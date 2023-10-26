@@ -1,0 +1,140 @@
+@import"src/assets/styles/colors.scss";
+@import"src/assets/styles/fonts.scss";
+.login-wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height:100vh;
+    width: 100vw;
+    max-width: 100%;
+}
+
+.login-header {
+    box-sizing: border-box;
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding-left: 77px;
+    padding-right: 77px;
+    padding-top: 80px;
+}
+
+.login-header-left {
+
+    img {
+        width:100px;
+        height: 122px;
+    }
+}
+
+.login-header-right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    @include OpenSans(400, 23px, 27.6px, $black);
+    button {
+        width: 112px;
+        height: 48px;
+        border-radius: 8px;
+        border-style: none;
+        background-color: $light-blue;
+        padding: 10px 16px 10px 16px;
+        @include OpenSans(400, 23px, 27.6px, $white);
+        cursor: pointer;
+    }
+}
+
+.login-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 652px;
+    max-height: 491px;
+    border-radius: 30px;
+    border-style: solid;
+    border-color: rgba(0, 0, 0, 0.08);
+    gap: 39px;
+    padding: 48px 115px 48px 115px;
+
+    h1 {
+        @include OpenSans(700, 48px, 57.6px, $black);
+        text-decoration: underline;
+        text-decoration-color: $light-blue;
+        text-decoration-thickness: 3px;
+        text-underline-offset: 3px;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 32px;
+    }
+    
+    .btn-container {
+        display: flex;
+        gap: 10px;
+
+        .login-btn{
+            width: 135px;
+            height: 48px;
+            border-radius: 8px;
+            border-style: none;
+            background-color: $light-blue;
+            padding: 10px 35px 10px 35px;
+            @include OpenSans(400, 23px, 27.6px, $white);
+            cursor: pointer;
+        }
+
+        .guest-login-btn{
+            box-sizing: border-box;
+            white-space: nowrap;
+            width: 197px;
+            height: 48px;
+            border-radius: 8px;
+            border-style:solid 1px;
+            border-color: $light-gray;
+            background-color: $white;
+            padding: 10px 35px 10px 35px;
+            @include OpenSans(400, 23px, 27.6px, $light-gray);
+            cursor: pointer;
+        }
+    }
+    span {
+        @include OpenSans(400, 16px, 19.2px, $black);
+    }
+
+    input {
+        max-width: 422px; 
+        height: 48px;
+        border: 0px 0px 1px 0px solid $light-gray;
+        border-top: none;
+        border-left: none;
+        border-right: none;
+        padding: 12px 21px 12px 21px;
+    }
+
+    .login-checkbox {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+    }
+}
+
+.login-footer {
+    display: flex;
+    width: 240px;
+    height: 35px;
+    @include OpenSans(400, 16px, 19.2px, $menu-color);
+
+    a { 
+        text-decoration: none;
+        color: $menu-color;
+        gap: 8px;
+        padding: 8px;
+    }
+}
+

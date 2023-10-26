@@ -1,0 +1,17 @@
+.page-wrapper {
+    header{
+        position: fixed;
+        top: 0;
+        left: 0;
+    }
+    .sidebar-desktop{
+        position: fixed;
+        top: 96px;
+        left: 0;
+    }
+    .summary-wrapper{
+        position: fixed;
+        top: 96px;
+        left: 232px;
+    }
+}

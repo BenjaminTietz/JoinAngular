@@ -6,5 +6,15 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'Joinangular';
+  titel = "Join";
+  showLogin = true;
+  showSignup = false;
+
+  toggleShowLogin(show: boolean) {
+    this.showLogin = show;
+  }
+
+  toggleShowSignup(show: boolean) {
+    this.showSignup = show;
+  }
 }

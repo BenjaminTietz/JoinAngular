@@ -1,0 +1,38 @@
+<div class="login-wrapper">
+  <div class="login-header">
+    <div class="login-header-left">
+      <img src="assets/img/join_logo_blue.png" alt="logo" />
+    </div>
+    <div class="login-header-right">
+      <span>Not a Join user?</span>
+      <button (click)="redirectToSignup()">Sign up</button>
+    </div>
+  </div>
+
+
+  <div class="login-box">
+    <h1>Log in</h1>
+    <form action="">
+      <input type="text" placeholder="Email" />
+      <input type="password" placeholder="Password" />
+      <div class="login-checkbox">
+        <input type="checkbox" id="remember-me" />
+        <span>Remember me</span>
+      </div>
+      <div class="btn-container">
+        <button (click)="redirectToSummary()" class="login-btn">Log in</button>
+        <button class="guest-login-btn">Guest log in</button>
+      </div>
+    </form>
+  </div>
+
+
+  <div class="login-footer">
+    <div class="login-footer-left">
+      <a href="#">Privacy Policy</a>
+    </div>
+    <div class="login-footer-right">
+        <a href="#">Legal Notice</a>
+    </div>
+  </div>
+</div>

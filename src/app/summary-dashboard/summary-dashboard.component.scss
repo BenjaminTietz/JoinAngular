@@ -1,0 +1,111 @@
+@import "src/assets/styles/colors.scss";
+@import "src/assets/styles/fonts.scss";
+
+.dashboard-wrapper {
+    position: fixed;
+    top: 96px;
+    left: 232px;
+    box-sizing: border-box;
+    width: 912px;
+    height: 591px;
+    margin-top: 265px;
+    margin-left: 380px;
+    gap: 72px;
+
+    .headline {
+        h1 {
+            @include OpenSans(400, 48px, 57.6px, $dashboard-headline);
+        }
+
+        span {
+            @include OpenSans(700, 64px, 76.8px, $light-blue);
+        }
+    }
+
+    .task-overview {
+        box-sizing: border-box;
+        width: 912px;
+        height: 442px;
+
+        .task-overview-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-sizing: border-box;
+            width: 912px;
+            height: 191px;
+
+            .task-overview-top-left {
+                box-sizing: border-box;
+                width: 672px;
+                height: 191px;
+                border-radius: 30px;
+                padding: 28px 48px 28px 48px;
+                gap: 35px;
+                background-color: $light-blue;
+            }
+
+            .task-overview-top-right {
+                box-sizing: border-box;
+                width: 208px;
+                height: 191px;
+                border-radius: 30px;
+                padding: 4px;
+                border-style: solid;
+                border-width: 2px;
+                border-color: $boarder-color;
+            }
+        }
+
+        .task-overview-bottom {
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            width: 912px;
+            height: 219px;
+            margin-top: 32px;
+
+            .task-container{
+                box-sizing: border-box;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                width: 204px;
+                height: 219px;
+                border-radius: 30px;
+                padding: 40px;
+                border-style: solid;
+                border-width: 2px;
+                border-color: $boarder-color;
+
+                .task-container-top{
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    width: 124px;
+                    height: 76px;
+                    gap: 20px;
+
+                    img {
+                        width: 76px;
+                        height: 76px;
+                    }
+
+                    span {
+                        @include OpenSans(700, 48px, 57.6px, $black);
+                    }
+                }
+
+                .task-container-bottom{
+                    span {
+                        @include OpenSans(400, 23px, 27.6px, $light-blue);
+                        white-space: nowrap;
+                    }
+                }
+            }
+        }
+    }
+}
