@@ -8,5 +8,5 @@ import { Component, Output, EventEmitter } from '@angular/core';
 export class SummaryComponent {
   @Output() toggleShowSignup: EventEmitter<boolean> = new EventEmitter();
 
-  // ... andere Komponenten-Logik
+  constructor() { }
 }

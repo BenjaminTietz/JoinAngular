@@ -32,7 +32,8 @@
             padding: 8px 30px 8px 30px;
             border-radius: 8px;
             gap: 8px;
-
+            cursor: pointer;
+            
             img {
                 width: 22px;
                 height: 22px;
@@ -52,7 +53,7 @@
         width: 232px;
         height: 384px;
         gap: 16px;
-        padding: 300px 0px 0px 48px;
+        padding: 300px 0px 0px 0px;
     }
 }
 

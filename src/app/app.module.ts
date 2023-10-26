@@ -9,6 +9,9 @@ import { SummaryComponent } from './summary/summary.component';
 import { HeaderDesktopComponent } from './header-desktop/header-desktop.component';
 import { SidebarDesktopComponent } from './sidebar-desktop/sidebar-desktop.component';
 import { SummaryDashboardComponent } from './summary-dashboard/summary-dashboard.component';
+import { AddtaskComponent } from './addtask/addtask.component';
+import { BoardComponent } from './board/board.component';
+import { ContactsComponent } from './contacts/contacts.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +21,10 @@ import { SummaryDashboardComponent } from './summary-dashboard/summary-dashboard
     SummaryComponent,
     HeaderDesktopComponent,
     SidebarDesktopComponent,
-    SummaryDashboardComponent
+    SummaryDashboardComponent,
+    AddtaskComponent,
+    BoardComponent,
+    ContactsComponent
   ],
   imports: [
     BrowserModule,
