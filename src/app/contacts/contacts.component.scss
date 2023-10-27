@@ -1,0 +1,98 @@
+@import "src/assets/styles/colors.scss";
+@import "src/assets/styles/fonts.scss";
+
+.contacts-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    box-sizing: border-box;
+    margin-top: 96px;
+    margin-left: 232px;
+    width: calc(100vw - 232px);
+    height: calc(100vh - 96px);
+    gap: 72px;
+    padding-left: 16px;
+
+    .contacts-left {
+        width: 456px;
+        height: 100%;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.16);
+    }
+
+    .contacts-right {
+        display: flex;
+        flex-direction: column;
+        width: 461px;
+        height: 318px;
+        gap: 21px;
+
+        .contact-detail-container {
+            display: flex;
+            flex-direction: column;
+
+            .contact-detail-top {
+                display: flex;
+                flex-direction: row;
+                .user-circle {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    width: 120px;
+                    height: 120px;
+                    border-radius: 50%;
+                    background-color: rgba(255, 122, 0, 1);
+                    
+                    .user-initials {
+                        @include Inter(500, 47px, 56.4px, $white);
+                    }
+                }
+
+                .contact-name-container {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: flex-start;
+
+                    .contact-name {
+                        @include Inter(500, 47px, 56.4px, $black);
+                    }
+
+                    .btn-container {
+                        display: flex;
+                        justify-content: flex-start;
+                        align-items: center;
+                        width: 158px;
+                        height: 24px;
+                        gap: 16px;
+
+                        .edit-btn {
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            width: 61px;
+                            height: 24px;
+                            gap: 6px;
+                            cursor: pointer;
+                            @include OpenSans(400, 16px, 19.2px, $dashboard-headline);
+                        }
+                    }
+                }
+                
+            }
+        }
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            @include OpenSans(400, 16px, 19.2px, $black);
+            h2 {
+                @include OpenSans(700, 23px, 27.6px, $black);
+            }
+            
+            span {
+                @include OpenSans(700, 16px, 19.2px, $black);
+            }
+        }
+    }
+}
