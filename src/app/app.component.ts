@@ -7,14 +7,5 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   titel = "Join";
-  showLogin = true;
-  showSignup = false;
 
-  toggleShowLogin(show: boolean) {
-    this.showLogin = show;
-  }
-
-  toggleShowSignup(show: boolean) {
-    this.showSignup = show;
-  }
 }

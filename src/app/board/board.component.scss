@@ -1,0 +1,15 @@
+@import "src/assets/styles/colors.scss";
+@import "src/assets/styles/fonts.scss";
+
+.board-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    box-sizing: border-box;
+    margin-top: 96px;
+    margin-left: 232px;
+    width: calc(100vw - 232px);
+    height: calc(100vh - 96px);
+    gap: 72px;
+}

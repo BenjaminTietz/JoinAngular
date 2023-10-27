@@ -7,24 +7,11 @@ import { Router } from '@angular/router';
   styleUrls: ['./sidebar-desktop.component.scss']
 })
 export class SidebarDesktopComponent {
-  
-  constructor(private router: Router) { }
 
-  redirectToSummary() {
-    this.router.navigate(['/summary']);
-    
-  }
 
-  redirectToAddTask() {
-    this.router.navigate(['/addtask']);
-  }
 
-  redirectToBoard() {
-    this.router.navigate(['/board']);
-  }
 
-  
-  redirectToContacts() {
-    this.router.navigate(['/contacts']);
-  }
+  constructor(public router: Router) { }
+
+
 }

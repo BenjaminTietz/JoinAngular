@@ -1,4 +1,5 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, Input } from '@angular/core';
+import { SidebarDesktopComponent } from '../sidebar-desktop/sidebar-desktop.component';
 
 @Component({
   selector: 'app-summary',
@@ -7,6 +8,7 @@ import { Component, Output, EventEmitter } from '@angular/core';
 })
 export class SummaryComponent {
   @Output() toggleShowSignup: EventEmitter<boolean> = new EventEmitter();
+
 
   constructor() { }
 }

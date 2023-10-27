@@ -1,1 +1,51 @@
-<p>addtask works!</p>
+<div class="addtask-wrapper">
+
+    <div class="addtask-left">
+        <div class="headline">
+            <h1>Add Task</h1>
+        </div>
+        <div class="addtask-left-top">
+            <input type="text" placeholder="Enter a title">
+            <h2>Description <span>(optional)</span></h2>
+            <textarea name="" id="" cols="30" rows="10" placeholder="Enter a description"></textarea>
+            <h2>Due date</h2>
+            <input type="date" placeholder="dd/mm/yyyy">
+        </div>
+        <div class="addtask-left-prio">
+            <h2>Description <span>(optional)</span></h2>
+            <div class="prio-box">
+                <div class="prio-container">
+                    <span>Urgent</span>
+                    <img src="assets/img/addtask/prio_urgent.svg" alt="prio_icon">
+                </div>
+                <div class="prio-container">
+                    <span>Medium</span>
+                    <img src="assets/img/addtask/prio_medium.svg" alt="prio_icon">
+                </div>
+                <div class="prio-container">
+                    <span>Low</span>
+                    <img src="assets/img/addtask/prio_low.svg" alt="prio_icon">
+                </div>
+            </div>
+        </div>
+        <div class="addtask-left-bottom">
+            <h2>Assigned to<span>(optional)</span></h2>
+            <input list="assigned" name="assigned" placeholder="Select contacts to assign">
+        </div>
+        <div class="addtask-left-bottom">
+            <h2>Category</h2>
+            <input list="category" name="category" placeholder="Select task category">
+        </div>
+        <div class="addtask-left-bottom">
+            <h2>Subtasks<span>(optional)</span></h2>
+            <input type="text" placeholder="Enter a subtask">
+        </div>
+    </div>
+    <div class="addtask-right">
+        <div class="btn-container">
+            <button class="clear-btn">Clear<img src="assets/img/addtask/clear_btn.svg"></button>
+            <button class="create-btn">Create Task<img src="assets/img/addtask/create_btn.svg"></button>
+        </div>
+        
+    </div>
+</div>
