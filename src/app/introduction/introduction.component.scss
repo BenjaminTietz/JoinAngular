@@ -1,0 +1,92 @@
+@import "src/assets/styles/colors.scss";
+@import "src/assets/styles/fonts.scss";
+
+.introduction-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  box-sizing: border-box;
+  margin-top: 96px;
+  margin-left: 232px;
+  padding-left: 32px;
+  width: calc(100vw - 256px);
+  height: calc(100vh - 96px);
+  gap: 30px;
+
+  span {
+    @include OpenSans(400, 16px, 19.2px, $black);
+
+    .blue {
+      color: $light-blue;
+    }
+  }
+
+  h2 {
+    @include OpenSans(700, 33px, 39.6px, $light-blue);
+  }
+
+  .whatis-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 90%
+  }
+  .introduction-headline {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 90%;
+    h1 {
+      @include OpenSans(700, 61px, 73.2px, $black);
+    }
+    img {
+      width: 32px;
+      height: 32px;
+      cursor: pointer;
+    }
+    span {
+      @include OpenSans(400, 16px, 19.2px, $black);
+
+      .blue {
+        color: $light-blue;
+      }
+    }
+
+    .introduction-top {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+    }
+  }
+  .steps-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 90%;
+    gap: 32px;
+    padding-bottom: 64px;
+
+    .steps {
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-start;
+      width: 100%;
+
+      .step-content {
+        margin-left: 32px;
+      }
+
+      h3 {
+        @include OpenSans(700, 33px, 39.6px, $medium-light-blue);
+        margin-top: 22px;
+      }
+      h4 {
+        @include OpenSans(700, 19px, 22.8px, $medium-light-blue);
+      }
+    }
+  }
+}

@@ -1,0 +1,32 @@
+@import "src/assets/styles/colors.scss";
+@import "src/assets/styles/fonts.scss";
+
+.privacy-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    box-sizing: border-box;
+    margin-top: 96px;
+    margin-left: 232px;
+    width: calc(100vw - 232px);
+    height: calc(100vh - 96px);
+    gap: 30px;
+    padding-left: 32px;
+
+    .privacy-headline {
+        h1 {
+        @include OpenSans(700, 61px, 73.2px, $black);
+        }
+    }
+
+    .privacy-content {
+        h2 {
+            @include OpenSans(700, 33px, 39.6px, $medium-light-blue);
+        }
+
+        span {
+            @include OpenSans(400, 16px, 19.2px, $black);
+        }
+    }
+}

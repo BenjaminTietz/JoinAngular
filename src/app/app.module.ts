@@ -12,6 +12,9 @@ import { SummaryDashboardComponent } from './summary-dashboard/summary-dashboard
 import { AddtaskComponent } from './addtask/addtask.component';
 import { BoardComponent } from './board/board.component';
 import { ContactsComponent } from './contacts/contacts.component';
+import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
+import { LegalNoticeComponent } from './legal-notice/legal-notice.component';
+import { IntroductionComponent } from './introduction/introduction.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +27,10 @@ import { ContactsComponent } from './contacts/contacts.component';
     SummaryDashboardComponent,
     AddtaskComponent,
     BoardComponent,
-    ContactsComponent
+    ContactsComponent,
+    PrivacyPolicyComponent,
+    LegalNoticeComponent,
+    IntroductionComponent
   ],
   imports: [
     BrowserModule,
