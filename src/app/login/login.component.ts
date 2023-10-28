@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { RemotestorageService } from '../remotestorage.service';
 
@@ -9,6 +9,9 @@ import { RemotestorageService } from '../remotestorage.service';
 })
 export class LoginComponent {
   @Output() toggleShowLogin: EventEmitter<boolean> = new EventEmitter();
+  @ViewChild('userEmail') userEmail: ElementRef;
+  @ViewChild('userPassword') userPassword: ElementRef;
+
 
   constructor(private router: Router, private RemotestorageService: RemotestorageService) { 
   }
@@ -41,7 +44,27 @@ async guestLogIn() {
   };
 };
 
+/**
+ * This function search for User Data and than try with that data to login into JOIN
+ * @date 7/15/2023 - 9:37:56 AM
+ *
+ */
+async logIn() {
+  let email = this.userEmail.nativeElement;
+  let password = this.userPassword.nativeElement;
 
+  let user = this.RemotestorageService.users.find(u => u.email == email.value && u.password == password.value);
+  if (user) {
+      await this.RemotestorageService.setItem('user', JSON.stringify(user) || "");
+      this.RemotestorageService.currentUser = JSON.parse(await this.RemotestorageService.getItem('user'));
+      this.router.navigate(['/summary']);
+      this.toggleShowLogin.emit(false); // set showLogin in AppComponent to false.
+      email.value = '';
+      password.value = '';
+  } else {
+      //failedLogIn(email, password);
+  };
+};
 
 
   redirectToSignup() {

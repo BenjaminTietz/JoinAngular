@@ -12,15 +12,15 @@
 
   <div class="login-box">
     <h1>Log in</h1>
-    <form action="">
-      <input type="text" placeholder="Email" />
-      <input type="password" placeholder="Password" />
+    <form action="" onsubmit="logIn()">
+      <input required type="email" placeholder="Email" #userEmail />
+      <input required type="password" placeholder="Password" #userPassword />
       <div class="login-checkbox">
         <input type="checkbox" id="remember-me" />
         <span>Remember me</span>
       </div>
       <div class="btn-container">
-        <button class="login-btn">Log in</button>
+        <button type="submit" class="login-btn">Log in</button>
         <button type="button" (click)="guestLogIn()" class="guest-login-btn">Guest log in</button>
       </div>
     </form>

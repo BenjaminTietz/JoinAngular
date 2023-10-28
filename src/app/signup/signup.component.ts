@@ -25,7 +25,6 @@ export class SignupComponent {
     let email = this.inputEmail.nativeElement;
     let password = this.inputPassword.nativeElement;
     let confirmPassword = this.confirmPasswordBox.nativeElement;
-    let acceptPrivacy = this.acceptPrivacy.nativeElement;
 
 
     // Validate if the password and confirm password match
@@ -38,7 +37,7 @@ export class SignupComponent {
         });
 
         // Save the updated 'users' array to local storage
-        await this.RemotestorageService.setItem('users', JSON.stringify(this.RemotestorageService.users) || "");
+        await this.RemotestorageService.setItem('users', JSON.stringify(this.RemotestorageService.users));
 
         // Reset the registration form
         //resetForm(userName, email, password);
@@ -64,7 +63,7 @@ export class SignupComponent {
 
 
   redirectToLogin() {
-    this.router.navigate(['/login']);
+    this.router.navigate(['/']);
     this.toggleShowLogin.emit(true); // Setze showLogin in der AppComponent auf true.
   }
 }

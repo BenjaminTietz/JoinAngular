@@ -30,20 +30,32 @@
     }
 }
 
-
+.signup-top {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
 .signup-box {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    max-width: 598px;
-    max-height: 607px;
+    width: 560px;
+    height: 607px;
     border-radius: 30px;
     border-style: none;
     gap: 35px;
     padding: 48px 88px 48px 88px;
     background-color: $white;
-
+    .signup-top {
+        position: relative;
+        img {
+            position: absolute;
+            left: 65px;
+            top: 50px;
+            cursor: pointer;
+        }
+    }
     h1 {
         @include OpenSans(700, 48px, 57.6px, $black);
         text-decoration: underline;
@@ -55,7 +67,10 @@
     form {
         display: flex;
         flex-direction: column;
+        justify-content: center;
+        align-items: center;
         gap: 16px;
+        width: 100%;
     }
     
     .btn-container {
@@ -90,7 +105,7 @@
     }
 
     input {
-        max-width: 422px; 
+        width: 422px; 
         height: 48px;
         border: 0px 0px 1px 0px solid $light-gray;
         border-top: none;
@@ -101,8 +116,19 @@
 
     .signup-checkbox {
         display: flex;
-        justify-content: flex-start;
+        justify-content: center;
         align-items: center;
+        width: 231px;
+        height: 24px;
+
+        input {
+            width: 24px;
+            height: 24px;
+            margin-right: 10px;
+        }
+        span {
+            white-space: nowrap;
+        }
     }
 }
 
@@ -133,7 +159,16 @@
         height: 607px;
         gap: 32px;
         padding: 32px 0px 32px 0px;
-    
+
+        .signup-top {
+            position: relative;
+            img {
+                position: absolute;
+                left: 20px;
+                top: 35px;
+                cursor: pointer;
+            }
+        }
         h1 {
             @include OpenSans(700, 47px, 56.4px, $black);
         }
@@ -169,7 +204,7 @@
         }
     
         input {
-            max-width: 364px; 
+            max-width: 80%; 
             height: 48px;
             padding: 12px 21px 12px 21px;
         }

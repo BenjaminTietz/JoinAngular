@@ -1,36 +1,41 @@
 <div class="signup-wrapper">
-    <div class="signup-header">
-      <div class="signup-header-left">
-        <img src="assets/img/join_logo_white.png" alt="logo" />
-      </div>
-    </div>
-  
-  
-    <div class="signup-box">
-      <h1>Sign up</h1>
-      <form action="" onsubmit="signUp()">
-        <input required type="text" placeholder="Name" #inputName />
-        <input required type="email" placeholder="Email" #inputEmail/>
-        <input required type="password" placeholder="Password" #inputPassword/>
-        <input required type="password" placeholder="Confirm Password" #inputConfirmPassword />
-        <div class="signup-checkbox">
-          <input required type="checkbox" #acceptPrivacy  />
-          <span>I accept the <a href="#">Privacy Policy</a></span>
-        </div>
-        <div class="btn-container">
-          <button type="submit" class="signup-btn">Sign up</button>
-        </div>
-      </form>
-    </div>
-  
-  
-    <div class="signup-footer">
-      <div class="signup-footer-left">
-        <a href="#">Privacy Policy</a>
-      </div>
-      <div class="signup-footer-right">
-          <a href="#">Legal Notice</a>
-      </div>
+  <div class="signup-header">
+    <div class="signup-header-left">
+      <img src="assets/img/join_logo_white.png" alt="logo" />
     </div>
   </div>
-  
+
+  <div class="signup-box">
+    <div class="signup-top">
+      <img (click)="redirectToLogin()" src="assets/img/signup/arrow-left-line.svg">
+      <h1>Sign up</h1>
+    </div>
+    <form action="" onsubmit="signUp()">
+      <input required type="text" placeholder="Name" #inputName />
+      <input required type="email" placeholder="Email" #inputEmail />
+      <input required type="password" placeholder="Password" #inputPassword />
+      <input
+        required
+        type="password"
+        placeholder="Confirm Password"
+        #inputConfirmPassword
+      />
+      <div class="signup-checkbox">
+        <input required type="checkbox" #acceptPrivacy />
+        <span>I accept the <a href="#">Privacy Policy</a></span>
+      </div>
+      <div class="btn-container">
+        <button type="submit" class="signup-btn">Sign up</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="signup-footer">
+    <div class="signup-footer-left">
+      <a href="#">Privacy Policy</a>
+    </div>
+    <div class="signup-footer-right">
+      <a href="#">Legal Notice</a>
+    </div>
+  </div>
+</div>
