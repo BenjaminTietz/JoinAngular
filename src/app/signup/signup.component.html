@@ -8,17 +8,17 @@
   
     <div class="signup-box">
       <h1>Sign up</h1>
-      <form action="">
-        <input type="text" placeholder="Name" />
-        <input type="text" placeholder="Email" />
-        <input type="password" placeholder="Password" />
-        <input type="password" placeholder="Confirm Password" />
+      <form action="" onsubmit="signUp()">
+        <input required type="text" placeholder="Name" #inputName />
+        <input required type="email" placeholder="Email" #inputEmail/>
+        <input required type="password" placeholder="Password" #inputPassword/>
+        <input required type="password" placeholder="Confirm Password" #inputConfirmPassword />
         <div class="signup-checkbox">
-          <input type="checkbox" id="accept-pp" />
+          <input required type="checkbox" #acceptPrivacy  />
           <span>I accept the <a href="#">Privacy Policy</a></span>
         </div>
         <div class="btn-container">
-          <button class="signup-btn">Sign up</button>
+          <button type="submit" class="signup-btn">Sign up</button>
         </div>
       </form>
     </div>

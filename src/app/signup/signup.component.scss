@@ -120,3 +120,65 @@
     }
 }
 
+@media screen and (max-width: 750px) {
+    .signup-header-left {
+
+        img {
+            width: 64px;
+            height: 78px;
+        }
+    }
+    .signup-box {
+        width: 300px;
+        height: 607px;
+        gap: 32px;
+        padding: 32px 0px 32px 0px;
+    
+        h1 {
+            @include OpenSans(700, 47px, 56.4px, $black);
+        }
+    
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        
+        .btn-container {
+    
+            .signup-btn{
+                white-space: nowrap;
+                width: 180px;
+                height: 48px;
+                padding: 4px 0px 4px 0px;
+                @include OpenSans(400, 19px, 22.8px, $white);
+            }
+    
+        }
+        span {
+            display: flex;  
+            justify-content: center;
+            align-items: center;
+            @include OpenSans(400, 16px, 19.2px, $black);
+    
+            a {
+                text-decoration: none;
+                color: $light-blue;
+                margin-left: 10px;
+            }
+        }
+    
+        input {
+            max-width: 364px; 
+            height: 48px;
+            padding: 12px 21px 12px 21px;
+        }
+    
+        .signup-checkbox {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+        }
+    }
+}
+
