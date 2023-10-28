@@ -199,3 +199,32 @@
         }
     }
 }
+
+@media screen and (max-width: 1200px) {
+    .dashboard-wrapper {
+        margin-top: 0px;
+        margin-left: 0px;
+        padding-top: 80px;
+        padding-bottom: 80px;
+        width: 100vw;
+        max-width: 100%;
+        height: calc(100vh - 156px);
+        gap: 24px;
+
+        .headline {
+            
+            h1 {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                @include OpenSans(400, 33px, 39.6px, $dashboard-headline);
+            }
+    
+            span {
+                @include OpenSans(700, 47px, 56.4px, $light-blue);
+            }
+        }
+    }
+}
+

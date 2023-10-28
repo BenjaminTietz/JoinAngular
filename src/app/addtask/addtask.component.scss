@@ -2,178 +2,363 @@
 @import "src/assets/styles/fonts.scss";
 
 .addtask-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  margin-top: 96px;
+  margin-left: 232px;
+  width: calc(100vw - 232px);
+  height: calc(100vh - 96px);
+  gap: 72px;
+
+  .addtask-left {
+    box-sizing: border-box;
+    width: 488px;
+    height: 928px;
+    padding: 64px 24px 0px 24px;
+    gap: 24px;
+  }
+
+  .headline {
+    h1 {
+      @include OpenSans(400, 48px, 57.6px, $dashboard-headline);
+    }
+  }
+
+  .addtask-left-top {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 440px;
+    height: 361px;
+    gap: 12px;
+
+    input {
+      width: 100%;
+      height: 64px;
+      gap: 10px;
+      border-top: none;
+      border-left: none;
+      border-right: none;
+      border-bottom: 1px solid $input-boarder;
+      padding: 13px 16px 13px 16px;
+    }
+
+    h2 {
+      @include OpenSans(700, 19px, 22.8px, $menu-color);
+    }
+
+    span {
+      @include OpenSans(400, 19px, 22.8px, $menu-color);
+    }
+
+    textarea {
+      width: 100%;
+      height: 123px;
+      gap: 4px;
+    }
+  }
+
+  .addtask-left-prio {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 8px;
+    h2 {
+      @include OpenSans(700, 19px, 22.8px, $menu-color);
+    }
+
+    span {
+      @include OpenSans(400, 19px, 22.8px, $menu-color);
+    }
+
+    .prio-box {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      height: 51px;
+      gap: 16px;
+
+      .prio-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 136px;
+        height: 51px;
+        border-radius: 10px;
+        border-color: $boarder-color;
+        border-style: solid;
+        border-width: 1px;
+        padding: 18px 10px 18px 10px;
+        gap: 10px;
+      }
+    }
+  }
+  .addtask-left-bottom {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 8px;
+    width: 440px;
+    height: 79px;
+    margin-top: 16px;
+
+    h2 {
+      @include OpenSans(700, 19px, 22.8px, $menu-color);
+    }
+
+    span {
+      @include OpenSans(400, 19px, 22.8px, $menu-color);
+    }
+
+    input {
+      width: 100%;
+      height: 64px;
+      gap: 10px;
+      border-top: none;
+      border-left: none;
+      border-right: none;
+      border-bottom: 1px solid $input-boarder;
+      padding: 12px 16px 12px 16px;
+    }
+  }
+
+  .addtask-right {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    height: 100%;
+    margin-bottom: 300px;
+
+    .btn-container {
+      display: flex;
+      justify-content: flex-end;
+      align-items: flex-end;
+      width: 335px;
+      height: 61px;
+      gap: 4px;
+
+      .clear-btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 136px;
+        height: 61px;
+        border-radius: 10px;
+        border-width: 1px;
+        border-color: $light-gray;
+        padding: 16px 10px 16px 10px;
+        gap: 4px;
+        @include OpenSans(400, 23px, 27.6px, $light-gray);
+        cursor: pointer;
+      }
+
+      .create-btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-sizing: border-box;
+        white-space: nowrap;
+        width: 174px;
+        height: 60px;
+        border-radius: 10px;
+        border-style: none;
+        background-color: $light-blue;
+        padding: 16px 10px 16px 10px;
+        gap: 4px;
+        @include OpenSans(400, 23px, 27.6px, $white);
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .addtask-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
     align-items: center;
     box-sizing: border-box;
-    margin-top: 96px;
-    margin-left: 232px;
-    width: calc(100vw - 232px);
-    height: calc(100vh - 96px);
-    gap: 72px;
-
-    .addtask-left {
-        width:488px;
-        height: 928px;
-        padding: 64px 24px 0px 24px;
-        gap: 24px;
-    }
-
-    .headline {
-        h1 {
-            @include OpenSans(400, 48px, 57.6px, $dashboard-headline);
-        }
-    }
-
-    .addtask-left-top {
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: flex-start;
-        width: 440px;
-        height: 361px;
-        gap: 12px;
-
-        input {
-            width:100%;
-            height: 64px;
-            gap: 10px;
-            border-top: none;
-            border-left: none;
-            border-right: none;
-            border-bottom: 1px solid $input-boarder;
-            padding: 13px 16px 13px 16px;
-        }
-
-        h2 {
-            @include OpenSans(700, 19px, 22.8px, $menu-color);
-        }
-
-        span {
-            @include OpenSans(400, 19px, 22.8px, $menu-color);
-        }
-
-        textarea {
-            width: 100%;
-            height: 123px;
-            gap: 4px;
-        }
-    }
-
-    .addtask-left-prio {
-        display: flex;
-        flex-direction: column;
-        justify-content:flex-start;
-        align-items: flex-start;
-        gap: 8px;
-        h2 {
-            @include OpenSans(700, 19px, 22.8px, $menu-color);
-        }
-
-        span {
-            @include OpenSans(400, 19px, 22.8px, $menu-color);
-        }
-
-        .prio-box {
-            display: flex;
-            flex-direction: row;
-            justify-content:space-between;
-            align-items: center;
-            width: 100%;
-            height: 51px;
-            gap: 16px;
-
-            .prio-container {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                width: 136px;
-                height: 51px;
-                border-radius: 10px;
-                border-color: $boarder-color;
-                border-style: solid;
-                border-width: 1px;
-                padding: 18px 10px 18px 10px;
-                gap: 10px;
-            }
-        }
-    }
-    .addtask-left-bottom {
-        display: flex;
-        flex-direction: column;
-        justify-content:flex-start;
-        align-items: flex-start;
-        gap: 8px;
-        width: 440px;
-        height: 79px;
-        margin-top: 16px;
-
-        h2 {
-            @include OpenSans(700, 19px, 22.8px, $menu-color);
-        }
-
-        span {
-            @include OpenSans(400, 19px, 22.8px, $menu-color);
-        }
-
-        input {
-            width:100%;
-            height: 64px;
-            gap: 10px;
-            border-top: none;
-            border-left: none;
-            border-right: none;
-            border-bottom: 1px solid $input-boarder;
-            padding: 12px 16px 12px 16px;
-        }
-    }
+    margin-top: 0px;
+    margin-left: 0px;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 80px;
+    padding-bottom: 76px;
+    width: 100vw;
+    max-width: 100%;
+    height: calc(100vh - 156px);
+    gap: 16px;
 
     .addtask-right {
-        display: flex;
-        justify-content: flex-end;
-        align-items: flex-end;
-        height: 100%;
-        margin-bottom: 300px;
+        margin-bottom: 0px;
+    }
+  }
+}
 
-        .btn-container {
+@media screen and (max-width: 600px) {
+  .addtask-wrapper {
+    .addtask-left {
+        width: 100%;
+        padding: 0px 0px 0px 0px;
+      }
+    .addtask-left-top {
+      h2 {
+        @include OpenSans(700, 16px, 19.2px, $menu-color);
+      }
+
+      span {
+        @include OpenSans(400, 16px, 19.2px, $menu-color);
+      }
+    }
+    .addtask-left-bottom {
+      h2 {
+        @include OpenSans(700, 16px, 19.2px, $menu-color);
+      }
+
+      span {
+        @include OpenSans(400, 16px, 19.2px, $menu-color);
+      }
+    }
+    .addtask-left-prio {
+      gap: 16px;
+      h2 {
+        @include OpenSans(700, 16px, 19.2px, $menu-color);
+      }
+
+      span {
+        @include OpenSans(400, 16px, 19.2px, $menu-color);
+      }
+
+      .prio-box {
+        height: 48px;
+
+        .prio-container {
+          width: 121px;
+          height: 48px;
+          padding: 18px 10px 18px 10px;
+          gap: 8px;
+
+          img {
+            width: 20px;
+            height: 14.5px;
+          }
+        }
+      }
+    }
+    .addtask-right {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      width: 100%;
+      margin-bottom: 0px;
+
+      .btn-container {
         display: flex;
-        justify-content: flex-end;
-        align-items: flex-end;
-        width: 335px;
-        height: 61px;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 48px;
         gap: 4px;
 
-        .clear-btn{
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 136px;
-            height: 61px;
-            border-radius: 10px;
-            border-width: 1px;
-            border-color: $light-gray;
-            padding: 16px 10px 16px 10px;
-            gap: 4px;
-            @include OpenSans(400, 23px, 27.6px, $light-gray);
-            cursor: pointer;
+        .clear-btn {
+          display: none;
         }
 
-        .create-btn{
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-sizing: border-box;
-            white-space: nowrap;
-            width: 174px;
-            height: 60px;
-            border-radius: 10px;
-            border-style:none;
-            background-color: $light-blue;
-            padding: 16px 10px 16px 10px;
-            gap: 4px;
-            @include OpenSans(400, 23px, 27.6px, $white);
-            cursor: pointer;
+        .create-btn {
+          width: 148px;
+          height: 48px;
+          padding: 12px 8px 12px 8px;
+          @include OpenSans(400, 19px, 22.8px, $white);
+
+          img {
+            width: 24px;
+            height: 24px;
+          }
         }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .addtask-wrapper {
+    align-items: flex-start;
+
+    .addtask-left-top {
+        input {
+            width: 65%;
+        }
+        textarea {
+            width: 65%;
         }
     }
+    .addtask-left-prio {
+      .prio-box {
+        gap:4px;
+        justify-content: flex-start;
+        .prio-container {
+          width: 100px;
+          height: 40px;
+          padding: 12px 6px 12px 6px;
+          gap: 8px;
+
+          img {
+            width: 20px;
+            height: 14.5px;
+          }
+        }
+      }
+    }
+    .addtask-left-bottom {
+      input {
+        width: 65%;
+      }
+    }
+  }
 }
+
+@media screen and (max-width: 400px) {
+    .addtask-wrapper {
+      align-items: flex-start;
+  
+      .addtask-left-top {
+          input {
+              width: 50%;
+          }
+          textarea {
+              width: 50%;
+          }
+      }
+      .addtask-left-prio {
+        .prio-box {
+          gap:2px;
+          justify-content: flex-start;
+          .prio-container {
+            width: 80px;
+            height: 30px;
+            padding: 10px 4px 10px 4px;
+            gap: 4px;
+  
+            img {
+              width: 16px;
+              height: 10.5px;
+            }
+          }
+        }
+      }
+      .addtask-left-bottom {
+        input {
+          width: 50%;
+        }
+      }
+    }
+  }

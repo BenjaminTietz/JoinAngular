@@ -15,6 +15,9 @@
     padding-left: 32px;
 
     .privacy-headline {
+        display: flex;
+        justify-content: space-between;
+        width: 90%;
         h1 {
         @include OpenSans(700, 61px, 73.2px, $black);
         }
@@ -28,5 +31,19 @@
         span {
             @include OpenSans(400, 16px, 19.2px, $black);
         }
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .privacy-wrapper {
+        margin-top: 0px;
+        padding-top: 80px;
+        margin-left: 0px;
+        width: 100vw;
+        max-width: 100%;
+        height: calc(100vh - 156px);
+        gap: 30px;
+        padding-left: 16px;
+        padding-right: 16px;
     }
 }

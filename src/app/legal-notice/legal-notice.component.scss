@@ -2,49 +2,79 @@
 @import "src/assets/styles/fonts.scss";
 
 .legal-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  box-sizing: border-box;
+  padding-top: 96px;
+  padding-left: 264px;
+  padding-right: 16px;
+  width: 100vw ;
+  height: calc(100vh - 96px);
+  gap: 30px;
+
+  .legal-headline {
     display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    box-sizing: border-box;
-    margin-top: 96px;
-    margin-left: 264px;
-    padding-right: 80px;
-    width: calc(100vw - 232px);
-    height: calc(100vh - 96px);
-    gap: 30px;
-    padding-left: 32px;
-
-    .legal-headline {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        width:100%;
-        h1 {
-        @include OpenSans(700, 61px, 73.2px, $black);
-        }
-        img {
-            width: 32px;
-            height: 32px;
-            cursor: pointer;
-        }
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    h1 {
+      @include OpenSans(700, 61px, 73.2px, $black);
     }
-
-    .legal-content {
-        h2 {
-            @include OpenSans(700, 33px, 39.6px, $light-blue);
-        }
-        h3 {
-            @include OpenSans(700, 19px, 22.8px, $medium-light-blue);
-        }
-        h4 {
-            @include OpenSans(400, 16px, 19.2px, $light-blue);}
-        span {
-            @include OpenSans(400, 16px, 19.2px, $black);
-            .blue {
-                color: $light-blue;
-            }
-        }
+    img {
+      width: 32px;
+      height: 32px;
+      cursor: pointer;
     }
+  }
+
+  .legal-content {
+    h2 {
+      @include OpenSans(700, 33px, 39.6px, $light-blue);
+    }
+    h3 {
+      @include OpenSans(700, 19px, 22.8px, $medium-light-blue);
+    }
+    h4 {
+      @include OpenSans(400, 16px, 19.2px, $light-blue);
+    }
+    span {
+      @include OpenSans(400, 16px, 19.2px, $black);
+      .blue {
+        color: $light-blue;
+      }
+    }
+  }
 }
+
+@media screen and (max-width: 1200px) {
+  .legal-wrapper {
+    margin-left: 0px;
+    padding-right: 16px;
+    padding-left: 16px;
+    width: 100vw;
+    max-width: 100%;
+    height: calc(100vh - 156px);
+    gap: 30px;
+  }
+}
+
+@media screen and (max-width: 850px) {
+    .legal-wrapper {
+      height: calc(130vh - 156px);
+    }
+  }
+
+@media screen and (max-width: 550px) {
+    .legal-wrapper {
+      height: calc(150vh - 156px);
+    }
+  }
+
+  @media screen and (max-width: 420px) {
+    .legal-wrapper {
+      height: calc(180vh - 156px);
+    }
+  }
