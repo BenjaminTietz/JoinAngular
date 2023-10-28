@@ -9,7 +9,7 @@ import { RemotestorageService } from '../remotestorage.service';
   styleUrls: ['./signup.component.scss']
 })
 export class SignupComponent {
-  @Output() toggleShowLogin: EventEmitter<boolean> = new EventEmitter();
+
 
   @ViewChild('inputName') inputName: ElementRef;
   @ViewChild('inputEmail') inputEmail: ElementRef;
@@ -64,6 +64,6 @@ export class SignupComponent {
 
   redirectToLogin() {
     this.router.navigate(['/']);
-    this.toggleShowLogin.emit(true); // Setze showLogin in der AppComponent auf true.
+
   }
 }

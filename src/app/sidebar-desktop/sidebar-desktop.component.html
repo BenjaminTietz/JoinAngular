@@ -1,18 +1,18 @@
 <div class="sidebar-wrapper">
     <div class="sidebar-top">
-        <div routerLink="/summarydashboard" class="sidebar-row">
+        <div (click)="selectComponent('app-summary-dashboard')" class="sidebar-row">
             <img src="assets/img/summary/summary_icon.png" alt="logo">
             <span>Summary</span>
         </div>
-        <div routerLink="/addtask" class="sidebar-row">
+        <div (click)="selectComponent('app-addtask')" class="sidebar-row">
             <img src="assets/img/summary/addtask_icon.png" alt="logo">
             <span>Add Task</span>
         </div>
-        <div routerLink="/board" class="sidebar-row">
+        <div (click)="selectComponent('app-board')" class="sidebar-row">
             <img src="assets/img/summary/board_icon.png" alt="logo">
             <span>Board</span>
         </div>
-        <div routerLink="/contacts" class="sidebar-row">
+        <div (click)="selectComponent('app-contacts')" class="sidebar-row">
             <img src="assets/img/summary/contacts_icon.png" alt="logo">
             <span>Contacts</span>
         </div>

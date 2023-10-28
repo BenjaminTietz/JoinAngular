@@ -3,8 +3,9 @@
     <app-header-desktop></app-header-desktop>
   </header>
   <div class="sidebar-desktop"><app-sidebar-desktop></app-sidebar-desktop></div>
-<app-addtask> </app-addtask>
-   
-
+    <app-summary-dashboard *ngIf="showSummary"></app-summary-dashboard>
+    <app-addtask *ngIf="showAddTask"></app-addtask>
+    <app-board *ngIf="showBoard"></app-board>
+    <app-contacts *ngIf="showContacts"></app-contacts>
   </div>
 

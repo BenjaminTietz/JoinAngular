@@ -8,7 +8,7 @@ import { RemotestorageService } from '../remotestorage.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-  @Output() toggleShowLogin: EventEmitter<boolean> = new EventEmitter();
+
   @ViewChild('userEmail') userEmail: ElementRef;
   @ViewChild('userPassword') userPassword: ElementRef;
 
@@ -36,12 +36,10 @@ async guestLogIn() {
       console.log('guestUser: ', this.RemotestorageService.guestUser);
       // Redirect to the "summary-component" page
       this.router.navigate(['/summary']);
-      this.toggleShowLogin.emit(false); // set showLogin in AppComponent to false.
-  } else {
+} else {
       // If no guest user data is present, simply redirect to the "summary-component" page
       this.router.navigate(['/summary']);
-      this.toggleShowLogin.emit(false); // set showLogin in AppComponent to false.
-  };
+};
 };
 
 /**
@@ -58,7 +56,6 @@ async logIn() {
       await this.RemotestorageService.setItem('user', JSON.stringify(user) || "");
       this.RemotestorageService.currentUser = JSON.parse(await this.RemotestorageService.getItem('user'));
       this.router.navigate(['/summary']);
-      this.toggleShowLogin.emit(false); // set showLogin in AppComponent to false.
       email.value = '';
       password.value = '';
   } else {
@@ -69,13 +66,11 @@ async logIn() {
 
   redirectToSignup() {
     this.router.navigate(['/signup']);
-    this.toggleShowLogin.emit(false); // Setze showLogin auf false in der AppComponent.
-  }
+}
 
   redirectToSummary() {
     this.router.navigate(['/summary']);
-    this.toggleShowLogin.emit(false); // Setze showLogin in der AppComponent auf false.
-  }
+}
 
 
 }
