@@ -29,7 +29,6 @@ STORAGE_URL:string = 'https://remote-storage.developerakademie.org/item';
 async setItem(key:string, value:any) {
     // Create a payload object containing the key, value, and access token.
     const payload = { key, value, token: this.STORAGE_TOKEN };
-    
     // Send a POST request to the external Storage API to store the value.
     return fetch(this.STORAGE_URL, { method: 'POST', body: JSON.stringify(payload) })
         .then(res => res.json());
@@ -45,7 +44,6 @@ async setItem(key:string, value:any) {
 async getItem(key: string) {
     // Create the URL for the GET request containing the key and access token.
     const url = `${this.STORAGE_URL}?key=${key}&token=${this.STORAGE_TOKEN}`;
-    
     // Send a GET request to the external Storage API to retrieve the value.
     return fetch(url)
         .then(res => res.json())

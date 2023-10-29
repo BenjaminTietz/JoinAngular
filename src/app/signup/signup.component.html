@@ -1,4 +1,11 @@
 <div class="signup-wrapper">
+  <!--Hidden Popup-->
+  <div #successPopUp class="popup-wrapper">
+    <div class="success-popup">
+      <span>You Signed Up successfully</span>
+    </div>
+  </div>
+  <!--Hidden Popup-->
   <div class="signup-header">
     <div class="signup-header-left">
       <img src="assets/img/join_logo_white.png" alt="logo" />
@@ -7,23 +14,66 @@
 
   <div class="signup-box">
     <div class="signup-top">
-      <img (click)="redirectToLogin()" src="assets/img/signup/arrow-left-line.svg">
+      <img
+        (click)="redirectToLogin()"
+        src="assets/img/signup/arrow-left-line.svg"
+      />
       <h1>Sign up</h1>
     </div>
-    <form action="" onsubmit="signUp()">
-      <input required type="text" placeholder="Name" #inputName />
-      <input required type="email" placeholder="Email" #inputEmail />
-      <input required type="password" placeholder="Password" #inputPassword />
-      <input
-        required
-        type="password"
-        placeholder="Confirm Password"
-        #inputConfirmPassword
-      />
-      <div class="signup-checkbox">
-        <input required type="checkbox" #acceptPrivacy />
-        <span>I accept the <a href="#">Privacy Policy</a></span>
+
+    <form #userSignUp="ngForm" (ngSubmit)="signUp(userSignUp.value)">
+      <div>
+        <input
+          required
+          placeholder="Name"
+          id="name"
+          type="text"
+          formControlname="name"
+          name="name"
+          #inputName
+          ngModel
+        />
       </div>
+
+      <div>
+        <input
+          required
+          placeholder="Email"
+          id="email"
+          type="email"
+          formControlname="email"
+          name="email"
+          #inputEmail
+          ngModel
+        />
+      </div>
+
+      <div>
+        <input
+          required
+          placeholder="Password"
+          id="password"
+          type="password"
+          formControlname="password"
+          name="password"
+          #inputPassword
+          ngModel
+        />
+      </div>
+
+      <div>
+        <input
+          required
+          placeholder="Confirm password"
+          id="confirmPassword"
+          type="password"
+          formControlname="confirmPassword"
+          name="confirmPassword"
+          #inputConfirmPassword
+          ngModel
+        />
+      </div>
+
       <div class="btn-container">
         <button type="submit" class="signup-btn">Sign up</button>
       </div>

@@ -1,6 +1,7 @@
 @import"src/assets/styles/colors.scss";
 @import"src/assets/styles/fonts.scss";
-.signup-wrapper{
+.signup-wrapper {
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -9,6 +10,48 @@
     width: 100vw;
     max-width: 100%;
     background-color: $light-blue;
+}
+
+.popup-wrapper {
+    position: absolute;
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height:100vh;
+    width: 100vw;
+    max-width: 100%;
+    background-color: white;
+    opacity: 0.8;
+    z-index: 1;
+
+    .success-popup {
+        position: relative;
+        margin-top: 60%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 326px;
+        height: 74px;
+        border-radius: 20px;
+        background-color: $light-blue;
+        opacity: 1;
+        z-index: 10;
+        @include OpenSans(400, 23px, 27.6px, $white);
+        animation: slide-in ease-in-out 1s;
+    }
+    @keyframes slide-in {
+        0% {
+            transform: translateY(750%);
+        }
+        100% {
+            transform: translateY(0);
+        }
+    }
+}
+
+.show-popup {
+    display: flex;
 }
 
 .signup-header {

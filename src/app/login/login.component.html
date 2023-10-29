@@ -12,9 +12,34 @@
 
   <div class="login-box">
     <h1>Log in</h1>
-    <form action="" onsubmit="logIn();return false;">
-      <input required type="email" placeholder="Email" #userEmail />
-      <input required type="password" placeholder="Password" #userPassword />
+
+    <form #userLogIn="ngForm" (ngSubmit)="logIn(userLogIn.value)">
+      <div>
+        <input
+          required
+          placeholder="Email"
+          id="email"
+          type="text"
+          formControlname="name"
+          name="email"
+          #inputEmail
+          ngModel
+        />
+      </div>
+
+      <div>
+        <input
+          required
+          placeholder="Password"
+          id="password"
+          type="password"
+          formControlname="password"
+          name="password"
+          #inputPassword
+          ngModel
+        />
+      </div>
+
       <div class="login-checkbox">
         <input type="checkbox" id="remember-me" />
         <span>Remember me</span>
@@ -24,6 +49,18 @@
         <button type="button" (click)="guestLogIn()" class="guest-login-btn">Guest log in</button>
       </div>
     </form>
+    <!-- <form action="" onsubmit="logIn();return false;">
+      <input required type="email" placeholder="Email" #userEmail />
+      <input required type="password" placeholder="Password" #userPassword />
+      <div class="login-checkbox">
+        <input type="checkbox" id="remember-me" />
+        <span>Remember me</span>
+      </div>
+      <div class="btn-container">
+        <button type="button" (click)="logIn()" class="login-btn">Log in</button>
+        <button type="button" (click)="guestLogIn()" class="guest-login-btn">Guest log in</button>
+      </div>
+    </form> -->
   </div>
 
   <div class="login-signup-mobile">

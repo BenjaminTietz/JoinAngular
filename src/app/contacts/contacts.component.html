@@ -2,29 +2,67 @@
   <!--Hidden Container-->
   <div class="add-contact-container" #addContactContainer>
     <div class="add-contact-top">
-      <img click="showSlider()" class="close-logo" src="assets/img/contacts/close.png">
+      <img
+        (click)="showSlider()"
+        class="close-logo"
+        src="assets/img/contacts/close.png"
+      />
       <div class="add-contact-top-title">
-        <img src="assets/img/contacts/join_logo.png">
+        <img src="assets/img/contacts/join_logo.png" />
         <h2>Add Contact</h2>
         <span>Tasks are better with a team!</span>
       </div>
     </div>
     <div class="add-contact-bottom">
-      <img src="assets/img/contacts/user-circle-add-contact.png">
-      <form>
-        <input type="text" placeholder="Name">
-        <input type="email" placeholder="Email">
-        <input type="phone" placeholder="Phone">
+      <img src="assets/img/contacts/user-circle-add-contact.png" />
+      <form
+        #addContactForm="ngForm"
+        (ngSubmit)="addContact(addContactForm.value)"
+      >
+        <input
+          #inputName
+          formControlname="name"
+          name="name"
+          type="text"
+          placeholder="Name"
+          ngModel
+        />
+        <input
+          #inputEmail
+          formControlname="email"
+          name="email"
+          type="email"
+          placeholder="Email"
+          ngModel
+        />
+        <input
+          #inputPhone
+          formControlname="phone"
+          name="phone"
+          type="phone"
+          placeholder="Phone"
+          ngModel
+        />
         <div class="add-contact-btn">
-          <button class="cancel-btn" type="button">Cancel<img src="assets/img/contacts/cancel.png"></button>
-          <button class="create-btn" type="submit">Create contact<img src="assets/img/contacts/create.png"></button>
+          <button class="cancel-btn" (click)="showSlider()" type="button">
+            Cancel<img src="assets/img/contacts/cancel.png" />
+          </button>
+          <button class="create-btn" type="submit">
+            Create contact<img src="assets/img/contacts/create.png" />
+          </button>
         </div>
       </form>
     </div>
   </div>
   <!--Hidden Container-->
-  <div class="contacts-left"></div>
-<button type="button" click="showSlider()">Add contact</button>
+  <div class="contacts-left">
+    <div class="contacts-left-btn-container">
+      <div class="add-contact-btn" (click)="showSlider()">
+        Add contact<img src="assets/img/contacts/person_add.png" />
+      </div>
+    </div>
+  </div>
+
   <div class="contacts-right">
     <div class="contact-detail-container">
       <div class="contact-detail-top">
