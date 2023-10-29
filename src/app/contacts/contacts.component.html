@@ -1,6 +1,30 @@
 <div class="contacts-wrapper">
+  <!--Hidden Container-->
+  <div class="add-contact-container" #addContactContainer>
+    <div class="add-contact-top">
+      <img click="showSlider()" class="close-logo" src="assets/img/contacts/close.png">
+      <div class="add-contact-top-title">
+        <img src="assets/img/contacts/join_logo.png">
+        <h2>Add Contact</h2>
+        <span>Tasks are better with a team!</span>
+      </div>
+    </div>
+    <div class="add-contact-bottom">
+      <img src="assets/img/contacts/user-circle-add-contact.png">
+      <form>
+        <input type="text" placeholder="Name">
+        <input type="email" placeholder="Email">
+        <input type="phone" placeholder="Phone">
+        <div class="add-contact-btn">
+          <button class="cancel-btn" type="button">Cancel<img src="assets/img/contacts/cancel.png"></button>
+          <button class="create-btn" type="submit">Create contact<img src="assets/img/contacts/create.png"></button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!--Hidden Container-->
   <div class="contacts-left"></div>
-
+<button type="button" click="showSlider()">Add contact</button>
   <div class="contacts-right">
     <div class="contact-detail-container">
       <div class="contact-detail-top">

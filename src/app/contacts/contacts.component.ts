@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-contacts',
@@ -6,5 +6,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./contacts.component.scss']
 })
 export class ContactsComponent {
-
+  @ViewChild('addContactContainer') addContactContainer: ElementRef;
+  
+  showSlider() {
+    this.addContactContainer.nativeElement.classList.toggle('show-slider');
+  }
 }
