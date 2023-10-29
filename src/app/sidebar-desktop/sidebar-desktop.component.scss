@@ -53,6 +53,11 @@
     height: 384px;
     gap: 16px;
     padding: 300px 0px 0px 0px;
+
+    a {
+      @include OpenSans(400, 16px, 19.2px, $menu-color);
+      cursor: pointer;
+    }
   }
 }
 

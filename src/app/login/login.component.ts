@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
+import { Component, Output, EventEmitter, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { RemotestorageService } from '../remotestorage.service';
 
@@ -13,27 +13,51 @@ export class LoginComponent {
   @ViewChild('userPassword') userPassword: ElementRef;
 
 
-  constructor(private router: Router, private RemotestorageService: RemotestorageService) { 
+  constructor(private router: Router, public RemotestorageService: RemotestorageService) { 
   }
 
+  async ngOnInit() {
+
+  }
+
+  /**
+ * An array that stores the list of users.
+ * 
+ * @type {Array}
+ */
+  users: Array<any> = [];
+
+  /**
+   * An array that stores the information of the currently logged-in user.
+   * 
+   * @type {Array}
+   */
+  currentUser: Array<string> = [];
+  
+  /**
+   * An array that stores the information of the guest user.
+   * 
+   * @type {Array}
+   */
+  guestUser: Array<any> = [];
 /**
  * Logs in the user as a guest. If a guest user is already logged in, it clears the guest user data and logs in the current user as a guest.
- * After logging in as a guest, it redirects the user to the "summary.html" page.
+ * After logging in as a guest, it redirects the user to the "summary-component" page.
  */
 async guestLogIn() {
-  if (this.RemotestorageService.guestUser != null) {
+  if (this.guestUser && this.guestUser.length > 0) {
       // Get the current user data
-      this.RemotestorageService.currentUser = JSON.parse(await this.RemotestorageService.getItem('user'));
+      this.currentUser = JSON.parse(await this.RemotestorageService.getItem('user'));
       
       // Add the current user to the guestUser array
-      this.RemotestorageService.guestUser.push(this.RemotestorageService.currentUser);
+      this.guestUser.push(this.currentUser);
       
       // Clear the guestUser array
-      this.RemotestorageService.guestUser = [];
+      this.guestUser = [];
       
       // Save the updated guestUser array to localStorage
-      await this.RemotestorageService.setItem('user', JSON.stringify(this.RemotestorageService.guestUser) || "");
-      console.log('guestUser: ', this.RemotestorageService.guestUser);
+      await this.RemotestorageService.setItem('user', JSON.stringify(this.guestUser) || "");
+      console.log('guestUser: ', this.guestUser);
       // Redirect to the "summary-component" page
       this.router.navigate(['/summary']);
 } else {
@@ -44,22 +68,21 @@ async guestLogIn() {
 
 /**
  * This function search for User Data and than try with that data to login into JOIN
- * @date 7/15/2023 - 9:37:56 AM
- *
  */
 async logIn() {
+  debugger;
   let email = this.userEmail.nativeElement;
   let password = this.userPassword.nativeElement;
 
-  let user = this.RemotestorageService.users.find(u => u.email == email.value && u.password == password.value);
+  let user = this.users.find(u => u.email == email.value && u.password == password.value);
   if (user) {
       await this.RemotestorageService.setItem('user', JSON.stringify(user) || "");
-      this.RemotestorageService.currentUser = JSON.parse(await this.RemotestorageService.getItem('user'));
+      this.currentUser = JSON.parse(await this.RemotestorageService.getItem('user'));
       this.router.navigate(['/summary']);
       email.value = '';
       password.value = '';
   } else {
-      //failedLogIn(email, password);
+      //TODO implement function failedLogIn(email, password);
   };
 };
 

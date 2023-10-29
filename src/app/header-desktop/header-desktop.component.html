@@ -1,12 +1,15 @@
 <header>
     <div class="header-left">
             <img src="assets/img/join_logo_white.png" alt="logo">
- 
-     
     </div>
     <div class="header-right">
         <span>Kanban Project Management Tool</span>
-        <img class="info" src="assets/img/help_white.png" alt="info">
-        <img src="assets/img/User profile initials.png" alt="usercircle">
+        <img (click)="selectComponent('app-introduction')" class="info" src="assets/img/help_white.png" alt="info">
+        <img (click)="showDropdown()" src="assets/img/User profile initials.png" alt="usercircle">
+        <div class="dropdown" #dropdown>
+                <a (click)="selectComponent('app-privacy-policy')">Privacy Policy</a>
+                <a (click)="selectComponent('app-legal-notice')">Legal Notice</a>
+                <a>Logout</a>
+        </div>
     </div>
 </header>

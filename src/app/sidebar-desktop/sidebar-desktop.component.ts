@@ -14,33 +14,54 @@ export class SidebarDesktopComponent {
   selectComponent(componentName: string) {
     switch (componentName) {
       case 'app-summary-dashboard':
-        console.log('Selected component:', componentName);
         this.boardService.showSummary = true;
-        console.log(this.boardService.showSummary);
         this.boardService.showAddTask = false;
         this.boardService.showBoard = false;
         this.boardService.showContacts = false;
+        this.boardService.showPrivacyPolicy = false;
+        this.boardService.showLegalNotice = false;
         break;
         case 'app-addtask':
-          console.log('Selected component:', componentName);
           this.boardService.showSummary = false;
           this.boardService.showAddTask = true;
           this.boardService.showBoard = false;
           this.boardService.showContacts = false;
+          this.boardService.showPrivacyPolicy = false;
+          this.boardService.showLegalNotice = false;
           break;
           case 'app-board':
-          console.log('Selected component:', componentName);
           this.boardService.showSummary = false;
           this.boardService.showAddTask = false;
           this.boardService.showBoard = true;
           this.boardService.showContacts = false;
+          this.boardService.showPrivacyPolicy = false;
+          this.boardService.showLegalNotice = false;
           break;
           case 'app-contacts':
-          console.log('Selected component:', componentName);
           this.boardService.showSummary = false;
           this.boardService.showAddTask = false;
           this.boardService.showBoard = false;
           this.boardService.showContacts = true;
+          this.boardService.showPrivacyPolicy = false;
+          this.boardService.showLegalNotice = false;
+          break;
+          case 'app-privacy-policy':
+            console.log('Selected component:', componentName);
+            this.boardService.showSummary = false;
+            this.boardService.showAddTask = false;
+            this.boardService.showBoard = false;
+            this.boardService.showContacts = false;
+            this.boardService.showPrivacyPolicy = true;
+            this.boardService.showLegalNotice = false;
+          break;
+          case 'app-legal-notice':
+            console.log('Selected component:', componentName);
+            this.boardService.showSummary = false;
+            this.boardService.showAddTask = false;
+            this.boardService.showBoard = false;
+            this.boardService.showContacts = false;
+            this.boardService.showPrivacyPolicy = false;
+            this.boardService.showLegalNotice = true;
           break;
     }
   }

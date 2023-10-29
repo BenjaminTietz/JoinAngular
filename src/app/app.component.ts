@@ -11,6 +11,9 @@ import { BoardService } from './board.service';
     [showAddTask]="showAddTask"
     [showBoard]="showBoard"
     [showContacts]="showContacts"
+    [showPrivacyPolicy]="showPrivacyPolicy"
+    [showLegalNotice]="showLegalNotice"
+    [showInfo]="showInfo"
   ></app-app-sidebar-desktop>
   <app-summary (valueChanged)="onValueChanged($event)"></app-summary>
 `
@@ -21,6 +24,9 @@ export class AppComponent {
   showAddTask: boolean = false;
   showBoard: boolean = false;
   showContacts: boolean = false;
+  showPrivacyPolicy: boolean = false;
+  showLegalNotice: boolean = false;
+  showInfo: boolean = false;
 
   constructor(private boardService: BoardService) {}
 
@@ -29,6 +35,9 @@ export class AppComponent {
     this.boardService.showAddTask = value;
     this.boardService.showBoard = value;
     this.boardService.showContacts = value;
+    this.boardService.showPrivacyPolicy = value;
+    this.boardService.showLegalNotice = value;
+    this.boardService.showInfo = value;
   }
 
   ngOnInit() {
@@ -36,5 +45,8 @@ export class AppComponent {
     this.showAddTask = this.boardService.showAddTask;
     this.showBoard = this.boardService.showBoard;
     this.showContacts = this.boardService.showContacts;
+    this.showPrivacyPolicy = this.boardService.showPrivacyPolicy;
+    this.showLegalNotice = this.boardService.showLegalNotice;
+    this.showInfo = this.boardService.showInfo;
   }
 }

@@ -8,12 +8,13 @@ import { BoardService } from '../board.service';
 
 })
 export class SummaryComponent {
-  constructor(private boardService: BoardService) {}
-  
+  constructor(public boardService: BoardService) {}
+
   @Input() showSummary: boolean;
   @Input() showAddTask: boolean;
   @Input() showBoard: boolean;
   @Input() showContacts: boolean;
-
-  
+  @Input() showPrivacyPolicy: boolean;
+  @Input() showLegalNotice: boolean;
+  @Input() showInfo: boolean;  
 }

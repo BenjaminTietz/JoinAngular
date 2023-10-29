@@ -7,26 +7,6 @@ export class RemotestorageService {
 
   constructor() { }
 
-  /**
- * An array that stores the list of users.
- * 
- * @type {Array}
- */
-users: Array<any> = [];
-
-/**
- * An array that stores the information of the currently logged-in user.
- * 
- * @type {Array}
- */
-currentUser: Array<any> = [];
-
-/**
- * An array that stores the information of the guest user.
- * 
- * @type {Array}
- */
-guestUser: Array<any> = [];
 
   /**
  * Constant containing the access token for the external Storage API.

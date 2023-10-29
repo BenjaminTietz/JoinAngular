@@ -21,6 +21,9 @@
         h1 {
         @include OpenSans(700, 61px, 73.2px, $black);
         }
+        img {
+            cursor: pointer;
+        }
     }
 
     .privacy-content {

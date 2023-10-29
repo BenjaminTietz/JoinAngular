@@ -8,4 +8,7 @@ export class BoardService {
   showAddTask: boolean = false;
   showBoard: boolean = false;
   showContacts: boolean = false;
+  showPrivacyPolicy: boolean = false;
+  showLegalNotice: boolean = false;
+  showInfo: boolean = false;
 }

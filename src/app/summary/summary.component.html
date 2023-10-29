@@ -3,9 +3,12 @@
     <app-header-desktop></app-header-desktop>
   </header>
   <div class="sidebar-desktop"><app-sidebar-desktop></app-sidebar-desktop></div>
-    <app-summary-dashboard *ngIf="showSummary"></app-summary-dashboard>
-    <app-addtask *ngIf="showAddTask"></app-addtask>
-    <app-board *ngIf="showBoard"></app-board>
-    <app-contacts *ngIf="showContacts"></app-contacts>
+    <app-summary-dashboard *ngIf="this.boardService.showSummary"></app-summary-dashboard>
+    <app-addtask *ngIf="this.boardService.showAddTask"></app-addtask>
+    <app-board *ngIf="this.boardService.showBoard"></app-board>
+    <app-contacts *ngIf="this.boardService.showContacts"></app-contacts>
+    <app-privacy-policy *ngIf="this.boardService.showPrivacyPolicy"></app-privacy-policy>
+    <app-legal-notice *ngIf="this.boardService.showLegalNotice"></app-legal-notice>
+    <app-introduction *ngIf="this.boardService.showInfo"></app-introduction>
   </div>
 

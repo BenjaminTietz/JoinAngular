@@ -17,9 +17,31 @@ export class SignupComponent {
   @ViewChild('confirmPasswordBox') confirmPasswordBox: ElementRef;
   @ViewChild('acceptPrivacy') acceptPrivacy: ElementRef;
 
-  constructor(private router: Router, private RemotestorageService: RemotestorageService) { }
+  constructor(private router: Router, public RemotestorageService: RemotestorageService) { }
+
+  /**
+ * An array that stores the list of users.
+ * 
+ * @type {Array}
+ */
+  users: Array<any> = [];
+
+  /**
+   * An array that stores the information of the currently logged-in user.
+   * 
+   * @type {Array}
+   */
+  currentUser: Array<string> = [];
+  
+  /**
+   * An array that stores the information of the guest user.
+   * 
+   * @type {Array}
+   */
+  guestUser: Array<any> = [];
 
   async signUp() {
+    debugger;
     // Retrieve user registration information from input fields
     let userName = this.inputName.nativeElement;
     let email = this.inputEmail.nativeElement;
@@ -30,24 +52,24 @@ export class SignupComponent {
     // Validate if the password and confirm password match
     if (password === confirmPassword) {
         // Add the new user to the 'users' array
-        this.RemotestorageService.users.push({
-            email: email.value,
-            password: password,
-            name: userName.value
+        this.users.push({
+            'email': email.value,
+            'password': password.value,
+            'name': userName.value
         });
-
+        console.log(this.users);
         // Save the updated 'users' array to local storage
-        await this.RemotestorageService.setItem('users', JSON.stringify(this.RemotestorageService.users));
+        await this.RemotestorageService.setItem('users', JSON.stringify(this.users));
 
         // Reset the registration form
-        //resetForm(userName, email, password);
+        //TODO implement Function to  : resetForm(userName, email, password);
 
         // Reload the 'users' array from local storage
-        this.RemotestorageService.users = JSON.parse(await this.RemotestorageService.getItem('users'));
+        this.users = JSON.parse(await this.RemotestorageService.getItem('users'));
 
         // Redirect the user to the login page with a success message
-        //window.location.href = 'login.html?msg=You have successfully registered';
-        console.log(this.RemotestorageService.users);
+        //TODO embedd Notification : You have successfully registered';
+        console.log(this.users);
     } else {
         // Display an alert if the password and confirm password do not match
         alert("Password and confirm password don't match!");
