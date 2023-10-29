@@ -51,10 +51,19 @@ header {
       box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.25);
 
       a {
+        width: 152px;
+        height: 39px;
+        border-radius: 8px;
+        padding: 4px 4px 4px 4px;
+        gap: 8px;
         @include OpenSans(400, 19px, 22.8px, $menu-color);
         text-decoration: none;
         margin-bottom: 10px;
         cursor: pointer;
+
+        &:hover {
+          background-color: $light-blue;
+        }
       }
     }
     .show {
@@ -88,6 +97,11 @@ header {
       img {
         width: 40px;
         height: 40px;
+      }
+
+      .dropdown {
+        top:40px;
+        right:15px;
       }
     }
 
