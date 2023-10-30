@@ -8,7 +8,7 @@ export class RemotestorageService {
   constructor() { }
 
 
-  /**
+/**
  * Constant containing the access token for the external Storage API.
  * @type {string}
  */

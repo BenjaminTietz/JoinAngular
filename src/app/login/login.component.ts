@@ -1,7 +1,7 @@
 import { Component, Output, EventEmitter, ViewChild, ElementRef, OnInit, NgModule } from '@angular/core';
 import { Router } from '@angular/router';
 import { RemotestorageService } from '../remotestorage.service';
-
+import { ArraysService } from '../arrays.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -13,34 +13,12 @@ export class LoginComponent {
   @ViewChild('userPassword') userPassword: ElementRef;
 
 
-  constructor(private router: Router, public RemotestorageService: RemotestorageService) { 
+  constructor(private router: Router, public RemotestorageService: RemotestorageService,public ArraysService: ArraysService) { 
   }
 
   async ngOnInit() {
     this.loadUsers();
-    console.log('users: ', this.users);
   }
-
-  /**
- * An array that stores the list of users.
- * 
- * @type {Array}
- */
-  users: Array<any> = [];
-
-  /**
-   * An array that stores the information of the currently logged-in user.
-   * 
-   * @type {Array}
-   */
-  currentUser: Array<string> = [];
-  
-  /**
-   * An array that stores the information of the guest user.
-   * 
-   * @type {Array}
-   */
-  guestUser: Array<any> = [];
 
 /**
  * Loads users' data from local storage.
@@ -48,7 +26,8 @@ export class LoginComponent {
  */
 async loadUsers() {
   try {
-      this.users = JSON.parse(await this.RemotestorageService.getItem('users'));
+    this.ArraysService.users = JSON.parse(await this.RemotestorageService.getItem('users'));
+    console.log('users: ', this.ArraysService.users);
   } catch (e) {
       console.error('Loading error:', e);
       throw new Error('Error loading users data');
@@ -60,19 +39,19 @@ async loadUsers() {
  * After logging in as a guest, it redirects the user to the "summary-component" page.
  */
 async guestLogIn() {
-  if (this.guestUser && this.guestUser.length > 0) {
+  if (  this.ArraysService.guestUser &&   this.ArraysService.guestUser.length > 0) {
       // Get the current user data
-      this.currentUser = JSON.parse(await this.RemotestorageService.getItem('user'));
+      this.ArraysService.currentUser = JSON.parse(await this.RemotestorageService.getItem('user'));
       
       // Add the current user to the guestUser array
-      this.guestUser.push(this.currentUser);
+      this.ArraysService.guestUser.push(this.ArraysService.currentUser);
       
       // Clear the guestUser array
-      this.guestUser = [];
+      this.ArraysService.guestUser = [];
       
       // Save the updated guestUser array to localStorage
-      await this.RemotestorageService.setItem('user', JSON.stringify(this.guestUser) || "");
-      console.log('guestUser: ', this.guestUser);
+      await this.RemotestorageService.setItem('user', JSON.stringify(this.ArraysService.guestUser) || "");
+      console.log('guestUser: ',   this.ArraysService.guestUser);
       // Redirect to the "summary-component" page
       this.router.navigate(['/summary']);
 } else {
@@ -85,11 +64,11 @@ async guestLogIn() {
  * This function search for User Data and than try with that data to login into JOIN
  */
 async logIn(data) {
-  console.log(data, this.users);
-  let user = this.users.find(u => u.email == data.email && u.password == data.password);
+  console.log('UserInput: ',data, 'users array: ', this.ArraysService.users);
+  let user = this.ArraysService.users.find(u => u.email == data.email && u.password == data.password);
   if (user) {
       await this.RemotestorageService.setItem('user', JSON.stringify(user));
-      this.currentUser = JSON.parse(await this.RemotestorageService.getItem('user'));
+      this.ArraysService.currentUser = JSON.parse(await this.RemotestorageService.getItem('user'));
       this.router.navigate(['/summary']);
       data.email = '';
       data.password = '';

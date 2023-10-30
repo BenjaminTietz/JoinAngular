@@ -2,7 +2,7 @@
 import { Component, Output, EventEmitter, ViewChild, ElementRef, NgModule } from '@angular/core';
 import { Router } from '@angular/router';
 import { RemotestorageService } from '../remotestorage.service';
-
+import { ArraysService } from '../arrays.service';
 
 
 @Component({
@@ -17,55 +17,37 @@ export class SignupComponent {
   @ViewChild('confirmPasswordBox') confirmPasswordBox: ElementRef;
   @ViewChild('acceptPrivacy') acceptPrivacy: ElementRef;
   @ViewChild('successPopUp') successPopUp: ElementRef;
-  constructor(private router: Router, public RemotestorageService: RemotestorageService) { }
 
-  /**
- * An array that stores the list of users.
- * 
- * @type {Array}
- */
-  users: Array<any> = [];
-
-  /**
-   * An array that stores the information of the currently logged-in user.
-   * 
-   * @type {Array}
-   */
-  currentUser: Array<string> = [];
   
-  /**
-   * An array that stores the information of the guest user.
-   * 
-   * @type {Array}
-   */
-  guestUser: Array<any> = [];
+  constructor(private router: Router, public RemotestorageService: RemotestorageService, public ArraysService: ArraysService) { }
+
 
   async signUp(data) {
     //alert('SUCCESS!! :-)\n\n' + JSON.stringify(data, null, 4));
         // Validate if the password and confirm password match
         if (data.password === data.confirmPassword) {
             // Add the new user to the 'users' array
-            this.users.push({
+            this.ArraysService.users.push({
                 'email': data.email,
                 'password': data.password,
                 'name': data.name
             });
-            console.log(this.users);
-            // Save the updated 'users' array to local storage
-            await this.RemotestorageService.setItem('users', JSON.stringify(this.users));
+            console.log(this.ArraysService.users);
+            // Save the updated 'users' array to remote storage
+            await this.RemotestorageService.setItem('users', JSON.stringify(this.ArraysService.users));
     
             // Reset the registration form
             this.resetForm(data);
     
-            // Reload the 'users' array from local storage
-            this.users = JSON.parse(await this.RemotestorageService.getItem('users'));
+            // Reload the 'users' array from remote storage
+            this.ArraysService.users = JSON.parse(await this.RemotestorageService.getItem('users'));
     
             // Redirect the user to the login page with a success message
             this.showSuccessMessage();
             setTimeout(() => {
               this.router.navigate(['/']);
             }, 2000);
-            console.log(this.users);
+            console.log(this.ArraysService.users);
         } else {
             // Display an alert if the password and confirm password do not match
             alert("Password and confirm password don't match!");
@@ -80,6 +62,7 @@ export class SignupComponent {
     showSuccessMessage() {
       this.successPopUp.nativeElement.classList.toggle('show-popup');
     }
+
     resetForm(data) {
       data.name = '';
       data.password = '';
@@ -88,7 +71,6 @@ export class SignupComponent {
 
     redirectToLogin() {
       this.router.navigate(['/']);
-  
     }
 }
 

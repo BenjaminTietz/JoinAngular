@@ -169,10 +169,57 @@
         height: 100%;
         box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.16);
 
+        .contacts-left-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            width:352px;
+            height: 77px;
+            padding: 15px 24px 15px 24px;
+            gap: 35px;
+            border-radius: 20px;
+            
+            &:hover {
+                background-color: $light-blue;
+                cursor: pointer;
+            }
+
+            .contacts-left-usercircle {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 42px;
+                height: 42px;
+                border: solid 1px $white;
+                border-radius: 50%;
+                background-color: $user-circle-1;
+                @include Inter(400, 12px, 14.4px, $white);
+            }
+
+            .contacts-left-content {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: flex-start;
+                width: 140px;
+                height: 47;
+                gap: 5px;
+
+                .contacts-left-content-name {
+                    @include OpenSans(400, 19px, 22.8px, $white);
+                }
+
+                .contacts-left-content-email {
+                    @include OpenSans(400, 16px, 19.2px, $white);
+                }
+            }
+        }
         .contacts-left-btn-container {
             display: flex;
             justify-content: center;
             align-items: center;
+            box-sizing: border-box;
             width: 100%;
             height: 104px;
             padding: 32px 24px 13px 24px;
@@ -202,14 +249,24 @@
     .contacts-right {
         display: flex;
         flex-direction: column;
-        width: 461px;
-        height: 318px;
         gap: 21px;
-
+        box-sizing: border-box;
+        padding-top: 32px;
         .contact-detail-container {
             display: flex;
             flex-direction: column;
+            animation: slide-in 2s;
+            width: 461px;
+            height: 318px;
 
+            @keyframes slide-in {
+                0% {
+                    transform: translateX(150%);
+                }
+                100% {
+                    transform: translateX(0);
+                }
+            }
             .contact-detail-top {
                 display: flex;
                 flex-direction: row;
@@ -221,7 +278,7 @@
                     height: 120px;
                     border-radius: 50%;
                     background-color: rgba(255, 122, 0, 1);
-                    
+                    margin-right: 16px;
                     .user-initials {
                         @include Inter(500, 47px, 56.4px, $white);
                     }
@@ -232,7 +289,7 @@
                     flex-direction: column;
                     justify-content: center;
                     align-items: flex-start;
-
+                    white-space: nowrap;
                     .contact-name {
                         @include Inter(500, 47px, 56.4px, $black);
                     }
