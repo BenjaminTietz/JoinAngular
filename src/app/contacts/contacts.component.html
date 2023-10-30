@@ -1,5 +1,6 @@
 <div class="contacts-wrapper">
   <!--Hidden Container-->
+  <!--Hidden Add Contact Container-->
   <div class="add-contact-container" #addContactContainer>
     <div class="add-contact-top">
       <img
@@ -54,6 +55,63 @@
       </form>
     </div>
   </div>
+<!--Hidden Add Contact Container-->
+<!--Hidden Edit Contact Container-->
+  <div *ngIf="selectedContactIndex !== -1" class="add-contact-container" #editContactContainer>
+    <div class="add-contact-top">
+      <img
+        (click)="showEditSlider()"
+        class="close-logo"
+        src="assets/img/contacts/close.png"
+      />
+      <div class="add-contact-top-title">
+        <img src="assets/img/contacts/join_logo.png" />
+        <h2>Edit Contact</h2>
+      </div>
+    </div>
+    <div class="add-contact-bottom">
+      <img src="assets/img/contacts/user-circle-add-contact.png" />
+      <form
+        #editContactForm="ngForm"
+        (ngSubmit)="editContact(editContactForm.value)"
+      >
+        <input
+        
+          #inputName
+          formControlname="name"
+          name="name"
+          type="text"
+          placeholder="Name"
+          [(ngModel)]="selectedContact.name"
+        />
+        <input
+          #inputEmail
+          formControlname="email"
+          name="email"
+          type="email"
+          placeholder="Email"
+          [(ngModel)]="selectedContact.email"
+        />
+        <input
+          #inputPhone
+          formControlname="phone"
+          name="phone"
+          type="phone"
+          placeholder="Phone"
+          [(ngModel)]="selectedContact.phone"
+        />
+        <div class="add-contact-btn">
+          <button class="cancel-btn" (click)="showSlider()" type="button">
+            Delete<img src="assets/img/contacts/cancel.png" />
+          </button>
+          <button class="create-btn" type="submit">
+            Save<img src="assets/img/contacts/create.png" />
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!--Hidden Edit Contact Container-->
   <!--Hidden Container-->
   <div class="contacts-left">
     <div class="contacts-left-btn-container">
@@ -62,7 +120,7 @@
       </div>
     </div>
     <div *ngFor="let contact of this.ArraysService.contacts; let i = index" id="contact-{{i}}" (click)="getContactById(i)" class="contacts-left-container">
-      <div class="contacts-left-usercircle">AM</div>
+      <div [style.background-color]="this.ArraysService.contacts[i].color" class="contacts-left-usercircle">AM</div>
       <div class="contacts-left-content">
         <div class="contacts-left-content-name">{{ contact.name }}</div>
         <div class="contacts-left-content-email">{{ contact.email }}</div>
@@ -74,17 +132,17 @@
   <div class="contacts-right">
     <div *ngIf="selectedContactIndex !== -1" class="contact-detail-container">
       <div class="contact-detail-top">
-        <div class="user-circle">
+        <div [style.background-color]="this.ArraysService.contacts[selectedContactIndex].color" class="user-circle">
           <div class="user-initials">AM</div>
         </div>
         <div class="contact-name-container">
           <div class="contact-name">{{ this.ArraysService.contacts[selectedContactIndex].name }}</div>
           <div class="btn-container">
-            <div class="edit-btn">
+            <div (click)="showEditSlider()" class="edit-btn">
               <img src="assets/img/contacts/edit.svg" alt="edit_icon" />
               <span>Edit</span>
             </div>
-            <div class="edit-btn">
+            <div (click)="deleteContact()" class="edit-btn">
               <img src="assets/img/contacts/delete.svg" alt="delete_icon" />
               <span>Delete</span>
             </div>

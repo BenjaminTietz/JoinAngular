@@ -183,6 +183,7 @@
             &:hover {
                 background-color: $light-blue;
                 cursor: pointer;
+                color: $white!important;
             }
 
             .contacts-left-usercircle {
@@ -193,7 +194,6 @@
                 height: 42px;
                 border: solid 1px $white;
                 border-radius: 50%;
-                background-color: $user-circle-1;
                 @include Inter(400, 12px, 14.4px, $white);
             }
 
@@ -207,11 +207,11 @@
                 gap: 5px;
 
                 .contacts-left-content-name {
-                    @include OpenSans(400, 19px, 22.8px, $white);
+                    @include OpenSans(400, 19px, 22.8px, $black);
                 }
 
                 .contacts-left-content-email {
-                    @include OpenSans(400, 16px, 19.2px, $white);
+                    @include OpenSans(400, 16px, 19.2px, $black);
                 }
             }
         }

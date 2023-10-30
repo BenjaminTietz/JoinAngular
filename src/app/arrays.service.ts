@@ -33,4 +33,11 @@ export class ArraysService {
      * @type {Array}
      */
     contacts: Array<any> = [];
+
+    /**
+     * An array that stores the information of the contacts soted apphabetically.
+     * 
+     * @type {Array}
+     */
+    sortedalphabetically: Array<any> = [];
 }
