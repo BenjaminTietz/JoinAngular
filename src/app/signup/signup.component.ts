@@ -2,7 +2,7 @@
 import { Component, Output, EventEmitter, ViewChild, ElementRef, NgModule } from '@angular/core';
 import { Router } from '@angular/router';
 import { RemotestorageService } from '../remotestorage.service';
-import { ArraysService } from '../arrays.service';
+import { ArraysService } from '../contact-arrays.service';
 
 
 @Component({

@@ -4,12 +4,34 @@
         <div class="headline">
             <h1>Add Task</h1>
         </div>
+        <form #addTaskForm="ngForm" (ngSubmit)="addTask(addTaskForm.value)">
         <div class="addtask-left-top">
-            <input type="text" placeholder="Enter a title">
+            <input 
+            #inputTitle
+            formControlname="title"
+            name="title"
+            type="text"
+            placeholder="Enter a title"
+            ngModel
+            >
             <h2>Description <span>(optional)</span></h2>
-            <textarea name="" id="" cols="30" rows="10" placeholder="Enter a description"></textarea>
+            <textarea 
+            #inputDescription
+            formControlname="description"
+            name="description"
+            type="text"
+            placeholder="Enter a description"
+            ngModel
+            cols="30" rows="10"></textarea>
             <h2>Due date</h2>
-            <input type="date" placeholder="dd/mm/yyyy">
+            <input 
+            #inputDate
+            formControlname="date"
+            name="date"
+            type="date"
+            placeholder="dd/mm/yyyy"
+            ngModel
+            >
         </div>
         <div class="addtask-left-prio">
             <h2>Priority <span>(optional)</span></h2>
@@ -30,22 +52,45 @@
         </div>
         <div class="addtask-left-bottom">
             <h2>Assigned to<span>(optional)</span></h2>
-            <input list="assigned" name="assigned" placeholder="Select contacts to assign">
+            <input
+            #inputAssigned
+            formControlname="assigned"
+            name="assigned"
+            list="assigned"
+            type="list"
+            placeholder="Select contacts to assign"
+            ngModel
+            >
         </div>
         <div class="addtask-left-bottom">
             <h2>Category</h2>
-            <input list="category" name="category" placeholder="Select task category">
+            <input
+            #inputCategory
+            formControlname="category"
+            name="category"
+            list="category"
+            type="list"
+            placeholder="Select task category"
+            ngModel
+            >
         </div>
         <div class="addtask-left-bottom">
             <h2>Subtasks<span>(optional)</span></h2>
-            <input type="text" placeholder="Enter a subtask">
+            <input
+            #inputSubtask
+            formControlname="subtask"
+            name="subtask"
+            type="text"
+            placeholder="Enter a subtask"
+            ngModel
+            >
         </div>
-    </div>
     <div class="addtask-right">
         <div class="btn-container">
-            <button class="clear-btn">Clear<img src="assets/img/addtask/clear_btn.svg"></button>
-            <button class="create-btn">Create Task<img src="assets/img/addtask/create_btn.svg"></button>
+            <button type="button" class="clear-btn">Clear<img src="assets/img/addtask/clear_btn.svg"></button>
+            <button type="submit" class="create-btn">Create Task<img src="assets/img/addtask/create_btn.svg"></button>
         </div>
         
     </div>
+    </form>
 </div>

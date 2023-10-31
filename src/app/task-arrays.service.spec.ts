@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { RemotestorageService } from './remotestorage.service';
+import { TaskArraysService } from './task-arrays.service';
 
-describe('RemotestorageService', () => {
-  let service: RemotestorageService;
+describe('TaskArraysService', () => {
+  let service: TaskArraysService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(RemotestorageService);
+    service = TestBed.inject(TaskArraysService);
   });
 
   it('should be created', () => {

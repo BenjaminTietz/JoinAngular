@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { RemotestorageService } from '../remotestorage.service';
-import { ArraysService } from '../arrays.service';
+import { ArraysService } from '../contact-arrays.service';
 @Component({
   selector: 'app-contacts',
   templateUrl: './contacts.component.html',
@@ -48,9 +48,8 @@ export class ContactsComponent {
   ) {}
 
   async ngOnInit() {
-    await this.ArraysService.loadContacts()
+    await this.ArraysService.loadContacts();
     this.ammountOfDisplayedcontacts = this.ArraysService.contacts.length;
-    console.log('ammountOfDisplayedcontacts',this.ammountOfDisplayedcontacts);
   }
   /**
    * Function to push the entered contacts into the "contacts" array
@@ -84,7 +83,7 @@ export class ContactsComponent {
     }
     // document.getElementById('form_add_contact').reset();
     this.ammountOfDisplayedcontacts++; 
-     await this.resetForm(data);
+      await this.resetForm(data);
         //TODO confimationMessage();
         setTimeout(() => {
           this.showSlider();
@@ -132,7 +131,19 @@ export class ContactsComponent {
     let randomIndex = Math.floor(Math.random() * this.userCircleColors.length);
     return this.userCircleColors[randomIndex];
   }
-
+/**
+ * Extracts the uppercase initials from the array "contacts"['name']
+ * @param {Array} sortedContacts - This is the sorted Contacts Array
+ */
+async extractInitials() {
+  this.ArraysService.initials = this.ArraysService.contacts.map(contact => {
+      let name = contact.name;
+      let matches = name.match(/[A-Z]/g);
+      let initialsString = matches ? matches.join('') : '';
+      return initialsString;
+  });
+  this.ArraysService.safeContacts();
+}
   showSlider() {
     this.addContactContainer.nativeElement.classList.toggle('show-slider');
   }
