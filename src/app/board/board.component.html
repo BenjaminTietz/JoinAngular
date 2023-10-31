@@ -1,68 +1,117 @@
 <div class="board-wrapper">
-    <div class="board-top">
-        <div class="search">
-            <input type="text" placeholder="Find Task">
+  <!----Hidden Task floating Container---->
+  <div #floatingTaskContainer class="floating-task-wrapper">
+    <div *ngIf="selectedTask" class="floating-task-container">
+      <div class="floating-task-top">
+        <div class="floating-task-category">
+          <span>{{ selectedTask.category }}</span>
         </div>
-            <button class="addtask-btn">Add task <img src="assets/img/board/addtask_btn.svg"></button>
+        <div (click)="closeTask()" class="floating-close-btn">
+            <img src="assets/img/board/close.png" />
+        </div>
+      </div>
+      <div class="floating-task-content">
+        <div class="floating-task-title">
+          <h1>{{ selectedTask.title }}</h1>
+        </div>
+        <div class="floating-task-description">
+          <h2>{{ selectedTask.description }}</h2>
+        </div>
+        <div class="floating-task-date">
+          <h2>Due date:</h2>
+          <span>{{ selectedTask.date }}</span>
+        </div>
+        <div class="floating-task-prio">
+          <h2>Priority:</h2>
+          <span>{{ selectedTask.prio }}</span>
+        </div>
+        <div class="floating-task-assign">
+          <h2>Assigned to:</h2>
+          <span>{{ selectedTask.assigned }}</span>
+        </div>
+        <div class="floating-task-subtask">
+          <h2>Subtask:</h2>
+          <span>{{ selectedTask.subtask }}</span>
+        </div>
+      </div>
+      <div class="floating-task-bottom">
+        <div class="floating-task-btn">
+          <button class="floating-task-btn-cancel">Delete</button>
+          <button class="floating-task-btn-save">Edit</button>
+        </div>
+      </div>
     </div>
-    <div class="task-category-wrapper">
-        <div class="category">
-            <div class="headline">
-                <h2>To do</h2>
-                <img src="assets/img/board/plus button.svg">
-            </div>
-            <div class="task-container">
-                <div class="single-task">
-                    <div class="task-category">
-                        User Story
-                    </div>
-                    <div class="task-content">
-                        <div class="task-name">
-                            Kochwelt Page & Recipe Recommender
-                        </div>
-                        <div class="task-description">
-                            Build start page with recipe recommendation...
-                        </div>
-                    </div>
-                    <div class="progressbar">
-                        
-                    </div>
-                    <div class="single-task-bottom">
-                        <div class="assigned-contacts">Placeholder</div>
-                        <img class="prio" src="assets/img/board/prio_urgent.svg">
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="category">
-            <div class="headline">
-                <h2>In progress</h2>
-                <img src="assets/img/board/plus button.svg">
-            </div>
-            <div class="task-container">
-                <div class="single-task"></div>
-            </div>
-        </div>
-        <div class="category">
-            <div class="headline">
-                <h2>Await feedback</h2>
-                <img src="assets/img/board/plus button.svg">
-            </div>
-            <div class="task-container">
-                <div class="single-task"></div>
-            </div>
-        </div>
-        <div class="category">
-            <div class="headline">
-                <h2>Done</h2>
-                <img src="assets/img/board/plus button.svg">
-            </div>
-            <div class="task-container">
-                <div class="single-task"></div>
-            </div>
-        </div>
+  </div>
+  <!----Hidden Task floating Container---->
+  <div class="board-top">
+    <div class="search">
+      <input type="text" placeholder="Find Task" />
     </div>
-
-
-
+    <button class="addtask-btn">
+      Add task <img src="assets/img/board/addtask_btn.svg" />
+    </button>
+  </div>
+  <div class="task-category-wrapper">
+    <div class="category">
+      <div class="headline">
+        <h2>To do</h2>
+        <img src="assets/img/board/plus button.svg" />
+      </div>
+      <div
+        *ngFor="let task of this.TaskArrayService.tasks; let i = index"
+        class="task-container"
+      >
+        <div (click)="openTask(i)" class="single-task">
+          <div class="task-category">
+            {{ task.category }}
+          </div>
+          <div class="task-content">
+            <div class="task-name">
+              {{ task.title }}
+            </div>
+            <div class="task-description">
+              {{ task.description }}
+            </div>
+          </div>
+          <div
+            *ngIf="this.TaskArrayService.tasks[i].subtask"
+            class="progressbar"
+          >
+            {{ task.subtask }}
+          </div>
+          <div class="single-task-bottom">
+            <div class="assigned-contacts">{{ task.assigned }}</div>
+            <img class="prio" src="assets/img/board/prio_urgent.svg" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="category">
+      <div class="headline">
+        <h2>In progress</h2>
+        <img src="assets/img/board/plus button.svg" />
+      </div>
+      <div class="task-container">
+        <div class="single-task"></div>
+      </div>
+    </div>
+    <div class="category">
+      <div class="headline">
+        <h2>Await feedback</h2>
+        <img src="assets/img/board/plus button.svg" />
+      </div>
+      <div class="task-container">
+        <div class="single-task"></div>
+      </div>
+    </div>
+    <div class="category">
+      <div class="headline">
+        <h2>Done</h2>
+        <img src="assets/img/board/plus button.svg" />
+      </div>
+      <div class="task-container">
+        <div class="single-task"></div>
+      </div>
+    </div>
+  </div>
 </div>

@@ -48,7 +48,6 @@ export class ContactsComponent {
   ) {}
 
   async ngOnInit() {
-    await this.ArraysService.loadContacts();
     this.ammountOfDisplayedcontacts = this.ArraysService.contacts.length;
   }
   /**

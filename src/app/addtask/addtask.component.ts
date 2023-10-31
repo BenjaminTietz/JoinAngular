@@ -8,6 +8,7 @@ import {
 import { Router } from '@angular/router';
 import { RemotestorageService } from '../remotestorage.service';
 import { TaskArraysService } from '../task-arrays.service';
+import { ArraysService } from '../contact-arrays.service';
 
 
 @Component({
@@ -21,11 +22,22 @@ export class AddtaskComponent {
   @ViewChild('inputPhone') inputPhone: ElementRef;
   @ViewChild('addContactContainer') addContactContainer: ElementRef;
   @ViewChild('editContactContainer') editContactContainer: ElementRef;
+
+  selectedPriority: string = '';
+
   constructor(
     private router: Router,
     public RemotestorageService: RemotestorageService,
-    public TaskArraysService: TaskArraysService
+    public TaskArraysService: TaskArraysService,
+    public ArraysService: ArraysService
   ) {}
+
+  async ngOninit() {
+    await this.TaskArraysService.loadTasks();
+    await this.ArraysService.loadContacts();
+    console.log(this.TaskArraysService.tasks);
+    console.log(this.ArraysService.contacts);
+  }
 
   /**
    * Asynchronous function to add a new task to the "task" array
@@ -48,10 +60,15 @@ export class AddtaskComponent {
       title: title,
       description: description,
       date: date,
+      prio: this.selectedPriority,
       assigned: assigned,
       category: category,
       subtask: subtask,
     });
+  }
+  selectPriority(priority: string) {
+    this.selectedPriority = priority;
+    console.log(this.selectedPriority);
   }
 }
 

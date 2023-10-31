@@ -9,7 +9,7 @@ export class TaskArraysService {
   constructor(public RemotestorageService: RemotestorageService) { }
 
   ngOnInit() {
-
+    this.loadTasks();
   }
 
   /**
@@ -27,14 +27,15 @@ export class TaskArraysService {
             'tasks_array',
             JSON.stringify(this.tasks)
           );
-          console.log('Saved task', this.tasks);
+          console.log('Task-ArrayService Saved task', this.tasks);
         }
         /**
          * Asynchronous function to load all tasks from the remote storage and assign them to the "tasks" array
          */
-        async loadContacts() {
+        async loadTasks() {
           this.tasks = JSON.parse(
             await this.RemotestorageService.getItem('tasks_array')
           );
+          console.log('Task-ArrayService loaded task', this.tasks);
         }
 }

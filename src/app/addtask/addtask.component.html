@@ -1,5 +1,4 @@
 <div class="addtask-wrapper">
-
     <div class="addtask-left">
         <div class="headline">
             <h1>Add Task</h1>
@@ -36,15 +35,15 @@
         <div class="addtask-left-prio">
             <h2>Priority <span>(optional)</span></h2>
             <div class="prio-box">
-                <div class="prio-container">
+                <div class="prio-container" (click)="selectPriority('urgent')">
                     <span>Urgent</span>
                     <img src="assets/img/addtask/prio_urgent.svg" alt="prio_icon">
                 </div>
-                <div class="prio-container">
+                <div class="prio-container" (click)="selectPriority('medium')">
                     <span>Medium</span>
                     <img src="assets/img/addtask/prio_medium.svg" alt="prio_icon">
                 </div>
-                <div class="prio-container">
+                <div class="prio-container" (click)="selectPriority('low')">
                     <span>Low</span>
                     <img src="assets/img/addtask/prio_low.svg" alt="prio_icon">
                 </div>
@@ -52,27 +51,20 @@
         </div>
         <div class="addtask-left-bottom">
             <h2>Assigned to<span>(optional)</span></h2>
-            <input
-            #inputAssigned
-            formControlname="assigned"
-            name="assigned"
-            list="assigned"
-            type="list"
-            placeholder="Select contacts to assign"
-            ngModel
-            >
+            <select #inputAssigned formControlname="assigned" class="inputfield-add-task" type="text" required name="assigned" ngModel>
+                <option *ngFor="let contact of this.ArraysService.contacts; let i = index" class="name" value="{{ contact.name }}">{{ contact.name }}</option>
+            </select>
         </div>
         <div class="addtask-left-bottom">
             <h2>Category</h2>
-            <input
-            #inputCategory
-            formControlname="category"
-            name="category"
-            list="category"
-            type="list"
-            placeholder="Select task category"
-            ngModel
-            >
+            <select #inputCategory formControlname="category" class="inputfield-add-task" type="text" required name="category" ngModel>
+                <option value="" disabled selected>Select a category</option>
+                <option class="sales" value="sales">Sales</option>
+                <option class="marketing" value="marketing">Marketing</option>
+                <option class="accounting" value="accounting">Accounting</option>
+                <option class="development" value="development">Development</option>
+                <option class="purchase" value="purchase">Purchase</option>
+            </select>
         </div>
         <div class="addtask-left-bottom">
             <h2>Subtasks<span>(optional)</span></h2>
