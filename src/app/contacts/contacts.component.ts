@@ -22,6 +22,7 @@ export class ContactsComponent {
 
   selectedContactIndex: number = -1; // Initialisieren mit -1, um kein Element anzuzeigen
   selectedContact: ArraysService['contacts'][number] | null;
+  ammountOfDisplayedcontacts: number = 0;
 
   userCircleColors: string[] = [
     '#FF7A00',
@@ -47,8 +48,9 @@ export class ContactsComponent {
   ) {}
 
   async ngOnInit() {
-    this.loadContacts();
-    console.log('contacts: ', this.ArraysService.contacts);
+    await this.ArraysService.loadContacts()
+    this.ammountOfDisplayedcontacts = this.ArraysService.contacts.length;
+    console.log('ammountOfDisplayedcontacts',this.ammountOfDisplayedcontacts);
   }
   /**
    * Function to push the entered contacts into the "contacts" array
@@ -65,49 +67,34 @@ export class ContactsComponent {
       phone: phone,
       color: color
     });
-    console.log(this.ArraysService.contacts);
-    this.safeContacts();
+    this.ArraysService.safeContacts();
   }
-  /**
-   * Asynchronous function to save all contacts from array "contacts" to remote storage
-   */
-  async safeContacts() {
-    await this.RemotestorageService.setItem(
-      'contact_array',
-      JSON.stringify(this.ArraysService.contacts)
-    );
-    // TODO await setItem('initials_array', JSON.stringify(initials));
-  }
-  /**
-   * Asynchronous function to load all contacts from the remote storage and assign them to the "contacts" array
-   */
-  async loadContacts() {
-    this.ArraysService.contacts = JSON.parse(
-      await this.RemotestorageService.getItem('contact_array')
-    );
-    console.log(this.ArraysService.contacts);
-    //TODO this.initials = JSON.parse(await getItem('initials_array'));
-  }
+
   /**
    * Asynchronous function to add a new contact to the "contacts" array
    */
   async addContact(data) {
-    console.log(data.name, data.email, data.phone);
-    // TODO sortedalphabetically = [];
-    // if (name != '' && email != '' && phone != '') {
-    //     pushToArray(name, email, phone);
-    //     await safeContacts();
-    //     createdContactSuccessfully();
+    console.log('Added contact',data.name, data.email, data.phone);
+    this.ArraysService.sortedalphabetically = [];
+    if (data.name != '' && data.email != '' && data.phone != '') {
+        this.pushToArray(data.name, data.email, data.phone);
+        await this.ArraysService.safeContacts();
+    // TODO    createdContactSuccessfully();
     //     hideAddContactCard();
-    // }
+    }
     // document.getElementById('form_add_contact').reset();
-    // await refresh();
-    this.pushToArray(data.name, data.email, data.phone);
-    this.safeContacts();
+    this.ammountOfDisplayedcontacts++; 
+     await this.resetForm(data);
         //TODO confimationMessage();
         setTimeout(() => {
           this.showSlider();
         }, 2000);
+  }
+
+  resetForm(data) {
+    data.name == '';
+    data.email == '';
+    data.phone == '';
   }
   /**
    * Asynchronous function to edit and update an existing contact to the "contacts" array
@@ -116,7 +103,7 @@ export class ContactsComponent {
     this.ArraysService.contacts[this.selectedContactIndex].name = data.name;
     this.ArraysService.contacts[this.selectedContactIndex].email = data.email;
     this.ArraysService.contacts[this.selectedContactIndex].phone = data.phone;
-    this.safeContacts();
+    this.ArraysService.safeContacts();
 
     //TODO confimationMessage();
     setTimeout(() => {
@@ -129,7 +116,9 @@ export class ContactsComponent {
    */
   deleteContact() {
     this.ArraysService.contacts.splice(this.selectedContactIndex, 1);
-    this.safeContacts();
+    this.ArraysService.safeContacts();
+    this.selectedContactIndex = -1;
+    this.ammountOfDisplayedcontacts--; 
     //TODO confimationMessage();
   }
   getContactById(index: number) {

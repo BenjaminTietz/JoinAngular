@@ -130,7 +130,7 @@
   </div>
 
   <div class="contacts-right">
-    <div *ngIf="selectedContactIndex !== -1" class="contact-detail-container">
+    <div *ngIf="selectedContactIndex !== -1 && ammountOfDisplayedcontacts > 0" class="contact-detail-container">
       <div class="contact-detail-top">
         <div [style.background-color]="this.ArraysService.contacts[selectedContactIndex].color" class="user-circle">
           <div class="user-initials">AM</div>

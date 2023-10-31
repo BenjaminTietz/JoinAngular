@@ -1,13 +1,18 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
+import { RemotestorageService } from './remotestorage.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ArraysService {
 
-  constructor() { }
+  constructor(public RemotestorageService: RemotestorageService) { }
 
-    /**
+  ngOnInit() {
+    this.loadContacts();
+  }
+
+  /**
  * An array that stores the list of users.
  * 
  * @type {Array}
@@ -35,9 +40,30 @@ export class ArraysService {
     contacts: Array<any> = [];
 
     /**
-     * An array that stores the information of the contacts soted apphabetically.
+     * An array that stores the information of the contacts sorted apphabetically.
      * 
      * @type {Array}
      */
     sortedalphabetically: Array<any> = [];
+
+      /**
+   * Asynchronous function to save all contacts from array "contacts" to remote storage
+   */
+  async safeContacts() {
+    await this.RemotestorageService.setItem(
+      'contact_array',
+      JSON.stringify(this.contacts)
+    );
+    // TODO await setItem('initials_array', JSON.stringify(initials));
+  }
+  /**
+   * Asynchronous function to load all contacts from the remote storage and assign them to the "contacts" array
+   */
+  async loadContacts() {
+    this.contacts = JSON.parse(
+      await this.RemotestorageService.getItem('contact_array')
+    );
+    console.log('loaded this contacts from RS',this.contacts);
+    //TODO this.initials = JSON.parse(await getItem('initials_array'));
+  }
 }
