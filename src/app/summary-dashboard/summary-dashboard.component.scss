@@ -47,7 +47,9 @@
                 padding: 28px 48px 28px 48px;
                 gap: 35px;
                 background-color: $light-blue;
-
+                box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.16);
+                cursor: pointer;
+                
                 .urgent-tasks {
                     display: flex;
                     flex-direction: column;
@@ -111,15 +113,19 @@
                 border-style: solid;
                 border-width: 2px;
                 border-color: $boarder-color;
-
+                box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.16);
+                &:hover {
+                    background-color: $menu-hover;
+                }
                 .task-container{
                     box-sizing: border-box;
                     display: flex;
                     flex-direction: column;
                     justify-content: center;
                     align-items: center;
+                    cursor: pointer;
 
-    
+                    
                     .task-container-top{
                         display: flex;
                         justify-content: center;
@@ -170,7 +176,11 @@
                 border-style: solid;
                 border-width: 2px;
                 border-color: $boarder-color;
-
+                box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.16);
+                cursor: pointer;
+                &:hover {
+                    background-color: $menu-hover;
+                }
                 .task-container-top{
                     display: flex;
                     justify-content: center;

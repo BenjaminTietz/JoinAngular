@@ -17,6 +17,10 @@ import { LegalNoticeComponent } from './legal-notice/legal-notice.component';
 import { IntroductionComponent } from './introduction/introduction.component';
 import { FormsModule }   from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import { DragAndDropService } from './drag-and-drop.service';
+import { RemotestorageService } from './remotestorage.service';
+import { TaskArraysService } from './task-arrays.service';
+
 
 @NgModule({
   declarations: [
@@ -40,7 +44,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [DragAndDropService, RemotestorageService, TaskArraysService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

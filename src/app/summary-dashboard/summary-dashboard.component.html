@@ -6,7 +6,7 @@
     <div class="task-overview-top">
       <div class="task-overview-top-left">
 
-        <div class="urgent-tasks">
+        <div (click)="selectComponent('app-board')" class="urgent-tasks">
             <div class="urgent-tasks-top">
                 <img
                 src="assets/img/summary/tasks_urgent.png"
@@ -26,13 +26,13 @@
 
       </div>
       <div class="task-overview-top-right">
-        <div class="task-container">
+        <div (click)="selectComponent('app-board')" class="task-container">
             <div class="task-container-top">
               <img
                 src="assets/img/summary/tasks_board.png"
                 alt="icon"
               />
-              <span>5</span>
+              <span>{{TaskArrayService.tasks.length}}</span>
             </div>
             <div class="task-container-bottom">
               <span>Tasks in Board</span>
@@ -41,7 +41,7 @@
       </div>
     </div>
     <div class="task-overview-bottom">
-      <div class="task-container">
+      <div (click)="selectComponent('app-board')" class="task-container">
         <div class="task-container-top">
           <img
             src="assets/img/summary/tasks_todo.png"
@@ -53,7 +53,7 @@
           <span>Tasks To-do</span>
         </div>
       </div>
-      <div class="task-container">
+      <div (click)="selectComponent('app-board')" class="task-container">
         <div class="task-container-top">
           <img
             src="assets/img/summary/tasks_progress.png"
@@ -65,7 +65,7 @@
           <span>Tasks in progress</span>
         </div>
       </div>
-      <div class="task-container">
+      <div (click)="selectComponent('app-board')" class="task-container">
         <div class="task-container-top">
           <img
             src="assets/img/summary/tasks_feedback.png"
@@ -77,7 +77,7 @@
           <span>Awaiting Feedback</span>
         </div>
       </div>
-      <div class="task-container">
+      <div (click)="selectComponent('app-board')" class="task-container">
         <div class="task-container-top">
           <img
             src="assets/img/summary/tasks_done.png"

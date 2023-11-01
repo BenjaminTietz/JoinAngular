@@ -22,8 +22,9 @@ export class AddtaskComponent {
   @ViewChild('inputPhone') inputPhone: ElementRef;
   @ViewChild('addContactContainer') addContactContainer: ElementRef;
   @ViewChild('editContactContainer') editContactContainer: ElementRef;
-
+  @ViewChild('assignedDropdown') assignedDropdown: ElementRef;
   selectedPriority: string = '';
+  assignedDropdownVisible: boolean = false;
 
   constructor(
     private router: Router,
@@ -35,18 +36,26 @@ export class AddtaskComponent {
   async ngOninit() {
     await this.TaskArraysService.loadTasks();
     await this.ArraysService.loadContacts();
-    console.log(this.TaskArraysService.tasks);
-    console.log(this.ArraysService.contacts);
+
+    
+    this.ArraysService.contacts.forEach(contact => {
+        contact.selected = false;
+      });
   }
 
   /**
    * Asynchronous function to add a new task to the "task" array
    */
   async addTask(data) {
-    console.log('Added task', data.title, data.description, data.date, data.assigned, data.category, data.subtask );
-      if (data.title != '' && data.date != '' && data.category != '') {
-          this.pushToArray(data.title, data.description, data.date, data.assigned, data.category, data.subtask);
-          await this.TaskArraysService.safeTasks();
+    let status = 'toDo';
+    if (data.title != '' && data.date != '' && data.category != '') {
+        let selectedContacts = this.ArraysService.contacts
+            .filter(contact => contact.selected)
+            .map(contact => contact.name);
+
+        this.pushToArray(data.title, data.description, data.date, selectedContacts, data.category, data.subtask, status);
+        await this.TaskArraysService.safeTasks();
+        console.log('Added task', data.title, data.description, data.date, selectedContacts, data.category, data.subtask);
     // TODO    createdContactSuccessfully();
     //     hideAddContactCard();
     }
@@ -55,7 +64,7 @@ export class AddtaskComponent {
         //TODO confimationMessage();
   }
 
-  pushToArray(title, description, date, assigned, category, subtask) {
+  pushToArray(title, description, date, assigned, category, subtask, status) {
     this.TaskArraysService.tasks.push({
       title: title,
       description: description,
@@ -64,11 +73,26 @@ export class AddtaskComponent {
       assigned: assigned,
       category: category,
       subtask: subtask,
+      status: status
     });
   }
   selectPriority(priority: string) {
     this.selectedPriority = priority;
     console.log(this.selectedPriority);
+  }
+
+  selectAssigned(assigned: string) {
+    this.selectedPriority = assigned;
+    console.log(this.selectedPriority);
+  }
+
+  showAssignDropdown() {
+    this.assignedDropdown.nativeElement.classList.toggle('show-assigned-dropdown');
+    if (this.assignedDropdownVisible == false) {
+      this.assignedDropdownVisible = true;
+    } else {
+      this.assignedDropdownVisible = false;
+    }
   }
 }
 

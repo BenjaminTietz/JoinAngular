@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { TaskArraysService } from '../task-arrays.service';
 import { RemotestorageService } from '../remotestorage.service';
+import { DragAndDropService } from '../drag-and-drop.service';
+
 @Component({
   selector: 'app-board',
   templateUrl: './board.component.html',
@@ -13,7 +15,8 @@ export class BoardComponent {
 
   constructor(
     public TaskArrayService: TaskArraysService,
-    public RemotestorageService: RemotestorageService
+    public RemotestorageService: RemotestorageService,
+    public DragAndDropService: DragAndDropService
   ) {}
 
   async ngOnInit() {}

@@ -7,7 +7,7 @@
           <span>{{ selectedTask.category }}</span>
         </div>
         <div (click)="closeTask()" class="floating-close-btn">
-            <img src="assets/img/board/close.png" />
+          <img src="assets/img/board/close.png" />
         </div>
       </div>
       <div class="floating-task-content">
@@ -52,12 +52,19 @@
     </button>
   </div>
   <div class="task-category-wrapper">
-    <div class="category">
+    <div
+      class="category"
+      id="toDo"
+      ondrop="this.DragAndDropService.moveTo('toDo')"
+      ondragover="this.DragAndDropService.allowDrop(event)"
+    >
       <div class="headline">
         <h2>To do</h2>
         <img src="assets/img/board/plus button.svg" />
       </div>
       <div
+        draggable="true"
+        (dragstart)="this.DragAndDropService.dragStart(i)"
         *ngFor="let task of this.TaskArrayService.tasks; let i = index"
         class="task-container"
       >
@@ -86,7 +93,12 @@
         </div>
       </div>
     </div>
-    <div class="category">
+    <div
+      class="category"
+      id="inProgress"
+      ondrop="this.DragAndDropService.moveTo('inProgress')"
+      ondragover="this.DragAndDropService.allowDrop(event)"
+    >
       <div class="headline">
         <h2>In progress</h2>
         <img src="assets/img/board/plus button.svg" />
@@ -95,7 +107,12 @@
         <div class="single-task"></div>
       </div>
     </div>
-    <div class="category">
+    <div
+      class="category"
+      id="awaitFeedback"
+      ondrop="this.DragAndDropService.moveTo('awaitFeedback')"
+      ondragover="this.DragAndDropService.allowDrop(event)"
+    >
       <div class="headline">
         <h2>Await feedback</h2>
         <img src="assets/img/board/plus button.svg" />
@@ -104,7 +121,12 @@
         <div class="single-task"></div>
       </div>
     </div>
-    <div class="category">
+    <div
+      class="category"
+      id="done"
+      ondrop="this.DragAndDropService.moveTo('done')"
+      ondragover="this.DragAndDropService.allowDrop(event)"
+    >
       <div class="headline">
         <h2>Done</h2>
         <img src="assets/img/board/plus button.svg" />
