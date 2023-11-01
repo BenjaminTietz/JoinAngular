@@ -18,12 +18,13 @@ export class DragAndDropService {
     console.log('moveTo', this.TaskArrayService.tasks[this.currentDraggedTask]['status']);
   }
 
-  allowDrop (ev) {
+  allowDrop (event) {
     debugger;
-    ev.preventDefault();
+    event.preventDefault();
   }
 
   moveTo (status: string) {
+    debugger;
     this.TaskArrayService.tasks[this.currentDraggedTask]['status'] = status;
     console.log('moveTo', status);
     

@@ -55,8 +55,8 @@
     <div
       class="category"
       id="toDo"
-      ondrop="this.DragAndDropService.moveTo('toDo')"
-      ondragover="this.DragAndDropService.allowDrop(event)"
+      (ondrop)="this.DragAndDropService.moveTo('toDo')"
+      (ondragover)="this.DragAndDropService.allowDrop(event)"
     >
       <div class="headline">
         <h2>To do</h2>
@@ -93,45 +93,45 @@
         </div>
       </div>
     </div>
-    <div
-      class="category"
-      id="inProgress"
-      ondrop="this.DragAndDropService.moveTo('inProgress')"
-      ondragover="this.DragAndDropService.allowDrop(event)"
-    >
+    <div class="category">
       <div class="headline">
         <h2>In progress</h2>
         <img src="assets/img/board/plus button.svg" />
       </div>
-      <div class="task-container">
+      <div
+        class="task-container"
+        id="inProgress"
+        (ondrop)="this.DragAndDropService.moveTo('inProgress')"
+        (ondragover)="this.DragAndDropService.allowDrop(event)"
+      >
         <div class="single-task"></div>
       </div>
     </div>
-    <div
-      class="category"
-      id="awaitFeedback"
-      ondrop="this.DragAndDropService.moveTo('awaitFeedback')"
-      ondragover="this.DragAndDropService.allowDrop(event)"
-    >
+    <div class="category">
       <div class="headline">
         <h2>Await feedback</h2>
         <img src="assets/img/board/plus button.svg" />
       </div>
-      <div class="task-container">
+      <div
+        class="task-container"
+        id="awaitFeedback"
+        (ondrop)="this.DragAndDropService.moveTo('awaitFeedback')"
+        (ondragover)="this.DragAndDropService.allowDrop(event)"
+      >
         <div class="single-task"></div>
       </div>
     </div>
-    <div
-      class="category"
-      id="done"
-      ondrop="this.DragAndDropService.moveTo('done')"
-      ondragover="this.DragAndDropService.allowDrop(event)"
-    >
+    <div class="category">
       <div class="headline">
         <h2>Done</h2>
         <img src="assets/img/board/plus button.svg" />
       </div>
-      <div class="task-container">
+      <div
+        class="task-container"
+        id="done"
+        (ondrop)="this.DragAndDropService.moveTo('done')"
+        (ondragover)="this.DragAndDropService.allowDrop(event)"
+      >
         <div class="single-task"></div>
       </div>
     </div>
