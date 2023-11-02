@@ -47,7 +47,7 @@
             src="assets/img/summary/tasks_todo.png"
             alt="icon"
           />
-          <span>1</span>
+          <span>{{TaskArrayService.toDo.length}}</span>
         </div>
         <div class="task-container-bottom">
           <span>Tasks To-do</span>
@@ -59,7 +59,7 @@
             src="assets/img/summary/tasks_progress.png"
             alt="icon"
           />
-          <span>2</span>
+          <span>{{TaskArrayService.inProgress.length}}</span>
         </div>
         <div class="task-container-bottom">
           <span>Tasks in progress</span>
@@ -71,7 +71,7 @@
             src="assets/img/summary/tasks_feedback.png"
             alt="icon"
           />
-          <span>3</span>
+          <span>{{TaskArrayService.awaitFeedback.length}}</span>
         </div>
         <div class="task-container-bottom">
           <span>Awaiting Feedback</span>
@@ -83,7 +83,7 @@
             src="assets/img/summary/tasks_done.png"
             alt="icon"
           />
-          <span>4</span>
+          <span>{{TaskArrayService.done.length}}</span>
         </div>
         <div class="task-container-bottom">
           <span>Tasks Done</span>

@@ -36,13 +36,19 @@
       </div>
       <div class="floating-task-bottom">
         <div class="floating-task-btn">
-          <button class="floating-task-btn-cancel">Delete</button>
+          <button
+            type="button"
+            (click)="deleteTask(selectedTask)"
+            class="floating-task-btn-cancel"
+          >
+            Delete
+          </button>
           <button class="floating-task-btn-save">Edit</button>
         </div>
       </div>
     </div>
   </div>
-  <!----Hidden Task floating Container---->
+  <!---- End ofHidden Task floating Container---->
   <div class="board-top">
     <div class="search">
       <input type="text" placeholder="Find Task" />
@@ -52,23 +58,24 @@
     </button>
   </div>
   <div class="task-category-wrapper">
-    <div
-      class="category"
-      id="toDo"
-      (ondrop)="this.DragAndDropService.moveTo('toDo')"
-      (ondragover)="this.DragAndDropService.allowDrop(event)"
-    >
+    <div class="category">
       <div class="headline">
         <h2>To do</h2>
         <img src="assets/img/board/plus button.svg" />
       </div>
       <div
-        draggable="true"
-        (dragstart)="this.DragAndDropService.dragStart(i)"
-        *ngFor="let task of this.TaskArrayService.tasks; let i = index"
+        id="toDo"
+        (ondrop)="this.DragAndDropService.moveTo('toDo')"
+        (ondragover)="this.DragAndDropService.allowDrop($event)"
+        *ngFor="let task of this.TaskArrayService.toDo; let i = index"
         class="task-container"
       >
-        <div (click)="openTask(i)" class="single-task">
+        <div
+          draggable="true"
+          (dragstart)="this.DragAndDropService.dragStart(i)"
+          (click)="openTask(i)"
+          class="single-task"
+        >
           <div class="task-category">
             {{ task.category }}
           </div>
@@ -99,12 +106,35 @@
         <img src="assets/img/board/plus button.svg" />
       </div>
       <div
+        *ngFor="let task of this.TaskArrayService.inProgress; let i = index"
         class="task-container"
         id="inProgress"
         (ondrop)="this.DragAndDropService.moveTo('inProgress')"
         (ondragover)="this.DragAndDropService.allowDrop(event)"
       >
-        <div class="single-task"></div>
+        <div (click)="openTask(i)" class="single-task">
+          <div class="task-category">
+            {{ task.category }}
+          </div>
+          <div class="task-content">
+            <div class="task-name">
+              {{ task.title }}
+            </div>
+            <div class="task-description">
+              {{ task.description }}
+            </div>
+          </div>
+          <div
+            *ngIf="this.TaskArrayService.tasks[i].subtask"
+            class="progressbar"
+          >
+            {{ task.subtask }}
+          </div>
+          <div class="single-task-bottom">
+            <div class="assigned-contacts">{{ task.assigned }}</div>
+            <img class="prio" src="assets/img/board/prio_urgent.svg" />
+          </div>
+        </div>
       </div>
     </div>
     <div class="category">
@@ -113,12 +143,35 @@
         <img src="assets/img/board/plus button.svg" />
       </div>
       <div
+        *ngFor="let task of this.TaskArrayService.awaitFeedback; let i = index"
         class="task-container"
         id="awaitFeedback"
         (ondrop)="this.DragAndDropService.moveTo('awaitFeedback')"
         (ondragover)="this.DragAndDropService.allowDrop(event)"
       >
-        <div class="single-task"></div>
+        <div (click)="openTask(i)" class="single-task">
+          <div class="task-category">
+            {{ task.category }}
+          </div>
+          <div class="task-content">
+            <div class="task-name">
+              {{ task.title }}
+            </div>
+            <div class="task-description">
+              {{ task.description }}
+            </div>
+          </div>
+          <div
+            *ngIf="this.TaskArrayService.tasks[i].subtask"
+            class="progressbar"
+          >
+            {{ task.subtask }}
+          </div>
+          <div class="single-task-bottom">
+            <div class="assigned-contacts">{{ task.assigned }}</div>
+            <img class="prio" src="assets/img/board/prio_urgent.svg" />
+          </div>
+        </div>
       </div>
     </div>
     <div class="category">
@@ -127,12 +180,35 @@
         <img src="assets/img/board/plus button.svg" />
       </div>
       <div
+        *ngFor="let task of this.TaskArrayService.done; let i = index"
         class="task-container"
         id="done"
         (ondrop)="this.DragAndDropService.moveTo('done')"
         (ondragover)="this.DragAndDropService.allowDrop(event)"
       >
-        <div class="single-task"></div>
+        <div (click)="openTask(i)" class="single-task">
+          <div class="task-category">
+            {{ task.category }}
+          </div>
+          <div class="task-content">
+            <div class="task-name">
+              {{ task.title }}
+            </div>
+            <div class="task-description">
+              {{ task.description }}
+            </div>
+          </div>
+          <div
+            *ngIf="this.TaskArrayService.tasks[i].subtask"
+            class="progressbar"
+          >
+            {{ task.subtask }}
+          </div>
+          <div class="single-task-bottom">
+            <div class="assigned-contacts">{{ task.assigned }}</div>
+            <img class="prio" src="assets/img/board/prio_urgent.svg" />
+          </div>
+        </div>
       </div>
     </div>
   </div>

@@ -12,12 +12,45 @@ export class TaskArraysService {
     this.loadTasks();
   }
 
-  /**
+/**
  * An array to store tasks.
  * @type {Array}
  */
   tasks = [];
-
+/**
+ * An subarray to store tasks with status = "toDo".
+ * @type {Array}
+ */
+  toDo = [];
+/**
+ * An subarray to store tasks with status = "inProgress".
+ * @type {Array}
+ */
+  inProgress = [];
+/**
+ * An subarray to store tasks with status = "awaitFeedback".
+ * @type {Array}
+ */
+  awaitFeedback = [];
+/**
+ * An subarray to store tasks with status = "done".
+ * @type {Array}
+ */
+  done = [];
+/**
+ * An function to store tasks according status in subarrays.
+ * @type {Array}
+ */
+  async updateTaskStatus () {
+    this.toDo = this.tasks.filter(task => task.status === 'toDo'); 
+    this.inProgress = this.tasks.filter(task => task.status === 'inProgress');
+    this.awaitFeedback = this.tasks.filter(task => task.status === 'awaitFeedback');
+    this.done = this.tasks.filter(task => task.status === 'done');
+      console.log('toDo', this.toDo);
+      console.log('inProgress', this.inProgress);
+      console.log('awaitFeedback', this.awaitFeedback);
+      console.log('done', this.done);
+    }
 
         /**
    * Asynchronous function to save all tasks from array "contacts" to remote storage
