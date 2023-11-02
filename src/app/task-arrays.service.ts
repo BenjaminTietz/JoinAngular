@@ -20,9 +20,11 @@ export class TaskArraysService {
 
   selectedPriority: string = '';
   assignedDropdownVisible: boolean = false;
+  taskId: number = 0;
 
   ngOnInit() {
     this.loadTasks();
+    this.generateTaskId()
   }
 
   /**
@@ -55,17 +57,24 @@ export class TaskArraysService {
    * @type {Array}
    */
   urgent = [];
+
+  async generateTaskId() {  
+    this.taskId = this.tasks.length;
+    console.log('Task-ArrayService generated task id', this.taskId);
+  }
   /**
    * Asynchronous function to add a new task to the "task" array
    */
   async addTask(data) {
     let status = 'toDo';
+    this.taskId = this.tasks.length;
     if (data.title != '' && data.date != '' && data.category != '') {
       let selectedContacts = this.ArraysService.contacts
         .filter((contact) => contact.selected)
         .map((contact) => contact.name);
 
       this.pushToArray(
+        this.taskId,
         data.title,
         data.description,
         data.date,
@@ -77,6 +86,7 @@ export class TaskArraysService {
       await this.safeTasks();
       console.log(
         'Added task',
+        this.taskId,
         data.title,
         data.description,
         data.date,
@@ -102,8 +112,9 @@ export class TaskArraysService {
     }
   }
 
-  pushToArray(title, description, date, assigned, category, subtask, status) {
+  pushToArray(id, title, description, date, assigned, category, subtask, status) {
     this.tasks.push({
+      id: this.taskId,
       title: title,
       description: description,
       date: date,

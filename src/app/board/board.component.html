@@ -58,23 +58,70 @@
     </button>
   </div>
   <div class="task-category-wrapper">
-    <div
-      (drop)="this.DragAndDropService.moveTo('toDo')"
-      (dragover)="this.DragAndDropService.allowDrop($event)"
-      class="category"
-    >
+    <div class="category">
       <div class="headline">
         <h2>To do</h2>
         <img src="assets/img/board/plus button.svg" />
       </div>
       <div
+        #toDo
+        (drop)="this.DragAndDropService.moveTo('toDo');this.removeHighlight('toDo')"
+        (dragover)="
+          this.DragAndDropService.allowDrop($event); this.highlight('toDo')"
+          (dragleave)="this.removeHighlight('toDo')"
         id="toDo"
-        *ngFor="let task of this.TaskArrayService.toDo; let i = index"
         class="task-container"
       >
         <div
           draggable="true"
           (dragstart)="this.DragAndDropService.dragStart(i, 'toDo')"
+          (click)="openTask(i)"
+          *ngFor="let task of this.TaskArrayService.toDo; let i = index"
+          class="single-task"
+        >
+          <div class="task-category">
+            {{ task.category }}
+          </div>
+          <div class="task-content">
+            <div class="task-name">
+              {{ task.title }}
+            </div>
+            <div class="task-description">
+              {{ task.description }}
+            </div>
+          </div>
+          <div
+            *ngIf="this.TaskArrayService.tasks[i].subtask"
+            class="progressbar"
+          >
+            {{ task.subtask }}
+          </div>
+          <div class="single-task-bottom">
+            <div class="assigned-contacts">{{ task.assigned }}</div>
+            <img class="prio" src="assets/img/board/prio_urgent.svg" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="category">
+      <div class="headline">
+        <h2>In progress</h2>
+        <img src="assets/img/board/plus button.svg" />
+      </div>
+      <div
+        #inProgress
+        (drop)="this.DragAndDropService.moveTo('inProgress'); this.removeHighlight('inProgress')"
+        (dragover)="
+          this.DragAndDropService.allowDrop($event);
+          this.highlight('inProgress')"
+          (dragleave)="this.removeHighlight('inProgress')"
+        class="task-container"
+        id="inProgress"
+      >
+        <div
+          draggable="true"
+          *ngFor="let task of this.TaskArrayService.inProgress; let i = index"
+          (dragstart)="this.DragAndDropService.dragStart(i, 'inProgress')"
           (click)="openTask(i)"
           class="single-task"
         >
@@ -102,66 +149,31 @@
         </div>
       </div>
     </div>
-    <div
-      (drop)="this.DragAndDropService.moveTo('inProgress')"
-      (dragover)="this.DragAndDropService.allowDrop($event)"
-      class="category"
-    >
-      <div class="headline">
-        <h2>In progress</h2>
-        <img src="assets/img/board/plus button.svg" />
-      </div>
-      <div
-        *ngFor="let task of this.TaskArrayService.inProgress; let i = index"
-        class="task-container"
-        id="inProgress"
-      >
-        <div draggable="true"
-        (dragstart)="this.DragAndDropService.dragStart(i, 'inProgress')"
-        (click)="openTask(i)"
-        class="single-task">
-          <div class="task-category">
-            {{ task.category }}
-          </div>
-          <div class="task-content">
-            <div class="task-name">
-              {{ task.title }}
-            </div>
-            <div class="task-description">
-              {{ task.description }}
-            </div>
-          </div>
-          <div
-            *ngIf="this.TaskArrayService.tasks[i].subtask"
-            class="progressbar"
-          >
-            {{ task.subtask }}
-          </div>
-          <div class="single-task-bottom">
-            <div class="assigned-contacts">{{ task.assigned }}</div>
-            <img class="prio" src="assets/img/board/prio_urgent.svg" />
-          </div>
-        </div>
-      </div>
-    </div>
-    <div
-      (drop)="this.DragAndDropService.moveTo('awaitFeedback')"
-      (dragover)="this.DragAndDropService.allowDrop($event)"
-      class="category"
-    >
+    <div class="category">
       <div class="headline">
         <h2>Await feedback</h2>
         <img src="assets/img/board/plus button.svg" />
       </div>
       <div
-        *ngFor="let task of this.TaskArrayService.awaitFeedback; let i = index"
+        #awaitFeedback
+        (drop)="this.DragAndDropService.moveTo('awaitFeedback'); this.removeHighlight('awaitFeedback')"
+        (dragover)="
+          this.DragAndDropService.allowDrop($event);
+          this.highlight('awaitFeedback')"
+          (dragleave)="this.removeHighlight('awaitFeedback')"
         class="task-container"
         id="awaitFeedback"
       >
-        <div draggable="true"
-        (dragstart)="this.DragAndDropService.dragStart(i, 'awaitFeedback')"
-        (click)="openTask(i)"
-        class="single-task">
+        <div
+          draggable="true"
+          *ngFor="
+            let task of this.TaskArrayService.awaitFeedback;
+            let i = index
+          "
+          (dragstart)="this.DragAndDropService.dragStart(i, 'awaitFeedback')"
+          (click)="openTask(i)"
+          class="single-task"
+        >
           <div class="task-category">
             {{ task.category }}
           </div>
@@ -186,24 +198,27 @@
         </div>
       </div>
     </div>
-    <div
-      (drop)="this.DragAndDropService.moveTo('done')"
-      (dragover)="this.DragAndDropService.allowDrop($event)"
-      class="category"
-    >
+    <div class="category">
       <div class="headline">
         <h2>Done</h2>
         <img src="assets/img/board/plus button.svg" />
       </div>
       <div
-        *ngFor="let task of this.TaskArrayService.done; let i = index"
+        #done
+        (drop)="this.DragAndDropService.moveTo('done'); this.removeHighlight('done')"
+        (dragover)="
+          this.DragAndDropService.allowDrop($event); this.highlight('done')"
+        (dragleave)="this.removeHighlight('done')"
         class="task-container"
         id="done"
       >
-        <div draggable="true"
-        (dragstart)="this.DragAndDropService.dragStart(i, 'done')"
-        (click)="openTask(i)"
-        class="single-task">
+        <div
+          draggable="true"
+          *ngFor="let task of this.TaskArrayService.done; let i = index"
+          (dragstart)="this.DragAndDropService.dragStart(i, 'done')"
+          (click)="openTask(i)"
+          class="single-task"
+        >
           <div class="task-category">
             {{ task.category }}
           </div>
