@@ -3,6 +3,7 @@ import { BoardService } from '../board.service';
 import { RemotestorageService } from '../remotestorage.service';
 import { TaskArraysService } from '../task-arrays.service';
 import { ArraysService } from '../contact-arrays.service';
+import { LoginService } from '../login.service';
 
 
 @Component({
@@ -15,7 +16,8 @@ export class SummaryComponent {
   constructor(public boardService: BoardService,
     public RemotestorageService: RemotestorageService,
     public ArraysService: ArraysService,
-    public TaskArraysService: TaskArraysService
+    public TaskArraysService: TaskArraysService,
+    public loginService: LoginService
     ) {}
 
   @Input() showSummary: boolean;
@@ -31,6 +33,9 @@ export class SummaryComponent {
     await this.ArraysService.loadContacts();
     await this.TaskArraysService.mapTaskStatus();
     await this.TaskArraysService.mapUrgentTasks();
+    this.loginService.getGreeting();
+    this.TaskArraysService.findNearestDate(this.TaskArraysService.urgent);
+    console.log('nearestUrgendTaskDate', this.TaskArraysService.nearestUrgendTaskDate);
     console.log('Summary loaded succesfully:',this.TaskArraysService.tasks);
     console.log('Summary loaded succesfully:',this.ArraysService.contacts);
   }

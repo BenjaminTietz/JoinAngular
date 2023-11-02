@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RemotestorageService } from '../remotestorage.service';
 import { TaskArraysService } from '../task-arrays.service';
 import { BoardService } from '../board.service';
+import { LoginService } from '../login.service';
 @Component({
   selector: 'app-summary-dashboard',
   templateUrl: './summary-dashboard.component.html',
@@ -13,7 +14,8 @@ export class SummaryDashboardComponent {
   constructor(
     public TaskArrayService: TaskArraysService,
     public RemoteStorageService: RemotestorageService,
-    public boardService: BoardService
+    public boardService: BoardService,
+    public loginService: LoginService
   ) {}
 
   ngOnInit(): void {
@@ -32,4 +34,5 @@ export class SummaryDashboardComponent {
           break;
     }
   }
+
 }

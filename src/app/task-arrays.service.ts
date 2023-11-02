@@ -21,12 +21,13 @@ export class TaskArraysService {
   selectedPriority: string = '';
   assignedDropdownVisible: boolean = false;
   taskId: number = 0;
-
+  nearestUrgendTaskDate: any = '';
   ngOnInit() {
     this.loadTasks();
-    this.generateTaskId()
+    this.generateTaskId();
   }
 
+  
   /**
    * An array to store tasks.
    * @type {Array}
@@ -155,6 +156,34 @@ export class TaskArraysService {
   async mapUrgentTasks() {
     this.urgent = this.tasks.filter((task) => task.prio === 'urgent');
   }
+    /**
+   *  function to filter tasks with prio = urgent and return the nearest date.
+   * @type {Array}
+   */
+    findNearestDate(urgentArray: any[]): void {
+      if (!urgentArray || urgentArray.length === 0) {
+        this.nearestUrgendTaskDate = null;
+        return;
+      }
+  
+      let today = new Date();
+      let nearestDate = new Date(urgentArray[0].date);
+  
+      for (let item of urgentArray) {
+        let itemDate = new Date(item.date);
+        let timeDifference = Math.abs(itemDate.getTime() - today.getTime());
+  
+        if (timeDifference < Math.abs(nearestDate.getTime() - today.getTime())) {
+          nearestDate = itemDate;
+        }
+      }
+  
+      let options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+      let formattedDate = nearestDate.toLocaleDateString('en-US', options); // 'en-US' for English
+  
+      this.nearestUrgendTaskDate = formattedDate;
+    }
+
 
   /**
    * Asynchronous function to save all tasks from array "contacts" to remote storage

@@ -145,13 +145,13 @@
 
 <!-- End of Hidden floating Add Task Container-->
   <div class="headline">
-    <h1>Good morning, <span>Sofia Müller</span></h1>
+    <h1>{{ loginService.userGreeting }}, <span>Sofia Müller</span></h1>
   </div>
   <div class="task-overview">
     <div class="task-overview-top">
-      <div class="task-overview-top-left">
+      <div (click)="selectComponent('app-board')"  class="task-overview-top-left">
 
-        <div (click)="selectComponent('app-board')" class="urgent-tasks">
+        <div class="urgent-tasks">
             <div class="urgent-tasks-top">
                 <img
                 src="assets/img/summary/tasks_urgent.png"
@@ -165,7 +165,7 @@
         <div class="horizontal-line"></div>
 
         <div class="deadline">
-            <div class="date">October 16, 2022</div>
+            <div class="date">{{TaskArrayService.nearestUrgendTaskDate}}</div>
             <span>Upcomming Deadline</span>
         </div>
 
