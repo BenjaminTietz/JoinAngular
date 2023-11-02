@@ -48,7 +48,7 @@
       </div>
     </div>
   </div>
-  <!---- End ofHidden Task floating Container---->
+  <!---- End of Hidden Task floating Container---->
   <div class="board-top">
     <div class="search">
       <input type="text" placeholder="Find Task" />
@@ -58,15 +58,17 @@
     </button>
   </div>
   <div class="task-category-wrapper">
-    <div class="category">
+    <div
+      (ondrop)="this.DragAndDropService.moveTo('toDo')"
+      (ondragover)="this.DragAndDropService.allowDrop($event)"
+      class="category"
+    >
       <div class="headline">
         <h2>To do</h2>
         <img src="assets/img/board/plus button.svg" />
       </div>
       <div
         id="toDo"
-        (ondrop)="this.DragAndDropService.moveTo('toDo')"
-        (ondragover)="this.DragAndDropService.allowDrop($event)"
         *ngFor="let task of this.TaskArrayService.toDo; let i = index"
         class="task-container"
       >
@@ -100,7 +102,11 @@
         </div>
       </div>
     </div>
-    <div class="category">
+    <div
+      (ondrop)="this.DragAndDropService.moveTo('inProgress')"
+      (ondragover)="this.DragAndDropService.allowDrop(event)"
+      class="category"
+    >
       <div class="headline">
         <h2>In progress</h2>
         <img src="assets/img/board/plus button.svg" />
@@ -109,8 +115,6 @@
         *ngFor="let task of this.TaskArrayService.inProgress; let i = index"
         class="task-container"
         id="inProgress"
-        (ondrop)="this.DragAndDropService.moveTo('inProgress')"
-        (ondragover)="this.DragAndDropService.allowDrop(event)"
       >
         <div (click)="openTask(i)" class="single-task">
           <div class="task-category">
@@ -137,7 +141,11 @@
         </div>
       </div>
     </div>
-    <div class="category">
+    <div
+      (ondrop)="this.DragAndDropService.moveTo('awaitFeedback')"
+      (ondragover)="this.DragAndDropService.allowDrop(event)"
+      class="category"
+    >
       <div class="headline">
         <h2>Await feedback</h2>
         <img src="assets/img/board/plus button.svg" />
@@ -146,8 +154,6 @@
         *ngFor="let task of this.TaskArrayService.awaitFeedback; let i = index"
         class="task-container"
         id="awaitFeedback"
-        (ondrop)="this.DragAndDropService.moveTo('awaitFeedback')"
-        (ondragover)="this.DragAndDropService.allowDrop(event)"
       >
         <div (click)="openTask(i)" class="single-task">
           <div class="task-category">
@@ -174,7 +180,11 @@
         </div>
       </div>
     </div>
-    <div class="category">
+    <div
+      (ondrop)="this.DragAndDropService.moveTo('done')"
+      (ondragover)="this.DragAndDropService.allowDrop(event)"
+      class="category"
+    >
       <div class="headline">
         <h2>Done</h2>
         <img src="assets/img/board/plus button.svg" />
@@ -183,8 +193,6 @@
         *ngFor="let task of this.TaskArrayService.done; let i = index"
         class="task-container"
         id="done"
-        (ondrop)="this.DragAndDropService.moveTo('done')"
-        (ondragover)="this.DragAndDropService.allowDrop(event)"
       >
         <div (click)="openTask(i)" class="single-task">
           <div class="task-category">

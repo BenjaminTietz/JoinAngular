@@ -12,7 +12,7 @@ export class BoardComponent {
   @ViewChild('floatingTaskContainer') floatingTaskContainer: ElementRef;
   selectedTask: any;
 
-  event: any;
+  event: Event;
   
   constructor(
     public TaskArrayService: TaskArraysService,

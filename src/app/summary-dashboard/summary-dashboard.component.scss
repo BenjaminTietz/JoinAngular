@@ -1,6 +1,246 @@
 @import "src/assets/styles/colors.scss";
 @import "src/assets/styles/fonts.scss";
 
+//  Start of Hidden floating Add Task Container
+.addtask-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    margin-top: 96px;
+    margin-left: 232px;
+    width: calc(100vw - 232px);
+    height: calc(100vh - 96px);
+    gap: 72px;
+  
+    .addtask-left {
+      box-sizing: border-box;
+      width: 488px;
+      height: 928px;
+      padding: 64px 24px 0px 24px;
+      gap: 24px;
+    }
+  
+    .headline {
+      h1 {
+        @include OpenSans(400, 48px, 57.6px, $dashboard-headline);
+      }
+    }
+  
+    .addtask-left-top {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      width: 440px;
+      height: 361px;
+      gap: 12px;
+  
+      input {
+        width: 100%;
+        height: 64px;
+        gap: 10px;
+        border-top: none;
+        border-left: none;
+        border-right: none;
+        border-bottom: 1px solid $input-boarder;
+        padding: 13px 16px 13px 16px;
+      }
+  
+      h2 {
+        @include OpenSans(700, 19px, 22.8px, $menu-color);
+      }
+  
+      span {
+        @include OpenSans(400, 19px, 22.8px, $menu-color);
+      }
+  
+      textarea {
+        width: 100%;
+        height: 123px;
+        gap: 4px;
+      }
+    }
+  
+    .addtask-left-prio {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      gap: 8px;
+      h2 {
+        @include OpenSans(700, 19px, 22.8px, $menu-color);
+      }
+  
+      span {
+        @include OpenSans(400, 19px, 22.8px, $menu-color);
+      }
+  
+      .prio-box {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        height: 51px;
+        gap: 16px;
+  
+        .prio-container {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 136px;
+          height: 51px;
+          border-radius: 10px;
+          border-color: $boarder-color;
+          border-style: solid;
+          border-width: 1px;
+          padding: 18px 10px 18px 10px;
+          gap: 10px;
+        }
+      }
+    }
+    .addtask-assigned-box {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      width: 440px;
+      height: 79px;
+      gap: 8px;
+  
+      h2 {
+        @include OpenSans(700, 19px, 22.8px, $menu-color);
+      }
+  
+      .assigned-contacts {
+        position: relative;
+        .assigned-dropdown-menu {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+          box-sizing: border-box;
+          width: 440px;
+          height: 79px;
+          gap: 8px;
+          padding: 12px 16px 12px 16px;
+          border: 0px 0px 1px 0px solid $input-boarder;
+          span {
+            @include OpenSans(400, 19px, 22.8px, $menu-color);
+          }
+          .arrow-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 24px;
+            height: 24px;
+            border-radius: 72px;
+            
+            &:hover {
+              background-color: $menu-hover;
+            }
+          }
+        }
+  
+        .assigned-dropdown{
+          visibility: hidden;
+          flex-direction: row;
+          justify-content: space-evenly;
+          align-items: flex-start;
+          width: 100%;
+          height: 500px;
+          position: absolute;
+          background-color: $white;
+  
+        }
+        .show-assigned-dropdown {
+          visibility: visible;
+        }
+      }
+  
+    }
+  
+    .addtask-left-bottom {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      gap: 8px;
+      width: 440px;
+      height: 79px;
+      margin-top: 16px;
+  
+      h2 {
+        @include OpenSans(700, 19px, 22.8px, $menu-color);
+      }
+  
+      span {
+        @include OpenSans(400, 19px, 22.8px, $menu-color);
+      }
+  
+      input {
+        width: 100%;
+        height: 64px;
+        gap: 10px;
+        border-top: none;
+        border-left: none;
+        border-right: none;
+        border-bottom: 1px solid $input-boarder;
+        padding: 12px 16px 12px 16px;
+      }
+    }
+  
+    .addtask-right {
+      display: flex;
+      justify-content: flex-end;
+      align-items: flex-end;
+      height: 100%;
+      margin-bottom: 300px;
+  
+      .btn-container {
+        display: flex;
+        justify-content: flex-end;
+        align-items: flex-end;
+        width: 335px;
+        height: 61px;
+        gap: 4px;
+  
+        .clear-btn {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 136px;
+          height: 61px;
+          border-radius: 10px;
+          border-width: 1px;
+          border-color: $light-gray;
+          padding: 16px 10px 16px 10px;
+          gap: 4px;
+          @include OpenSans(400, 23px, 27.6px, $light-gray);
+          cursor: pointer;
+        }
+  
+        .create-btn {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          box-sizing: border-box;
+          white-space: nowrap;
+          width: 174px;
+          height: 60px;
+          border-radius: 10px;
+          border-style: none;
+          background-color: $light-blue;
+          padding: 16px 10px 16px 10px;
+          gap: 4px;
+          @include OpenSans(400, 23px, 27.6px, $white);
+          cursor: pointer;
+        }
+      }
+    }
+  }
+//  End of Hidden floating Add Task Container
 .dashboard-wrapper {
     display: flex;
     flex-direction: column;

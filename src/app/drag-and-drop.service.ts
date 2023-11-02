@@ -23,7 +23,7 @@ export class DragAndDropService {
     console.log('currentStatus', this.TaskArrayService.tasks[this.currentDraggedTask]['status']);
   }
 
-  allowDrop (event: { preventDefault: () => void; }) {
+  allowDrop (event: Event) {
     console.log('allowDrop is active');
     event.preventDefault();
   }
@@ -34,4 +34,4 @@ export class DragAndDropService {
     console.log('currentStatus', status);
     
   }
-}
+} 
