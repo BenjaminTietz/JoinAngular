@@ -9,29 +9,46 @@ import { BoardComponent } from './board/board.component';
 export class DragAndDropService {
 
   currentDraggedTask: any;
-
+  currentStatus: any;
   constructor(public TaskArrayService: TaskArraysService) { }
 
   async ngOnInit() {
+    await this.TaskArrayService.mapTaskStatus();
   }
 
 
 
-  dragStart(index: number) {
+  dragStart(index: number, status: string) {
     this.currentDraggedTask = index;
+    this.currentStatus = status;
     console.log('dragStart', this.currentDraggedTask);
-    console.log('currentStatus', this.TaskArrayService.tasks[this.currentDraggedTask]['status']);
+    if (this.currentStatus == 'toDo') {
+      console.log('currentStatus', this.TaskArrayService.toDo[this.currentDraggedTask]['status']);
+      } else if (this.currentStatus == 'inProgress') {
+        console.log('currentStatus', this.TaskArrayService.inProgress[this.currentDraggedTask]['status']);
+      } else if (this.currentStatus == 'awaitFeedback') {
+        console.log('currentStatus', this.TaskArrayService.awaitFeedback[this.currentDraggedTask]['status']);
+      } else if (this.currentStatus == 'done') {
+        console.log('currentStatus', this.TaskArrayService.done[this.currentDraggedTask]['status']);
+      }
   }
 
   allowDrop (event: Event) {
-    console.log('allowDrop is active');
     event.preventDefault();
   }
 
-  moveTo (status: string) {
-
-    this.TaskArrayService.tasks[this.currentDraggedTask]['status'] = status;
-    console.log('currentStatus', status);
-    
+  async moveTo (status: string) {
+    if (this.currentStatus == 'toDo') {
+    this.TaskArrayService.toDo[this.currentDraggedTask]['status'] = status;
+    } else if (this.currentStatus == 'inProgress') {
+    this.TaskArrayService.inProgress[this.currentDraggedTask]['status'] = status;
+    } else if (this.currentStatus == 'awaitFeedback') {
+    this.TaskArrayService.awaitFeedback[this.currentDraggedTask]['status'] = status;
+    } else if (this.currentStatus == 'done') {
+    this.TaskArrayService.done[this.currentDraggedTask]['status'] = status;
+    }
+    await this.TaskArrayService.updateTask(this.currentDraggedTask, status);
+    await this.TaskArrayService.safeTasks(); 
+    await this.TaskArrayService.mapTaskStatus();   
   }
 } 

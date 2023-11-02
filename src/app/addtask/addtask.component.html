@@ -3,7 +3,7 @@
     <div class="headline">
       <h1>Add Task</h1>
     </div>
-    <form #addTaskForm="ngForm" (ngSubmit)="addTask(addTaskForm.value)">
+    <form #addTaskForm="ngForm" (ngSubmit)="this.TaskArraysService.addTask(addTaskForm.value)">
       <div class="addtask-left-top">
         <input
           #inputTitle
@@ -37,15 +37,15 @@
       <div class="addtask-left-prio">
         <h2>Priority <span>(optional)</span></h2>
         <div class="prio-box">
-          <div class="prio-container" (click)="selectPriority('urgent')">
+          <div class="prio-container" (click)="this.TaskArraysService.selectPriority('urgent')">
             <span>Urgent</span>
             <img src="assets/img/addtask/prio_urgent.svg" alt="prio_icon" />
           </div>
-          <div class="prio-container" (click)="selectPriority('medium')">
+          <div class="prio-container" (click)="this.TaskArraysService.selectPriority('medium')">
             <span>Medium</span>
             <img src="assets/img/addtask/prio_medium.svg" alt="prio_icon" />
           </div>
-          <div class="prio-container" (click)="selectPriority('low')">
+          <div class="prio-container" (click)="this.TaskArraysService.selectPriority('low')">
             <span>Low</span>
             <img src="assets/img/addtask/prio_low.svg" alt="prio_icon" />
           </div>
@@ -57,7 +57,7 @@
           <div class="assigned-dropdown-menu">
             <span>Select contacts to assign</span>
             <div
-              *ngIf="!assignedDropdownVisible"
+              *ngIf="!this.TaskArraysService.assignedDropdownVisible"
               (click)="showAssignDropdown()"
               class="arrow-container"
             >
@@ -67,7 +67,7 @@
               />
             </div>
             <div
-              *ngIf="assignedDropdownVisible"
+              *ngIf="this.TaskArraysService.assignedDropdownVisible"
               (click)="showAssignDropdown()"
               class="arrow-container"
             >

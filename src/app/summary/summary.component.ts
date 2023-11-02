@@ -29,7 +29,7 @@ export class SummaryComponent {
   async ngOnInit() {
     await this.TaskArraysService.loadTasks();
     await this.ArraysService.loadContacts();
-    await this.TaskArraysService.updateTaskStatus();
+    await this.TaskArraysService.mapTaskStatus();
     await this.TaskArraysService.mapUrgentTasks();
     console.log('Summary loaded succesfully:',this.TaskArraysService.tasks);
     console.log('Summary loaded succesfully:',this.ArraysService.contacts);

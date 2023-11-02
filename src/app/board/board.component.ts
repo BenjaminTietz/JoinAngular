@@ -21,7 +21,7 @@ export class BoardComponent {
   ) {}
 
   async ngOnInit() {
-    await this.TaskArrayService.updateTaskStatus();
+    await this.TaskArrayService.mapTaskStatus();
   }
 
 

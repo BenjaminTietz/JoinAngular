@@ -17,14 +17,12 @@ import { ArraysService } from '../contact-arrays.service';
   styleUrls: ['./addtask.component.scss']
 })
 export class AddtaskComponent {
+  @ViewChild('assignedDropdown') assignedDropdown: ElementRef;
   @ViewChild('inputName') inputName: ElementRef;
   @ViewChild('inputEmail') inputEmail: ElementRef;
   @ViewChild('inputPhone') inputPhone: ElementRef;
   @ViewChild('addContactContainer') addContactContainer: ElementRef;
   @ViewChild('editContactContainer') editContactContainer: ElementRef;
-  @ViewChild('assignedDropdown') assignedDropdown: ElementRef;
-  selectedPriority: string = '';
-  assignedDropdownVisible: boolean = false;
 
   constructor(
     private router: Router,
@@ -43,55 +41,14 @@ export class AddtaskComponent {
       });
   }
 
-  /**
-   * Asynchronous function to add a new task to the "task" array
-   */
-  async addTask(data) {
-    let status = 'toDo';
-    if (data.title != '' && data.date != '' && data.category != '') {
-        let selectedContacts = this.ArraysService.contacts
-            .filter(contact => contact.selected)
-            .map(contact => contact.name);
-
-        this.pushToArray(data.title, data.description, data.date, selectedContacts, data.category, data.subtask, status);
-        await this.TaskArraysService.safeTasks();
-        console.log('Added task', data.title, data.description, data.date, selectedContacts, data.category, data.subtask);
-    // TODO    createdContactSuccessfully();
-    //     hideAddContactCard();
-    }
-    // document.getElementById('form_add_contact').reset();
-    //   await this.resetForm(data);
-        //TODO confimationMessage();
-  }
-
-  pushToArray(title, description, date, assigned, category, subtask, status) {
-    this.TaskArraysService.tasks.push({
-      title: title,
-      description: description,
-      date: date,
-      prio: this.selectedPriority,
-      assigned: assigned,
-      category: category,
-      subtask: subtask,
-      status: status
-    });
-  }
-  selectPriority(priority: string) {
-    this.selectedPriority = priority;
-    console.log(this.selectedPriority);
-  }
-
-  selectAssigned(assigned: string) {
-    this.selectedPriority = assigned;
-    console.log(this.selectedPriority);
-  }
-
   showAssignDropdown() {
-    this.assignedDropdown.nativeElement.classList.toggle('show-assigned-dropdown');
-    if (this.assignedDropdownVisible == false) {
-      this.assignedDropdownVisible = true;
+    this.assignedDropdown.nativeElement.classList.toggle(
+      'show-assigned-dropdown'
+    );
+    if (this.TaskArraysService.assignedDropdownVisible == false) {
+      this.TaskArraysService.assignedDropdownVisible = true;
     } else {
-      this.assignedDropdownVisible = false;
+      this.TaskArraysService.assignedDropdownVisible = false;
     }
   }
 }

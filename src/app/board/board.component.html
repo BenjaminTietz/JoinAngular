@@ -59,8 +59,8 @@
   </div>
   <div class="task-category-wrapper">
     <div
-      (ondrop)="this.DragAndDropService.moveTo('toDo')"
-      (ondragover)="this.DragAndDropService.allowDrop($event)"
+      (drop)="this.DragAndDropService.moveTo('toDo')"
+      (dragover)="this.DragAndDropService.allowDrop($event)"
       class="category"
     >
       <div class="headline">
@@ -74,7 +74,7 @@
       >
         <div
           draggable="true"
-          (dragstart)="this.DragAndDropService.dragStart(i)"
+          (dragstart)="this.DragAndDropService.dragStart(i, 'toDo')"
           (click)="openTask(i)"
           class="single-task"
         >
@@ -103,8 +103,8 @@
       </div>
     </div>
     <div
-      (ondrop)="this.DragAndDropService.moveTo('inProgress')"
-      (ondragover)="this.DragAndDropService.allowDrop(event)"
+      (drop)="this.DragAndDropService.moveTo('inProgress')"
+      (dragover)="this.DragAndDropService.allowDrop($event)"
       class="category"
     >
       <div class="headline">
@@ -116,7 +116,10 @@
         class="task-container"
         id="inProgress"
       >
-        <div (click)="openTask(i)" class="single-task">
+        <div draggable="true"
+        (dragstart)="this.DragAndDropService.dragStart(i, 'inProgress')"
+        (click)="openTask(i)"
+        class="single-task">
           <div class="task-category">
             {{ task.category }}
           </div>
@@ -142,8 +145,8 @@
       </div>
     </div>
     <div
-      (ondrop)="this.DragAndDropService.moveTo('awaitFeedback')"
-      (ondragover)="this.DragAndDropService.allowDrop(event)"
+      (drop)="this.DragAndDropService.moveTo('awaitFeedback')"
+      (dragover)="this.DragAndDropService.allowDrop($event)"
       class="category"
     >
       <div class="headline">
@@ -155,7 +158,10 @@
         class="task-container"
         id="awaitFeedback"
       >
-        <div (click)="openTask(i)" class="single-task">
+        <div draggable="true"
+        (dragstart)="this.DragAndDropService.dragStart(i, 'awaitFeedback')"
+        (click)="openTask(i)"
+        class="single-task">
           <div class="task-category">
             {{ task.category }}
           </div>
@@ -181,8 +187,8 @@
       </div>
     </div>
     <div
-      (ondrop)="this.DragAndDropService.moveTo('done')"
-      (ondragover)="this.DragAndDropService.allowDrop(event)"
+      (drop)="this.DragAndDropService.moveTo('done')"
+      (dragover)="this.DragAndDropService.allowDrop($event)"
       class="category"
     >
       <div class="headline">
@@ -194,7 +200,10 @@
         class="task-container"
         id="done"
       >
-        <div (click)="openTask(i)" class="single-task">
+        <div draggable="true"
+        (dragstart)="this.DragAndDropService.dragStart(i, 'done')"
+        (click)="openTask(i)"
+        class="single-task">
           <div class="task-category">
             {{ task.category }}
           </div>
