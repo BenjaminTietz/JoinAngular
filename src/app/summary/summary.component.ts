@@ -33,6 +33,7 @@ export class SummaryComponent {
     await this.ArraysService.loadContacts();
     await this.TaskArraysService.mapTaskStatus();
     await this.TaskArraysService.mapUrgentTasks();
+    await this.loginService.extractUserName();
     this.loginService.getGreeting();
     this.TaskArraysService.findNearestDate(this.TaskArraysService.urgent);
     console.log('nearestUrgendTaskDate', this.TaskArraysService.nearestUrgendTaskDate);

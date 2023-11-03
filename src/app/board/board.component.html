@@ -38,7 +38,7 @@
         <div class="floating-task-btn">
           <button
             type="button"
-            (click)="deleteTask(selectedTask)"
+            (click)="deleteTask()"
             class="floating-task-btn-cancel"
           >
             Delete
@@ -75,7 +75,7 @@
         <div
           draggable="true"
           (dragstart)="this.DragAndDropService.dragStart(i, 'toDo')"
-          (click)="openTask(i)"
+          (click)="openTask(i, 'toDo')"
           *ngFor="let task of this.TaskArrayService.toDo; let i = index"
           class="single-task"
         >
@@ -122,7 +122,7 @@
           draggable="true"
           *ngFor="let task of this.TaskArrayService.inProgress; let i = index"
           (dragstart)="this.DragAndDropService.dragStart(i, 'inProgress')"
-          (click)="openTask(i)"
+          (click)="openTask(i, 'inProgress')"
           class="single-task"
         >
           <div class="task-category">
@@ -171,7 +171,7 @@
             let i = index
           "
           (dragstart)="this.DragAndDropService.dragStart(i, 'awaitFeedback')"
-          (click)="openTask(i)"
+          (click)="openTask(i, 'awaitFeedback')"
           class="single-task"
         >
           <div class="task-category">
@@ -216,7 +216,7 @@
           draggable="true"
           *ngFor="let task of this.TaskArrayService.done; let i = index"
           (dragstart)="this.DragAndDropService.dragStart(i, 'done')"
-          (click)="openTask(i)"
+          (click)="openTask(i, 'done')"
           class="single-task"
         >
           <div class="task-category">

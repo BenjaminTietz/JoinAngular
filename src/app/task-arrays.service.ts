@@ -98,6 +98,7 @@ export class TaskArraysService {
       // TODO    createdContactSuccessfully();
       //     hideAddContactCard();
     }
+    await this.findNearestDate(this.urgent);
     // document.getElementById('form_add_contact').reset();
     //   await this.resetForm(data);
     //TODO confimationMessage();
@@ -160,7 +161,7 @@ export class TaskArraysService {
    *  function to filter tasks with prio = urgent and return the nearest date.
    * @type {Array}
    */
-    findNearestDate(urgentArray: any[]): void {
+    async findNearestDate(urgentArray: any[]): Promise<void> {
       if (!urgentArray || urgentArray.length === 0) {
         this.nearestUrgendTaskDate = null;
         return;

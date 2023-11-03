@@ -13,7 +13,7 @@
   <div class="login-box">
     <h1>Log in</h1>
 
-    <form #userLogIn="ngForm" (ngSubmit)="logIn(userLogIn.value)">
+    <form #userLogIn="ngForm" (ngSubmit)="LoginService.logIn(userLogIn.value)">
       <div>
         <input
           required
@@ -46,7 +46,7 @@
       </div>
       <div class="btn-container">
         <button type="submit" class="login-btn">Log in</button>
-        <button type="button" (click)="guestLogIn()" class="guest-login-btn">Guest log in</button>
+        <button type="button" (click)="LoginService.guestLogIn()" class="guest-login-btn">Guest log in</button>
       </div>
     </form>
     <!-- <form action="" onsubmit="logIn();return false;">
