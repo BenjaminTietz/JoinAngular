@@ -19,6 +19,7 @@ export class ContactsComponent {
   @ViewChild('inputPhone') inputPhone: ElementRef;
   @ViewChild('addContactContainer') addContactContainer: ElementRef;
   @ViewChild('editContactContainer') editContactContainer: ElementRef;
+  @ViewChild('mobileDetailView') mobileDetailView: ElementRef;
 
   selectedContactIndex: number = -1; // Initialisieren mit -1, um kein Element anzuzeigen
   selectedContact: ArraysService['contacts'][number] | null;
@@ -148,5 +149,8 @@ async extractInitials() {
   }
   showEditSlider() {
     this.editContactContainer.nativeElement.classList.toggle('show-slider');
+  }
+  showMobileDetailView() {
+    this.mobileDetailView.nativeElement.classList.toggle('show-mobile-detailview');
   }
 }

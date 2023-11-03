@@ -252,13 +252,15 @@
         gap: 21px;
         box-sizing: border-box;
         padding-top: 32px;
+        overflow: hidden;
+        width: 100%;
         .contact-detail-container {
             display: flex;
             flex-direction: column;
             animation: slide-in 2s;
-            width: 461px;
+            min-width: 461px;
             height: 318px;
-
+            
             @keyframes slide-in {
                 0% {
                     transform: translateX(150%);
@@ -317,7 +319,7 @@
                 
             }
         }
-        .contact-info {
+           .contact-info {
             display: flex;
             flex-direction: column;
             gap: 15px;
@@ -328,6 +330,159 @@
             
             span {
                 @include OpenSans(700, 16px, 19.2px, $black);
+            }
+        }
+    }
+    .contacts-detailview-mobile {
+        display: none;
+    }
+    .show-mobile-detailview {
+        display: flex!important;
+        transition: all 0.2s ease-in-out;
+        animation: slide-in 1s;
+        .mobile-contact-detail-container {
+            display: flex;
+            flex-direction: column;
+            min-width: 461px;
+            height: 318px;
+
+            .mobile-contact-detail-top {
+                display: flex;
+                flex-direction: row;
+                .mobile-user-circle {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    width: 120px;
+                    height: 120px;
+                    border-radius: 50%;
+                    background-color: rgba(255, 122, 0, 1);
+                    margin-right: 16px;
+                    .mobile-user-initials {
+                        @include Inter(500, 47px, 56.4px, $white);
+                    }
+                }
+
+                .mobile-contact-name-container {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: flex-start;
+                    white-space: nowrap;
+                    .mobile-contact-name {
+                        @include Inter(500, 47px, 56.4px, $black);
+                    }
+
+                    .mobile-btn-container {
+                        display: flex;
+                        justify-content: flex-start;
+                        align-items: center;
+                        width: 158px;
+                        height: 24px;
+                        gap: 16px;
+
+                        .mobile-edit-btn {
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            width: 61px;
+                            height: 24px;
+                            gap: 6px;
+                            cursor: pointer;
+                            @include OpenSans(400, 16px, 19.2px, $dashboard-headline);
+                        }
+                    }
+                }
+                .mobile-close-btn {
+                    width: 31px;
+                    height: 31px;
+                    margin-top: 24px;
+                    margin-left: 16px;
+
+                    &:hover {
+                        cursor: pointer;
+                        transform: scale(1.5);
+                        transition: all 0.2s ease-in-out;
+                    }
+                }
+            }
+        }
+           .mobile-contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            @include OpenSans(400, 16px, 19.2px, $black);
+            h2 {
+                @include OpenSans(700, 23px, 27.6px, $black);
+            }
+            
+            span {
+                @include OpenSans(700, 16px, 19.2px, $black);
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .contacts-wrapper {
+        position: relative;
+        margin-left: 0px;
+        width: 100vw;
+        max-width: 100%;
+        height: calc(100vh - 96px);
+        max-height: 100%;
+        gap: 0px;
+        padding-left: 0px;
+        overflow: hidden;
+        .contacts-left {
+            width: 100%;
+            height: 100%;
+            .contacts-left-container {
+                width: 100%;
+                height: 77px;
+                padding: 15px 24px 15px 24px;
+                gap: 35px;
+                border-radius: 20px;
+            }
+            .contacts-left-btn-container {
+                width: 100%;
+                height: 104px;
+                padding: 32px 24px 13px 24px;
+                gap: 10px;
+                .add-contact-btn {
+                    width: 100%;
+                    height: 56px;
+                    border-radius: 10px;
+                    border-style: none;
+                    background-color: $light-blue;
+                    padding: 10px 35px 10px 35px;
+                    @include OpenSans(400, 23px, 27.6px, $white);
+                    cursor: pointer;
+                    img {
+                        width: 32px;
+                        height: 32px;
+                        margin-left: 16px;
+                    }
+                }
+            }
+        }
+
+        .contacts-right {
+            display: none;
+        }
+        .contacts-detailview-mobile {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            max-width: 100%;
+            height: 100vh;
+            height: 100%;
+            background-color: white;
+            padding-left: 16px;
+            overflow: hidden;
+            .contact-detail-container {
+                min-width: 100%;
             }
         }
     }

@@ -111,15 +111,15 @@
       </form>
     </div>
   </div>
-  <!--Hidden Edit Contact Container-->
-  <!--Hidden Container-->
+  <!--end of Hidden Edit Contact Container-->
+  <!--end of Hidden Container-->
   <div class="contacts-left">
     <div class="contacts-left-btn-container">
       <div class="add-contact-btn" (click)="showSlider()">
         Add contact<img src="assets/img/contacts/person_add.png" />
       </div>
     </div>
-    <div *ngFor="let contact of this.ArraysService.contacts; let i = index" id="contact-{{i}}" (click)="getContactById(i)" class="contacts-left-container">
+    <div *ngFor="let contact of this.ArraysService.contacts; let i = index" id="contact-{{i}}" (click)="getContactById(i);showMobileDetailView() " class="contacts-left-container">
       <div [style.background-color]="this.ArraysService.contacts[i].color" class="contacts-left-usercircle">AM</div>
       <div class="contacts-left-content">
         <div class="contacts-left-content-name">{{ contact.name }}</div>
@@ -158,4 +158,36 @@
       </div>
     </div>
   </div>
+  <!--mobile contact detail Container-->
+  <div #mobileDetailView class="contacts-detailview-mobile">
+    <div *ngIf="selectedContactIndex !== -1 && ammountOfDisplayedcontacts > 0" class="mobile-contact-detail-container">
+      <div class="mobile-contact-detail-top">
+        <div [style.background-color]="this.ArraysService.contacts[selectedContactIndex].color" class="mobile-user-circle">
+          <div class="mobile-user-initials">AM</div>
+        </div>
+        <div class="mobile-contact-name-container">
+          <div class="mobile-contact-name">{{ this.ArraysService.contacts[selectedContactIndex].name }}</div>
+          <div class="mobile-btn-container">
+            <div (click)="showEditSlider()" class="mobile-edit-btn">
+              <img src="assets/img/contacts/edit.svg" alt="edit_icon" />
+              <span>Edit</span>
+            </div>
+            <div (click)="deleteContact()" class="mobile-edit-btn">
+              <img src="assets/img/contacts/delete.svg" alt="delete_icon" />
+              <span>Delete</span>
+            </div>
+          </div>
+        </div>
+        <img (click)="showMobileDetailView()" class="mobile-close-btn" src="assets/img/contacts/arrow-left-line.png" />
+      </div>
+      <div class="mobile-contact-info">
+        <h2>Contact Information</h2>
+        <span>Email</span>
+        <div class="mobile-contact-email">{{ this.ArraysService.contacts[selectedContactIndex].email }}</div>
+        <span>Phone</span>
+        <div class="mobile-contact-phone">{{ this.ArraysService.contacts[selectedContactIndex].phone }}</div>
+      </div>
+    </div>
+  </div>
+  <!--end of mobile contact detail Container-->
 </div>
