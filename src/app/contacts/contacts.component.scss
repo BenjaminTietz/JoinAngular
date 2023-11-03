@@ -161,6 +161,7 @@
 
 
     .contacts-left {
+        position: relative;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
@@ -243,6 +244,22 @@
                     margin-left: 16px;
                 }
             }
+        }
+
+        .mobile-add-contact-container {
+            position: absolute;
+            bottom: 100px;
+            right: 32px;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            width: 64px;
+            height: 64px;
+            border-radius: 10px;
+            background-color: $light-blue;
+            box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.16);
+            gap: 10px;
+            padding: 16px;
         }
     }
 
@@ -334,7 +351,87 @@
         }
     }
     .contacts-detailview-mobile {
+        position: relative;
         display: none;
+        
+        .mobile-edit-contact-container {
+            position: absolute;
+            bottom: 100px;
+            right: 32px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 64px;
+            height: 64px;
+            border-radius: 10px;
+            background-color: $light-blue;
+            box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.16);
+            gap: 10px;
+            padding: 16px;
+            cursor: pointer;
+        }
+        .mobile-menu-wrapper {
+            position: absolute;
+            bottom: 196px;
+            right: 130px;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-sizing: border-box;
+            width: 116px;
+            height: 100px;
+            border-radius: 20px 20px 0px 20px;
+            padding: 10px;
+            background-color: $white;
+            box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.16);
+
+            .mobile-edit-btn {
+                display: flex;
+                justify-content: space-evenly;
+                align-items: center;
+                box-sizing: border-box;
+                width: 96px;
+                height: 40px;
+                padding: 8px;
+                gap: 8px;
+                cursor: pointer;
+
+                span {
+                    @include OpenSans(400, 16px, 19.2px, $dashboard-headline);
+                }
+
+                img {
+                    width: 24px;
+                    height: 24px;
+                }
+            }
+            
+            .mobile-delete-btn {
+                display: flex;
+                justify-content: space-evenly;
+                align-items: center;
+                box-sizing: border-box;
+                width: 96px;
+                height: 40px;
+                padding: 8px;
+                gap: 8px;
+                cursor: pointer;
+                span {
+                    @include OpenSans(400, 16px, 19.2px, $dashboard-headline);
+                }
+
+                img {
+                    width: 24px;
+                    height: 24px;
+                }
+            }
+        }
+    }
+    .show-mobile-contact-menu {
+        display: flex!important;
+        transition: all 0.2s ease-in-out;
+        animation: slide-in 1s;
     }
     .show-mobile-detailview {
         display: flex!important;
@@ -373,25 +470,6 @@
                         @include Inter(500, 47px, 56.4px, $black);
                     }
 
-                    .mobile-btn-container {
-                        display: flex;
-                        justify-content: flex-start;
-                        align-items: center;
-                        width: 158px;
-                        height: 24px;
-                        gap: 16px;
-
-                        .mobile-edit-btn {
-                            display: flex;
-                            justify-content: center;
-                            align-items: center;
-                            width: 61px;
-                            height: 24px;
-                            gap: 6px;
-                            cursor: pointer;
-                            @include OpenSans(400, 16px, 19.2px, $dashboard-headline);
-                        }
-                    }
                 }
                 .mobile-close-btn {
                     width: 31px;
@@ -437,6 +515,9 @@
         .contacts-left {
             width: 100%;
             height: 100%;
+            .contacts-left-btn-container {
+                display: none;
+            }
             .contacts-left-container {
                 width: 100%;
                 height: 77px;
@@ -464,6 +545,9 @@
                         margin-left: 16px;
                     }
                 }
+            }
+            .mobile-add-contact-container {
+                display: flex;
             }
         }
 

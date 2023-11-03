@@ -20,6 +20,7 @@ export class ContactsComponent {
   @ViewChild('addContactContainer') addContactContainer: ElementRef;
   @ViewChild('editContactContainer') editContactContainer: ElementRef;
   @ViewChild('mobileDetailView') mobileDetailView: ElementRef;
+  @ViewChild('mobileMenuWrapper') mobileMenuWrapper: ElementRef;
 
   selectedContactIndex: number = -1; // Initialisieren mit -1, um kein Element anzuzeigen
   selectedContact: ArraysService['contacts'][number] | null;
@@ -151,6 +152,14 @@ async extractInitials() {
     this.editContactContainer.nativeElement.classList.toggle('show-slider');
   }
   showMobileDetailView() {
-    this.mobileDetailView.nativeElement.classList.toggle('show-mobile-detailview');
+    let currentBrowserWidth = window.innerWidth;
+    if (currentBrowserWidth < 1200) {
+      this.mobileDetailView.nativeElement.classList.toggle('show-mobile-detailview');
+    }
   }
+  openMobileContactMenu() {
+    console.log('openMobileContactMenu');
+    this.mobileMenuWrapper.nativeElement.classList.toggle('show-mobile-contact-menu');
+  }
+
 }
