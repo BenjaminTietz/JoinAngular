@@ -14,7 +14,7 @@
   padding: 66px 0px 66px 0px;
   gap: 235px;
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.16);
-
+  background-color: $bg-color;
   .sidebar-top {
     display: flex;
     flex-direction: column;
@@ -80,7 +80,7 @@
     gap: 0px;
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.16);
     background-color: $white;
-
+    background-color: $bg-color;
     .sidebar-top {
       display: flex;
       flex-direction: row;

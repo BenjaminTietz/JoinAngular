@@ -1,198 +1,49 @@
+<!--Summary desktop version-->
 <div class="dashboard-wrapper">
-<!-- Hidden floating Add Task Container-->
-<!-- <div class="addtask-wrapper">
-  <div class="addtask-left">
-    <div class="headline">
-      <h1>Add Task</h1>
-    </div>
-    <form #addTaskForm="ngForm" (ngSubmit)="addTask(addTaskForm.value)">
-      <div class="addtask-left-top">
-        <input
-          #inputTitle
-          formControlname="title"
-          name="title"
-          type="text"
-          placeholder="Enter a title"
-          ngModel
-        />
-        <h2>Description <span>(optional)</span></h2>
-        <textarea
-          #inputDescription
-          formControlname="description"
-          name="description"
-          type="text"
-          placeholder="Enter a description"
-          ngModel
-          cols="30"
-          rows="10"
-        ></textarea>
-        <h2>Due date</h2>
-        <input
-          #inputDate
-          formControlname="date"
-          name="date"
-          type="date"
-          placeholder="dd/mm/yyyy"
-          ngModel
-        />
-      </div>
-      <div class="addtask-left-prio">
-        <h2>Priority <span>(optional)</span></h2>
-        <div class="prio-box">
-          <div class="prio-container" (click)="selectPriority('urgent')">
-            <span>Urgent</span>
-            <img src="assets/img/addtask/prio_urgent.svg" alt="prio_icon" />
-          </div>
-          <div class="prio-container" (click)="selectPriority('medium')">
-            <span>Medium</span>
-            <img src="assets/img/addtask/prio_medium.svg" alt="prio_icon" />
-          </div>
-          <div class="prio-container" (click)="selectPriority('low')">
-            <span>Low</span>
-            <img src="assets/img/addtask/prio_low.svg" alt="prio_icon" />
-          </div>
-        </div>
-      </div>
-      <div class="addtask-assigned-box">
-        <h2>Assigned to<span>(optional)</span></h2>
-        <div class="assigned-contacts">
-          <div class="assigned-dropdown-menu">
-            <span>Select contacts to assign</span>
-            <div
-              *ngIf="!assignedDropdownVisible"
-              (click)="showAssignDropdown()"
-              class="arrow-container"
-            >
-              <img
-                src="assets/img/addtask/arrow_drop_down.png"
-                alt="arrow_down"
-              />
-            </div>
-            <div
-              *ngIf="assignedDropdownVisible"
-              (click)="showAssignDropdown()"
-              class="arrow-container"
-            >
-              <img
-                src="assets/img/addtask/arrow_drop_down_up.png"
-                alt="arrow_down"
-              />
-            </div>
-          </div>
-            <div
-              *ngFor="let contact of this.ArraysService.contacts; let i = index"
-              class="assigned-dropdown"
-              #assignedDropdown
-            >
-              <div class="assigned-user-circle">
-                <div class="assigned-user-Initials">AT</div>
-              </div>
-              <span class="assigned-user-name">{{ contact.name }}</span>
-              <input
-                type="checkbox"
-                [(ngModel)]="contact.selected"
-                name="assigned"
-                [value]="contact.name"
-              />
-            </div>
-          </div>
-        </div>
-      <div class="addtask-left-bottom">
-        <h2>Category</h2>
-        <select
-          #inputCategory
-          formControlname="category"
-          class="inputfield-add-task"
-          type="text"
-          required
-          name="category"
-          ngModel
-        >
-          <option value="" disabled selected>Select a category</option>
-          <option class="sales" value="sales">Sales</option>
-          <option class="marketing" value="marketing">Marketing</option>
-          <option class="accounting" value="accounting">Accounting</option>
-          <option class="development" value="development">Development</option>
-          <option class="purchase" value="purchase">Purchase</option>
-        </select>
-      </div>
-      <div class="addtask-left-bottom">
-        <h2>Subtasks<span>(optional)</span></h2>
-        <input
-          #inputSubtask
-          formControlname="subtask"
-          name="subtask"
-          type="text"
-          placeholder="Enter a subtask"
-          ngModel
-        />
-      </div>
-      <div class="addtask-right">
-        <div class="btn-container">
-          <button type="button" class="clear-btn">
-            Clear<img src="assets/img/addtask/clear_btn.svg" />
-          </button>
-          <button type="submit" class="create-btn">
-            Create Task<img src="assets/img/addtask/create_btn.svg" />
-          </button>
-        </div>
-      </div>
-    </form>
-  </div>
-</div>
- -->
-
-
-<!-- End of Hidden floating Add Task Container-->
   <div class="headline">
-    <h1>{{ loginService.userGreeting }}, <span>{{loginService.currentUser}}</span></h1>
+    <h1>
+      {{ loginService.userGreeting }},
+      <span>{{ loginService.currentUser }}</span>
+    </h1>
   </div>
   <div class="task-overview">
     <div class="task-overview-top">
-      <div (click)="selectComponent('app-board')"  class="task-overview-top-left">
-
+      <div
+        (click)="selectComponent('app-board')"
+        class="task-overview-top-left"
+      >
         <div class="urgent-tasks">
-            <div class="urgent-tasks-top">
-                <img
-                src="assets/img/summary/tasks_urgent.png"
-                alt="icon"
-              />
-                <span>{{TaskArrayService.urgent.length}}</span>
-            </div>
-            <span>Tasks Urgent</span>
+          <div class="urgent-tasks-top">
+            <img src="assets/img/summary/tasks_urgent.png" alt="icon" />
+            <span>{{ TaskArrayService.urgent.length }}</span>
+          </div>
+          <span>Tasks Urgent</span>
         </div>
 
         <div class="horizontal-line"></div>
 
         <div class="deadline">
-            <div class="date">{{TaskArrayService.nearestUrgendTaskDate}}</div>
-            <span>Upcomming Deadline</span>
+          <div class="date">{{ TaskArrayService.nearestUrgendTaskDate }}</div>
+          <span>Upcomming Deadline</span>
         </div>
-
       </div>
       <div class="task-overview-top-right">
         <div (click)="selectComponent('app-board')" class="task-container">
-            <div class="task-container-top">
-              <img
-                src="assets/img/summary/tasks_board.png"
-                alt="icon"
-              />
-              <span>{{TaskArrayService.tasks.length}}</span>
-            </div>
-            <div class="task-container-bottom">
-              <span>Tasks in Board</span>
-            </div>
+          <div class="task-container-top">
+            <img src="assets/img/summary/tasks_board.png" alt="icon" />
+            <span>{{ TaskArrayService.tasks.length }}</span>
           </div>
+          <div class="task-container-bottom">
+            <span>Tasks in Board</span>
+          </div>
+        </div>
       </div>
     </div>
     <div class="task-overview-bottom">
       <div (click)="selectComponent('app-board')" class="task-container">
         <div class="task-container-top">
-          <img
-            src="assets/img/summary/tasks_todo.png"
-            alt="icon"
-          />
-          <span>{{TaskArrayService.toDo.length}}</span>
+          <img src="assets/img/summary/tasks_todo.png" alt="icon" />
+          <span>{{ TaskArrayService.toDo.length }}</span>
         </div>
         <div class="task-container-bottom">
           <span>Tasks To-do</span>
@@ -200,11 +51,8 @@
       </div>
       <div (click)="selectComponent('app-board')" class="task-container">
         <div class="task-container-top">
-          <img
-            src="assets/img/summary/tasks_progress.png"
-            alt="icon"
-          />
-          <span>{{TaskArrayService.inProgress.length}}</span>
+          <img src="assets/img/summary/tasks_progress.png" alt="icon" />
+          <span>{{ TaskArrayService.inProgress.length }}</span>
         </div>
         <div class="task-container-bottom">
           <span>Tasks in progress</span>
@@ -212,11 +60,8 @@
       </div>
       <div (click)="selectComponent('app-board')" class="task-container">
         <div class="task-container-top">
-          <img
-            src="assets/img/summary/tasks_feedback.png"
-            alt="icon"
-          />
-          <span>{{TaskArrayService.awaitFeedback.length}}</span>
+          <img src="assets/img/summary/tasks_feedback.png" alt="icon" />
+          <span>{{ TaskArrayService.awaitFeedback.length }}</span>
         </div>
         <div class="task-container-bottom">
           <span>Awaiting Feedback</span>
@@ -224,11 +69,8 @@
       </div>
       <div (click)="selectComponent('app-board')" class="task-container">
         <div class="task-container-top">
-          <img
-            src="assets/img/summary/tasks_done.png"
-            alt="icon"
-          />
-          <span>{{TaskArrayService.done.length}}</span>
+          <img src="assets/img/summary/tasks_done.png" alt="icon" />
+          <span>{{ TaskArrayService.done.length }}</span>
         </div>
         <div class="task-container-bottom">
           <span>Tasks Done</span>
@@ -237,3 +79,86 @@
     </div>
   </div>
 </div>
+<!--end of Summary desktop version-->
+<div class="dashboard-mobile-wrapper">
+  <!-- <div class="headline">
+    <h1>{{ loginService.userGreeting }}, <span>{{loginService.currentUser}}</span></h1>
+  </div> -->
+  <div class="task-overview">
+
+      <div
+        (click)="selectComponent('app-board')"
+        class="task-overview-top"
+      >
+        <div class="urgent-tasks">
+          <div class="urgent-tasks-top">
+            <img src="assets/img/summary/tasks_urgent.png" alt="icon" />
+            <span>{{ TaskArrayService.urgent.length }}</span>
+          </div>
+          <span>Tasks Urgent</span>
+        </div>
+
+        <div class="horizontal-line"></div>
+
+        <div class="deadline">
+          <div class="date">{{ TaskArrayService.nearestUrgendTaskDate }}</div>
+          <span>Upcomming Deadline</span>
+        </div>
+      </div>
+
+    <div (click)="selectComponent('app-board')" class="task-toDo-container">
+      <div class="task-container-left">
+        <img src="assets/img/summary/tasks_todo.png" alt="icon" />
+      </div>
+      <span>{{ TaskArrayService.toDo.length }}</span>
+      <div class="task-container-right">
+        <span>Tasks To-do</span>
+      </div>
+    </div>
+    <div class="task-overview-bottom">
+      <div class="task-overview-row">
+          <div (click)="selectComponent('app-board')" class="task-container">
+            <div class="task-container-top">
+              <img src="assets/img/summary/tasks_board.png" alt="icon" />
+              <span>{{ TaskArrayService.tasks.length }}</span>
+            </div>
+            <div class="task-container-bottom">
+              <span>Tasks in Board</span>
+            </div>
+          </div>
+        <div (click)="selectComponent('app-board')" class="task-container">
+          <div class="task-container-top">
+            <img src="assets/img/summary/tasks_progress.png" alt="icon" />
+            <span>{{ TaskArrayService.inProgress.length }}</span>
+          </div>
+          <div class="task-container-bottom">
+            <span>Tasks in progress</span>
+          </div>
+        </div>
+      </div>
+      <div class="task-overview-row">
+        <div (click)="selectComponent('app-board')" class="task-container">
+          <div class="task-container-top">
+            <img src="assets/img/summary/tasks_feedback.png" alt="icon" />
+            <span>{{ TaskArrayService.awaitFeedback.length }}</span>
+          </div>
+          <div class="task-container-bottom">
+            <span>Awaiting Feedback</span>
+          </div>
+        </div>
+        <div (click)="selectComponent('app-board')" class="task-container">
+          <div class="task-container-top">
+            <img src="assets/img/summary/tasks_done.png" alt="icon" />
+            <span>{{ TaskArrayService.done.length }}</span>
+          </div>
+          <div class="task-container-bottom">
+            <span>Tasks Done</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--Summary mobile version-->
+
+<!--end of Summary mobile version-->

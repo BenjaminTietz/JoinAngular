@@ -14,7 +14,8 @@
   height: calc(100vh - 96px);
   gap: 72px;
   padding-left: 72px;
-
+  background-color: $bg-color;
+  
   .floating-task-wrapper {
     display: none;
     justify-content: center;

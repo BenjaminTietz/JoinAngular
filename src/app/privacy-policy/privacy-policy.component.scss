@@ -13,7 +13,7 @@
     height: calc(100vh - 96px);
     gap: 30px;
     padding-left: 32px;
-
+    background-color: $bg-color;
     .privacy-headline {
         display: flex;
         justify-content: space-between;

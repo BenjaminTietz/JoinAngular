@@ -11,6 +11,8 @@
   width: calc(100vw - 232px);
   height: calc(100vh - 96px);
   gap: 72px;
+  background-color: $bg-color;
+  overflow: hidden;
 
   .addtask-left {
     box-sizing: border-box;
@@ -255,7 +257,8 @@
     padding-bottom: 76px;
     width: 100vw;
     max-width: 100%;
-    height: calc(100vh - 156px);
+    height: calc(100vh - 74px);
+    max-height: 100%;
     gap: 16px;
 
     .addtask-right {

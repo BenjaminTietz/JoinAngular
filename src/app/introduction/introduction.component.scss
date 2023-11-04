@@ -13,7 +13,7 @@
   width: calc(100vw - 256px);
   height: calc(100vh - 96px);
   gap: 30px;
-
+  background-color: $bg-color;
   span {
     @include OpenSans(400, 16px, 19.2px, $black);
 
