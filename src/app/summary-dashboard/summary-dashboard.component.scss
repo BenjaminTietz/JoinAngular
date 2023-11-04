@@ -12,7 +12,7 @@
   width: calc(100vw - 232px);
   height: calc(100vh - 96px);
   gap: 72px;
-
+  background-color: $bg-color;
   .headline {
     h1 {
       @include OpenSans(400, 48px, 57.6px, $dashboard-headline);
@@ -49,7 +49,10 @@
         background-color: $light-blue;
         box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.16);
         cursor: pointer;
-
+        &:hover {
+          transition: all 0.2s ease-in-out;
+          transform: scale(1.05);
+        }
         .urgent-tasks {
           display: flex;
           flex-direction: column;
@@ -114,16 +117,19 @@
         border-width: 2px;
         border-color: $boarder-color;
         box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.16);
+        cursor: pointer;
         &:hover {
           background-color: $menu-hover;
+          transition: all 0.2s ease-in-out;
+          transform: scale(1.05);
         }
+
         .task-container {
           box-sizing: border-box;
           display: flex;
           flex-direction: column;
           justify-content: center;
           align-items: center;
-          cursor: pointer;
 
           .task-container-top {
             display: flex;
@@ -179,6 +185,8 @@
         cursor: pointer;
         &:hover {
           background-color: $menu-hover;
+          transition: all 0.2s ease-in-out;
+          transform: scale(1.05);
         }
         .task-container-top {
           display: flex;
@@ -260,7 +268,10 @@
       background-color: $light-blue;
       box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.16);
       cursor: pointer;
-
+      &:hover {
+        transition: all 0.2s ease-in-out;
+        transform: scale(1.05);
+      }
       .urgent-tasks {
         display: flex;
         flex-direction: column;
@@ -332,34 +343,33 @@
       gap: 12px;
       background-color: $menu-hover;
       box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.16);
+      cursor: pointer;
       &:hover {
-        background-color: $menu-hover;
+        transition: all 0.2s ease-in-out;
+        transform: scale(1.05);
       }
       span {
         @include OpenSans(700, 48px, 57.6px, $black);
       }
-        .task-container-left {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          width: 124px;
+      .task-container-left {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 124px;
+        height: 76px;
+        gap: 20px;
+
+        img {
+          width: 76px;
           height: 76px;
-          gap: 20px;
-
-          img {
-            width: 76px;
-            height: 76px;
-          }
-
-
         }
-        .task-container-right {
-          span {
-            @include OpenSans(400, 19px, 22.8px, $light-blue);
-            white-space: nowrap;
-          }
+      }
+      .task-container-right {
+        span {
+          @include OpenSans(400, 19px, 22.8px, $light-blue);
+          white-space: nowrap;
         }
-      
+      }
     }
     .task-overview-bottom {
       box-sizing: border-box;
@@ -371,7 +381,7 @@
       gap: 24px;
       .task-overview-row {
         display: flex;
-        flex-direction: row;  
+        flex-direction: row;
         justify-content: space-between;
         align-items: center;
         gap: 15px;
@@ -393,6 +403,8 @@
         cursor: pointer;
         &:hover {
           background-color: $menu-hover;
+          transition: all 0.2s ease-in-out;
+          transform: scale(1.05);
         }
         .task-container-top {
           display: flex;
@@ -442,5 +454,77 @@
   }
   .dashboard-mobile-wrapper {
     display: flex;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .dashboard-mobile-wrapper {
+    overflow-y: scroll;
+    justify-content: flex-start;
+    padding-top: 90px;
+    padding-bottom: 90px;
+    height: 100vh;
+    .task-overview {
+      width: 300px;
+      gap: 8px;
+      .task-overview-top {
+        height: 100px;
+        .urgent-tasks {
+          width: 80px;
+          .urgent-tasks-top {
+            img {
+              width: 40px;
+              height: 40px;
+            }
+            span {
+              @include OpenSans(700, 32px, 16.8px, $white);
+              margin-right: 8px;
+            }
+          }
+          span {
+            @include OpenSans(400, 16px, 16.8px, $white);
+            margin-right: 8px;
+            margin-bottom: 14px;
+          }
+        }
+        .deadline {
+          width: 120px;
+          .date {
+            @include OpenSans(700, 16px, 16.8px, $white);
+          }
+          span {
+            @include OpenSans(400, 12px, 12.8px, $white);
+          }
+        }
+      }
+      .task-toDo-container {
+        height:100px;
+      }
+      .task-overview-bottom {
+        gap: 8px;
+        .task-container {
+          width: 145px;
+          height: 115px;
+          padding: 15px 20px 15px 20px;
+          .task-container-top {
+            width: 80px;
+            height: 80px;
+            gap: 10px;
+            img {
+              width: 60px;
+              height: 60px;
+            }
+            span {
+              @include OpenSans(700, 24px, 24.8px, $black);
+            }
+          }
+          .task-container-bottom {
+            span {
+              @include OpenSans(400, 12px, 12.8px, $light-blue);
+            }
+          }
+        }
+      }
+    }
   }
 }
