@@ -25,6 +25,7 @@ export class AddtaskComponent {
   @ViewChild('addContactContainer') addContactContainer: ElementRef;
   @ViewChild('editContactContainer') editContactContainer: ElementRef;
 
+
   form: FormGroup;
 
   constructor(
@@ -47,7 +48,7 @@ export class AddtaskComponent {
 
   showAssignDropdown() {
     this.assignedDropdown.nativeElement.classList.toggle(
-      'show-assigned-dropdown-container'
+      'show-assigned-dropdown'
     );
     if (this.TaskArraysService.assignedDropdownVisible == false) {
       this.TaskArraysService.assignedDropdownVisible = true;
@@ -55,6 +56,8 @@ export class AddtaskComponent {
       this.TaskArraysService.assignedDropdownVisible = false;
     }
   }
+
+
 }
 
 

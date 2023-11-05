@@ -16,10 +16,17 @@
 
   .addtask-left {
     box-sizing: border-box;
-    width: 488px;
-    height: 928px;
-    padding: 64px 24px 0px 24px;
+    max-width: 100%;
+    height: 100vh;
+    max-height: 100%;
+    padding: 0px 24px 0px 24px;
     gap: 24px;
+
+    form {
+      position: relative input {
+        width: 100%;
+      }
+    }
   }
 
   .headline {
@@ -37,7 +44,9 @@
     height: 361px;
     gap: 12px;
 
-    div {
+    .input-wrapper {
+      width: 100vw;
+      max-width: 100%;
       input {
         width: 100%;
         height: 64px;
@@ -60,6 +69,7 @@
           }
         }
       }
+    }
     h2 {
       @include OpenSans(700, 19px, 22.8px, $menu-color);
     }
@@ -69,12 +79,12 @@
     }
 
     textarea {
-      width: 100%;
+      width: 100vw!important;
+      max-width: 100%;
       height: 123px;
       gap: 4px;
     }
   }
-}
 
   .addtask-left-prio {
     display: flex;
@@ -173,35 +183,23 @@
       }
     }
   }
-  .assigned-user {
+  .addtask-assigned-box {
+    position: relative;
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    flex-direction: column;
+    justify-content: flex-start;
     align-items: flex-start;
-    width: 440px;
-    height: 59px;
     gap: 8px;
-    margin-top: 16px;
-
-    .assigned-user-circle {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-
-      .assigned-user-Initials {
-        @include OpenSans(400, 19px, 22.8px, $white);
-      }
-    }
-    h2 {
-      @include OpenSans(700, 19px, 22.8px, $menu-color);
-    }
+    width: 440px;
+    height: 79px;
+    margin-top: 22px;
+    background-color: $bg-color;
 
     .assigned-contacts {
       position: relative;
-
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
       .assigned-dropdown-menu {
         display: flex;
         flex-direction: row;
@@ -209,28 +207,74 @@
         align-items: center;
         box-sizing: border-box;
         width: 440px;
-        height: 79px;
+        height: 22px;
         gap: 8px;
-        padding: 12px 16px 12px 16px;
+        padding: unset;
         border: 0px 0px 1px 0px solid $input-boarder;
         background-color: $bg-color;
         span {
           @include OpenSans(400, 19px, 22.8px, $menu-color);
         }
-        .arrow-container {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          width: 24px;
-          height: 24px;
-          border-radius: 72px;
+      }
+      .arrow-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 24px;
+        height: 24px;
+        border-radius: 72px;
 
-          &:hover {
-            background-color: $menu-hover;
-          }
+        &:hover {
+          background-color: $menu-hover;
         }
       }
     }
+    .assigned-dropdown-container {
+      position: absolute !important;
+      top: 104px;
+      display: none;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      position: absolute;
+      box-sizing: border-box;
+      background-color: $bg-color;
+      overflow-y: scroll;
+      max-height: 160px;
+      border: 1px solid $black !important;
+      .assigned-user {
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+        width: 440px;
+        height: 59px;
+        padding: 12px 16px 12px 16px;
+
+        .assigned-user-circle {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+
+          .assigned-user-Initials {
+            @include OpenSans(400, 19px, 22.8px, $white);
+          }
+        }
+        h2 {
+          @include OpenSans(700, 19px, 22.8px, $menu-color);
+        }
+        span {
+          @include OpenSans(400, 19px, 22.8px, $menu-color);
+        }
+      }
+    }
+  }
+  .show-assigned-dropdown {
+    display: flex !important;
   }
 
   .addtask-left-bottom {
@@ -243,6 +287,43 @@
     height: 79px;
     margin-top: 22px;
 
+    select {
+      width: 105%;
+      height: 64px;
+      gap: 10px;
+      border-top: none;
+      border-left: none;
+      border-right: none;
+      border-bottom: 1px solid $input-boarder;
+      background-color: $bg-color;
+      @include OpenSans(400, 19px, 22.8px, $menu-color);
+    }
+    .input-wrapper {
+      width: 100vw;
+      max-width: 100%;
+      input {
+        width: 100%;
+        height: 64px;
+        gap: 10px;
+        border-top: none;
+        border-left: none;
+        border-right: none;
+        border-bottom: 1px solid $input-boarder;
+        padding: 13px 16px 13px 16px;
+
+        &.ng-touched,
+        &.ng-dirty {
+          &.ng-invalid {
+            border: 1px solid $red;
+            border-radius: 10px;
+          }
+          &.ng-valid {
+            border: 1px solid $green;
+            border-radius: 10px;
+          }
+        }
+      }
+    }
     h2 {
       @include OpenSans(700, 19px, 22.8px, $menu-color);
     }
@@ -263,56 +344,51 @@
     }
   }
 
-  .addtask-right {
+  .btn-container {
+    position: absolute;
+    bottom: 35px;
     display: flex;
     justify-content: flex-end;
     align-items: flex-end;
-    height: 100%;
-    margin-bottom: 300px;
+    width: 335px;
+    height: 61px;
+    margin-left: 64px;
+    gap: 4px;
 
-    .btn-container {
+    .clear-btn {
       display: flex;
-      justify-content: flex-end;
-      align-items: flex-end;
-      width: 335px;
+      justify-content: center;
+      align-items: center;
+      width: 136px;
       height: 61px;
+      border-radius: 10px;
+      border-width: 1px;
+      border-color: $light-gray;
+      padding: 16px 10px 16px 10px;
       gap: 4px;
+      @include OpenSans(400, 23px, 27.6px, $light-gray);
+      cursor: pointer;
+    }
 
-      .clear-btn {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 136px;
-        height: 61px;
-        border-radius: 10px;
-        border-width: 1px;
-        border-color: $light-gray;
-        padding: 16px 10px 16px 10px;
-        gap: 4px;
-        @include OpenSans(400, 23px, 27.6px, $light-gray);
-        cursor: pointer;
-      }
+    .create-btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-sizing: border-box;
+      white-space: nowrap;
+      width: 174px;
+      height: 60px;
+      border-radius: 10px;
+      border-style: none;
+      background-color: $light-blue;
+      padding: 16px 10px 16px 10px;
+      gap: 4px;
+      @include OpenSans(400, 23px, 27.6px, $white);
+      cursor: pointer;
 
-      .create-btn {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        box-sizing: border-box;
-        white-space: nowrap;
-        width: 174px;
-        height: 60px;
-        border-radius: 10px;
-        border-style: none;
-        background-color: $light-blue;
-        padding: 16px 10px 16px 10px;
-        gap: 4px;
-        @include OpenSans(400, 23px, 27.6px, $white);
-        cursor: pointer;
-
-        &:disabled {
-          background-color: $light-gray;
-          cursor: not-allowed;
-        }
+      &:disabled {
+        background-color: $light-gray;
+        cursor: not-allowed;
       }
     }
   }
@@ -336,6 +412,13 @@
     gap: 16px;
     overflow-y: scroll;
 
+    .addtask-left {
+      .addtask-right {
+        .btn-container {
+        }
+      }
+    }
+
     .addtask-right {
       margin-bottom: 165px;
     }
@@ -345,7 +428,6 @@
 @media screen and (max-width: 600px) {
   .addtask-wrapper {
     .addtask-left {
-      width: 100%;
       padding: 0px 0px 0px 0px;
     }
     .addtask-left-top {
@@ -392,6 +474,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        bottom: -152px;
         width: 100%;
         height: 48px;
         gap: 4px;
@@ -490,6 +573,7 @@
     }
     .addtask-right {
       .btn-container {
+        bottom: -152px;
         .create-btn {
           margin-top: 40px;
         }

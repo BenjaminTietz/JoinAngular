@@ -10,7 +10,7 @@
       "
     >
       <div class="addtask-left-top">
-        <div>
+        <div class="input-wrapper">
           <input
             formControlName="title"
             name="title"
@@ -36,7 +36,6 @@
             placeholder="dd/mm/yyyy"
           />
         </div>
-        div>
       </div>
       <div class="addtask-left-prio">
         <h2>Priority <span>(optional)</span></h2>
@@ -87,16 +86,15 @@
           >
             <img
               src="assets/img/addtask/arrow_drop_down_up.png"
-              alt="arrow_down"
+              alt="arrow_up"
             />
           </div>
         </div>
-        <div
-          *ngFor="let contact of this.ArraysService.contacts; let i = index"
-          class="assigned-dropdown-container"
-          #assignedDropdown
-        >
-          <div class="assigned-user">
+        <div class="assigned-dropdown-container" #assignedDropdown>
+          <div
+            *ngFor="let contact of this.ArraysService.contacts; let i = index"
+            class="assigned-user"
+          >
             <div
               [style.background-color]="this.ArraysService.contacts[i].color"
               class="assigned-user-circle"
@@ -129,7 +127,7 @@
       </div>
       <div class="addtask-left-bottom">
         <h2>Subtasks<span>(optional)</span></h2>
-        <div>
+        <div class="input-wrapper">
           <input
             formControlName="subtask"
             name="subtask"
@@ -138,25 +136,24 @@
           />
         </div>
       </div>
-      <div class="addtask-right">
-        <div class="btn-container">
-          <button type="button" class="clear-btn">
-            Clear<img src="assets/img/addtask/clear_btn.svg" />
-          </button>
-          <button
-            [disabled]="
-              !(
-                this.TaskArraysService.addTaskForm.valid &&
-                (this.TaskArraysService.addTaskForm.dirty ||
-                  this.TaskArraysService.addTaskForm.touched)
-              )
-            "
-            type="submit"
-            class="create-btn"
-          >
-            Create Task<img src="assets/img/addtask/create_btn.svg" />
-          </button>
-        </div>
+
+      <div class="btn-container">
+        <button type="button" class="clear-btn">
+          Clear<img src="assets/img/addtask/clear_btn.svg" />
+        </button>
+        <button
+          [disabled]="
+            !(
+              this.TaskArraysService.addTaskForm.valid &&
+              (this.TaskArraysService.addTaskForm.dirty ||
+                this.TaskArraysService.addTaskForm.touched)
+            )
+          "
+          type="submit"
+          class="create-btn"
+        >
+          Create Task<img src="assets/img/addtask/create_btn.svg" />
+        </button>
       </div>
     </form>
   </div>
