@@ -8,6 +8,9 @@ import {
 import { Router } from '@angular/router';
 import { RemotestorageService } from '../remotestorage.service';
 import { ArraysService } from '../contact-arrays.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 @Component({
   selector: 'app-contacts',
   templateUrl: './contacts.component.html',
@@ -25,6 +28,8 @@ export class ContactsComponent {
   selectedContactIndex: number = -1; // Initialisieren mit -1, um kein Element anzuzeigen
   selectedContact: ArraysService['contacts'][number] | null;
   ammountOfDisplayedcontacts: number = 0;
+
+  form: FormGroup;
 
   userCircleColors: string[] = [
     '#FF7A00',
@@ -46,8 +51,11 @@ export class ContactsComponent {
   constructor(
     private router: Router,
     public RemotestorageService: RemotestorageService,
-    public ArraysService: ArraysService
-  ) {}
+    public ArraysService: ArraysService,
+    private fb: FormBuilder,
+  ) { 
+    this.ArraysService.contactsForm.valueChanges.subscribe(console.log);
+  }
 
   async ngOnInit() {
     this.ammountOfDisplayedcontacts = this.ArraysService.contacts.length;

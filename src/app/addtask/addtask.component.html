@@ -4,38 +4,39 @@
       <h1>Add Task</h1>
     </div>
     <form
-      #addTaskForm="ngForm"
-      (ngSubmit)="this.TaskArraysService.addTask(addTaskForm.value)"
+      [formGroup]="this.TaskArraysService.addTaskForm"
+      (ngSubmit)="
+        this.TaskArraysService.addTask(this.TaskArraysService.addTaskForm.value)
+      "
     >
       <div class="addtask-left-top">
-        <input
-          #inputTitle
-          formControlname="title"
-          name="title"
-          type="text"
-          placeholder="Enter a title"
-          ngModel
-        />
+        <div>
+          <input
+            formControlName="title"
+            name="title"
+            type="text"
+            placeholder="Enter a title"
+          />
+        </div>
         <h2>Description <span>(optional)</span></h2>
         <textarea
-          #inputDescription
-          formControlname="description"
+          formControlName="description"
           name="description"
           type="text"
           placeholder="Enter a description"
-          ngModel
           cols="30"
           rows="10"
         ></textarea>
         <h2>Due date</h2>
-        <input
-          #inputDate
-          formControlname="date"
-          name="date"
-          type="date"
-          placeholder="dd/mm/yyyy"
-          ngModel
-        />
+        <div>
+          <input
+            formControlName="dueDate"
+            name="date"
+            type="date"
+            placeholder="dd/mm/yyyy"
+          />
+        </div>
+        div>
       </div>
       <div class="addtask-left-prio">
         <h2>Priority <span>(optional)</span></h2>
@@ -69,59 +70,54 @@
           <div class="assigned-dropdown-menu">
             <span>Select contacts to assign</span>
           </div>
-            <div
-              *ngIf="!this.TaskArraysService.assignedDropdownVisible"
-              (click)="showAssignDropdown()"
-              class="arrow-container"
-            >
-              <img
-                src="assets/img/addtask/arrow_drop_down.png"
-                alt="arrow_down"
-              />
-            </div>
-            <div
-              *ngIf="this.TaskArraysService.assignedDropdownVisible"
-              (click)="showAssignDropdown()"
-              class="arrow-container"
-            >
-              <img
-                src="assets/img/addtask/arrow_drop_down_up.png"
-                alt="arrow_down"
-              />
-            </div>
+          <div
+            *ngIf="!this.TaskArraysService.assignedDropdownVisible"
+            (click)="showAssignDropdown()"
+            class="arrow-container"
+          >
+            <img
+              src="assets/img/addtask/arrow_drop_down.png"
+              alt="arrow_down"
+            />
           </div>
           <div
+            *ngIf="this.TaskArraysService.assignedDropdownVisible"
+            (click)="showAssignDropdown()"
+            class="arrow-container"
+          >
+            <img
+              src="assets/img/addtask/arrow_drop_down_up.png"
+              alt="arrow_down"
+            />
+          </div>
+        </div>
+        <div
           *ngFor="let contact of this.ArraysService.contacts; let i = index"
-           class="assigned-dropdown-container"
-           #assignedDropdown>
-            <div class="assigned-user"
+          class="assigned-dropdown-container"
+          #assignedDropdown
+        >
+          <div class="assigned-user">
+            <div
+              [style.background-color]="this.ArraysService.contacts[i].color"
+              class="assigned-user-circle"
             >
-              <div   [style.background-color]="
-              this.ArraysService.contacts[i].color" class="assigned-user-circle">
-                <div class="assigned-user-Initials">AT</div>
-              </div>
-              <span class="assigned-user-name">{{ contact.name }}</span>
-              <input
-                type="checkbox"
-                [(ngModel)]="contact.selected"
-                name="assigned"
-                [value]="contact.name"
-              />
+              <div class="assigned-user-Initials">AT</div>
+            </div>
+            <span class="assigned-user-name">{{ contact.name }}</span>
+            <div>
+              <input type="checkbox" name="assigned" />
             </div>
           </div>
         </div>
-
+      </div>
 
       <div class="addtask-left-bottom">
         <h2>Category</h2>
         <select
-          #inputCategory
-          formControlname="category"
+          formControlName="category"
           class="inputfield-add-task"
           type="text"
-          required
           name="category"
-          ngModel
         >
           <option value="" disabled selected>Select a category</option>
           <option class="sales" value="sales">Sales</option>
@@ -133,21 +129,31 @@
       </div>
       <div class="addtask-left-bottom">
         <h2>Subtasks<span>(optional)</span></h2>
-        <input
-          #inputSubtask
-          formControlname="subtask"
-          name="subtask"
-          type="text"
-          placeholder="Enter a subtask"
-          ngModel
-        />
+        <div>
+          <input
+            formControlName="subtask"
+            name="subtask"
+            type="text"
+            placeholder="Enter a subtask"
+          />
+        </div>
       </div>
       <div class="addtask-right">
         <div class="btn-container">
           <button type="button" class="clear-btn">
             Clear<img src="assets/img/addtask/clear_btn.svg" />
           </button>
-          <button type="submit" class="create-btn">
+          <button
+            [disabled]="
+              !(
+                this.TaskArraysService.addTaskForm.valid &&
+                (this.TaskArraysService.addTaskForm.dirty ||
+                  this.TaskArraysService.addTaskForm.touched)
+              )
+            "
+            type="submit"
+            class="create-btn"
+          >
             Create Task<img src="assets/img/addtask/create_btn.svg" />
           </button>
         </div>

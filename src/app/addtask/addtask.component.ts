@@ -9,7 +9,8 @@ import { Router } from '@angular/router';
 import { RemotestorageService } from '../remotestorage.service';
 import { TaskArraysService } from '../task-arrays.service';
 import { ArraysService } from '../contact-arrays.service';
-
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-addtask',
@@ -24,11 +25,14 @@ export class AddtaskComponent {
   @ViewChild('addContactContainer') addContactContainer: ElementRef;
   @ViewChild('editContactContainer') editContactContainer: ElementRef;
 
+  form: FormGroup;
+
   constructor(
     private router: Router,
     public RemotestorageService: RemotestorageService,
     public TaskArraysService: TaskArraysService,
-    public ArraysService: ArraysService
+    public ArraysService: ArraysService,
+    private fb: FormBuilder,
   ) {}
 
   async ngOninit() {

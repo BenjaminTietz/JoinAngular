@@ -17,38 +17,84 @@
     <div class="add-contact-bottom">
       <img src="assets/img/contacts/user-circle-add-contact.png" />
       <form
-        #addContactForm="ngForm"
-        (ngSubmit)="addContact(addContactForm.value)"
+        [formGroup]="this.ArraysService.contactsForm"
+        (ngSubmit)="this.addContact(this.ArraysService.contactsForm.value)"
       >
+      <div>
         <input
-          #inputName
-          formControlname="name"
+          formControlName="name"
           name="name"
           type="text"
           placeholder="Name"
-          ngModel
         />
+      </div>
+      <ng-container
+      *ngIf="
+        this.ArraysService.contactsForm.controls['name'].dirty ||
+        this.ArraysService.contactsForm.controls['name'].touched
+      "
+    >
+      <p
+        class="error-message"
+        *ngIf="this.ArraysService.contactsForm.controls['name'].errors"
+      >
+        Enter correct Name
+      </p>
+    </ng-container>
+      <div>
         <input
-          #inputEmail
-          formControlname="email"
+          formControlName="email"
           name="email"
           type="email"
           placeholder="Email"
-          ngModel
         />
+      </div>
+      <ng-container
+      *ngIf="
+        this.ArraysService.contactsForm.controls['email'].dirty ||
+        this.ArraysService.contactsForm.controls['email'].touched
+      "
+    >
+      <p
+        class="error-message"
+        *ngIf="this.ArraysService.contactsForm.controls['email'].errors"
+      >
+        Enter valid email adress
+      </p>
+    </ng-container>
+    <div>
         <input
-          #inputPhone
-          formControlname="phone"
+          formControlName="phone"
           name="phone"
           type="phone"
           placeholder="Phone"
-          ngModel
         />
+      </div>
+      <ng-container
+      *ngIf="
+        this.ArraysService.contactsForm.controls['phone'].dirty ||
+        this.ArraysService.contactsForm.controls['phone'].touched
+      "
+    >
+      <p
+        class="error-message"
+        *ngIf="this.ArraysService.contactsForm.controls['phone'].errors"
+      >
+        Enter correct phone number
+      </p>
+    </ng-container>
         <div class="add-contact-btn">
           <button class="cancel-btn" (click)="showSlider()" type="button">
             Cancel<img src="assets/img/contacts/cancel.png" />
           </button>
-          <button class="create-btn" type="submit">
+          <button class="create-btn" type="submit"
+          [disabled]="
+          !(
+            this.ArraysService.contactsForm.valid &&
+            (this.ArraysService.contactsForm.dirty ||
+              this.ArraysService.contactsForm.touched)
+          )
+        ">
             Create contact<img src="assets/img/contacts/create.png" />
           </button>
         </div>
@@ -207,7 +253,6 @@
           <div class="mobile-contact-name">
             {{ this.ArraysService.contacts[selectedContactIndex].name }}
           </div>
-
         </div>
         <img
           (click)="showMobileDetailView()"
@@ -227,7 +272,10 @@
         </div>
       </div>
     </div>
-    <div (click)="openMobileContactMenu()" class="mobile-edit-contact-container">
+    <div
+      (click)="openMobileContactMenu()"
+      class="mobile-edit-contact-container"
+    >
       <img src="assets/img/contacts/mobile_open_menu.png" />
     </div>
     <!--hidden mobile edit contact menu-->

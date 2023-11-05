@@ -1,13 +1,47 @@
 import { Injectable, OnInit } from '@angular/core';
 import { RemotestorageService } from './remotestorage.service';
 import { ContactsComponent } from './contacts/contacts.component';
+import {
+  FormBuilder,
+  FormGroup,
+  FormControl,
+  Validators,
+} from '@angular/forms';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class ArraysService {
+  public contactsForm: FormGroup = new FormGroup({
+    name: new FormControl('', [Validators.required]),
+    email: new FormControl('', [
+      Validators.required,
+      Validators.minLength(4),
+      Validators.email,
+    ]),
+    phone: new FormControl('', [
+      Validators.required,
+      Validators.minLength(4),
+      Validators.pattern('[- +()0-9]+')
+    ]),
+  });
 
-  constructor(public RemotestorageService: RemotestorageService) { }
+    public contactsFormFB: FormGroup;
+
+  constructor(
+    public RemotestorageService: RemotestorageService,
+    private fb: FormBuilder,
+    ) 
+
+    {
+      this.contactsFormFB = this.fb.group({
+        email: ['', [Validators.required, Validators.email]],
+        password: ['', [Validators.required, Validators.minLength(6)]],
+      });
+      this.contactsFormFB.valueChanges.subscribe(console.log);
+  
+    }
 
   ngOnInit() {
     this.loadContacts();

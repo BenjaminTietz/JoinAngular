@@ -2,6 +2,12 @@ import { Injectable, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { RemotestorageService } from './remotestorage.service';
 import { ArraysService } from './contact-arrays.service';
 import { AddtaskComponent } from './addtask/addtask.component';
+import {
+  FormBuilder,
+  FormGroup,
+  FormControl,
+  Validators,
+} from '@angular/forms';
 
 @Injectable({
   providedIn: 'root',
@@ -13,11 +19,29 @@ export class TaskArraysService {
   @ViewChild('inputPhone') inputPhone: ElementRef;
   @ViewChild('addContactContainer') addContactContainer: ElementRef;
   @ViewChild('editContactContainer') editContactContainer: ElementRef;
+
+
+  public addTaskForm: FormGroup = new FormGroup({
+    title: new FormControl('', [Validators.required]),
+    description: new FormControl('', []),
+    dueDate: new FormControl('', [Validators.required]),
+    category: new FormControl('', [Validators.required]),
+    subtask: new FormControl('', []),
+  });
+
+  public addTaskFormFB: FormGroup;
+
   constructor(
     public RemotestorageService: RemotestorageService,
-    public ArraysService: ArraysService
-  ) {}
-
+    public ArraysService: ArraysService,
+    private fb: FormBuilder
+  ) {
+    this.addTaskFormFB = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+    });
+    this.addTaskForm.valueChanges.subscribe(console.log);
+  }
   selectedPriority: string = '';
   assignedDropdownVisible: boolean = false;
   taskId: number = 0;
@@ -105,12 +129,11 @@ export class TaskArraysService {
         data.category,
         data.subtask
       );
-      // TODO    createdContactSuccessfully();
-      //     hideAddContactCard();
+      // TODO    createdTaskSuccessfully();
     }
     await this.findNearestDate(this.urgent);
-    // document.getElementById('form_add_contact').reset();
-    //   await this.resetForm(data);
+    // reset form
+  
     //TODO confimationMessage();
   }
 
