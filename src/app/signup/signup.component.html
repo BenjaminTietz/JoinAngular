@@ -21,23 +21,42 @@
       <h1>Sign up</h1>
     </div>
 
-    <form [formGroup]="this.LoginService.logInForm"
-    (ngSubmit)="signUp(this.LoginService.logInForm.value)">
+    <form
+      [formGroup]="this.LoginService.signUpForm"
+      (ngSubmit)="signUp(this.LoginService.signUpForm.value)"
+    >
       <div>
-        <input
-          placeholder="Name"
-          type="text"
-          formControlName="name"
-        />
+        <input placeholder="Name" type="text" formControlName="name" />
       </div>
-
+      <ng-container
+        *ngIf="
+          this.LoginService.signUpForm.controls['name'].dirty ||
+          this.LoginService.signUpForm.controls['name'].touched
+        "
+      >
+        <p
+          class="error-message"
+          *ngIf="this.LoginService.signUpForm.controls['name'].errors"
+        >
+          Enter correct Name
+        </p>
+      </ng-container>
       <div>
-        <input
-          placeholder="Email"
-          type="email"
-          formControlName="email"
-        />
+        <input placeholder="Email" type="email" formControlName="email" />
       </div>
+      <ng-container
+        *ngIf="
+          this.LoginService.signUpForm.controls['email'].dirty ||
+          this.LoginService.signUpForm.controls['email'].touched
+        "
+      >
+        <p
+          class="error-message"
+          *ngIf="this.LoginService.signUpForm.controls['email'].errors"
+        >
+          Enter vaild Email adress
+        </p>
+      </ng-container>
 
       <div>
         <input
@@ -46,7 +65,19 @@
           formControlName="password"
         />
       </div>
-
+      <ng-container
+        *ngIf="
+          this.LoginService.signUpForm.controls['password'].dirty ||
+          this.LoginService.signUpForm.controls['password'].touched
+        "
+      >
+        <p
+          class="error-message"
+          *ngIf="this.LoginService.signUpForm.controls['password'].errors"
+        >
+          Enter vaild password. min 4 char
+        </p>
+      </ng-container>
       <div>
         <input
           placeholder="Confirm password"
@@ -54,9 +85,37 @@
           formControlName="confirmPassword"
         />
       </div>
-
+      <ng-container
+        *ngIf="
+          this.LoginService.signUpForm.controls['confirmPassword'].dirty ||
+          this.LoginService.signUpForm.controls['confirmPassword'].touched ||
+          this.LoginService.signUpForm.controls['password'].value !==
+            this.LoginService.signUpForm.controls['confirmPassword'].value
+        "
+      >
+        <p
+          class="error-message"
+          *ngIf="
+            this.LoginService.signUpForm.controls['confirmPassword'].errors
+          "
+        >
+          Confirmed password doesn't match password!
+        </p>
+      </ng-container>
       <div class="btn-container">
-        <button type="submit" class="signup-btn">Sign up</button>
+        <button
+          [disabled]="
+            !(
+              this.LoginService.signUpForm.valid &&
+              (this.LoginService.signUpForm.dirty ||
+                this.LoginService.signUpForm.touched)
+            )
+          "
+          type="submit"
+          class="signup-btn"
+        >
+          Sign up
+        </button>
       </div>
     </form>
   </div>

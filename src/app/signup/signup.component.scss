@@ -1,267 +1,303 @@
-@import"src/assets/styles/colors.scss";
-@import"src/assets/styles/fonts.scss";
+@import "src/assets/styles/colors.scss";
+@import "src/assets/styles/fonts.scss";
 .signup-wrapper {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    height:100vh;
-    width: 100vw;
-    max-width: 100%;
-    background-color: $light-blue;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  max-width: 100%;
+  background-color: $light-blue;
 }
 
 .popup-wrapper {
-    position: absolute;
-    display: none;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    height:100vh;
-    width: 100vw;
-    max-width: 100%;
-    background-color: white;
-    opacity: 0.8;
-    z-index: 1;
+  position: absolute;
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  max-width: 100%;
+  background-color: white;
+  opacity: 0.8;
+  z-index: 1;
 
-    .success-popup {
-        position: relative;
-        margin-top: 60%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 326px;
-        height: 74px;
-        border-radius: 20px;
-        background-color: $light-blue;
-        opacity: 1;
-        z-index: 10;
-        @include OpenSans(400, 23px, 27.6px, $white);
-        animation: slide-in ease-in-out 1s;
+  .success-popup {
+    position: relative;
+    margin-top: 60%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 326px;
+    height: 74px;
+    border-radius: 20px;
+    background-color: $light-blue;
+    opacity: 1;
+    z-index: 10;
+    @include OpenSans(400, 23px, 27.6px, $white);
+    animation: slide-in ease-in-out 1s;
+  }
+  @keyframes slide-in {
+    0% {
+      transform: translateY(750%);
     }
-    @keyframes slide-in {
-        0% {
-            transform: translateY(750%);
-        }
-        100% {
-            transform: translateY(0);
-        }
+    100% {
+      transform: translateY(0);
     }
+  }
 }
 
 .show-popup {
-    display: flex;
+  display: flex;
 }
 
 .signup-header {
-    box-sizing: border-box;
-    width: 100%;
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    padding-left: 77px;
-    padding-right: 77px;
-    padding-top: 80px;
+  box-sizing: border-box;
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding-left: 77px;
+  padding-right: 77px;
+  padding-top: 80px;
 }
 
 .signup-header-left {
-
-    img {
-        width:100px;
-        height: 122px;
-    }
+  img {
+    width: 100px;
+    height: 122px;
+  }
 }
 
 .signup-top {
-    display: flex;
-    justify-content: center;
-    width: 100%;
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
 .signup-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 560px;
+  height: 607px;
+  border-radius: 30px;
+  border-style: none;
+  gap: 35px;
+  padding: 48px 88px 48px 88px;
+  background-color: $white;
+  .signup-top {
+    position: relative;
+    img {
+      position: absolute;
+      left: 65px;
+      top: 50px;
+      cursor: pointer;
+    }
+  }
+  h1 {
+    @include OpenSans(700, 48px, 57.6px, $black);
+    text-decoration: underline;
+    text-decoration-color: $light-blue;
+    text-decoration-thickness: 3px;
+    text-underline-offset: 3px;
+    margin-block-start: unset;
+    margin-block-end: unset;
+  }
+
+  form {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 560px;
-    height: 607px;
-    border-radius: 30px;
-    border-style: none;
-    gap: 35px;
-    padding: 48px 88px 48px 88px;
-    background-color: $white;
-    .signup-top {
-        position: relative;
-        img {
-            position: absolute;
-            left: 65px;
-            top: 50px;
-            cursor: pointer;
+
+    width: 100%;
+    input {
+      p {
+        border-radius: 10px;
+        margin-block-start: unset;
+        margin-block-end: unset;
+        margin-inline-start: unset;
+        margin-inline-end: unset;
+
+        @include OpenSans(400, 16px, 19.2px, $red);
+      }
+      &.ng-touched,
+      &.ng-dirty {
+        &.ng-invalid {
+          border: 1px solid $red;
+          border-radius: 10px;
         }
-    }
-    h1 {
-        @include OpenSans(700, 48px, 57.6px, $black);
-        text-decoration: underline;
-        text-decoration-color: $light-blue;
-        text-decoration-thickness: 3px;
-        text-underline-offset: 3px;
-    }
-
-    form {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 16px;
-        width: 100%;
-
-    }
-    
-    .btn-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        .signup-btn{
-            white-space: nowrap;
-            width: 135px;
-            height: 48px;
-            border-radius: 8px;
-            border-style: none;
-            background-color: $light-blue;
-            padding: 10px 35px 10px 35px;
-            @include OpenSans(400, 23px, 27.6px, $white);
-            cursor: pointer;
+        &.ng-valid {
+          border: 1px solid $green;
+          border-radius: 10px;
         }
-
+      }
     }
-    span {
-        display: flex;  
-        justify-content: center;
-        align-items: center;
-        @include OpenSans(400, 16px, 19.2px, $black);
+  }
 
-        a {
-            text-decoration: none;
-            color: $light-blue;
-            margin-left: 10px;
-        }
+  .btn-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .signup-btn {
+      white-space: nowrap;
+      width: 135px;
+      height: 48px;
+      margin-top: 16px;
+      border-radius: 8px;
+      border-style: none;
+      background-color: $light-blue;
+      padding: 10px 35px 10px 35px;
+      @include OpenSans(400, 23px, 27.6px, $white);
+      cursor: pointer;
+
+      &:disabled {
+        background-color: $light-gray;
+        cursor: not-allowed;
+      }
     }
+  }
+  span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    @include OpenSans(400, 16px, 19.2px, $black);
+
+    a {
+      text-decoration: none;
+      color: $light-blue;
+      margin-left: 10px;
+    }
+  }
+
+  input {
+    width: 422px;
+    height: 48px;
+    border: 0px 0px 1px 0px solid $light-gray;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    padding: 12px 21px 12px 21px;
+  }
+  .error-message {
+    @include OpenSans(400, 16px, 19.2px, $red);
+    text-align: center;
+    margin-block-start: unset !important;
+    margin-block-end: unset !important;
+  }
+  .signup-checkbox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 231px;
+    height: 24px;
 
     input {
-        width: 422px; 
-        height: 48px;
-        border: 0px 0px 1px 0px solid $light-gray;
-        border-top: none;
-        border-left: none;
-        border-right: none;
-        padding: 12px 21px 12px 21px;
+      width: 24px;
+      height: 24px;
+      margin-right: 10px;
     }
-
-    .signup-checkbox {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 231px;
-        height: 24px;
-
-        input {
-            width: 24px;
-            height: 24px;
-            margin-right: 10px;
-        }
-        span {
-            white-space: nowrap;
-        }
+    span {
+      white-space: nowrap;
     }
+  }
 }
 
 .signup-footer {
-    display: flex;
-    width: 240px;
-    height: 35px;
-    @include OpenSans(400, 16px, 19.2px, $menu-color);
+  display: flex;
+  width: 240px;
+  height: 35px;
+  @include OpenSans(400, 16px, 19.2px, $menu-color);
 
-    a { 
-        text-decoration: none;
-        color: $white;
-        gap: 8px;
-        padding: 8px;
-    }
+  a {
+    text-decoration: none;
+    color: $white;
+    gap: 8px;
+    padding: 8px;
+  }
 }
 
 @media screen and (max-width: 750px) {
-    .signup-header-left {
-
-        img {
-            width: 64px;
-            height: 78px;
-        }
+  .signup-header {
+    padding-top: 16px;
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+  .signup-header-left {
+    img {
+      width: 64px;
+      height: 78px;
     }
-    .signup-box {
-        width: 300px;
-        height: 607px;
-        gap: 32px;
-        padding: 32px 0px 32px 0px;
+  }
+  .signup-box {
+    width: 300px;
+    height: 607px;
+    gap: 32px;
+    padding: unset;
 
-        .signup-top {
-            position: relative;
-            img {
-                position: absolute;
-                left: 20px;
-                top: 35px;
-                cursor: pointer;
-            }
-        }
-        h1 {
-            @include OpenSans(700, 47px, 56.4px, $black);
-        }
-    
-        form {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-
-            input {
-                width: 85%;
-            }
-        }
-        
-        .btn-container {
-    
-            .signup-btn{
-                white-space: nowrap;
-                width: 180px;
-                height: 48px;
-                padding: 4px 0px 4px 0px;
-                @include OpenSans(400, 19px, 22.8px, $white);
-            }
-    
-        }
-        span {
-            display: flex;  
-            justify-content: center;
-            align-items: center;
-            @include OpenSans(400, 16px, 19.2px, $black);
-    
-            a {
-                text-decoration: none;
-                color: $light-blue;
-                margin-left: 10px;
-            }
-        }
-    
-        input {
-            max-width: 80%; 
-            height: 48px;
-            padding: 12px 21px 12px 21px;
-        }
-    
-        .signup-checkbox {
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
-        }
+    .signup-top {
+      position: relative;
+      img {
+        position: absolute;
+        left: 20px;
+        top: 12px;
+        cursor: pointer;
+      }
     }
+    h1 {
+      @include OpenSans(700, 47px, 56.4px, $black);
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+
+      input {
+        width: 85%;
+        height: 80%;
+        @include OpenSans(400, 16px, 12px, $black);
+      }
+    }
+
+    .btn-container {
+      .signup-btn {
+        white-space: nowrap;
+        width: 180px;
+        height: 48px;
+        padding: 4px 0px 4px 0px;
+        @include OpenSans(400, 19px, 22.8px, $white);
+      }
+    }
+    span {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      @include OpenSans(400, 16px, 19.2px, $black);
+
+      a {
+        text-decoration: none;
+        color: $light-blue;
+        margin-left: 10px;
+      }
+    }
+
+    input {
+      max-width: 80%;
+      height: 48px;
+      padding: 12px 21px 12px 21px;
+    }
+
+    .signup-checkbox {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+    }
+  }
 }
 

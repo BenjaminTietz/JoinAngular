@@ -35,6 +35,7 @@ export class LoginService {
   });
 
   public loginFormFB: FormGroup;
+  public signUpFormFB: FormGroup;
 
   userGreeting;
   currentUser;
@@ -50,7 +51,14 @@ export class LoginService {
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
     this.logInForm.valueChanges.subscribe(console.log);
-    
+
+    this.signUpFormFB = this.fb.group({
+      name: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      confirmPassword: ['', [Validators.required, Validators.minLength(6)]]
+    });
+    this.signUpFormFB.valueChanges.subscribe(console.log);
   }
 
   /**
