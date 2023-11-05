@@ -2,6 +2,7 @@
 @import "src/assets/styles/fonts.scss";
 
 .addtask-wrapper {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -10,7 +11,6 @@
   margin-left: 232px;
   width: calc(100vw - 232px);
   height: calc(100vh - 96px);
-  gap: 72px;
   background-color: $bg-color;
   overflow: hidden;
 
@@ -137,14 +137,14 @@
           width: 24px;
           height: 24px;
           border-radius: 72px;
-          
+
           &:hover {
             background-color: $menu-hover;
           }
         }
       }
 
-      .assigned-dropdown{
+      .assigned-dropdown {
         visibility: hidden;
         flex-direction: row;
         justify-content: space-evenly;
@@ -153,13 +153,11 @@
         height: 500px;
         position: absolute;
         background-color: $white;
-
       }
       .show-assigned-dropdown {
         visibility: visible;
       }
     }
-
   }
 
   .addtask-left-bottom {
@@ -249,20 +247,19 @@
     justify-content: flex-start;
     align-items: center;
     box-sizing: border-box;
-    margin-top: 0px;
+    margin-top: 78px;
     margin-left: 0px;
     padding-left: 16px;
     padding-right: 16px;
-    padding-top: 80px;
-    padding-bottom: 76px;
     width: 100vw;
     max-width: 100%;
-    height: calc(100vh - 74px);
+    height: calc(100vh - 156px);
     max-height: 100%;
     gap: 16px;
+    overflow-y: scroll;
 
     .addtask-right {
-        margin-bottom: 0px;
+      margin-bottom: 165px;
     }
   }
 }
@@ -270,9 +267,9 @@
 @media screen and (max-width: 600px) {
   .addtask-wrapper {
     .addtask-left {
-        width: 100%;
-        padding: 0px 0px 0px 0px;
-      }
+      width: 100%;
+      padding: 0px 0px 0px 0px;
+    }
     .addtask-left-top {
       h2 {
         @include OpenSans(700, 16px, 19.2px, $menu-color);
@@ -356,18 +353,19 @@
 @media screen and (max-width: 500px) {
   .addtask-wrapper {
     align-items: flex-start;
+    overflow-y: scroll;
 
     .addtask-left-top {
-        input {
-            width: 65%;
-        }
-        textarea {
-            width: 65%;
-        }
+      input {
+        width: 65%;
+      }
+      textarea {
+        width: 65%;
+      }
     }
     .addtask-left-prio {
       .prio-box {
-        gap:4px;
+        gap: 4px;
         justify-content: flex-start;
         .prio-container {
           width: 100px;
@@ -391,38 +389,45 @@
 }
 
 @media screen and (max-width: 400px) {
-    .addtask-wrapper {
-      align-items: flex-start;
-  
-      .addtask-left-top {
-          input {
-              width: 50%;
-          }
-          textarea {
-              width: 50%;
-          }
+  .addtask-wrapper {
+    align-items: flex-start;
+
+    .addtask-left-top {
+      input {
+        width: 50%;
       }
-      .addtask-left-prio {
-        .prio-box {
-          gap:2px;
-          justify-content: flex-start;
-          .prio-container {
-            width: 80px;
-            height: 30px;
-            padding: 10px 4px 10px 4px;
-            gap: 4px;
-  
-            img {
-              width: 16px;
-              height: 10.5px;
-            }
+      textarea {
+        width: 50%;
+      }
+    }
+    .addtask-left-prio {
+      .prio-box {
+        gap: 2px;
+        justify-content: flex-start;
+        .prio-container {
+          width: 80px;
+          height: 30px;
+          padding: 10px 4px 10px 4px;
+          gap: 4px;
+
+          img {
+            width: 16px;
+            height: 10.5px;
           }
         }
       }
-      .addtask-left-bottom {
-        input {
-          width: 50%;
+    }
+    .addtask-left-bottom {
+      input {
+        width: 50%;
+      }
+    }
+    .addtask-right {
+      .btn-container {
+        .create-btn {
+          margin-top: 40px;
         }
       }
     }
   }
+}
