@@ -103,6 +103,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    box-sizing: border-box;
     max-width: 652px;
     max-height: 491px;
     border-radius: 30px;
@@ -122,7 +123,29 @@
     form {
         display: flex;
         flex-direction: column;
-        gap: 32px;
+        gap: 8px;
+
+        input {
+            width: 90%;
+            @include OpenSans(400, 19px, 16px, $black);
+
+            &.ng-touched, &.ng-dirty {
+                &.ng-invalid {
+                    border: 1px solid $red;
+                }
+                &.ng-valid {
+                    border: 1px solid $green;
+                }
+            }
+        }
+        .error-message {
+            
+            @include OpenSans(400, 16px, 19.2px, $red);
+
+                margin-block-start: unset!important;
+                margin-block-end: unset!important;
+
+        }
     }
     
     .btn-container {
@@ -138,6 +161,11 @@
             padding: 10px 35px 10px 35px;
             @include OpenSans(400, 23px, 27.6px, $white);
             cursor: pointer;
+
+            &:disabled {
+                background-color: $light-gray;
+                cursor: not-allowed;
+            }
         }
 
         .guest-login-btn{
@@ -172,7 +200,16 @@
         display: flex;
         justify-content: flex-start;
         align-items: center;
+        width: 100%;
+        height: 16px;
+
+        input {
+            width: 16px;
+            height: 16px;
+            margin-right: 8px;
+        }
     }
+
 }
 
 .login-footer {
@@ -192,6 +229,8 @@
 @media screen and (max-width: 750px) {
     .login-header {
         padding-top: 4px;
+        padding-left: 24px;
+        padding-right: 24px;
     }
     .login-header-left {
         .logo {
@@ -205,7 +244,6 @@
     .login-box {
         max-width: 100%;
         max-height: 491px;
-        gap: 32px;
         padding: 32px 16px 32px 16px;
     
         h1 {
@@ -215,7 +253,12 @@
         form {
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 8px;
+
+            input {
+                width: 85%;
+                @include OpenSans(400, 19px, 16px, $black);
+            }
         }
         
         .btn-container {

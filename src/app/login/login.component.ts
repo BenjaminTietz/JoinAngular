@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { RemotestorageService } from '../remotestorage.service';
 import { ArraysService } from '../contact-arrays.service';
 import { LoginService } from '../login.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -13,17 +15,24 @@ export class LoginComponent {
   @ViewChild('userEmail') userEmail: ElementRef;
   @ViewChild('userPassword') userPassword: ElementRef;
 
-
+  form: FormGroup;
+ 
   constructor(
     private router: Router, 
     public RemotestorageService: RemotestorageService,
     public ArraysService: ArraysService,
-    public LoginService: LoginService
+    public LoginService: LoginService,
+    private fb: FormBuilder,
     ) { 
-  }
+      this.LoginService.logInForm.valueChanges.subscribe(console.log);
+    }
 
   async ngOnInit() {
     this.LoginService.loadUsers();
+    this.form = this.fb.group({
+      email: [null, [Validators.required, Validators.email]],
+      password: [null, Validators.required],
+    });
   }
 
 

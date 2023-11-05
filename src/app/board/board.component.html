@@ -51,7 +51,7 @@
   <!---- End of Hidden Task floating Container---->
   <div class="board-top">
     <div class="search">
-      <input type="text" placeholder="Find Task" />
+      <input type="text" placeholder="Find Task" (input)="onSearch($event)">
     </div>
     <button class="addtask-btn">
       Add task <img src="assets/img/board/addtask_btn.svg" />
@@ -65,13 +65,50 @@
       </div>
       <div
         #toDo
-        (drop)="this.DragAndDropService.moveTo('toDo');this.removeHighlight('toDo')"
+        (drop)="
+          this.DragAndDropService.moveTo('toDo'); this.removeHighlight('toDo')
+        "
         (dragover)="
-          this.DragAndDropService.allowDrop($event); this.highlight('toDo')"
-          (dragleave)="this.removeHighlight('toDo')"
+          this.DragAndDropService.allowDrop($event); this.highlight('toDo')
+        "
+        (dragleave)="this.removeHighlight('toDo')"
         id="toDo"
         class="task-container"
       >
+
+      <div *ngIf="searchFieldActive">
+        <div
+        draggable="true"
+        (dragstart)="this.DragAndDropService.dragStart(i, 'toDo')"
+        (click)="openTask(i, 'toDo')"
+        *ngFor="let task of this.TaskArrayService.filteredToDo; let i = index"
+        class="single-task"
+      >
+        <div class="task-category">
+          {{ task.category }}
+        </div>
+        <div class="task-content">
+          <div class="task-name">
+            {{ task.title }}
+          </div>
+          <div class="task-description">
+            {{ task.description }}
+          </div>
+        </div>
+        <div
+          *ngIf="this.TaskArrayService.tasks[i].subtask"
+          class="progressbar"
+        >
+          {{ task.subtask }}
+        </div>
+        <div class="single-task-bottom">
+          <div class="assigned-contacts">{{ task.assigned }}</div>
+          <img class="prio" src="assets/img/board/prio_urgent.svg" />
+        </div>
+      </div>
+      </div>
+
+      <div *ngIf="!searchFieldActive">
         <div
           draggable="true"
           (dragstart)="this.DragAndDropService.dragStart(i, 'toDo')"
@@ -101,9 +138,10 @@
             <img class="prio" src="assets/img/board/prio_urgent.svg" />
           </div>
         </div>
-        <div *ngIf="this.TaskArrayService.toDo.length == 0" class="no-task-msg">
-          <h2>No tasks in this category</h2>
-        </div>
+      </div>
+      <div  *ngIf="this.TaskArrayService.toDo.length === 0 && this.TaskArrayService.filteredToDo.length === 0" class="no-task-msg">
+        <h2>No tasks in this category</h2>
+      </div>
       </div>
     </div>
     <div class="category">
@@ -113,14 +151,58 @@
       </div>
       <div
         #inProgress
-        (drop)="this.DragAndDropService.moveTo('inProgress'); this.removeHighlight('inProgress')"
+        (drop)="
+          this.DragAndDropService.moveTo('inProgress');
+          this.removeHighlight('inProgress')
+        "
         (dragover)="
           this.DragAndDropService.allowDrop($event);
-          this.highlight('inProgress')"
-          (dragleave)="this.removeHighlight('inProgress')"
+          this.highlight('inProgress')
+        "
+        (dragleave)="this.removeHighlight('inProgress')"
         class="task-container"
         id="inProgress"
       >
+      <div *ngIf="searchFieldActive">
+        <div
+          draggable="true"
+          *ngFor="let task of this.TaskArrayService.filteredInProgress; let i = index"
+          (dragstart)="this.DragAndDropService.dragStart(i, 'inProgress')"
+          (click)="openTask(i, 'inProgress')"
+          class="single-task"
+        >
+          <div class="task-category">
+            {{ task.category }}
+          </div>
+          <div class="task-content">
+            <div class="task-name">
+              {{ task.title }}
+            </div>
+            <div class="task-description">
+              {{ task.description }}
+            </div>
+          </div>
+          <div
+            *ngIf="this.TaskArrayService.tasks[i].subtask"
+            class="progressbar"
+          >
+            {{ task.subtask }}
+          </div>
+          <div class="single-task-bottom">
+            <div class="assigned-contacts">{{ task.assigned }}</div>
+            <img class="prio" src="assets/img/board/prio_urgent.svg" />
+          </div>
+          <!--TODO-- <div class="btn-container">
+            <div class="btn-up">
+              <img src="assets/img/board/up.png" />
+            </div>
+            <div class="btn-down">
+              <img src="assets/img/board/down.png" />
+            </div>
+          </div> -->
+        </div>
+      </div>
+      <div *ngIf="!searchFieldActive">
         <div
           draggable="true"
           *ngFor="let task of this.TaskArrayService.inProgress; let i = index"
@@ -149,8 +231,20 @@
             <div class="assigned-contacts">{{ task.assigned }}</div>
             <img class="prio" src="assets/img/board/prio_urgent.svg" />
           </div>
+          <!--TODO-- <div class="btn-container">
+            <div class="btn-up">
+              <img src="assets/img/board/up.png" />
+            </div>
+            <div class="btn-down">
+              <img src="assets/img/board/down.png" />
+            </div>
+          </div> -->
         </div>
-        <div *ngIf="this.TaskArrayService.inProgress.length == 0" class="no-task-msg">
+      </div>
+        <div
+          *ngIf="this.TaskArrayService.inProgress.length == 0 && this.TaskArrayService.filteredInProgress.length == 0"
+          class="no-task-msg"
+        >
           <h2>No tasks in this category</h2>
         </div>
       </div>
@@ -162,14 +256,53 @@
       </div>
       <div
         #awaitFeedback
-        (drop)="this.DragAndDropService.moveTo('awaitFeedback'); this.removeHighlight('awaitFeedback')"
+        (drop)="
+          this.DragAndDropService.moveTo('awaitFeedback');
+          this.removeHighlight('awaitFeedback')
+        "
         (dragover)="
           this.DragAndDropService.allowDrop($event);
-          this.highlight('awaitFeedback')"
-          (dragleave)="this.removeHighlight('awaitFeedback')"
+          this.highlight('awaitFeedback')
+        "
+        (dragleave)="this.removeHighlight('awaitFeedback')"
         class="task-container"
         id="awaitFeedback"
       >
+      <div *ngIf="searchFieldActive">
+        <div
+          draggable="true"
+          *ngFor="
+            let task of this.TaskArrayService.filteredAwaitFeedback;
+            let i = index
+          "
+          (dragstart)="this.DragAndDropService.dragStart(i, 'awaitFeedback')"
+          (click)="openTask(i, 'awaitFeedback')"
+          class="single-task"
+        >
+          <div class="task-category">
+            {{ task.category }}
+          </div>
+          <div class="task-content">
+            <div class="task-name">
+              {{ task.title }}
+            </div>
+            <div class="task-description">
+              {{ task.description }}
+            </div>
+          </div>
+          <div
+            *ngIf="this.TaskArrayService.tasks[i].subtask"
+            class="progressbar"
+          >
+            {{ task.subtask }}
+          </div>
+          <div class="single-task-bottom">
+            <div class="assigned-contacts">{{ task.assigned }}</div>
+            <img class="prio" src="assets/img/board/prio_urgent.svg" />
+          </div>
+        </div>
+        </div>
+      <div *ngIf="!searchFieldActive">
         <div
           draggable="true"
           *ngFor="
@@ -202,7 +335,11 @@
             <img class="prio" src="assets/img/board/prio_urgent.svg" />
           </div>
         </div>
-        <div *ngIf="this.TaskArrayService.awaitFeedback.length == 0" class="no-task-msg">
+        </div>
+        <div
+          *ngIf="this.TaskArrayService.awaitFeedback.length == 0 && this.TaskArrayService.filteredAwaitFeedback.length == 0 "
+          class="no-task-msg"
+        >
           <h2>No tasks in this category</h2>
         </div>
       </div>
@@ -214,13 +351,47 @@
       </div>
       <div
         #done
-        (drop)="this.DragAndDropService.moveTo('done'); this.removeHighlight('done')"
+        (drop)="
+          this.DragAndDropService.moveTo('done'); this.removeHighlight('done')
+        "
         (dragover)="
-          this.DragAndDropService.allowDrop($event); this.highlight('done')"
+          this.DragAndDropService.allowDrop($event); this.highlight('done')
+        "
         (dragleave)="this.removeHighlight('done')"
         class="task-container"
         id="done"
-      >
+      >      <div *ngIf="searchFieldActive">
+        <div
+          draggable="true"
+          *ngFor="let task of this.TaskArrayService.filteredDone; let i = index"
+          (dragstart)="this.DragAndDropService.dragStart(i, 'done')"
+          (click)="openTask(i, 'done')"
+          class="single-task"
+        >
+          <div class="task-category">
+            {{ task.category }}
+          </div>
+          <div class="task-content">
+            <div class="task-name">
+              {{ task.title }}
+            </div>
+            <div class="task-description">
+              {{ task.description }}
+            </div>
+          </div>
+          <div
+            *ngIf="this.TaskArrayService.tasks[i].subtask"
+            class="progressbar"
+          >
+            {{ task.subtask }}
+          </div>
+          <div class="single-task-bottom">
+            <div class="assigned-contacts">{{ task.assigned }}</div>
+            <img class="prio" src="assets/img/board/prio_urgent.svg" />
+          </div>
+        </div>
+      </div>
+      <div *ngIf="!searchFieldActive">
         <div
           draggable="true"
           *ngFor="let task of this.TaskArrayService.done; let i = index"
@@ -250,7 +421,8 @@
             <img class="prio" src="assets/img/board/prio_urgent.svg" />
           </div>
         </div>
-        <div *ngIf="this.TaskArrayService.done.length == 0" class="no-task-msg">
+      </div>
+        <div *ngIf="this.TaskArrayService.done.length == 0 && this.TaskArrayService.filteredDone.length == 0 " class="no-task-msg">
           <h2>No tasks in this category</h2>
         </div>
       </div>

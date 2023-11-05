@@ -1,7 +1,7 @@
 <div class="login-wrapper">
   <div class="login-header">
     <div class="login-header-left">
-      <img class="logo" src="assets/img/login/login.svg">
+      <img class="logo" src="assets/img/login/login.svg" />
     </div>
     <div class="login-header-right">
       <span>Not a Join user?</span>
@@ -9,58 +9,65 @@
     </div>
   </div>
 
-
   <div class="login-box">
     <h1>Log in</h1>
-
-    <form #userLogIn="ngForm" (ngSubmit)="LoginService.logIn(userLogIn.value)">
+    <form
+      [formGroup]="this.LoginService.logInForm"
+      (ngSubmit)="this.LoginService.logIn(this.LoginService.logInForm.value)"
+    >
       <div>
-        <input
-          required
-          placeholder="Email"
-          id="email"
-          type="text"
-          formControlname="name"
-          name="email"
-          #inputEmail
-          ngModel
-        />
+        <input placeholder="Email" type="text" formControlName="email" />
       </div>
-
+      <ng-container
+        *ngIf="
+          this.LoginService.logInForm.controls['email'].dirty ||
+          this.LoginService.logInForm.controls['email'].touched
+        "
+      >
+        <p class="error-message" *ngIf="this.LoginService.logInForm.controls['email'].errors">Enter correct UserEmailAdress</p>
+      </ng-container>
       <div>
         <input
-          required
           placeholder="Password"
-          id="password"
           type="password"
-          formControlname="password"
-          name="password"
-          #inputPassword
-          ngModel
+          formControlName="password"
         />
       </div>
-
+      <ng-container
+        *ngIf="
+          this.LoginService.logInForm.controls['password'].dirty ||
+          this.LoginService.logInForm.controls['password'].touched
+        "
+      >
+        <p class="error-message" *ngIf="this.LoginService.logInForm.controls['password'].errors">Enter correct Password</p>
+      </ng-container>
       <div class="login-checkbox">
         <input type="checkbox" id="remember-me" />
         <span>Remember me</span>
       </div>
       <div class="btn-container">
-        <button type="submit" class="login-btn">Log in</button>
-        <button type="button" (click)="LoginService.guestLogIn()" class="guest-login-btn">Guest log in</button>
+        <button
+          [disabled]="
+            !(
+              this.LoginService.logInForm.valid &&
+              (this.LoginService.logInForm.dirty ||
+                this.LoginService.logInForm.touched)
+            )
+          "
+          type="submit"
+          class="login-btn"
+        >
+          Log in
+        </button>
+        <button
+          type="button"
+          (click)="this.LoginService.guestLogIn()"
+          class="guest-login-btn"
+        >
+          Guest log in
+        </button>
       </div>
     </form>
-    <!-- <form action="" onsubmit="logIn();return false;">
-      <input required type="email" placeholder="Email" #userEmail />
-      <input required type="password" placeholder="Password" #userPassword />
-      <div class="login-checkbox">
-        <input type="checkbox" id="remember-me" />
-        <span>Remember me</span>
-      </div>
-      <div class="btn-container">
-        <button type="button" (click)="logIn()" class="login-btn">Log in</button>
-        <button type="button" (click)="guestLogIn()" class="guest-login-btn">Guest log in</button>
-      </div>
-    </form> -->
   </div>
 
   <div class="login-signup-mobile">
@@ -72,7 +79,7 @@
       <a href="#">Privacy Policy</a>
     </div>
     <div class="login-footer-right">
-        <a href="#">Legal Notice</a>
+      <a href="#">Legal Notice</a>
     </div>
   </div>
 </div>

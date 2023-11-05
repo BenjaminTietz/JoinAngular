@@ -114,6 +114,7 @@
         align-items: center;
         gap: 16px;
         width: 100%;
+
     }
     
     .btn-container {
@@ -220,6 +221,10 @@
             display: flex;
             flex-direction: column;
             gap: 16px;
+
+            input {
+                width: 85%;
+            }
         }
         
         .btn-container {

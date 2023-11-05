@@ -21,56 +21,37 @@
       <h1>Sign up</h1>
     </div>
 
-    <form #userSignUp="ngForm" (ngSubmit)="signUp(userSignUp.value)">
+    <form [formGroup]="this.LoginService.logInForm"
+    (ngSubmit)="signUp(this.LoginService.logInForm.value)">
       <div>
         <input
-          required
           placeholder="Name"
-          id="name"
           type="text"
-          formControlname="name"
-          name="name"
-          #inputName
-          ngModel
+          formControlName="name"
         />
       </div>
 
       <div>
         <input
-          required
           placeholder="Email"
-          id="email"
           type="email"
-          formControlname="email"
-          name="email"
-          #inputEmail
-          ngModel
+          formControlName="email"
         />
       </div>
 
       <div>
         <input
-          required
           placeholder="Password"
-          id="password"
           type="password"
-          formControlname="password"
-          name="password"
-          #inputPassword
-          ngModel
+          formControlName="password"
         />
       </div>
 
       <div>
         <input
-          required
           placeholder="Confirm password"
-          id="confirmPassword"
           type="password"
-          formControlname="confirmPassword"
-          name="confirmPassword"
-          #inputConfirmPassword
-          ngModel
+          formControlName="confirmPassword"
         />
       </div>
 

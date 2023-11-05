@@ -33,6 +33,16 @@ export class TaskArraysService {
    * @type {Array}
    */
   tasks = [];
+    
+  /**
+   * An array to filtered store tasks.
+   * @type {Array}
+   */
+  filteredTasks = [];
+  filteredToDo = [];
+  filteredInProgress = [];
+  filteredAwaitFeedback = [];
+  filteredDone  = [];
   /**
    * An subarray to store tasks with status = "toDo".
    * @type {Array}
@@ -150,6 +160,7 @@ export class TaskArraysService {
     );
     this.done = this.tasks.filter((task) => task.status === 'done');
   }
+
   /**
    * Asynchronous function to store tasks according status in subarrays.
    * @type {Array}

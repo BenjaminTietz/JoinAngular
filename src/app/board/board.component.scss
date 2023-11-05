@@ -230,7 +230,7 @@
       align-items: flex-start;
       width: 100%;
       height: 700px;
-      gap: 16px;
+
       .no-task-msg {
         display: flex;
         justify-content: center;
@@ -299,6 +299,7 @@
         width: 100%;
         height: 32px;
       }
+
     }
   }
 }

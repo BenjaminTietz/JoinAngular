@@ -18,6 +18,8 @@ export class BoardComponent {
   selectedTask: any;
   event: Event;
   taskToDelete;
+  searchFieldActive: boolean = false;
+  searchTerm: string = '';
 
   constructor(
     public TaskArrayService: TaskArraysService,
@@ -29,7 +31,24 @@ export class BoardComponent {
     await this.TaskArrayService.mapTaskStatus();
   }
 
-
+  onSearch(event: any) {
+    const searchTerm = event.target.value;
+    console.log('searchTerm', searchTerm);
+  
+    if (searchTerm.trim() === '') {
+      this.searchFieldActive = false;
+      this.TaskArrayService.filteredTasks = this.TaskArrayService.tasks;
+    } else {
+      this.searchFieldActive = true;
+      this.TaskArrayService.filteredTasks = this.TaskArrayService.tasks.filter(task => task.title.includes(searchTerm));
+  
+      // Filtered tasks by status
+      this.TaskArrayService.filteredToDo = this.TaskArrayService.filteredTasks.filter(task => task.status === 'toDo');
+      this.TaskArrayService.filteredInProgress = this.TaskArrayService.filteredTasks.filter(task => task.status === 'inProgress');
+      this.TaskArrayService.filteredAwaitFeedback = this.TaskArrayService.filteredTasks.filter(task => task.status === 'awaitFeedback');
+      this.TaskArrayService.filteredDone = this.TaskArrayService.filteredTasks.filter(task => task.status === 'done');
+    }
+  }
 
   openTask(i: number, subArrayName: string) {
     if (['toDo', 'inProgress', 'awaitFeedback', 'done'].includes(subArrayName)) {
@@ -95,5 +114,5 @@ export class BoardComponent {
     }
   }
 
-  
+
 }
