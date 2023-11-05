@@ -101,6 +101,9 @@
             <img class="prio" src="assets/img/board/prio_urgent.svg" />
           </div>
         </div>
+        <div *ngIf="this.TaskArrayService.toDo.length == 0" class="no-task-msg">
+          <h2>No tasks in this category</h2>
+        </div>
       </div>
     </div>
     <div class="category">
@@ -146,6 +149,9 @@
             <div class="assigned-contacts">{{ task.assigned }}</div>
             <img class="prio" src="assets/img/board/prio_urgent.svg" />
           </div>
+        </div>
+        <div *ngIf="this.TaskArrayService.inProgress.length == 0" class="no-task-msg">
+          <h2>No tasks in this category</h2>
         </div>
       </div>
     </div>
@@ -196,6 +202,9 @@
             <img class="prio" src="assets/img/board/prio_urgent.svg" />
           </div>
         </div>
+        <div *ngIf="this.TaskArrayService.awaitFeedback.length == 0" class="no-task-msg">
+          <h2>No tasks in this category</h2>
+        </div>
       </div>
     </div>
     <div class="category">
@@ -240,6 +249,9 @@
             <div class="assigned-contacts">{{ task.assigned }}</div>
             <img class="prio" src="assets/img/board/prio_urgent.svg" />
           </div>
+        </div>
+        <div *ngIf="this.TaskArrayService.done.length == 0" class="no-task-msg">
+          <h2>No tasks in this category</h2>
         </div>
       </div>
     </div>

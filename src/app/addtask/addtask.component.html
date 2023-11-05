@@ -3,7 +3,10 @@
     <div class="headline">
       <h1>Add Task</h1>
     </div>
-    <form #addTaskForm="ngForm" (ngSubmit)="this.TaskArraysService.addTask(addTaskForm.value)">
+    <form
+      #addTaskForm="ngForm"
+      (ngSubmit)="this.TaskArraysService.addTask(addTaskForm.value)"
+    >
       <div class="addtask-left-top">
         <input
           #inputTitle
@@ -37,15 +40,24 @@
       <div class="addtask-left-prio">
         <h2>Priority <span>(optional)</span></h2>
         <div class="prio-box">
-          <div class="prio-container" (click)="this.TaskArraysService.selectPriority('urgent')">
+          <div
+            class="prio-container-urgent"
+            (click)="this.TaskArraysService.selectPriority('urgent')"
+          >
             <span>Urgent</span>
             <img src="assets/img/addtask/prio_urgent.svg" alt="prio_icon" />
           </div>
-          <div class="prio-container" (click)="this.TaskArraysService.selectPriority('medium')">
+          <div
+            class="prio-container-medium"
+            (click)="this.TaskArraysService.selectPriority('medium')"
+          >
             <span>Medium</span>
             <img src="assets/img/addtask/prio_medium.svg" alt="prio_icon" />
           </div>
-          <div class="prio-container" (click)="this.TaskArraysService.selectPriority('low')">
+          <div
+            class="prio-container-low"
+            (click)="this.TaskArraysService.selectPriority('low')"
+          >
             <span>Low</span>
             <img src="assets/img/addtask/prio_low.svg" alt="prio_icon" />
           </div>
@@ -77,12 +89,14 @@
               />
             </div>
           </div>
-            <div
-              *ngFor="let contact of this.ArraysService.contacts; let i = index"
-              class="assigned-dropdown"
-              #assignedDropdown
+          <div
+          *ngFor="let contact of this.ArraysService.contacts; let i = index"
+           class="assigned-dropdown-container"
+           #assignedDropdown>
+            <div class="assigned-user"
             >
-              <div class="assigned-user-circle">
+              <div   [style.background-color]="
+              this.ArraysService.contacts[i].color" class="assigned-user-circle">
                 <div class="assigned-user-Initials">AT</div>
               </div>
               <span class="assigned-user-name">{{ contact.name }}</span>
@@ -95,6 +109,7 @@
             </div>
           </div>
         </div>
+      </div>
       <div class="addtask-left-bottom">
         <h2>Category</h2>
         <select
@@ -125,16 +140,16 @@
           ngModel
         />
       </div>
+      <div class="addtask-right">
+        <div class="btn-container">
+          <button type="button" class="clear-btn">
+            Clear<img src="assets/img/addtask/clear_btn.svg" />
+          </button>
+          <button type="submit" class="create-btn">
+            Create Task<img src="assets/img/addtask/create_btn.svg" />
+          </button>
+        </div>
+      </div>
     </form>
-  </div>
-  <div class="addtask-right">
-    <div class="btn-container">
-      <button type="button" class="clear-btn">
-        Clear<img src="assets/img/addtask/clear_btn.svg" />
-      </button>
-      <button type="submit" class="create-btn">
-        Create Task<img src="assets/img/addtask/create_btn.svg" />
-      </button>
-    </div>
   </div>
 </div>

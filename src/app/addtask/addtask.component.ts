@@ -43,7 +43,7 @@ export class AddtaskComponent {
 
   showAssignDropdown() {
     this.assignedDropdown.nativeElement.classList.toggle(
-      'show-assigned-dropdown'
+      'show-assigned-dropdown-container'
     );
     if (this.TaskArraysService.assignedDropdownVisible == false) {
       this.TaskArraysService.assignedDropdownVisible = true;

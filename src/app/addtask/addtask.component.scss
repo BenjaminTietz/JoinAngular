@@ -86,36 +86,110 @@
       height: 51px;
       gap: 16px;
 
-      .prio-container {
+      .prio-container-urgent {
         display: flex;
+        justify-content: space-between;
         align-items: center;
-        justify-content: center;
-        width: 136px;
-        height: 51px;
-        border-radius: 10px;
-        border-color: $boarder-color;
-        border-style: solid;
-        border-width: 1px;
+        box-sizing: border-box;
+        width: 121px;
+        height: 48px;
         padding: 18px 10px 18px 10px;
-        gap: 10px;
+        gap: 8px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.16);
+        cursor: pointer;
+
+        &:hover {
+          transition: all 225ms ease-in-out;
+          border-bottom: 5px solid $urgent;
+          border-radius: 0px 0px 20px 20px;
+        }
+
+        img {
+          width: 20px;
+          height: 14.5px;
+        }
+      }
+      .prio-container-medium {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-sizing: border-box;
+        width: 121px;
+        height: 48px;
+        padding: 18px 10px 18px 10px;
+        gap: 8px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.16);
+        cursor: pointer;
+
+        &:hover {
+          transition: all 225ms ease-in-out;
+          border-bottom: 5px solid $medium;
+          border-radius: 0px 0px 20px 20px;
+        }
+
+        img {
+          width: 20px;
+          height: 14.5px;
+        }
+      }
+      .prio-container-low {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-sizing: border-box;
+        width: 121px;
+        height: 48px;
+        padding: 18px 10px 18px 10px;
+        gap: 8px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.16);
+        cursor: pointer;
+
+        &:hover {
+          transition: all 225ms ease-in-out;
+          border-bottom: 5px solid $low;
+          border-radius: 0px 0px 20px 20px;
+        }
+
+        img {
+          width: 20px;
+          height: 14.5px;
+        }
       }
     }
   }
-  .addtask-assigned-box {
+  .assigned-user {
     display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
+    flex-direction: row;
+    justify-content: space-between;
     align-items: flex-start;
     width: 440px;
-    height: 79px;
+    height: 59px;
     gap: 8px;
+    margin-top: 16px;
 
+    .assigned-user-circle {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+
+
+      .assigned-user-Initials {
+        @include OpenSans(400, 19px, 22.8px, $white);
+      }
+    }
     h2 {
       @include OpenSans(700, 19px, 22.8px, $menu-color);
     }
 
     .assigned-contacts {
       position: relative;
+      
       .assigned-dropdown-menu {
         display: flex;
         flex-direction: row;
@@ -127,6 +201,7 @@
         gap: 8px;
         padding: 12px 16px 12px 16px;
         border: 0px 0px 1px 0px solid $input-boarder;
+        background-color: $bg-color;
         span {
           @include OpenSans(400, 19px, 22.8px, $menu-color);
         }
@@ -144,19 +219,6 @@
         }
       }
 
-      .assigned-dropdown {
-        visibility: hidden;
-        flex-direction: row;
-        justify-content: space-evenly;
-        align-items: flex-start;
-        width: 100%;
-        height: 500px;
-        position: absolute;
-        background-color: $white;
-      }
-      .show-assigned-dropdown {
-        visibility: visible;
-      }
     }
   }
 
@@ -168,7 +230,7 @@
     gap: 8px;
     width: 440px;
     height: 79px;
-    margin-top: 16px;
+    margin-top: 22px;
 
     h2 {
       @include OpenSans(700, 19px, 22.8px, $menu-color);
@@ -301,17 +363,7 @@
       .prio-box {
         height: 48px;
 
-        .prio-container {
-          width: 121px;
-          height: 48px;
-          padding: 18px 10px 18px 10px;
-          gap: 8px;
-
-          img {
-            width: 20px;
-            height: 14.5px;
-          }
-        }
+        
       }
     }
     .addtask-right {
@@ -394,10 +446,10 @@
 
     .addtask-left-top {
       input {
-        width: 50%;
+        width: 55%;
       }
       textarea {
-        width: 50%;
+        width: 55%;
       }
     }
     .addtask-left-prio {

@@ -94,4 +94,6 @@ export class BoardComponent {
     this.done.nativeElement.classList.remove('drag-area-heighlight');
     }
   }
+
+  
 }

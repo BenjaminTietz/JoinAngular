@@ -84,7 +84,7 @@ export class TaskArraysService {
         data.subtask,
         status
       );
-      await this.safeTasks();
+      // await this.safeTasks();
       console.log(
         'Added task',
         this.taskId,
