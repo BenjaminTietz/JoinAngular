@@ -89,6 +89,8 @@
       max-width: 105%;
       height: 123px;
       gap: 4px;
+      background-color: $bg-color;
+      @include OpenSans(400, 19px, 22.8px, $menu-color);
     }
   }
 
@@ -161,7 +163,7 @@
         &:hover {
           transition: all 225ms ease-in-out;
           border-bottom: 2px solid $medium;
-          border-radius: 0px 0px 20px 20px;
+          border-radius: 20px 20px 20px 20px;
         }
 
         img {
@@ -189,7 +191,7 @@
         &:hover {
           transition: all 225ms ease-in-out;
           border-bottom: 2px solid $low;
-          border-radius: 0px 0px 20px 20px;
+          border-radius: 20px 20px 20px 20px;
         }
 
         img {
@@ -381,7 +383,8 @@
         border-right: none;
         border-bottom: 1px solid $input-boarder;
         padding: 13px 16px 13px 16px;
-
+        background-color: $bg-color;
+        @include OpenSans(400, 19px, 22.8px, $menu-color);
         &.ng-touched,
         &.ng-dirty {
           &.ng-invalid {

@@ -226,6 +226,11 @@
       cursor: pointer;
     }
   }
+  
+  .display-none {
+    display: none;
+  }
+
   .task-category-wrapper {
     display: flex;
     flex-direction: row;
@@ -398,3 +403,691 @@
 
   }
 }
+
+
+.show-addtask-wrapper {
+  display: flex!important;
+}
+.addtask-wrapper {
+  position: absolute;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  width: calc(100vw - 294px);
+  height: calc(100vh - 96px);
+  background-color: $bg-color;
+  overflow: hidden;
+  z-index: 2;
+  animation: slide-in-right 1.5s ease-in-out;
+
+  @keyframes slide-in-right {
+    0% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+
+  .addtask-left {
+    box-sizing: border-box;
+    max-width: 100%;
+    height: 100vh;
+    max-height: 100%;
+    padding: 0px 24px 0px 24px;
+    gap: 24px;
+
+    form {
+      position: relative input {
+        width: 100%;
+      }
+    }
+  }
+
+  .headline {
+    h1 {
+      @include OpenSans(400, 48px, 57.6px, $dashboard-headline);
+    }
+  }
+
+  .addtask-left-top {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 440px;
+    height: 361px;
+    gap: 12px;
+
+    .input-wrapper {
+      width: 100vw;
+      max-width: 100%;
+      input {
+        width: 100%;
+        height: 24px;
+        gap: 10px;
+        border-top: none;
+        border-left: none;
+        border-right: none;
+        border-bottom: 1px solid $input-boarder;
+        padding: 13px 16px 13px 16px;
+
+        &.ng-touched,
+        &.ng-dirty {
+          &.ng-invalid {
+            border: 1px solid $red;
+            border-radius: 10px;
+          }
+          &.ng-valid {
+            border: 1px solid $green;
+            border-radius: 10px;
+          }
+        }
+      }
+    }
+    h2 {
+      @include OpenSans(700, 19px, 22.8px, $menu-color);
+    }
+    input {
+      border-style: dashed;
+      background-color: $bg-color;
+      width: 460px;
+      height: 64px;
+      @include OpenSans(400, 19px, 22.8px, $menu-color);
+    }
+    span {
+      @include OpenSans(400, 19px, 22.8px, $menu-color);
+    }
+
+    textarea {
+      width: 100vw !important;
+      max-width: 105%;
+      height: 123px;
+      gap: 4px;
+      background-color: $bg-color;
+      @include OpenSans(400, 19px, 22.8px, $menu-color);
+    }
+  }
+
+  .addtask-left-prio {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 8px;
+    h2 {
+      @include OpenSans(700, 19px, 22.8px, $menu-color);
+    }
+
+    span {
+      @include OpenSans(400, 19px, 22.8px, $menu-color);
+    }
+
+    .prio-box {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      height: 51px;
+      gap: 16px;
+
+      .prio-container-urgent {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-sizing: border-box;
+        width: 121px;
+        height: 48px;
+        padding: 18px 10px 18px 10px;
+        gap: 8px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.16);
+        cursor: pointer;
+
+        svg {
+          fill: $urgent;
+        }
+        &:hover {
+          transition: all 225ms ease-in-out;
+          border-bottom: 2px solid $urgent;
+          border-radius: 20px 20px 20px 20px;
+        }
+
+        img {
+          width: 20px;
+          height: 14.5px;
+        }
+      }
+      .prio-container-medium {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-sizing: border-box;
+        width: 121px;
+        height: 48px;
+        padding: 18px 10px 18px 10px;
+        gap: 8px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.16);
+        cursor: pointer;
+
+        svg {
+          fill: $medium;
+        }
+        &:hover {
+          transition: all 225ms ease-in-out;
+          border-bottom: 2px solid $medium;
+          border-radius: 20px 20px 20px 20px;
+        }
+
+        img {
+          width: 20px;
+          height: 14.5px;
+        }
+      }
+      .prio-container-low {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-sizing: border-box;
+        width: 121px;
+        height: 48px;
+        padding: 18px 10px 18px 10px;
+        gap: 8px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.16);
+        cursor: pointer;
+
+        svg {
+          fill: $low;
+        }
+
+        &:hover {
+          transition: all 225ms ease-in-out;
+          border-bottom: 2px solid $low;
+          border-radius: 20px 20px 20px 20px;
+        }
+
+        img {
+          width: 20px;
+          height: 14.5px;
+        }
+      }
+      .assign-color-urgent {
+        background-color: $urgent;
+        svg {
+          fill: $white;
+        }
+        span {
+          @include OpenSans(700, 19px, 22.8px, $white);
+        }
+      }
+      .assign-color-medium {
+        background-color: $medium;
+        svg {
+          fill: $white;
+        }
+        span {
+          @include OpenSans(700, 19px, 22.8px, $white);
+        }
+      }
+      .assign-color-low {
+        background-color: $low;
+        svg {
+          fill: $white;
+        }
+        span {
+          @include OpenSans(700, 19px, 22.8px, $white);
+        }
+      }
+    }
+  }
+  .addtask-assigned-box {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 8px;
+    width: 440px;
+    height: 79px;
+    margin-top: 22px;
+    background-color: $bg-color;
+
+    h2 {
+      @include OpenSans(700, 19px, 22.8px, $menu-color);
+      span {
+        @include OpenSans(400, 19px, 22.8px, $menu-color);
+      }
+    }
+    .assigned-contacts {
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      .assigned-dropdown-menu {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        box-sizing: border-box;
+        width: 440px;
+        height: 22px;
+        gap: 8px;
+        padding: unset;
+        border: 0px 0px 1px 0px solid $input-boarder;
+        background-color: $bg-color;
+        span {
+          @include OpenSans(400, 19px, 22.8px, $menu-color);
+        }
+      }
+      .arrow-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 24px;
+        height: 24px;
+        border-radius: 72px;
+
+        &:hover {
+          background-color: $menu-hover;
+        }
+      }
+    }
+    .assigned-dropdown-container {
+      position: absolute !important;
+      top: 104px;
+      display: none;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      position: absolute;
+      box-sizing: border-box;
+      background-color: $bg-color;
+      overflow-y: scroll;
+      max-height: 160px;
+      border: 1px solid $black !important;
+      z-index: 5;
+
+      .assigned-user {
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+        width: 440px;
+        height: 59px;
+        padding: 12px 16px 12px 16px;
+
+        .assigned-user-circle {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+
+          .assigned-user-Initials {
+            @include OpenSans(400, 19px, 22.8px, $white);
+          }
+        }
+        h2 {
+          @include OpenSans(700, 19px, 22.8px, $menu-color);
+        }
+        span {
+          @include OpenSans(400, 19px, 22.8px, $menu-color);
+        }
+      }
+    }
+  }
+  .show-assigned-dropdown {
+    display: flex !important;
+  }
+
+  .addtask-left-bottom {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 8px;
+    width: 440px;
+    height: 79px;
+    margin-top: 22px;
+
+    .subtask-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 460px;
+
+      img {
+        width: 24px;
+        height: 24px;
+
+
+        &:hover {
+          cursor: pointer;
+          background-color: $menu-hover;
+          border-radius: 50%;
+        }
+      }
+    }
+
+    select {
+      width: 105%;
+      height: 64px;
+      gap: 10px;
+      border-top: none;
+      border-left: none;
+      border-right: none;
+      border-bottom: 1px solid $input-boarder;
+      background-color: $bg-color;
+      @include OpenSans(400, 19px, 22.8px, $menu-color);
+    }
+    .input-wrapper {
+      width: 100vw;
+      max-width: 100%;
+      input {
+        width: 100%;
+        height: 24px;
+        gap: 10px;
+        border-top: none;
+        border-left: none;
+        border-right: none;
+        border-bottom: 1px solid $input-boarder;
+        padding: 13px 16px 13px 16px;
+        background-color: $bg-color;
+        @include OpenSans(400, 19px, 22.8px, $menu-color);
+        &.ng-touched,
+        &.ng-dirty {
+          &.ng-invalid {
+            border: 1px solid $red;
+            border-radius: 10px;
+          }
+          &.ng-valid {
+            border: 1px solid $green;
+            border-radius: 10px;
+          }
+        }
+      }
+    }
+
+    .add-btn-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      bottom: -21px;
+      left: 431px;
+      position: absolute;
+      z-index: 3;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background-color: rgba(0, 0, 0, 0.16);
+      cursor: pointer;
+      transition: all 225ms ease-in-out;
+
+      &:hover {
+        scale: (1.2);
+      }
+    }
+
+    h2 {
+      @include OpenSans(700, 19px, 22.8px, $menu-color);
+    }
+
+    span {
+      @include OpenSans(400, 19px, 22.8px, $menu-color);
+    }
+
+    input {
+      width: 100%;
+      height: 64px;
+      gap: 10px;
+      border-top: none;
+      border-left: none;
+      border-right: none;
+      border-bottom: 1px solid $input-boarder;
+      padding: 12px 16px 12px 16px;
+    }
+  }
+
+  .btn-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    width: 335px;
+    height: 61px;
+    margin-top: 32px;
+    margin-left: 64px;
+    gap: 4px;
+
+    .clear-btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 136px;
+      height: 61px;
+      border-radius: 10px;
+      border-width: 1px;
+      border-color: $light-gray;
+      padding: 16px 10px 16px 10px;
+      gap: 4px;
+      @include OpenSans(400, 23px, 27.6px, $light-gray);
+      cursor: pointer;
+    }
+
+    .create-btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-sizing: border-box;
+      white-space: nowrap;
+      width: 174px;
+      height: 60px;
+      border-radius: 10px;
+      border-style: none;
+      background-color: $light-blue;
+      padding: 16px 10px 16px 10px;
+      gap: 4px;
+      @include OpenSans(400, 23px, 27.6px, $white);
+      cursor: pointer;
+
+      &:disabled {
+        background-color: $light-gray;
+        cursor: not-allowed;
+      }
+    }
+  }
+  
+}
+@media screen and (max-width: 1400px) {
+
+}
+
+@media screen and (max-width: 1200px) {
+  .addtask-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    box-sizing: border-box;
+    margin-top: 78px;
+    margin-left: 0px;
+    padding-left: 16px;
+    padding-right: 16px;
+    width: 100vw;
+    max-width: 100%;
+    height: calc(100vh - 156px);
+    max-height: 100%;
+    gap: 16px;
+    overflow-y: scroll;
+
+
+
+    .addtask-right {
+      margin-bottom: 165px;
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .addtask-wrapper {
+    .addtask-left {
+      padding: 0px 0px 0px 0px;
+    }
+    .addtask-left-top {
+      h2 {
+        @include OpenSans(700, 16px, 19.2px, $menu-color);
+      }
+
+      span {
+        @include OpenSans(400, 16px, 19.2px, $menu-color);
+      }
+    }
+    .addtask-left-bottom {
+      h2 {
+        @include OpenSans(700, 16px, 19.2px, $menu-color);
+      }
+
+      span {
+        @include OpenSans(400, 16px, 19.2px, $menu-color);
+      }
+    }
+    .addtask-left-prio {
+      gap: 16px;
+      h2 {
+        @include OpenSans(700, 16px, 19.2px, $menu-color);
+      }
+
+      span {
+        @include OpenSans(400, 16px, 19.2px, $menu-color);
+      }
+
+      .prio-box {
+        height: 48px;
+      }
+    }
+    .addtask-right {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      width: 100%;
+      margin-bottom: 0px;
+
+      .btn-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 48px;
+        gap: 4px;
+        margin-left: unset;
+        .clear-btn {
+          display: none;
+        }
+
+        .create-btn {
+          width: 148px;
+          height: 48px;
+          padding: 12px 8px 12px 8px;
+          @include OpenSans(400, 19px, 22.8px, $white);
+
+          img {
+            width: 24px;
+            height: 24px;
+          }
+        }
+      }
+
+    }
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .addtask-wrapper {
+    align-items: flex-start;
+    overflow-y: scroll;
+
+    .addtask-left-top {
+      input {
+        width: 65%;
+      }
+      textarea {
+        width: 65%;
+      }
+    }
+    .addtask-left-prio {
+      .prio-box {
+        gap: 4px;
+        justify-content: flex-start;
+        .prio-container {
+          width: 100px;
+          height: 40px;
+          padding: 12px 6px 12px 6px;
+          gap: 8px;
+
+          img {
+            width: 20px;
+            height: 14.5px;
+          }
+        }
+      }
+    }
+    .addtask-left-bottom {
+      input {
+        width: 65%;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .addtask-wrapper {
+    align-items: flex-start;
+
+    .addtask-left-top {
+      input {
+        width: 55%;
+      }
+      textarea {
+        width: 55%;
+      }
+    }
+    .addtask-left-prio {
+      .prio-box {
+        gap: 2px;
+        justify-content: flex-start;
+        .prio-container {
+          width: 80px;
+          height: 30px;
+          padding: 10px 4px 10px 4px;
+          gap: 4px;
+
+          img {
+            width: 16px;
+            height: 10.5px;
+          }
+        }
+      }
+    }
+    .addtask-left-bottom {
+      input {
+        width: 50%;
+      }
+    }
+    .addtask-right {
+      .btn-container {
+        bottom: -152px;
+        .create-btn {
+          margin-top: 40px;
+        }
+      }
+    }
+  }
+}
+

@@ -35,7 +35,7 @@ export class AddtaskComponent {
     public RemotestorageService: RemotestorageService,
     public TaskArraysService: TaskArraysService,
     public ArraysService: ArraysService,
-    private fb: FormBuilder,
+    public fb: FormBuilder,
   ) {}
 
   async ngOninit() {

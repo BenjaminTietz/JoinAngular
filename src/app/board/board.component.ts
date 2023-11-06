@@ -2,6 +2,9 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { TaskArraysService } from '../task-arrays.service';
 import { RemotestorageService } from '../remotestorage.service';
 import { DragAndDropService } from '../drag-and-drop.service';
+import { ArraysService } from '../contact-arrays.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-board',
@@ -14,6 +17,12 @@ export class BoardComponent {
   @ViewChild('inProgress') inProgress: ElementRef;
   @ViewChild('awaitFeedback') awaitFeedback: ElementRef;
   @ViewChild('done') done: ElementRef;
+  @ViewChild('prioUrgent') prioUrgent: ElementRef;
+  @ViewChild('prioMedium') prioMedium: ElementRef;
+  @ViewChild('prioLow') prioLow: ElementRef;
+  @ViewChild('assignedDropdown') assignedDropdown: ElementRef;
+  @ViewChild('addtaskWrapper') addtaskWrapper: ElementRef;
+  @ViewChild('taskCategoryWrapper') taskCategoryWrapper: ElementRef;
 
   selectedTask: any;
   event: Event;
@@ -24,7 +33,8 @@ export class BoardComponent {
   constructor(
     public TaskArrayService: TaskArraysService,
     public RemotestorageService: RemotestorageService,
-    public DragAndDropService: DragAndDropService
+    public DragAndDropService: DragAndDropService,
+    public ArraysService: ArraysService,
   ) {}
 
   async ngOnInit() {
@@ -133,5 +143,51 @@ export class BoardComponent {
     }
   }
 
+  selectPriority(priority: string) {
+    this.TaskArrayService.selectedPriority = priority;
+    console.log(this.TaskArrayService.selectedPriority);
 
+    if (this.TaskArrayService.selectedPriority === 'urgent')
+    {
+      this.prioUrgent.nativeElement.classList.toggle('assign-color-urgent');
+      this.prioMedium.nativeElement.classList.remove('assign-color-medium');
+      this.prioLow.nativeElement.classList.remove('assign-color-low');
+    } 
+    else if (this.TaskArrayService.selectedPriority === 'medium') 
+    {
+      this.prioMedium.nativeElement.classList.toggle('assign-color-medium');
+      this.prioUrgent.nativeElement.classList.remove('assign-color-urgent');
+      this.prioLow.nativeElement.classList.remove('assign-color-low');
+    } 
+    else if (this.TaskArrayService.selectedPriority === 'low') 
+    {
+      this.prioLow.nativeElement.classList.toggle('assign-color-low');
+      this.prioUrgent.nativeElement.classList.remove('assign-color-urgent');
+      this.prioMedium.nativeElement.classList.remove('assign-color-medium');
+    }
+  }
+
+
+  showAssignDropdown() {
+    this.assignedDropdown.nativeElement.classList.toggle(
+      'show-assigned-dropdown'
+    );
+    if (this.TaskArrayService.assignedDropdownVisible == false) {
+      this.TaskArrayService.assignedDropdownVisible = true;
+    } else {
+      this.TaskArrayService.assignedDropdownVisible = false;
+    }
+  }
+  
+  showAddtaskFloatingContainer() {
+    console.log('showAddtaskFloatingContainer');
+    this.addtaskWrapper.nativeElement.classList.add('show-addtask-wrapper');
+    this.taskCategoryWrapper.nativeElement.classList.add('dispay-none');
+    //TO-DO: Reset form
+  }
+  hideAddtaskFloatingContainer() {
+    console.log('hideAddtaskFloatingContainer');
+    this.addtaskWrapper.nativeElement.classList.remove('show-addtask-wrapper');
+    //TO-DO: Reset form
+  }
 }
