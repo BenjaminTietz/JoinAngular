@@ -89,10 +89,8 @@ export class ContactsComponent {
         this.pushToArray(data.name, data.email, data.phone);
         await this.ArraysService.safeContacts();
     }
-
-    // TODO empty input fields
     this.ammountOfDisplayedcontacts++; 
-      await this.resetForm(data);
+      await this.ArraysService.resetAddContactForm();
         this.showCreatePopup();
         setTimeout(() => {
           this.showSlider();
@@ -100,11 +98,7 @@ export class ContactsComponent {
         }, 2000);
   }
 
-  resetForm(data) {
-    data.name == '';
-    data.email == '';
-    data.phone == '';
-  }
+
   /**
    * Asynchronous function to edit and update an existing contact to the "contacts" array
    */
@@ -114,9 +108,10 @@ export class ContactsComponent {
     this.ArraysService.contacts[this.selectedContactIndex].phone = data.phone;
     this.ArraysService.safeContacts();
 
-    //TODO confimationMessage();
+    this.showCreatePopup();
     setTimeout(() => {
       this.showEditSlider();
+      this.showCreatePopup();
     }, 2000);
   }
 

@@ -8,8 +8,8 @@
   align-items: center;
   box-sizing: border-box;
   margin-top: 96px;
-  margin-left: 232px;
-  width: calc(100vw - 232px);
+  margin-left: 238px;
+  width: calc(100vw - 238px);
   height: calc(100vh - 96px);
   background-color: $bg-color;
   overflow: hidden;
@@ -49,7 +49,7 @@
       max-width: 100%;
       input {
         width: 100%;
-        height: 64px;
+        height: 24px;
         gap: 10px;
         border-top: none;
         border-left: none;
@@ -80,7 +80,7 @@
 
     textarea {
       width: 100vw!important;
-      max-width: 100%;
+      max-width: 105%;
       height: 123px;
       gap: 4px;
     }
@@ -122,10 +122,13 @@
         box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.16);
         cursor: pointer;
 
+        svg {
+          fill:$urgent;
+        }
         &:hover {
           transition: all 225ms ease-in-out;
-          border-bottom: 5px solid $urgent;
-          border-radius: 0px 0px 20px 20px;
+          border-bottom: 2px solid $urgent;
+          border-radius: 20px 20px 20px 20px;
         }
 
         img {
@@ -146,9 +149,12 @@
         box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.16);
         cursor: pointer;
 
+        svg {
+          fill:$medium;
+        }
         &:hover {
           transition: all 225ms ease-in-out;
-          border-bottom: 5px solid $medium;
+          border-bottom: 2px solid $medium;
           border-radius: 0px 0px 20px 20px;
         }
 
@@ -170,15 +176,46 @@
         box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.16);
         cursor: pointer;
 
+        svg {
+          fill:$low;
+        }
+
         &:hover {
           transition: all 225ms ease-in-out;
-          border-bottom: 5px solid $low;
+          border-bottom: 2px solid $low;
           border-radius: 0px 0px 20px 20px;
         }
 
         img {
           width: 20px;
           height: 14.5px;
+        }
+      }
+      .assign-color-urgent {
+        background-color: $urgent;
+        svg {
+          fill:$white;
+        }
+        span {
+          @include OpenSans(700, 19px, 22.8px, $white);
+        }
+      }
+      .assign-color-medium {
+        background-color: $medium;
+        svg {
+          fill:$white;
+        }
+        span {
+          @include OpenSans(700, 19px, 22.8px, $white);
+        }
+      }
+      .assign-color-low {
+        background-color: $low;
+        svg {
+          fill:$white;
+        }
+        span {
+          @include OpenSans(700, 19px, 22.8px, $white);
         }
       }
     }
@@ -195,6 +232,12 @@
     margin-top: 22px;
     background-color: $bg-color;
 
+    h2 {
+      @include OpenSans(700, 19px, 22.8px, $menu-color);
+      span {
+        @include OpenSans(400, 19px, 22.8px, $menu-color);
+      }
+    }
     .assigned-contacts {
       position: relative;
       display: flex;
@@ -242,6 +285,8 @@
       overflow-y: scroll;
       max-height: 160px;
       border: 1px solid $black !important;
+      z-index: 5;
+
       .assigned-user {
         box-sizing: border-box;
         display: flex;
@@ -278,6 +323,7 @@
   }
 
   .addtask-left-bottom {
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -303,7 +349,7 @@
       max-width: 100%;
       input {
         width: 100%;
-        height: 64px;
+        height: 24px;
         gap: 10px;
         border-top: none;
         border-left: none;
@@ -322,6 +368,26 @@
             border-radius: 10px;
           }
         }
+      }
+    }
+
+    .add-btn-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      bottom: -21px;
+      left: 431px;
+      position: absolute;
+      z-index: 3;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background-color: rgba(0, 0, 0, 0.16);
+      cursor: pointer;
+      transition: all 225ms ease-in-out;
+
+      &:hover {
+        scale: (1.2);
       }
     }
     h2 {

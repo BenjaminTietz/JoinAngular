@@ -85,6 +85,11 @@ export class ArraysService {
    */
   initials: Array<any> = [];
 
+
+  resetAddContactForm() {
+    this.contactsForm.reset();
+  }
+
   /**
    * Asynchronous function to save all contacts from array "contacts" to remote storage
    */

@@ -24,10 +24,12 @@ export class AddtaskComponent {
   @ViewChild('inputPhone') inputPhone: ElementRef;
   @ViewChild('addContactContainer') addContactContainer: ElementRef;
   @ViewChild('editContactContainer') editContactContainer: ElementRef;
-
+  @ViewChild('prioUrgent') prioUrgent: ElementRef;
+  @ViewChild('prioMedium') prioMedium: ElementRef;
+  @ViewChild('prioLow') prioLow: ElementRef;
 
   form: FormGroup;
-
+ 
   constructor(
     private router: Router,
     public RemotestorageService: RemotestorageService,
@@ -45,6 +47,31 @@ export class AddtaskComponent {
         contact.selected = false;
       });
   }
+
+  selectPriority(priority: string) {
+    this.TaskArraysService.selectedPriority = priority;
+    console.log(this.TaskArraysService.selectedPriority);
+
+    if (this.TaskArraysService.selectedPriority === 'urgent')
+    {
+      this.prioUrgent.nativeElement.classList.toggle('assign-color-urgent');
+      this.prioMedium.nativeElement.classList.remove('assign-color-medium');
+      this.prioLow.nativeElement.classList.remove('assign-color-low');
+    } 
+    else if (this.TaskArraysService.selectedPriority === 'medium') 
+    {
+      this.prioMedium.nativeElement.classList.toggle('assign-color-medium');
+      this.prioUrgent.nativeElement.classList.remove('assign-color-urgent');
+      this.prioLow.nativeElement.classList.remove('assign-color-low');
+    } 
+    else if (this.TaskArraysService.selectedPriority === 'low') 
+    {
+      this.prioLow.nativeElement.classList.toggle('assign-color-low');
+      this.prioUrgent.nativeElement.classList.remove('assign-color-urgent');
+      this.prioMedium.nativeElement.classList.remove('assign-color-medium');
+    }
+  }
+
 
   showAssignDropdown() {
     this.assignedDropdown.nativeElement.classList.toggle(

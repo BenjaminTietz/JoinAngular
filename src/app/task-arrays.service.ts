@@ -21,6 +21,7 @@ export class TaskArraysService {
   @ViewChild('editContactContainer') editContactContainer: ElementRef;
 
 
+
   public addTaskForm: FormGroup = new FormGroup({
     title: new FormControl('', [Validators.required]),
     description: new FormControl('', []),
@@ -92,9 +93,24 @@ export class TaskArraysService {
    * @type {Array}
    */
   urgent = [];
+    /**
+   * An subarray to store subtasks .
+   * @type {Array}
+   */
+    subtasks = [];
 
-  async generateTaskId() {  
-    this.taskId = this.tasks.length;
+  async generateTaskId() {
+    // first filter out IDs from the "task" array and convert them to numbers (from strings)
+    let taskIds = this.tasks.map(task => task.id);
+  
+    // if taskarray is empty, set the ID to 1
+    if (taskIds.length === 0) {
+      this.taskId = 1;
+    } else {
+      // otherwise, get the highest ID and add 1
+      this.taskId = Math.max(...taskIds) + 1;
+    }
+  
     console.log('Task-ArrayService generated task id', this.taskId);
   }
   /**
@@ -102,7 +118,7 @@ export class TaskArraysService {
    */
   async addTask(data) {
     let status = 'toDo';
-    this.taskId = this.tasks.length + 1;
+    this.taskId = this.taskId + 1;
     if (data.title != '' && data.date != '' && data.category != '') {
       let selectedContacts = this.ArraysService.contacts
         .filter((contact) => contact.selected)
@@ -115,10 +131,10 @@ export class TaskArraysService {
         data.date,
         selectedContacts,
         data.category,
-        data.subtask,
+        this.subtasks,
         status
       );
-      // await this.safeTasks();
+       await this.safeTasks();
       console.log(
         'Added task',
         this.taskId,
@@ -129,12 +145,27 @@ export class TaskArraysService {
         data.category,
         data.subtask
       );
-      // TODO    createdTaskSuccessfully();
     }
     await this.findNearestDate(this.urgent);
-    // reset form
-  
+    await this.resetAddTaskForm();
+    this.subtasks = [];
     //TODO confimationMessage();
+  }
+
+  resetAddTaskForm() {
+    this.addTaskForm.reset();
+  }
+
+  addSubtask() {
+    let subtaskControl = this.addTaskForm.get('subtask');
+    let subtaskValue = subtaskControl.value;
+
+    if (subtaskValue) {
+      this.subtasks.push(subtaskValue);
+      subtaskControl.setValue(''); // Das Eingabefeld leeren
+    }
+
+    console.log('subtasks', this.subtasks);
   }
 
   async updateTask(taskIndex: number, newStatus: string) {
@@ -160,10 +191,7 @@ export class TaskArraysService {
       status: status,
     });
   }
-  selectPriority(priority: string) {
-    this.selectedPriority = priority;
-    console.log(this.selectedPriority);
-  }
+
 
   selectAssigned(assigned: string) {
     this.selectedPriority = assigned;
