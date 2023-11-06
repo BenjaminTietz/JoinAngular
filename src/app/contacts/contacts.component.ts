@@ -10,7 +10,7 @@ import { RemotestorageService } from '../remotestorage.service';
 import { ArraysService } from '../contact-arrays.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+ 
 @Component({
   selector: 'app-contacts',
   templateUrl: './contacts.component.html',
@@ -24,6 +24,7 @@ export class ContactsComponent {
   @ViewChild('editContactContainer') editContactContainer: ElementRef;
   @ViewChild('mobileDetailView') mobileDetailView: ElementRef;
   @ViewChild('mobileMenuWrapper') mobileMenuWrapper: ElementRef;
+  @ViewChild('popupContainer ') popupContainer : ElementRef;
 
   selectedContactIndex: number = -1; // Initialisieren mit -1, um kein Element anzuzeigen
   selectedContact: ArraysService['contacts'][number] | null;
@@ -87,15 +88,15 @@ export class ContactsComponent {
     if (data.name != '' && data.email != '' && data.phone != '') {
         this.pushToArray(data.name, data.email, data.phone);
         await this.ArraysService.safeContacts();
-    // TODO    createdContactSuccessfully();
-    //     hideAddContactCard();
     }
-    // document.getElementById('form_add_contact').reset();
+
+    // TODO empty input fields
     this.ammountOfDisplayedcontacts++; 
       await this.resetForm(data);
-        //TODO confimationMessage();
+        this.showCreatePopup();
         setTimeout(() => {
           this.showSlider();
+          this.showCreatePopup();
         }, 2000);
   }
 
@@ -127,7 +128,13 @@ export class ContactsComponent {
     this.ArraysService.safeContacts();
     this.selectedContactIndex = -1;
     this.ammountOfDisplayedcontacts--; 
-    //TODO confimationMessage();
+
+
+    //TODO confimationMessage()
+    //short delay before hiding the slider
+    this.mobileDetailView.nativeElement.classList.toggle('show-mobile-detailview');
+    
+    ;
   }
   getContactById(index: number) {
     this.selectedContactIndex = index;
@@ -170,4 +177,7 @@ async extractInitials() {
     this.mobileMenuWrapper.nativeElement.classList.toggle('show-mobile-contact-menu');
   }
 
+  showCreatePopup() {
+    this.popupContainer.nativeElement.classList.toggle('showPopup');
+  }
 }

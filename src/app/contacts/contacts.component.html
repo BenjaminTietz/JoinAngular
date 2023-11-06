@@ -1,5 +1,10 @@
 <div class="contacts-wrapper">
   <!--Hidden Container-->
+  <div #popupContainer class="popup-container">
+    <div class="create-popup">
+      <span>Contact succesfully created</span>
+    </div>
+  </div>
   <!--Hidden Add Contact Container-->
   <div class="add-contact-container" #addContactContainer>
     <div class="add-contact-top">
@@ -101,7 +106,7 @@
       </form>
     </div>
   </div>
-  <!--Hidden Add Contact Container-->
+  <!--end of hidden Add Contact Container-->
   <!--Hidden Edit Contact Container-->
   <div
     *ngIf="selectedContactIndex !== -1"

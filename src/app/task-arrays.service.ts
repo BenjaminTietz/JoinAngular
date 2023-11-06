@@ -102,7 +102,7 @@ export class TaskArraysService {
    */
   async addTask(data) {
     let status = 'toDo';
-    this.taskId = this.tasks.length;
+    this.taskId = this.tasks.length + 1;
     if (data.title != '' && data.date != '' && data.category != '') {
       let selectedContacts = this.ArraysService.contacts
         .filter((contact) => contact.selected)
