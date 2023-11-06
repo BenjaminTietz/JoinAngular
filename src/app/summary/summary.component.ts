@@ -36,8 +36,8 @@ export class SummaryComponent {
     await this.loginService.extractUserName();
     this.loginService.getGreeting();
     this.TaskArraysService.findNearestDate(this.TaskArraysService.urgent);
-    console.log('nearestUrgendTaskDate', this.TaskArraysService.nearestUrgendTaskDate);
-    console.log('Summary loaded succesfully:',this.TaskArraysService.tasks);
-    console.log('Summary loaded succesfully:',this.ArraysService.contacts);
+    console.log('Summary loaded succesfully nearestUrgendTaskDate', this.TaskArraysService.nearestUrgendTaskDate);
+    console.log('Summary loaded succesfully TASKS:',this.TaskArraysService.tasks);
+    console.log('Summary loaded succesfully CONTACTS:',this.ArraysService.contacts);
   }
 }

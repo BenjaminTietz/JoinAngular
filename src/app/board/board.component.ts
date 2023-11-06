@@ -52,29 +52,29 @@ export class BoardComponent {
 
   openTask(i: number, subArrayName: string) {
     if (['toDo', 'inProgress', 'awaitFeedback', 'done'].includes(subArrayName)) {
-      const subArray = this.TaskArrayService[subArrayName]; // Subarray auswählen
+      let subArray = this.TaskArrayService[subArrayName]; // choose subarray
       if (i >= 0 && i < subArray.length) {
-        const subTask = subArray[i];
+        let subTask = subArray[i];
         if (subTask && subTask.id !== undefined) {
-          const taskId = subTask.id; // Extrahiere die ID
-          // Finde den Index der Aufgabe im Hauptarray
-          const taskIndex = this.TaskArrayService.tasks.findIndex(task => task.id === taskId);
+          let taskId = subTask.id; // extract ID from subtask
+          // find index of the task inside th main array
+          let taskIndex = this.TaskArrayService.tasks.findIndex(task => task.id === taskId);
           this.taskToDelete = taskIndex;
           console.log('taskToDelete', this.taskToDelete);
           if (taskIndex !== -1) {
             this.selectedTask = this.TaskArrayService.tasks[taskIndex];
             this.floatingTaskContainer.nativeElement.classList.add('show-floating-container');
           } else {
-            console.log(`Aufgabe mit ID ${taskId} wurde nicht im Hauptarray gefunden.`);
+            console.log(`Task with ID ${taskId} was not found in the main array.`);
           }
         } else {
-          console.log(`ID konnte nicht aus dem Subarray-Eintrag extrahiert werden.`);
+          console.log(`ID could not be extracted from subarray entry.`);
         }
       } else {
-        console.log(`Ungültiger Index ${i} für Subarray ${subArrayName}.`);
+        console.log(`Invalid index ${i} for subarray ${subArrayName}.`);
       }
     } else {
-      console.log(`Ungültiger Subarray-Name: ${subArrayName}.`);
+      console.log(`Invalid subarray name: ${subArrayName}.`);
     }
   }
 
@@ -85,6 +85,7 @@ export class BoardComponent {
   }
 
   async deleteTask() {
+        console.log('taskToDelete', this.taskToDelete);
         this.TaskArrayService.tasks.splice(this.taskToDelete, 1);
         this.TaskArrayService.safeTasks();
         this.closeTask();
@@ -119,6 +120,7 @@ export class BoardComponent {
     this.done.nativeElement.classList.add('drag-area-heighlight');
     }
   }
+  
   removeHighlight (id) {
     if (id === 'toDo') {
     this.toDo.nativeElement.classList.remove('drag-area-heighlight');

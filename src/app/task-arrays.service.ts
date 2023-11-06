@@ -101,15 +101,12 @@ export class TaskArraysService {
 
   async generateTaskId() {
     // first filter out IDs from the "task" array and convert them to numbers (from strings)
-    let taskIds = this.tasks.map(task => task.id);
+    let taskIds = this.tasks.length;
   
     // if taskarray is empty, set the ID to 1
-    if (taskIds.length === 0) {
+    if (this.tasks.length === 0) {
       this.taskId = 1;
-    } else {
-      // otherwise, get the highest ID and add 1
-      this.taskId = Math.max(...taskIds) + 1;
-    }
+    } 
   
     console.log('Task-ArrayService generated task id', this.taskId);
   }
@@ -128,7 +125,7 @@ export class TaskArraysService {
         this.taskId,
         data.title,
         data.description,
-        data.date,
+        data.dueDate,
         selectedContacts,
         data.category,
         this.subtasks,
@@ -140,7 +137,7 @@ export class TaskArraysService {
         this.taskId,
         data.title,
         data.description,
-        data.date,
+        data.dueDate,
         selectedContacts,
         data.category,
         data.subtask

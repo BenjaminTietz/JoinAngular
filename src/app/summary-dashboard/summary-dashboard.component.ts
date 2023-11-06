@@ -19,7 +19,7 @@ export class SummaryDashboardComponent {
   ) {}
 
   ngOnInit(): void {
-    
+    this.TaskArrayService.findNearestDate(this.TaskArrayService.urgent);
   }
 
   selectComponent(componentName: string) {
