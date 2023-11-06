@@ -131,6 +131,9 @@ export class LoginService {
     }
   }
 
+  /**
+   * This function extracts the name of the current user from the "users" array
+   */
   async extractUserName() {
     let email = this.currentUserEmail;
     let user = this.ArraysService.users.find(
@@ -145,6 +148,9 @@ export class LoginService {
     }
   }
 
+/**
+ * This function chooses a greeting slogan depending on the time of the day
+ */
   getGreeting(): void {
     let currentTime = new Date().getHours();
     let greeting: string;

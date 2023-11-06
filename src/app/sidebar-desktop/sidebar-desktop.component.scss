@@ -1,6 +1,6 @@
 @import "src/assets/styles/colors.scss";
 @import "src/assets/styles/fonts.scss";
-
+ 
 .sidebar-wrapper {
   position: fixed;
   top: 96px;
@@ -96,8 +96,8 @@
         justify-content: center;
         align-items: center;
         width: 75px;
-        height: 76px;
-        padding: 15px 0px 15px 0px;
+        height: 100%;
+        padding: unset;
         border-radius: 8px;
         gap: 8px;
         cursor: pointer;
