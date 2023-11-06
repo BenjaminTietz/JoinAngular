@@ -2,6 +2,7 @@ import { Injectable, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { RemotestorageService } from './remotestorage.service';
 import { ArraysService } from './contact-arrays.service';
 import { AddtaskComponent } from './addtask/addtask.component';
+import { AbstractControl, ValidationErrors } from '@angular/forms';
 import {
   FormBuilder,
   FormGroup,
@@ -42,11 +43,17 @@ export class TaskArraysService {
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
     this.addTaskForm.valueChanges.subscribe(console.log);
+
+    const currentDate = new Date();
+    this.minDate = currentDate.toISOString().split('T')[0];
   }
+
+  minDate: string;
   selectedPriority: string = '';
   assignedDropdownVisible: boolean = false;
   taskId: number = 0;
   nearestUrgendTaskDate: any = '';
+
   ngOnInit() {
     this.loadTasks();
     this.generateTaskId();
@@ -98,6 +105,7 @@ export class TaskArraysService {
    * @type {Array}
    */
     subtasks = [];
+
 
   async generateTaskId() {
     // first filter out IDs from the "task" array and convert them to numbers (from strings)
@@ -163,6 +171,10 @@ export class TaskArraysService {
     }
 
     console.log('subtasks', this.subtasks);
+  }
+
+  deleteSubtask(i) {
+    this.subtasks.splice(i, 1);
   }
 
   async updateTask(taskIndex: number, newStatus: string) {

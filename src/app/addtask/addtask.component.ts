@@ -29,7 +29,7 @@ export class AddtaskComponent {
   @ViewChild('prioLow') prioLow: ElementRef;
 
   form: FormGroup;
- 
+
   constructor(
     private router: Router,
     public RemotestorageService: RemotestorageService,
@@ -47,6 +47,7 @@ export class AddtaskComponent {
         contact.selected = false;
       });
   }
+
 
   selectPriority(priority: string) {
     this.TaskArraysService.selectedPriority = priority;

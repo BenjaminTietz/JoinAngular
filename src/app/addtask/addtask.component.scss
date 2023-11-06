@@ -73,7 +73,13 @@
     h2 {
       @include OpenSans(700, 19px, 22.8px, $menu-color);
     }
-
+    input {
+      border-style: dashed;
+      background-color: $bg-color;
+      width: 460px;
+      height: 64px;
+      @include OpenSans(400, 19px, 22.8px, $menu-color);
+    }
     span {
       @include OpenSans(400, 19px, 22.8px, $menu-color);
     }
@@ -332,6 +338,25 @@
     width: 440px;
     height: 79px;
     margin-top: 22px;
+
+    .subtask-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 460px;
+
+      img {
+        width: 24px;
+        height: 24px;
+
+
+        &:hover {
+          cursor: pointer;
+          background-color: $menu-hover;
+          border-radius: 50%;
+        }
+      }
+    }
 
     select {
       width: 105%;
