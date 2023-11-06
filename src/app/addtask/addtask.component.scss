@@ -79,7 +79,7 @@
     }
 
     textarea {
-      width: 100vw!important;
+      width: 100vw !important;
       max-width: 105%;
       height: 123px;
       gap: 4px;
@@ -123,7 +123,7 @@
         cursor: pointer;
 
         svg {
-          fill:$urgent;
+          fill: $urgent;
         }
         &:hover {
           transition: all 225ms ease-in-out;
@@ -150,7 +150,7 @@
         cursor: pointer;
 
         svg {
-          fill:$medium;
+          fill: $medium;
         }
         &:hover {
           transition: all 225ms ease-in-out;
@@ -177,7 +177,7 @@
         cursor: pointer;
 
         svg {
-          fill:$low;
+          fill: $low;
         }
 
         &:hover {
@@ -194,7 +194,7 @@
       .assign-color-urgent {
         background-color: $urgent;
         svg {
-          fill:$white;
+          fill: $white;
         }
         span {
           @include OpenSans(700, 19px, 22.8px, $white);
@@ -203,7 +203,7 @@
       .assign-color-medium {
         background-color: $medium;
         svg {
-          fill:$white;
+          fill: $white;
         }
         span {
           @include OpenSans(700, 19px, 22.8px, $white);
@@ -212,7 +212,7 @@
       .assign-color-low {
         background-color: $low;
         svg {
-          fill:$white;
+          fill: $white;
         }
         span {
           @include OpenSans(700, 19px, 22.8px, $white);
@@ -390,6 +390,7 @@
         scale: (1.2);
       }
     }
+
     h2 {
       @include OpenSans(700, 19px, 22.8px, $menu-color);
     }
@@ -411,13 +412,12 @@
   }
 
   .btn-container {
-    position: absolute;
-    bottom: 35px;
     display: flex;
     justify-content: flex-end;
     align-items: flex-end;
     width: 335px;
     height: 61px;
+    margin-top: 32px;
     margin-left: 64px;
     gap: 4px;
 
@@ -458,6 +458,10 @@
       }
     }
   }
+  
+}
+@media screen and (max-width: 1400px) {
+
 }
 
 @media screen and (max-width: 1200px) {
@@ -478,12 +482,7 @@
     gap: 16px;
     overflow-y: scroll;
 
-    .addtask-left {
-      .addtask-right {
-        .btn-container {
-        }
-      }
-    }
+
 
     .addtask-right {
       margin-bottom: 165px;
@@ -540,7 +539,6 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        bottom: -152px;
         width: 100%;
         height: 48px;
         gap: 4px;

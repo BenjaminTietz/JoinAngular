@@ -91,6 +91,23 @@ export class BoardComponent {
         await this.ngOnInit();
   }
   
+  getCategoryColor(category: string): string {
+    switch (category) {
+      case 'sales':
+        return '#e69f5d';
+      case 'marketing':
+        return '#f199c8';
+      case 'accounting':
+        return '#82fcd3';
+      case 'development':
+        return '#a899f5';
+      case 'purchase':
+        return '#d5b7f3';
+      default:
+        return '#000000'; // Standardfarbe für unbekannte Kategorien
+    }
+  }
+
   highlight (id) {
     if (id === 'toDo') {
     this.toDo.nativeElement.classList.add('drag-area-heighlight');

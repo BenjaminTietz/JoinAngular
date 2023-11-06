@@ -133,7 +133,7 @@
           name="category"
         >
           <option value="" disabled selected>Select a category</option>
-          <option class="sales" value="sales">Sales</option>
+          <option  class="sales" value="sales">Sales</option>
           <option class="marketing" value="marketing">Marketing</option>
           <option class="accounting" value="accounting">Accounting</option>
           <option class="development" value="development">Development</option>
@@ -156,28 +156,25 @@
 
         <div *ngFor="let subtask of this.TaskArraysService.subtasks; let i = index">
           <span>{{ subtask }}</span>
-
         </div>
-
-      </div>
-
-      <div class="btn-container">
-        <button type="button" class="clear-btn">
-          Clear<img src="assets/img/addtask/clear_btn.svg" />
-        </button>
-        <button
-          [disabled]="
-            !(
-              this.TaskArraysService.addTaskForm.valid &&
-              (this.TaskArraysService.addTaskForm.dirty ||
-                this.TaskArraysService.addTaskForm.touched)
-            )
-          "
-          type="submit"
-          class="create-btn"
-        >
-          Create Task<img src="assets/img/addtask/create_btn.svg" />
-        </button>
+        <div class="btn-container">
+          <button type="button" class="clear-btn">
+            Clear<img src="assets/img/addtask/clear_btn.svg" />
+          </button>
+          <button
+            [disabled]="
+              !(
+                this.TaskArraysService.addTaskForm.valid &&
+                (this.TaskArraysService.addTaskForm.dirty ||
+                  this.TaskArraysService.addTaskForm.touched)
+              )
+            "
+            type="submit"
+            class="create-btn"
+          >
+            Create Task<img src="assets/img/addtask/create_btn.svg" />
+          </button>
+        </div>
       </div>
     </form>
   </div>
