@@ -314,7 +314,7 @@
         }
 
         .mobile-add-contact-container {
-            position: absolute;
+            position: fixed;
             bottom: 100px;
             right: 32px;
             display: none;
@@ -422,7 +422,7 @@
         display: none;
         
         .mobile-edit-contact-container {
-            position: absolute;
+            position: fixed;
             bottom: 100px;
             right: 32px;
             display: flex;
@@ -438,7 +438,7 @@
             cursor: pointer;
         }
         .mobile-menu-wrapper {
-            position: absolute;
+            position: fixed;
             bottom: 196px;
             right: 130px;
             display: none;

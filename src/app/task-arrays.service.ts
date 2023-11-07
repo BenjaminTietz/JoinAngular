@@ -31,7 +31,16 @@ export class TaskArraysService {
     subtask: new FormControl('', []),
   });
 
+  public editTaskForm: FormGroup = new FormGroup({
+    title: new FormControl('', [Validators.required]),
+    description: new FormControl('', []),
+    dueDate: new FormControl('', [Validators.required]),
+    category: new FormControl('', [Validators.required]),
+    subtask: new FormControl('', []),
+  });
+
   public addTaskFormFB: FormGroup;
+  public editTaskFormFB: FormGroup;
 
   constructor(
     public RemotestorageService: RemotestorageService,
@@ -39,10 +48,22 @@ export class TaskArraysService {
     private fb: FormBuilder
   ) {
     this.addTaskFormFB = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      title: new FormControl('', [Validators.required]),
+      description: new FormControl('', []),
+      dueDate: new FormControl('', [Validators.required]),
+      category: new FormControl('', [Validators.required]),
+      subtask: new FormControl('', []),
     });
     this.addTaskForm.valueChanges.subscribe(console.log);
+
+    this.editTaskFormFB = this.fb.group({
+      title: 'this.selectedTask.title',
+      description: 'this.selectedTask.description',
+      dueDate: 'this.selectedTask.date',
+      category: 'this.selectedTask.category',
+      subtask: 'this.selectedTask.subtask',
+    });
+    this.editTaskForm.valueChanges.subscribe(console.log);
 
     const currentDate = new Date();
     this.minDate = currentDate.toISOString().split('T')[0];
@@ -53,10 +74,12 @@ export class TaskArraysService {
   assignedDropdownVisible: boolean = false;
   taskId: number = 0;
   nearestUrgendTaskDate: any = '';
+  selectedTask: any;
 
   ngOnInit() {
     this.loadTasks();
     this.generateTaskId();
+    this.editTaskForm.patchValue(this.selectedTask);
   }
 
   
@@ -156,6 +179,45 @@ export class TaskArraysService {
     this.subtasks = [];
     //TODO confimationMessage();
   }
+
+    /**
+   * Asynchronous function to add a new task to the "task" array
+   */
+    async editTask(data) {
+      // let status = 'toDo';
+      // this.taskId = this.taskId + 1;
+      // if (data.title != '' && data.date != '' && data.category != '') {
+      //   let selectedContacts = this.ArraysService.contacts
+      //     .filter((contact) => contact.selected)
+      //     .map((contact) => contact.name);
+  
+      //   this.pushToArray(
+      //     this.taskId,
+      //     data.title,
+      //     data.description,
+      //     data.dueDate,
+      //     selectedContacts,
+      //     data.category,
+      //     this.subtasks,
+      //     status
+      //   );
+      //    await this.safeTasks();
+      //   console.log(
+      //     'Added task',
+      //     this.taskId,
+      //     data.title,
+      //     data.description,
+      //     data.dueDate,
+      //     selectedContacts,
+      //     data.category,
+      //     data.subtask
+      //   );
+      // }
+      // await this.findNearestDate(this.urgent);
+      // await this.resetAddTaskForm();
+      // this.subtasks = [];
+      // //TODO confimationMessage();
+    }
 
   resetAddTaskForm() {
     this.addTaskForm.reset();

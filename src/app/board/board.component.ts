@@ -22,9 +22,9 @@ export class BoardComponent {
   @ViewChild('prioLow') prioLow: ElementRef;
   @ViewChild('assignedDropdown') assignedDropdown: ElementRef;
   @ViewChild('addtaskWrapper') addtaskWrapper: ElementRef;
+  @ViewChild('editTaskWrapper') editTaskWrapper: ElementRef;
   @ViewChild('taskCategoryWrapper') taskCategoryWrapper: ElementRef;
 
-  selectedTask: any;
   event: Event;
   taskToDelete;
   searchFieldActive: boolean = false;
@@ -35,7 +35,9 @@ export class BoardComponent {
     public RemotestorageService: RemotestorageService,
     public DragAndDropService: DragAndDropService,
     public ArraysService: ArraysService,
-  ) {}
+  ) {
+    console.log('board loaded', this.TaskArrayService.selectedTask);
+  }
 
   async ngOnInit() {
     await this.TaskArrayService.mapTaskStatus();
@@ -72,7 +74,8 @@ export class BoardComponent {
           this.taskToDelete = taskIndex;
           console.log('taskToDelete', this.taskToDelete);
           if (taskIndex !== -1) {
-            this.selectedTask = this.TaskArrayService.tasks[taskIndex];
+            this.TaskArrayService.selectedTask = this.TaskArrayService.tasks[taskIndex];
+            console.log('board loaded', this.TaskArrayService.selectedTask);
             this.floatingTaskContainer.nativeElement.classList.add('show-floating-container');
           } else {
             console.log(`Task with ID ${taskId} was not found in the main array.`);
@@ -191,5 +194,15 @@ export class BoardComponent {
     this.addtaskWrapper.nativeElement.classList.remove('show-addtask-wrapper');
     this.taskCategoryWrapper.nativeElement.classList.remove('display-none');
     //TO-DO: Reset form
+  }
+  showEditTaskFloatingContainer(selectedTask) {
+    this.TaskArrayService.selectedTask = selectedTask;
+    this.TaskArrayService.editTaskForm.patchValue(selectedTask);
+    console.log('selectedTask', this.TaskArrayService.selectedTask);
+    this.editTaskWrapper.nativeElement.classList.add('show-edittask-wrapper');
+  }
+
+  hideEditTaskFloatingContainer() {
+    this.editTaskWrapper.nativeElement.classList.remove('show-edittask-wrapper');
   }
 }
