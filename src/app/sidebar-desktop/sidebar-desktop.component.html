@@ -1,26 +1,30 @@
 <div class="sidebar-wrapper">
     <div class="sidebar-top">
-        <div (click)="selectComponent('app-summary-dashboard')" class="sidebar-row">
+        <div #summary (click)="selectComponent('app-summary-dashboard')" class="sidebar-row">
             <img src="assets/img/summary/summary_icon.png" alt="logo">
             <span>Summary</span>
         </div>
-        <div (click)="selectComponent('app-addtask')" class="sidebar-row">
+        <div #addTask (click)="selectComponent('app-addtask')" class="sidebar-row">
             <img src="assets/img/summary/addtask_icon.png" alt="logo">
             <span>Add Task</span>
         </div>
-        <div (click)="selectComponent('app-board')" class="sidebar-row">
+        <div #board (click)="selectComponent('app-board')" class="sidebar-row">
             <img src="assets/img/summary/board_icon.png" alt="logo">
             <span>Board</span>
         </div>
-        <div (click)="selectComponent('app-contacts')" class="sidebar-row">
+        <div #contacts (click)="selectComponent('app-contacts')" class="sidebar-row">
             <img src="assets/img/summary/contacts_icon.png" alt="logo">
             <span>Contacts</span>
         </div>
     </div>
 
     <div class="sidebar-bottom">
+        <div #privacy class="sidebar-bottom-btn-container">
         <a (click)="selectComponent('app-privacy-policy')">Privacy Policy</a>
+        </div>
+        <div #legal class="sidebar-bottom-btn-container">
         <a (click)="selectComponent('app-legal-notice')">Legal Notice</a>
+    </div>
     </div>
 
 </div>

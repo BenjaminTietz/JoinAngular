@@ -45,6 +45,10 @@
         margin-left: 16px;
       }
     }
+
+    .sidebar-row-active {
+      background-color: $menu-hover;
+    }
   }
 
   .sidebar-bottom {
@@ -55,6 +59,25 @@
     height: 384px;
     gap: 16px;
     padding: 300px 0px 0px 0px;
+
+    .sidebar-bottom-btn-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 116px;
+      height: 35px;
+      padding: 8px;
+      gap: 8px;
+      border-radius: 8px;
+    }
+
+    .sidebar-bottom-btn-container-active {
+      background-color: $light-blue;
+      a {
+        @include OpenSans(700, 16px, 19.2px, $white);
+        cursor: pointer;
+      }
+    }
 
     a {
       @include OpenSans(400, 16px, 19.2px, $menu-color);

@@ -179,15 +179,17 @@ export class BoardComponent {
     }
   }
   
-  showAddtaskFloatingContainer() {
-    console.log('showAddtaskFloatingContainer');
+  async showAddtaskFloatingContainer() {
+    await this.ngOnInit();
     this.addtaskWrapper.nativeElement.classList.add('show-addtask-wrapper');
-    this.taskCategoryWrapper.nativeElement.classList.add('dispay-none');
+    this.taskCategoryWrapper.nativeElement.classList.add('display-none');
+    console.log('this.taskCategoryWrapper', this.taskCategoryWrapper);
     //TO-DO: Reset form
   }
-  hideAddtaskFloatingContainer() {
-    console.log('hideAddtaskFloatingContainer');
+  async hideAddtaskFloatingContainer() {
+    await this.ngOnInit();
     this.addtaskWrapper.nativeElement.classList.remove('show-addtask-wrapper');
+    this.taskCategoryWrapper.nativeElement.classList.remove('display-none');
     //TO-DO: Reset form
   }
 }
