@@ -60,10 +60,13 @@ export class ArraysService {
       phone: ['', [Validators.required, Validators.minLength(6)]],
     });
     this.editContactFormFB.valueChanges.subscribe(console.log);
+
+    this.sortedalphabetically = [];
   }
 
   ngOnInit() {
     this.loadContacts();
+    this.sortContactsAlphabetically(this.contacts);
 
   }
 
@@ -115,6 +118,19 @@ export class ArraysService {
     this.contactsForm.reset();
   }
 
+
+  /**
+   * Function to sort the contacts alphabetically
+   * @param {Array} contacts - This is the array of contacts
+   */
+  sortContactsAlphabetically(contacts) {
+    this.sortedalphabetically = contacts.slice().sort((a, b) =>
+      a.name.localeCompare(b.name)
+    );
+    console.log('sortedalphabetically', this.sortedalphabetically);
+  }
+
+  
   /**
    * Asynchronous function to save all contacts from array "contacts" to remote storage
    */

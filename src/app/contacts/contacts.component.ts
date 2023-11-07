@@ -28,9 +28,12 @@ export class ContactsComponent {
 
   selectedContactIndex: number = -1; // Initialisieren mit -1, um kein Element anzuzeigen
   selectedContact: ArraysService['contacts'][number] | null;
+  selectedSortedContactIndex : number = 0;
   ammountOfDisplayedcontacts: number = 0;
-
+  contactId: number = 0;
   form: FormGroup;
+  indexToDelete: number;
+  indexToEdit: number;
 
   userCircleColors: string[] = [
     '#FF7A00',
@@ -59,7 +62,9 @@ export class ContactsComponent {
   }
 
   async ngOnInit() {
+    this.ArraysService.sortContactsAlphabetically(this.ArraysService.contacts)
     this.ammountOfDisplayedcontacts = this.ArraysService.contacts.length;
+    this.generateContactId();
   }
   /**
    * Function to push the entered contacts into the "contacts" array
@@ -70,7 +75,9 @@ export class ContactsComponent {
    */
   pushToArray(name, email, phone) {
     let color = this.getRandomUserCircleColor();
+    let id = this.contactId;
     this.ArraysService.contacts.push({
+      id: id,
       name: name,
       email: email,
       phone: phone,
@@ -78,11 +85,39 @@ export class ContactsComponent {
     });
     this.ArraysService.safeContacts();
   }
+  async generateContactId() {
+    // first filter out IDs from the "contacts" array and convert them to numbers (from strings)
+    let contactIds = this.ArraysService.contacts.length;
+
+    // if contacts is empty, set the ID to 1
+    if (contactIds === 0) {
+      this.contactId = 0;
+    }
+  }
+
+  generateIndexToDelete() {
+    console.log('contacts array', this.ArraysService.contacts)
+    console.log('selectedContact', this.selectedContact);
+    let id = this.selectedContact.id;
+    console.log('id of contact', id);
+    this.indexToDelete = this.ArraysService.contacts.findIndex(contact => contact.id === id);
+    console.log('indexToDelete', this.indexToDelete);
+  }
+
+  generateIndexToEdit() {
+    console.log('contacts array', this.ArraysService.contacts)
+    console.log('selectedContact', this.selectedContact);
+    let id = this.selectedContact.id;
+    console.log('id of contact', id);
+    this.indexToEdit = this.ArraysService.contacts.findIndex(contact => contact.id === id);
+    console.log('indexToDelete', this.indexToDelete);
+  }
 
   /**
    * Asynchronous function to add a new contact to the "contacts" array
    */
   async addContact(data) {
+    this.contactId = this.contactId + 1;
     console.log('Added contact',data.name, data.email, data.phone);
     this.ArraysService.sortedalphabetically = [];
     if (data.name != '' && data.email != '' && data.phone != '') {
@@ -96,6 +131,7 @@ export class ContactsComponent {
           this.showSlider();
           this.showCreatePopup();
         }, 2000);
+        this.ngOnInit();
   }
 
 
@@ -103,9 +139,11 @@ export class ContactsComponent {
    * Asynchronous function to edit and update an existing contact to the "contacts" array
    */
   async editContact(data) {
-    this.ArraysService.contacts[this.selectedContactIndex].name = data.name;
-    this.ArraysService.contacts[this.selectedContactIndex].email = data.email;
-    this.ArraysService.contacts[this.selectedContactIndex].phone = data.phone;
+    await this.generateIndexToEdit()
+
+    this.ArraysService.contacts[this.indexToEdit].name = data.name;
+    this.ArraysService.contacts[this.indexToEdit].email = data.email;
+    this.ArraysService.contacts[this.indexToEdit].phone = data.phone;
     this.ArraysService.safeContacts();
 
     this.showCreatePopup();
@@ -118,23 +156,27 @@ export class ContactsComponent {
   /**
    * Function to delete a contact from the "contacts" array
    */
-  deleteContact() {
-    this.ArraysService.contacts.splice(this.selectedContactIndex, 1);
-    this.ArraysService.safeContacts();
-    this.selectedContactIndex = -1;
-    this.ammountOfDisplayedcontacts--; 
+  async deleteContact() {
 
+    await this.generateIndexToDelete();
+
+    this.ArraysService.contacts.splice(this.indexToDelete, 1);
+    this.ArraysService.safeContacts();
+    
+    this.ngOnInit();
 
     //TODO confimationMessage()
     //short delay before hiding the slider
-    this.mobileDetailView.nativeElement.classList.toggle('show-mobile-detailview');
+    
     
     ;
   }
+
   getContactById(index: number) {
     this.selectedContactIndex = index;
-    this.selectedContact = this.ArraysService.contacts[index];
+    this.selectedContact = this.ArraysService.sortedalphabetically[index];
   }
+
   /**
    * Function to generate a random color for the user circle
    */
@@ -159,7 +201,7 @@ async extractInitials() {
     this.addContactContainer.nativeElement.classList.toggle('show-slider');
   }
   showEditSlider() {
-    this.ArraysService.selectedContact = this.selectedContact;
+    this.selectedContact = this.selectedContact;
     this.ArraysService.editContactForm.patchValue(this.selectedContact);
     this.editContactContainer.nativeElement.classList.toggle('show-slider');
   }
@@ -171,7 +213,6 @@ async extractInitials() {
   }
   openMobileContactMenu() {
 
-    console.log('openMobileContactMenu');
     this.mobileMenuWrapper.nativeElement.classList.toggle('show-mobile-contact-menu');
   }
 

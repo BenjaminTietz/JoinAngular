@@ -182,13 +182,13 @@
       </div>
     </div>
     <div
-      *ngFor="let contact of this.ArraysService.contacts; let i = index"
+      *ngFor="let contact of this.ArraysService.sortedalphabetically; let i = index"
       id="contact-{{ i }}"
       (click)="getContactById(i); showMobileDetailView()"
       class="contacts-left-container"
     >
       <div
-        [style.background-color]="this.ArraysService.contacts[i].color"
+        [style.background-color]="this.ArraysService.sortedalphabetically[i].color"
         class="contacts-left-usercircle"
       >
         AM
@@ -212,7 +212,7 @@
       <div class="contact-detail-top">
         <div
           [style.background-color]="
-            this.ArraysService.contacts[selectedContactIndex].color
+            this.ArraysService.sortedalphabetically[selectedContactIndex].color
           "
           class="user-circle"
         >
@@ -220,7 +220,7 @@
         </div>
         <div class="contact-name-container">
           <div class="contact-name">
-            {{ this.ArraysService.contacts[selectedContactIndex].name }}
+            {{ this.ArraysService.sortedalphabetically[selectedContactIndex].name }}
           </div>
           <div class="btn-container">
             <div (click)="showEditSlider()" class="edit-btn">
@@ -238,11 +238,11 @@
         <h2>Contact Information</h2>
         <span>Email</span>
         <div class="contact-email">
-          {{ this.ArraysService.contacts[selectedContactIndex].email }}
+          {{ this.ArraysService.sortedalphabetically[selectedContactIndex].email }}
         </div>
         <span>Phone</span>
         <div class="contact-phone">
-          {{ this.ArraysService.contacts[selectedContactIndex].phone }}
+          {{ this.ArraysService.sortedalphabetically[selectedContactIndex].phone }}
         </div>
       </div>
     </div>
@@ -256,7 +256,7 @@
       <div class="mobile-contact-detail-top">
         <div
           [style.background-color]="
-            this.ArraysService.contacts[selectedContactIndex].color
+            this.ArraysService.sortedalphabetically[selectedContactIndex].color
           "
           class="mobile-user-circle"
         >
@@ -264,7 +264,7 @@
         </div>
         <div class="mobile-contact-name-container">
           <div class="mobile-contact-name">
-            {{ this.ArraysService.contacts[selectedContactIndex].name }}
+            {{ this.ArraysService.sortedalphabetically[selectedContactIndex].name }}
           </div>
         </div>
         <img
@@ -277,11 +277,11 @@
         <h2>Contact Information</h2>
         <span>Email</span>
         <div class="mobile-contact-email">
-          {{ this.ArraysService.contacts[selectedContactIndex].email }}
+          {{ this.ArraysService.sortedalphabetically[selectedContactIndex].email }}
         </div>
         <span>Phone</span>
         <div class="mobile-contact-phone">
-          {{ this.ArraysService.contacts[selectedContactIndex].phone }}
+          {{ this.ArraysService.sortedalphabetically[selectedContactIndex].phone }}
         </div>
       </div>
     </div>
