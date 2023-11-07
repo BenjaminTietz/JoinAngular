@@ -23,7 +23,7 @@
         </div>
         <div class="floating-task-prio">
           <h2>Priority:</h2>
-          <span>{{ this.TaskArrayService.selectedTask.prio }}</span>
+          <img class="prio" src="assets/img/board/prio_{{ this.TaskArrayService.selectedTask.prio }}.svg" />
         </div>
         <div class="floating-task-assign">
           <h2>Assigned to:</h2>
@@ -195,7 +195,7 @@
               </div>
               <span class="assigned-user-name">{{ contact.name }}</span>
               <div>
-                <input type="checkbox" name="assigned" />
+                <input (click)="this.TaskArrayService.toggleContactSelection(contact)" type="checkbox" name="assigned" />
               </div>
             </div>
           </div>
@@ -544,11 +544,11 @@
         <div
           *ngIf="this.TaskArrayService.tasks[i].subtask.length > 0"
           class="progressbar"
-        ><progress id="file" value="{{ task.subtaskDone }}" max="{{ task.subtask.length}}">{{ task.subtaskDone }} of {{ task.subtask.length}} done. </progress>
+        ><progress id="file" value="2" max="{{this.TaskArrayService.tasks[i].subtask.length}} "></progress>
         </div>
         <div class="single-task-bottom">
           <div class="assigned-contacts">{{ task.assigned }}</div>
-          <img class="prio" src="assets/img/board/prio_urgent.svg" />
+          <img class="prio" src="assets/img/board/prio_{{ task.prio }}.svg" />
         </div>
       </div>
       </div>
@@ -575,11 +575,11 @@
           <div
           *ngIf="this.TaskArrayService.tasks[i].subtask.length > 0"
           class="progressbar"
-        ><progress id="file" value="{{ task.subtaskDone }}" max="100">  </progress>
+        ><progress id="file" value="2" max="{{this.TaskArrayService.tasks[i].subtask.length}} ">  </progress>
         </div>
           <div class="single-task-bottom">
             <div class="assigned-contacts">{{ task.assigned }}</div>
-            <img class="prio" src="assets/img/board/prio_urgent.svg" />
+            <img class="prio" src="assets/img/board/prio_{{ task.prio }}.svg" />
           </div>
         </div>
       </div>
@@ -629,11 +629,11 @@
           <div
           *ngIf="this.TaskArrayService.tasks[i].subtask.length > 0"
           class="progressbar"
-        ><progress id="file" value="{{ task.subtaskDone }}" max="100">  </progress>
+        ><progress id="file" value="2" max="{{this.TaskArrayService.tasks[i].subtask.length}} ">  </progress>
         </div>
           <div class="single-task-bottom">
             <div class="assigned-contacts">{{ task.assigned }}</div>
-            <img class="prio" src="assets/img/board/prio_urgent.svg" />
+            <img class="prio" src="assets/img/board/prio_{{ task.prio }}.svg" />
           </div>
           <!--TODO-- <div class="btn-container">
             <div class="btn-up">
@@ -667,11 +667,11 @@
           <div
           *ngIf="this.TaskArrayService.tasks[i].subtask.length > 0"
           class="progressbar"
-        ><progress id="file" value="{{ task.subtaskDone }}" max="100">  </progress>
+        ><progress id="file" value="2" max="{{this.TaskArrayService.tasks[i].subtask.length}} ">  </progress>
         </div>
           <div class="single-task-bottom">
             <div class="assigned-contacts">{{ task.assigned }}</div>
-            <img class="prio" src="assets/img/board/prio_urgent.svg" />
+            <img class="prio" src="assets/img/board/prio_{{ task.prio }}.svg" />
           </div>
           <!--TODO-- <div class="btn-container">
             <div class="btn-up">
@@ -735,11 +735,11 @@
           <div
           *ngIf="this.TaskArrayService.tasks[i].subtask.length > 0"
           class="progressbar"
-        ><progress id="file" value="{{ task.subtaskDone }}" max="100">  </progress>
+        ><progress id="file" value="2" max="{{this.TaskArrayService.tasks[i].subtask.length}} ">  </progress>
         </div>
           <div class="single-task-bottom">
             <div class="assigned-contacts">{{ task.assigned }}</div>
-            <img class="prio" src="assets/img/board/prio_urgent.svg" />
+            <img class="prio" src="assets/img/board/prio_{{ task.prio }}.svg" />
           </div>
         </div>
         </div>
@@ -768,11 +768,11 @@
           <div
           *ngIf="this.TaskArrayService.tasks[i].subtask.length > 0"
           class="progressbar"
-        ><progress id="file" value="{{ task.subtaskDone }}" max="100">  </progress>
+        ><progress id="file" value="2" max="{{this.TaskArrayService.tasks[i].subtask.length}} ">  </progress>
         </div>
           <div class="single-task-bottom">
             <div class="assigned-contacts">{{ task.assigned }}</div>
-            <img class="prio" src="assets/img/board/prio_urgent.svg" />
+            <img class="prio" src="assets/img/board/prio_{{ task.prio }}.svg" />
           </div>
         </div>
         </div>
@@ -821,11 +821,11 @@
           <div
           *ngIf="this.TaskArrayService.tasks[i].subtask.length > 0"
           class="progressbar"
-        ><progress id="file" value="{{ task.subtaskDone }}" max="100">  </progress>
+        ><progress id="file" value="2" max="{{this.TaskArrayService.tasks[i].subtask.length}} ">  </progress>
         </div>
           <div class="single-task-bottom">
             <div class="assigned-contacts">{{ task.assigned }}</div>
-            <img class="prio" src="assets/img/board/prio_urgent.svg" />
+            <img class="prio" src="assets/img/board/prio_{{ task.prio }}.svg" />
           </div>
         </div>
       </div>
@@ -851,11 +851,12 @@
           <div
           *ngIf="this.TaskArrayService.tasks[i].subtask.length > 0"
           class="progressbar"
-        ><progress id="file" value="{{ task.subtaskDone }}" max="100">  </progress>
+        ><progress id="file" value="2" max="{{this.TaskArrayService.tasks[i].subtask.length}} "></progress>
+        <span>X/{{this.TaskArrayService.tasks[i].subtask.length}} Subtasks </span>
         </div>
           <div class="single-task-bottom">
             <div class="assigned-contacts">{{ task.assigned }}</div>
-            <img class="prio" src="assets/img/board/prio_urgent.svg" />
+            <img class="prio" src="assets/img/board/prio_{{ task.prio }}.svg" />
           </div>
         </div>
       </div>

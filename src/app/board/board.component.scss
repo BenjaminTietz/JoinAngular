@@ -17,7 +17,7 @@
   gap: 72px;
   background-color: $bg-color;
   overflow-y: scroll;
-  
+
   .floating-task-wrapper {
     display: none;
     justify-content: center;
@@ -105,8 +105,8 @@
           }
         }
         .floating-task-date {
-            display: flex;
-            align-items: center;
+          display: flex;
+          align-items: center;
           h2 {
             @include Inter(700, 21px, 25.2px, $menu-color);
           }
@@ -115,31 +115,31 @@
           }
         }
         .floating-task-prio {
-            display: flex;
-            align-items: center;
-            h2 {
-              @include Inter(700, 21px, 25.2px, $menu-color);
-            }
-            span {
-              @include Inter(400, 19px, 22.8px, $menu-color);
-            }
+          display: flex;
+          align-items: center;
+          h2 {
+            @include Inter(700, 21px, 25.2px, $menu-color);
           }
-          .floating-task-assign {
-            h2 {
-              @include Inter(700, 21px, 25.2px, $menu-color);
-            }
-            span {
-              @include Inter(400, 19px, 22.8px, $menu-color);
-            }
+          span {
+            @include Inter(400, 19px, 22.8px, $menu-color);
           }
-          .floating-task-subtask {
-            h2 {
-              @include Inter(700, 21px, 25.2px, $menu-color);
-            }
-            span {
-              @include Inter(400, 19px, 22.8px, $menu-color);
-            }
+        }
+        .floating-task-assign {
+          h2 {
+            @include Inter(700, 21px, 25.2px, $menu-color);
           }
+          span {
+            @include Inter(400, 19px, 22.8px, $menu-color);
+          }
+        }
+        .floating-task-subtask {
+          h2 {
+            @include Inter(700, 21px, 25.2px, $menu-color);
+          }
+          span {
+            @include Inter(400, 19px, 22.8px, $menu-color);
+          }
+        }
       }
     }
   }
@@ -228,9 +228,9 @@
   }
 
   .display-none {
-    display: none!important;
+    display: none !important;
   }
-  
+
   .task-category-wrapper {
     display: flex;
     flex-direction: row;
@@ -254,7 +254,7 @@
     .drag-area-heighlight {
       box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.16);
       border-radius: 10px;
-      background-color: rgba(0,0,0, 0.2);
+      background-color: rgba(0, 0, 0, 0.2);
     }
 
     .headline {
@@ -296,7 +296,6 @@
         h2 {
           @include OpenSans(400, 16px, 19.2px, $board-text);
         }
-        
       }
     }
 
@@ -310,6 +309,18 @@
       box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.16);
       border-radius: 10px;
       padding: 16px;
+
+      .progressbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        progress {
+          width: 120px;
+          height: 32px;
+        }
+
+      }
       .task-category {
         display: flex;
         justify-content: center;
@@ -350,11 +361,9 @@
         width: 100%;
         height: 32px;
       }
-
     }
   }
 }
-
 
 @media screen and (max-width: 1200px) {
   .board-wrapper {
@@ -386,8 +395,6 @@
     gap: unset;
     height: calc(100vh - 160px);
 
-
-
     .task-category-wrapper {
       flex-wrap: wrap;
       gap: unset;
@@ -400,13 +407,11 @@
         height: unset;
       }
     }
-
   }
 }
 
-
 .show-addtask-wrapper {
-  display: flex!important;
+  display: flex !important;
 }
 .addtask-wrapper {
   position: absolute;
@@ -767,7 +772,6 @@
         width: 24px;
         height: 24px;
 
-
         &:hover {
           cursor: pointer;
           background-color: $menu-hover;
@@ -902,10 +906,8 @@
       }
     }
   }
-  
 }
 @media screen and (max-width: 1400px) {
-
 }
 
 @media screen and (max-width: 1200px) {
@@ -924,8 +926,6 @@
     max-height: 100%;
     gap: 16px;
     overflow-y: scroll;
-
-
 
     .addtask-right {
       margin-bottom: 165px;
@@ -1002,7 +1002,6 @@
           }
         }
       }
-
     }
   }
 }
@@ -1090,9 +1089,8 @@
   }
 }
 
-
 .show-edittask-wrapper {
-  display: flex!important;
+  display: flex !important;
 }
 .edittask-wrapper {
   position: absolute;
@@ -1453,7 +1451,6 @@
         width: 24px;
         height: 24px;
 
-
         &:hover {
           cursor: pointer;
           background-color: $menu-hover;
@@ -1588,10 +1585,8 @@
       }
     }
   }
-  
 }
 @media screen and (max-width: 1400px) {
-
 }
 
 @media screen and (max-width: 1200px) {
@@ -1610,8 +1605,6 @@
     max-height: 100%;
     gap: 16px;
     overflow-y: scroll;
-
-
 
     .edittask-right {
       margin-bottom: 165px;
@@ -1688,7 +1681,6 @@
           }
         }
       }
-
     }
   }
 }
@@ -1775,5 +1767,3 @@
     }
   }
 }
-
-

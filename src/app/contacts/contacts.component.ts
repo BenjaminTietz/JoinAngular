@@ -159,6 +159,8 @@ async extractInitials() {
     this.addContactContainer.nativeElement.classList.toggle('show-slider');
   }
   showEditSlider() {
+    this.ArraysService.selectedContact = this.selectedContact;
+    this.ArraysService.editContactForm.patchValue(this.selectedContact);
     this.editContactContainer.nativeElement.classList.toggle('show-slider');
   }
   showMobileDetailView() {
@@ -168,6 +170,7 @@ async extractInitials() {
     }
   }
   openMobileContactMenu() {
+
     console.log('openMobileContactMenu');
     this.mobileMenuWrapper.nativeElement.classList.toggle('show-mobile-contact-menu');
   }

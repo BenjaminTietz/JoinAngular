@@ -126,6 +126,9 @@ export class TaskArraysService {
    */
   subtasks = [];
 
+  selectedContacts: any[] = [];
+
+
   async generateTaskId() {
     // first filter out IDs from the "task" array and convert them to numbers (from strings)
     let taskIds = this.tasks.length;
@@ -141,6 +144,7 @@ export class TaskArraysService {
    * Asynchronous function to add a new task to the "task" array
    */
   async addTask(data) {
+    debugger;
     let status = 'toDo';
     this.taskId = this.taskId + 1;
     if (data.title != '' && data.date != '' && data.category != '') {
@@ -153,7 +157,7 @@ export class TaskArraysService {
         data.title,
         data.description,
         data.dueDate,
-        selectedContacts,
+        this.selectedContacts,
         data.category,
         this.subtasks,
         status
@@ -176,6 +180,21 @@ export class TaskArraysService {
     //TODO confimationMessage();
   }
 
+  //todo non functional
+  toggleContactSelection(contact) {
+    console.log('toggleContactSelection', 'active');
+    contact.selected = !contact.selected;
+    if (contact.selected) {
+      this.selectedContacts.push(contact);
+      console.log('selectedContacts', this.selectedContacts);
+    } else {
+      const index = this.selectedContacts.findIndex((c) => c.name === contact.name);
+      if (index !== -1) {
+        this.selectedContacts.splice(index, 1);
+      }
+    }
+  }
+
   /**
    * Asynchronous function to add a new task to the "task" array
    */
@@ -189,6 +208,7 @@ export class TaskArraysService {
       this.tasks[taskIndex].title = data.title;
       this.tasks[taskIndex].description = data.description;
       this.tasks[taskIndex].date = data.date;
+      this.tasks[taskIndex].prio = this.selectedPriority,
       this.tasks[taskIndex].category = data.category;
       this.tasks[taskIndex].subtask = data.subtask;
 

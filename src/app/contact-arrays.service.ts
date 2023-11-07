@@ -26,21 +26,45 @@ export class ArraysService {
     ]),
   });
 
+  public editContactForm: FormGroup = new FormGroup({
+    name: new FormControl('', [Validators.required]),
+    email: new FormControl('', [
+      Validators.required,
+      Validators.minLength(4),
+      Validators.email,
+    ]),
+    phone: new FormControl('', [
+      Validators.required,
+      Validators.minLength(4),
+      Validators.pattern('[- +()0-9]+'),
+    ]),
+  });
+
   public contactsFormFB: FormGroup;
+  public editContactFormFB: FormGroup;
 
   constructor(
     public RemotestorageService: RemotestorageService,
     private fb: FormBuilder
   ) {
     this.contactsFormFB = this.fb.group({
+      name: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      phone: ['', [Validators.required, Validators.minLength(6)]],
     });
     this.contactsFormFB.valueChanges.subscribe(console.log);
+
+    this.editContactFormFB = this.fb.group({
+      name: ['', [Validators.required, Validators.minLength(3)]],
+      email: ['', [Validators.required, Validators.email]],
+      phone: ['', [Validators.required, Validators.minLength(6)]],
+    });
+    this.editContactFormFB.valueChanges.subscribe(console.log);
   }
 
   ngOnInit() {
     this.loadContacts();
+
   }
 
   /**
@@ -85,6 +109,7 @@ export class ArraysService {
    */
   initials: Array<any> = [];
 
+  selectedContact: number;
 
   resetAddContactForm() {
     this.contactsForm.reset();

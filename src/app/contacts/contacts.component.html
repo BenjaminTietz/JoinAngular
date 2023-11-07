@@ -128,37 +128,45 @@
       <img src="assets/img/contacts/user-circle-add-contact.png" />
       <form
         #editContactForm="ngForm"
+        [formGroup]="this.ArraysService.editContactForm"
         (ngSubmit)="editContact(editContactForm.value)"
       >
         <input
           #inputName
-          formControlname="name"
+          formControlName="name"
           name="name"
           type="text"
           placeholder="Name"
-          [(ngModel)]="selectedContact.name"
+          
         />
         <input
           #inputEmail
-          formControlname="email"
+          formControlName="email"
           name="email"
           type="email"
           placeholder="Email"
-          [(ngModel)]="selectedContact.email"
+          
         />
         <input
           #inputPhone
-          formControlname="phone"
+          formControlName="phone"
           name="phone"
           type="phone"
           placeholder="Phone"
-          [(ngModel)]="selectedContact.phone"
+          
         />
         <div class="add-contact-btn">
           <button class="cancel-btn" (click)="showSlider()" type="button">
             Delete<img src="assets/img/contacts/cancel.png" />
           </button>
-          <button class="create-btn" type="submit">
+          <button class="create-btn" type="submit"
+          [disabled]="
+          !(
+            this.ArraysService.editContactForm.valid &&
+            (this.ArraysService.editContactForm.dirty ||
+              this.ArraysService.editContactForm.touched)
+          )
+        ">
             Save<img src="assets/img/contacts/create.png" />
           </button>
         </div>
