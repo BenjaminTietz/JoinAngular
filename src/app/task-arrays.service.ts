@@ -21,12 +21,10 @@ export class TaskArraysService {
   @ViewChild('addContactContainer') addContactContainer: ElementRef;
   @ViewChild('editContactContainer') editContactContainer: ElementRef;
 
-
-
   public addTaskForm: FormGroup = new FormGroup({
     title: new FormControl('', [Validators.required]),
     description: new FormControl('', []),
-    dueDate: new FormControl('', [Validators.required]),
+    date: new FormControl('', [Validators.required]),
     category: new FormControl('', [Validators.required]),
     subtask: new FormControl('', []),
   });
@@ -34,7 +32,7 @@ export class TaskArraysService {
   public editTaskForm: FormGroup = new FormGroup({
     title: new FormControl('', [Validators.required]),
     description: new FormControl('', []),
-    dueDate: new FormControl('', [Validators.required]),
+    date: new FormControl('', [Validators.required]),
     category: new FormControl('', [Validators.required]),
     subtask: new FormControl('', []),
   });
@@ -50,18 +48,18 @@ export class TaskArraysService {
     this.addTaskFormFB = this.fb.group({
       title: new FormControl('', [Validators.required]),
       description: new FormControl('', []),
-      dueDate: new FormControl('', [Validators.required]),
+      date: new FormControl('', [Validators.required]),
       category: new FormControl('', [Validators.required]),
       subtask: new FormControl('', []),
     });
     this.addTaskForm.valueChanges.subscribe(console.log);
 
     this.editTaskFormFB = this.fb.group({
-      title: 'this.selectedTask.title',
-      description: 'this.selectedTask.description',
-      dueDate: 'this.selectedTask.date',
-      category: 'this.selectedTask.category',
-      subtask: 'this.selectedTask.subtask',
+      title: new FormControl('', [Validators.required]),
+      description: new FormControl('', []),
+      date: new FormControl('', [Validators.required]),
+      category: new FormControl('', [Validators.required]),
+      subtask: new FormControl('', []),
     });
     this.editTaskForm.valueChanges.subscribe(console.log);
 
@@ -82,13 +80,12 @@ export class TaskArraysService {
     this.editTaskForm.patchValue(this.selectedTask);
   }
 
-  
   /**
    * An array to store tasks.
    * @type {Array}
    */
   tasks = [];
-    
+
   /**
    * An array to filtered store tasks.
    * @type {Array}
@@ -97,7 +94,7 @@ export class TaskArraysService {
   filteredToDo = [];
   filteredInProgress = [];
   filteredAwaitFeedback = [];
-  filteredDone  = [];
+  filteredDone = [];
   /**
    * An subarray to store tasks with status = "toDo".
    * @type {Array}
@@ -123,22 +120,21 @@ export class TaskArraysService {
    * @type {Array}
    */
   urgent = [];
-    /**
+  /**
    * An subarray to store subtasks .
    * @type {Array}
    */
-    subtasks = [];
-
+  subtasks = [];
 
   async generateTaskId() {
     // first filter out IDs from the "task" array and convert them to numbers (from strings)
     let taskIds = this.tasks.length;
-  
+
     // if taskarray is empty, set the ID to 1
     if (this.tasks.length === 0) {
       this.taskId = 1;
-    } 
-  
+    }
+
     console.log('Task-ArrayService generated task id', this.taskId);
   }
   /**
@@ -162,7 +158,7 @@ export class TaskArraysService {
         this.subtasks,
         status
       );
-       await this.safeTasks();
+      await this.safeTasks();
       console.log(
         'Added task',
         this.taskId,
@@ -180,44 +176,31 @@ export class TaskArraysService {
     //TODO confimationMessage();
   }
 
-    /**
+  /**
    * Asynchronous function to add a new task to the "task" array
    */
-    async editTask(data) {
-      // let status = 'toDo';
-      // this.taskId = this.taskId + 1;
-      // if (data.title != '' && data.date != '' && data.category != '') {
-      //   let selectedContacts = this.ArraysService.contacts
-      //     .filter((contact) => contact.selected)
-      //     .map((contact) => contact.name);
-  
-      //   this.pushToArray(
-      //     this.taskId,
-      //     data.title,
-      //     data.description,
-      //     data.dueDate,
-      //     selectedContacts,
-      //     data.category,
-      //     this.subtasks,
-      //     status
-      //   );
-      //    await this.safeTasks();
-      //   console.log(
-      //     'Added task',
-      //     this.taskId,
-      //     data.title,
-      //     data.description,
-      //     data.dueDate,
-      //     selectedContacts,
-      //     data.category,
-      //     data.subtask
-      //   );
-      // }
-      // await this.findNearestDate(this.urgent);
-      // await this.resetAddTaskForm();
-      // this.subtasks = [];
-      // //TODO confimationMessage();
+  async editTask(data) {
+    // find index in the main tasks array
+    let taskIndex = this.selectedTask.id-1;
+
+    if (taskIndex >= 0 && taskIndex < this.tasks.length) {
+      console.log('Edited task', data.title, data.description, data.dueDate, data.category, data.subtask);
+
+      this.tasks[taskIndex].title = data.title;
+      this.tasks[taskIndex].description = data.description;
+      this.tasks[taskIndex].date = data.date;
+      this.tasks[taskIndex].category = data.category;
+      this.tasks[taskIndex].subtask = data.subtask;
+
+      this.safeTasks();
+
+      console.log('Edited task', data.title, data.description, data.dueDate);
+    } else {
+      console.log('Invalid task index.');
     }
+
+    //todo confimationMessage(); hideSlider();
+  }
 
   resetAddTaskForm() {
     this.addTaskForm.reset();
@@ -243,13 +226,24 @@ export class TaskArraysService {
     if (taskIndex >= 0 && taskIndex < this.tasks.length) {
       this.tasks[taskIndex].status = newStatus;
       await this.safeTasks();
-      console.log(`Updated task status to "${newStatus}" for task with title: ${this.tasks[taskIndex].title}`);
+      console.log(
+        `Updated task status to "${newStatus}" for task with title: ${this.tasks[taskIndex].title}`
+      );
     } else {
       console.error('Invalid task index');
     }
   }
 
-  pushToArray(id, title, description, date, assigned, category, subtask, status) {
+  pushToArray(
+    id,
+    title,
+    description,
+    date,
+    assigned,
+    category,
+    subtask,
+    status
+  ) {
     this.tasks.push({
       id: this.taskId,
       title: title,
@@ -263,12 +257,10 @@ export class TaskArraysService {
     });
   }
 
-
   selectAssigned(assigned: string) {
     this.selectedPriority = assigned;
     console.log(this.selectedPriority);
   }
-
 
   /**
    * Asynchronous function to store tasks according status in subarrays.
@@ -290,34 +282,37 @@ export class TaskArraysService {
   async mapUrgentTasks() {
     this.urgent = this.tasks.filter((task) => task.prio === 'urgent');
   }
-    /**
+  /**
    *  function to filter tasks with prio = urgent and return the nearest date.
    * @type {Array}
    */
-    async findNearestDate(urgentArray: any[]): Promise<void> {
-      if (!urgentArray || urgentArray.length === 0) {
-        this.nearestUrgendTaskDate = null;
-        return;
-      }
-  
-      let today = new Date();
-      let nearestDate = new Date(urgentArray[0].date);
-  
-      for (let item of urgentArray) {
-        let itemDate = new Date(item.date);
-        let timeDifference = Math.abs(itemDate.getTime() - today.getTime());
-  
-        if (timeDifference < Math.abs(nearestDate.getTime() - today.getTime())) {
-          nearestDate = itemDate;
-        }
-      }
-  
-      let options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
-      let formattedDate = nearestDate.toLocaleDateString('en-US', options); // 'en-US' for English
-  
-      this.nearestUrgendTaskDate = formattedDate;
+  async findNearestDate(urgentArray: any[]): Promise<void> {
+    if (!urgentArray || urgentArray.length === 0) {
+      this.nearestUrgendTaskDate = null;
+      return;
     }
 
+    let today = new Date();
+    let nearestDate = new Date(urgentArray[0].date);
+
+    for (let item of urgentArray) {
+      let itemDate = new Date(item.date);
+      let timeDifference = Math.abs(itemDate.getTime() - today.getTime());
+
+      if (timeDifference < Math.abs(nearestDate.getTime() - today.getTime())) {
+        nearestDate = itemDate;
+      }
+    }
+
+    let options: Intl.DateTimeFormatOptions = {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    };
+    let formattedDate = nearestDate.toLocaleDateString('en-US', options); // 'en-US' for English
+
+    this.nearestUrgendTaskDate = formattedDate;
+  }
 
   /**
    * Asynchronous function to save all tasks from array "contacts" to remote storage

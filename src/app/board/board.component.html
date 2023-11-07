@@ -82,7 +82,7 @@
           <h2>Due date</h2>
           <div>
             <input
-              formControlName="dueDate"
+              formControlName="date"
               name="date"
               type="date"
               placeholder="dd/mm/yyyy"
@@ -281,9 +281,7 @@
         #editTaskForm="ngForm"
         [formGroup]="this.TaskArrayService.editTaskForm"
         (ngSubmit)="
-          this.TaskArrayService.editTask(this.TaskArrayService.addTaskForm.value); this.hideAddtaskFloatingContainer()
-        "
-      >
+          this.TaskArrayService.editTask(this.TaskArrayService.editTaskForm.value); this.hideEditTaskFloatingContainer()">
         <div class="edittask-left-top">
           <div class="input-wrapper">
             <input
@@ -307,7 +305,7 @@
           <h2>Due date</h2>
           <div>
             <input
-              formControlName="dueDate"
+              formControlName="date"
               name="date"
               type="date"
               placeholder="dd/mm/yyyy"
@@ -481,9 +479,9 @@
             <button
               [disabled]="
                 !(
-                  this.TaskArrayService.addTaskForm.valid &&
-                  (this.TaskArrayService.addTaskForm.dirty ||
-                    this.TaskArrayService.addTaskForm.touched)
+                  this.TaskArrayService.editTaskForm.valid &&
+                  (this.TaskArrayService.editTaskForm.dirty ||
+                    this.TaskArrayService.editTaskForm.touched)
                 )
               "
               type="submit"

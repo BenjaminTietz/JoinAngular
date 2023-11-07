@@ -202,7 +202,9 @@ export class BoardComponent {
     this.editTaskWrapper.nativeElement.classList.add('show-edittask-wrapper');
   }
 
-  hideEditTaskFloatingContainer() {
+  async hideEditTaskFloatingContainer() {
+    this.closeTask();
+    await this.ngOnInit();
     this.editTaskWrapper.nativeElement.classList.remove('show-edittask-wrapper');
   }
 }
