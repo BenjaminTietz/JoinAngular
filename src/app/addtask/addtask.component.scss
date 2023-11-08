@@ -351,7 +351,6 @@
         width: 24px;
         height: 24px;
 
-
         &:hover {
           cursor: pointer;
           background-color: $menu-hover;
@@ -486,11 +485,8 @@
       }
     }
   }
-  
 }
-@media screen and (max-width: 1400px) {
 
-}
 
 @media screen and (max-width: 1200px) {
   .addtask-wrapper {
@@ -510,8 +506,6 @@
     gap: 16px;
     overflow-y: scroll;
 
-
-
     .addtask-right {
       margin-bottom: 165px;
     }
@@ -520,10 +514,48 @@
 
 @media screen and (max-width: 600px) {
   .addtask-wrapper {
+    .btn-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 48px;
+      gap: 4px;
+      margin-left: 0 !important;
+      .clear-btn {
+        display: none;
+      }
+
+      .create-btn {
+        width: 148px;
+        height: 48px;
+        padding: 12px 8px 12px 8px;
+        @include OpenSans(400, 19px, 22.8px, $white);
+
+        img {
+          width: 24px;
+          height: 24px;
+        }
+      }
+    }
     .addtask-left {
       padding: 0px 0px 0px 0px;
     }
+
     .addtask-left-top {
+      .input-wrapper {
+        input {
+          width: 84%;
+        }
+      }
+      textarea {
+        width: 90% !important;
+      }
+      div {
+        input {
+          width: 240%;
+        }
+      }
       h2 {
         @include OpenSans(700, 16px, 19.2px, $menu-color);
       }
@@ -532,11 +564,33 @@
         @include OpenSans(400, 16px, 19.2px, $menu-color);
       }
     }
+    .addtask-assigned-box {
+      .assigned-dropdown-container {
+        width: 320px;
+        .assigned-user {
+          width: 300px;
+        }
+      }
+      .assigned-contacts {
+        width: 300px;
+      }
+    }
     .addtask-left-bottom {
+      .add-btn-container {
+        left: 300px;
+        bottom: -14px;
+      }
+      .input-wrapper {
+        input {
+          width: 300px;
+        }
+      }
       h2 {
         @include OpenSans(700, 16px, 19.2px, $menu-color);
       }
-
+      select {
+        width: 300px;
+      }
       span {
         @include OpenSans(400, 16px, 19.2px, $menu-color);
       }
@@ -562,115 +616,116 @@
       height: 100%;
       width: 100%;
       margin-bottom: 0px;
-
-      .btn-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        height: 48px;
-        gap: 4px;
-        margin-left: unset;
-        .clear-btn {
-          display: none;
-        }
-
-        .create-btn {
-          width: 148px;
-          height: 48px;
-          padding: 12px 8px 12px 8px;
-          @include OpenSans(400, 19px, 22.8px, $white);
-
-          img {
-            width: 24px;
-            height: 24px;
-          }
-        }
-      }
-
     }
   }
 }
 
 @media screen and (max-width: 500px) {
   .addtask-wrapper {
-    align-items: flex-start;
-    overflow-y: scroll;
-
-    .addtask-left-top {
-      input {
-        width: 65%;
+    .btn-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 48px;
+      gap: 4px;
+      margin-left: 0 !important;
+      .clear-btn {
+        display: none;
       }
-      textarea {
-        width: 65%;
-      }
-    }
-    .addtask-left-prio {
-      .prio-box {
-        gap: 4px;
-        justify-content: flex-start;
-        .prio-container {
-          width: 100px;
-          height: 40px;
-          padding: 12px 6px 12px 6px;
-          gap: 8px;
 
-          img {
-            width: 20px;
-            height: 14.5px;
-          }
+      .create-btn {
+        width: 148px;
+        height: 48px;
+        padding: 12px 8px 12px 8px;
+        @include OpenSans(400, 19px, 22.8px, $white);
+
+        img {
+          width: 24px;
+          height: 24px;
         }
       }
     }
-    .addtask-left-bottom {
-      input {
-        width: 65%;
-      }
+    .addtask-left {
+      padding: 0px 0px 0px 0px;
     }
-  }
-}
-
-@media screen and (max-width: 400px) {
-  .addtask-wrapper {
-    align-items: flex-start;
 
     .addtask-left-top {
-      input {
-        width: 55%;
+      .input-wrapper {
+        input {
+          width: 60%;
+        }
       }
       textarea {
-        width: 55%;
+        width: 65%!important;
+      }
+      div {
+        input {
+          width: 180%;
+        }
+      }
+      h2 {
+        @include OpenSans(700, 16px, 19.2px, $menu-color);
+      }
+
+      span {
+        @include OpenSans(400, 16px, 19.2px, $menu-color);
+      }
+    }
+    .addtask-assigned-box {
+      .assigned-dropdown-container {
+        width: 320px;
+        .assigned-user {
+          width: 300px;
+        }
+      }
+      .assigned-contacts {
+        width: 300px;
+      }
+    }
+    .addtask-left-bottom {
+      .add-btn-container {
+        left: 300px;
+        bottom: -14px;
+      }
+      .input-wrapper {
+        input {
+          width: 300px;
+        }
+      }
+      h2 {
+        @include OpenSans(700, 16px, 19.2px, $menu-color);
+      }
+      select {
+        width: 300px;
+      }
+      span {
+        @include OpenSans(400, 16px, 19.2px, $menu-color);
       }
     }
     .addtask-left-prio {
-      .prio-box {
-        gap: 2px;
-        justify-content: flex-start;
-        .prio-container {
-          width: 80px;
-          height: 30px;
-          padding: 10px 4px 10px 4px;
-          gap: 4px;
-
-          img {
-            width: 16px;
-            height: 10.5px;
-          }
-        }
+      gap: 16px;
+      h2 {
+        @include OpenSans(700, 16px, 19.2px, $menu-color);
       }
-    }
-    .addtask-left-bottom {
-      input {
-        width: 50%;
+
+      span {
+        @include OpenSans(400, 16px, 19.2px, $menu-color);
+      }
+
+      .prio-box {
+        height: 48px;
+        width: 80%;
       }
     }
     .addtask-right {
-      .btn-container {
-        bottom: -152px;
-        .create-btn {
-          margin-top: 40px;
-        }
-      }
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      width: 100%;
+      margin-bottom: 0px;
     }
   }
 }
+
