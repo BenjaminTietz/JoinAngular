@@ -56,7 +56,7 @@ export class LoginService {
       name: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      confirmPassword: ['', [Validators.required, Validators.minLength(6)]]
+      confirmPassword: ['', [Validators.required, Validators.minLength(6)]],
     });
     this.signUpFormFB.valueChanges.subscribe(console.log);
   }
@@ -103,9 +103,13 @@ export class LoginService {
       );
       console.log('guestUser: ', this.ArraysService.guestUser);
       // Redirect to the "summary-component" page
+      this.currentUser = 'Guest'; // Set the current user's name
+      await this.safeUser();
       this.router.navigate(['/summary']);
     } else {
       // If no guest user data is present, simply redirect to the "summary-component" page
+      this.currentUser = 'Guest'; // Set the current user's name
+      await this.safeUser();
       this.router.navigate(['/summary']);
     }
   }
@@ -122,6 +126,8 @@ export class LoginService {
       await this.RemotestorageService.setItem('user', JSON.stringify(user));
       this.currentUserEmail = user.email;
       await this.extractUserName();
+      this.currentUser = user.name; // Set the current user's name
+      await this.safeUser();
       this.router.navigate(['/summary']);
       data.email = '';
       data.password = '';
@@ -129,6 +135,44 @@ export class LoginService {
       console.log('User not found');
       // TODO: Implementiere die Funktion failedLogIn(email, password);
     }
+  }
+
+  /**
+   * This function search for User Data and than try with that data to login into JOIN
+   */
+  async logout() {
+    // Clear the current user data in remote storage
+    await this.RemotestorageService.setItem('current_user_array', JSON.stringify({}));
+  
+    // Reset the currentUser and currentUserEmail properties
+    this.currentUser = null;
+    this.currentUserEmail = null;
+  
+    // You can also add any other necessary logout logic here
+  
+    // Redirect to a login page or any other destination
+    this.router.navigate(['']);
+  }
+
+
+  /**
+   * Asynchronous function to save current user to remote storage
+   */
+  async safeUser() {
+    let userData = {
+      name: this.currentUser,
+      // Add other user data here
+    };
+    await this.RemotestorageService.setItem('current_user_array', JSON.stringify(userData));
+    console.log('Login Service saved current user', userData);
+  }
+  /**
+   * Asynchronous function to load current user from remote storage
+   */
+  async loadUser() {
+    let userData = JSON.parse(await this.RemotestorageService.getItem('current_user_array'));
+    this.currentUser = userData.name;
+    console.log('Login Service loaded current user', this.currentUser);
   }
 
   /**
@@ -148,9 +192,9 @@ export class LoginService {
     }
   }
 
-/**
- * This function chooses a greeting slogan depending on the time of the day
- */
+  /**
+   * This function chooses a greeting slogan depending on the time of the day
+   */
   getGreeting(): void {
     let currentTime = new Date().getHours();
     let greeting: string;

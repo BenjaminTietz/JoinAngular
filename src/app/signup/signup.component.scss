@@ -220,10 +220,18 @@
   @include OpenSans(400, 16px, 19.2px, $menu-color);
 
   a {
+    cursor: pointer;
     text-decoration: none;
     color: $white;
     gap: 8px;
     padding: 8px;
+
+    &:hover {
+      text-decoration: underline;
+      text-decoration-color: $white;
+      text-decoration-thickness: 2px;
+      text-underline-offset: 6px;
+    }
   }
 }
 
@@ -360,20 +368,7 @@
   }
 }
 
-@media screen and (max-width: 1200px) {
-  .privacy-wrapper {
-      margin-top: 0px;
-      padding-top: 80px;
-      width: 100vw;
-      height: 100vh;
-      gap: 30px;
-      padding-left: 16px;
-      padding-right: 16px;
-  }
 
-  .privacy-content {
-  }
-}
 
 .legal-wrapper {
   display: none;
@@ -436,14 +431,3 @@
   }
 }
 
-@media screen and (max-width: 1200px) {
-  .legal-wrapper {
-      margin-top: 0px;
-      padding-top: 80px;
-      width: 100vw;
-      height: 100vh;
-      gap: 30px;
-      padding-left: 16px;
-      padding-right: 16px;
-  }
-}

@@ -9,7 +9,7 @@
         <div class="dropdown" #dropdown>
                 <a (click)="selectComponent('app-privacy-policy')">Privacy Policy</a>
                 <a (click)="selectComponent('app-legal-notice')">Legal Notice</a>
-                <a>Logout</a>
+                <a (click)="this.LoginService.logout()">Logout</a>
         </div>
     </div>
 </header>

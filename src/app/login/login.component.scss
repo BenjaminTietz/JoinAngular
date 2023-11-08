@@ -81,6 +81,12 @@
         padding: 10px 16px 10px 16px;
         @include OpenSans(400, 23px, 27.6px, $white);
         cursor: pointer;
+
+        &:hover {
+            transition: all 115ms ease-in-out;
+            box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.16);
+            scale: 1.05;
+        }
     }
 }
 
@@ -229,6 +235,19 @@
         color: $menu-color;
         gap: 8px;
         padding: 8px;
+
+        cursor: pointer;
+        text-decoration: none;
+        color: $black;
+        gap: 8px;
+        padding: 8px;
+    
+        &:hover {
+          text-decoration: underline;
+          text-decoration-color: $black;
+          text-decoration-thickness: 2px;
+          text-underline-offset: 6px;
+        }
     }
 }
 
@@ -373,20 +392,6 @@
     }
 }
 
-@media screen and (max-width: 1200px) {
-    .privacy-wrapper {
-        margin-top: 0px;
-        padding-top: 80px;
-        width: 100vw;
-        height: 100vh;
-        gap: 30px;
-        padding-left: 16px;
-        padding-right: 16px;
-    }
-
-    .privacy-content {
-    }
-}
 
 .legal-wrapper {
     display: none;
@@ -449,14 +454,4 @@
     }
   }
   
-  @media screen and (max-width: 1200px) {
-    .legal-wrapper {
-        margin-top: 0px;
-        padding-top: 80px;
-        width: 100vw;
-        height: 100vh;
-        gap: 30px;
-        padding-left: 16px;
-        padding-right: 16px;
-    }
-  }
+

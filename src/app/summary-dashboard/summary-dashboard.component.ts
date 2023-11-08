@@ -20,6 +20,8 @@ export class SummaryDashboardComponent {
 
   ngOnInit(): void {
     this.TaskArrayService.findNearestDate(this.TaskArrayService.urgent);
+    this.loginService.loadUser();
+    
   }
 
   selectComponent(componentName: string) {

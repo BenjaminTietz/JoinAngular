@@ -236,7 +236,26 @@
   gap: 24px;
 
   .headline {
+    position: absolute;
+    background-color: white;
+    height: 77vh;
+    width: 100vw;
+    max-width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: slide-up 1500ms 2s ease-in-out forwards;
+
+    @keyframes slide-up {
+      0% {
+        transform: translateY(0px);
+      }
+      100% {
+        transform: translateY(-100vh);
+      }
+    }
     h1 {
+      text-align: center;
       @include OpenSans(400, 48px, 57.6px, $dashboard-headline);
     }
 
@@ -455,9 +474,29 @@
   .dashboard-mobile-wrapper {
     display: flex;
   }
+  .headline {
+
+    h1 {
+      @include OpenSans(400, 32px, 32.6px, $dashboard-headline);
+    }
+
+    span {
+      @include OpenSans(700, 32px, 36px, $light-blue);
+    }
+  }
 }
 
 @media screen and (max-width: 450px) {
+  .headline {
+    width:auto;
+    h1 {
+      @include OpenSans(400, 26px, 28.6px, $dashboard-headline);
+    }
+
+    span {
+      @include OpenSans(700, 26px, 30px, $light-blue);
+    }
+  }
   .dashboard-mobile-wrapper {
     overflow-y: scroll;
     justify-content: flex-start;
