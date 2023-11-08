@@ -124,7 +124,7 @@
         <h2>Edit Contact</h2>
       </div>
     </div>
-    <div class="add-contact-bottom">
+    <div class="edit-contact-bottom">
       <img src="assets/img/contacts/user-circle-add-contact.png" />
       <form
         #editContactForm="ngForm"
@@ -293,7 +293,7 @@
     </div>
     <!--hidden mobile edit contact menu-->
     <div #mobileMenuWrapper class="mobile-menu-wrapper">
-      <div class="mobile-edit-btn">
+      <div (click)="showEditSlider()" class="mobile-edit-btn">
         <img src="assets/img/contacts/edit.svg" alt="edit_icon" />
         <span>Edit</span>
       </div>

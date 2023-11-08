@@ -659,6 +659,7 @@
         justify-content: center;
         align-items: center;
         overflow-y: scroll;
+
         .add-contact-container {
             position: absolute;
             top: 0;
@@ -668,7 +669,7 @@
             justify-content: center;
             align-items: center;
             width: 351px;
-            height: 662px;
+            height: 582px;
             border-radius: 30px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.16);
             z-index: 2;
@@ -681,7 +682,7 @@
                 align-items: center;
                 box-sizing: border-box;
                 width: 351px;
-                height: 320px;
+                height: 250px;
                 padding: 91px 46px 91px 46px;
                 gap: 12px;
                 border-top-left-radius: 20px;
@@ -721,6 +722,104 @@
                     }
                 }
             }
+            .edit-contact-bottom {
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                box-sizing: border-box;
+                width: 351px;
+                height: 332px;
+                background-color: $white;
+                border: 1px solid $input-boarder;
+                padding-top: 16px;
+
+                img {    
+                    width: 64px;
+                    height: 64px;
+                    top: -50px;
+                    position: absolute;
+                }
+                form {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: flex-start;
+                    align-items: center;
+                    width: 422px;
+                    height: 193px;
+                    gap: 24px;
+    
+                    input {
+                        width: 67%;
+                        height: 48px;
+                        padding-left: 16px;
+                        @include OpenSans(400, 19px, 22.8px, $black);
+    
+                        &.ng-touched,
+                        &.ng-dirty {
+                          &.ng-invalid {
+                            border: 1px solid $red;
+                            border-radius: 10px;
+                          }
+                          &.ng-valid {
+                            border: 1px solid $green;
+                            border-radius: 10px;
+                          }
+                        }
+                    }
+                
+                .add-contact-btn {
+                    display: flex;
+                    gap: 4px;
+    
+                    .cancel-btn {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        box-sizing: border-box;
+                        white-space: nowrap;
+                        width: 116px;
+                        height: 61px;
+                        border-radius: 10px;
+                        border-style:solid 1px;
+                        border-color: $light-gray;
+                        background-color: $white;
+                        padding: 16px 10px 16px 10px;
+                        gap: 10px;
+                        @include OpenSans(400, 23px, 27.6px, $light-gray);
+                        cursor: pointer;
+                        
+                        img {
+                            display: none;
+                        }
+                    }
+            
+                    .create-btn {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        width: 184px;
+                        height: 60px;
+                        border-radius: 8px;
+                        border-style: none;
+                        background-color: $light-blue;
+                        padding: 16px 10px 16px 10px;
+                        gap: 10px;
+                        @include OpenSans(400, 23px, 27.6px, $white);
+                        cursor: pointer;
+                        img {
+                            display: none;
+                        }
+                        &:disabled {
+                            background-color: $light-gray;
+                            cursor: not-allowed;
+                          }
+                    }
+                }
+            }
+
+            }
             .add-contact-bottom {
                 position: relative;
                 display: flex;
@@ -729,13 +828,15 @@
                 align-items: center;
                 box-sizing: border-box;
                 width: 351px;
-                height: 362px;
+                height: 332px;
                 background-color: $white;
                 border: 1px solid $input-boarder;
                 padding-top: 16px;
 
-                img {
-                    top: -116px;
+                img {    
+                    width: 64px;
+                    height: 64px;
+                    top: -50px;
                     position: absolute;
                 }
                 form {
