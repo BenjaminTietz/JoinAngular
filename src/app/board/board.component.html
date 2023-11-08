@@ -455,23 +455,40 @@
           <div class="add-btn-container">
             <img
               src="assets/img/addtask/add_btn.png"
-              (click)="this.TaskArrayService.addSubtask()"
+              (click)="this.TaskArrayService.addSubtaskFromEdit()"
             />
           </div>
   
-          <div
-            *ngFor="let subtask of this.TaskArrayService.subtasks; let i = index"
-          >
+          <div *ngIf="this.TaskArrayService.tasks && this.TaskArrayService.tasks[this.TaskArrayService.selectedTaskIndex]">
+            <!-- <div *ngFor="let subtask of this.TaskArrayService.tasks[this.TaskArrayService.selectedTaskIndex].subtask; let i = index">         
             <div class="subtask-container">
               <span>{{ subtask }} </span>
               <div class="subtask-btn-container">
                 <img
                   src="assets/img/board/delete.png"
-                  (click)="this.TaskArrayService.deleteSubtask(i)"
+                  (click)="this.TaskArrayService.deleteSubtaskFromEdit(i)"
+                />
+              </div>
+            </div>
+          </div> -->
+
+          <div *ngFor="let subtask of this.TaskArrayService.subtasks; let i = index">         
+            <div class="subtask-container">
+              <span>{{ subtask }} </span>
+              <div class="subtask-btn-container">
+                <img
+                  src="assets/img/board/delete.png"
+                  (click)="this.TaskArrayService.deleteSubtask(i);this.TaskArrayService.deleteSubtaskFromEdit(i)"
                 />
               </div>
             </div>
           </div>
+
+
+          </div>
+
+
+
           <div class="btn-container">
             <button (click)="hideEditTaskFloatingContainer()" type="button" class="clear-btn">
               Close<img src="assets/img/addtask/clear_btn.svg" />

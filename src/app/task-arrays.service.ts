@@ -80,6 +80,7 @@ export class TaskArraysService {
   taskId: number = 0;
   nearestUrgendTaskDate: any = '';
   selectedTask: any;
+  selectedTaskIndex: number;
 
   ngOnInit() {
     this.loadTasks();
@@ -155,9 +156,7 @@ export class TaskArraysService {
       this.assignedUser.splice(index, 1);
     }
   }
-  
-  
-  
+
   removeFromAssignedArray(index: number) {
     let assignedContacts = this.addTaskForm.get('assignedContacts') as FormArray;
     assignedContacts.removeAt(index);
@@ -168,6 +167,20 @@ export class TaskArraysService {
   
     const assignedContacts = this.addTaskForm.get('assignedContacts') as FormArray;
     assignedContacts.clear(); // Clear the FormArray
+  }
+
+  pushFromTaskArraytoSubtaskArray() {
+    console.log('selectedTask', this.selectedTaskIndex);
+    let subtask = this.tasks[this.selectedTaskIndex].subtask;
+    if (subtask) {
+      this.subtasks.push(...subtask);
+      console.log('subtasks', this.subtasks);
+    }
+  }
+
+  getIndexOfSelectedTask() {
+    let index = this.tasks.findIndex(task => task.id === this.selectedTask.id);
+    this.selectedTaskIndex = index;
   }
 
   async generateTaskId() {
@@ -245,32 +258,48 @@ export class TaskArraysService {
    * Asynchronous function to add a new task to the "task" array
    */
   async editTask(data) {
-    // find index in the main tasks array
-    let taskIndex = this.selectedTask.id-1;
-
+    // Find the index in the main tasks array
+    let taskIndex = this.selectedTaskIndex ;
+  
     if (taskIndex >= 0 && taskIndex < this.tasks.length) {
       console.log('Edited task', data.title, data.description, data.dueDate, data.category, data.subtask);
-
+  
+      // Update the task properties
       this.tasks[taskIndex].title = data.title;
       this.tasks[taskIndex].description = data.description;
       this.tasks[taskIndex].date = data.date;
-      this.tasks[taskIndex].prio = this.selectedPriority,
+      this.tasks[taskIndex].prio = this.selectedPriority;
       this.tasks[taskIndex].category = data.category;
-      this.tasks[taskIndex].subtask = data.subtask;
-
+  
+      // Push each entry from data.subtask into this.tasks[taskIndex].subtask
+      for (let subtask of data.subtask) {
+        this.tasks[taskIndex].subtask.push(subtask);
+      }
+  
+      // Push each entry from this.subtasks into this.tasks[taskIndex].subtask
+      for (let subtask of this.subtasks) {
+        this.tasks[taskIndex].subtask.push(subtask);
+      }
+  
       this.safeTasks();
-
+  
       console.log('Edited task', data.title, data.description, data.dueDate);
     } else {
       console.log('Invalid task index.');
     }
-
-    //todo confimationMessage(); hideSlider();
+  
+    await this.findNearestDate(this.urgent);
+    this.subtasks = [];
+    this.clearAssignedData();
+    this.ngOnInit();
+  
+    // todo confirmationMessage(); hideSlider();
   }
 
   resetAddTaskForm() {
     this.addTaskForm.reset();
   }
+
 
   addSubtask() {
     let subtaskControl = this.addTaskForm.get('subtask');
@@ -284,8 +313,39 @@ export class TaskArraysService {
     console.log('subtasks', this.subtasks);
   }
 
+  addSubtaskFromEdit() {
+    let subtaskControl = this.editTaskForm.get('subtask');
+    let subtaskValue = subtaskControl.value;
+
+    if (subtaskValue) {
+      this.subtasks.push(subtaskValue);
+      subtaskControl.setValue(''); // Das Eingabefeld leeren
+    }
+
+    console.log('addSubtaskFromEdit generated subtasks', this.subtasks);
+  }
+
+  editSubtask() {
+    let subtaskControl = this.editTaskForm.get('subtask');
+    let subtaskValue = subtaskControl.value;
+
+    if (subtaskValue) {
+      this.subtasks.push(subtaskValue);
+      subtaskControl.setValue(''); // Das Eingabefeld leeren
+    }
+
+    console.log('subtasks', this.subtasks);
+  }
+
   deleteSubtask(i) {
     this.subtasks.splice(i, 1);
+    this.pushFromTaskArraytoSubtaskArray();
+  }
+
+  deleteSubtaskFromEdit(i) {
+    console.log('deleteSubtaskFromEdit aktive index to delete:', this.selectedTaskIndex);
+    this.tasks[this.selectedTaskIndex].subtask.splice(i, 1);
+    this.safeTasks();
   }
 
   async updateTask(taskIndex: number, newStatus: string) {

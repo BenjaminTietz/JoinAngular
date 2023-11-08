@@ -196,6 +196,8 @@ export class BoardComponent {
     //TO-DO: Reset form
   }
   showEditTaskFloatingContainer(selectedTask) {
+    this.TaskArrayService.getIndexOfSelectedTask();
+    this.TaskArrayService.pushFromTaskArraytoSubtaskArray();
     this.TaskArrayService.selectedTask = selectedTask;
     this.TaskArrayService.editTaskForm.patchValue(selectedTask);
     console.log('selectedTask', this.TaskArrayService.selectedTask);

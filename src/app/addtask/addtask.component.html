@@ -147,7 +147,11 @@
             </div>
           </div>
         </div>
-        
+        <!-- todo implement box to render assigned contacts <h2>Assigned Contacts:</h2>
+<div *ngFor="let assignedContact of this.TaskArraysService.addTaskForm.get('assignedContacts').value; let i = index">
+  <span>{{ assignedContact }}</span>
+  <button (click)="this.TaskArraysService.removeFromAssignedArray(i)">Remove</button>
+</div> -->
       </div>
 
       <div class="addtask-left-bottom">
@@ -196,6 +200,7 @@
             </div>
           </div>
         </div>
+
         <div class="btn-container">
           <button type="button" class="clear-btn">
             Clear<img src="assets/img/addtask/clear_btn.svg" />
