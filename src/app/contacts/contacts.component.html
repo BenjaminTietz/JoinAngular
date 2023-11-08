@@ -249,6 +249,14 @@
   </div>
   <!--mobile contact detail Container-->
   <div #mobileDetailView class="contacts-detailview-mobile">
+    <div class="detailview-mobile-top">
+    <h2>Contact Information</h2>
+    <img
+    (click)="showMobileDetailView()"
+    class="mobile-close-btn"
+    src="assets/img/contacts/arrow-left-line.png"
+  />
+    </div>
     <div
       *ngIf="selectedContactIndex !== -1 && ammountOfDisplayedcontacts > 0"
       class="mobile-contact-detail-container"
@@ -267,14 +275,9 @@
             {{ this.ArraysService.sortedalphabetically[selectedContactIndex].name }}
           </div>
         </div>
-        <img
-          (click)="showMobileDetailView()"
-          class="mobile-close-btn"
-          src="assets/img/contacts/arrow-left-line.png"
-        />
+
       </div>
       <div class="mobile-contact-info">
-        <h2>Contact Information</h2>
         <span>Email</span>
         <div class="mobile-contact-email">
           {{ this.ArraysService.sortedalphabetically[selectedContactIndex].email }}

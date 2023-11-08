@@ -165,6 +165,7 @@ export class ContactsComponent {
       this.showCreatePopup();
     }, 2000);
     this.ngOnInit();
+    this.showMobileDetailView();
   }
 
   /**
@@ -177,7 +178,7 @@ export class ContactsComponent {
     this.ArraysService.safeContacts();
 
     this.ngOnInit();
-
+    this.showMobileDetailView();
     //TODO confimationMessage()
     //short delay before hiding the slider
   }
