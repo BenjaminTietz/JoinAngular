@@ -14,6 +14,9 @@ export class LoginComponent {
 
   @ViewChild('userEmail') userEmail: ElementRef;
   @ViewChild('userPassword') userPassword: ElementRef;
+  @ViewChild('privacyWrapper') privacyWrapper: ElementRef;
+  @ViewChild('loginWrapper') loginWrapper: ElementRef;
+  @ViewChild('legalNoticeWrapper') legalNoticeWrapper: ElementRef;
 
   form: FormGroup;
  
@@ -44,5 +47,21 @@ export class LoginComponent {
     this.router.navigate(['/summary']);
 }
 
+showPrivacyPolicy() {
+  this.privacyWrapper.nativeElement.classList.add('show');
+  this.loginWrapper.nativeElement.classList.add('hide');
+}
+hidePrivacyPolicy() {
+  this.privacyWrapper.nativeElement.classList.remove('show');
+  this.loginWrapper.nativeElement.classList.remove('hide');
+}
 
+showLegalNotice() {
+  this.legalNoticeWrapper.nativeElement.classList.add('show');
+  this.loginWrapper.nativeElement.classList.add('hide');
+}
+hideLegalNotice() {
+  this.legalNoticeWrapper.nativeElement.classList.remove('show');
+  this.loginWrapper.nativeElement.classList.remove('hide');
+}
 }

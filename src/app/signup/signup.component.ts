@@ -19,6 +19,9 @@ export class SignupComponent {
   @ViewChild('confirmPasswordBox') confirmPasswordBox: ElementRef;
   @ViewChild('acceptPrivacy') acceptPrivacy: ElementRef;
   @ViewChild('successPopUp') successPopUp: ElementRef;
+  @ViewChild('privacyWrapper') privacyWrapper: ElementRef;
+  @ViewChild('signUpWrapper') signUpWrapper: ElementRef;
+  @ViewChild('legalNoticeWrapper') legalNoticeWrapper: ElementRef;
 
   form: FormGroup;
 
@@ -82,6 +85,24 @@ export class SignupComponent {
 
     redirectToLogin() {
       this.router.navigate(['/']);
+    }
+
+    showPrivacyPolicy() {
+      this.privacyWrapper.nativeElement.classList.add('show');
+      this.signUpWrapper.nativeElement.classList.add('hide');
+    }
+    hidePrivacyPolicy() {
+      this.privacyWrapper.nativeElement.classList.remove('show');
+      this.signUpWrapper.nativeElement.classList.remove('hide');
+    }
+    
+    showLegalNotice() {
+      this.legalNoticeWrapper.nativeElement.classList.add('show');
+      this.signUpWrapper.nativeElement.classList.add('hide');
+    }
+    hideLegalNotice() {
+      this.legalNoticeWrapper.nativeElement.classList.remove('show');
+      this.signUpWrapper.nativeElement.classList.remove('hide');
     }
 }
 
