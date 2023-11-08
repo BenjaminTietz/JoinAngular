@@ -143,10 +143,11 @@
             </div>
             <span class="assigned-user-name">{{ contact.name }}</span>
             <div>
-              <input type="checkbox" name="assigned" />
+              <input (change)="this.TaskArraysService.pushToAssignedArray(contact.name)" type="checkbox" name="assigned" />
             </div>
           </div>
         </div>
+        
       </div>
 
       <div class="addtask-left-bottom">

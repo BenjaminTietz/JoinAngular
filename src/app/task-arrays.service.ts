@@ -3,6 +3,8 @@ import { RemotestorageService } from './remotestorage.service';
 import { ArraysService } from './contact-arrays.service';
 import { AddtaskComponent } from './addtask/addtask.component';
 import { AbstractControl, ValidationErrors } from '@angular/forms';
+import { BoardService } from './board.service';
+import { FormArray } from '@angular/forms';
 import {
   FormBuilder,
   FormGroup,
@@ -27,6 +29,7 @@ export class TaskArraysService {
     date: new FormControl('', [Validators.required]),
     category: new FormControl('', [Validators.required]),
     subtask: new FormControl('', []),
+    assignedContacts: this.fb.array([]),
   });
 
   public editTaskForm: FormGroup = new FormGroup({
@@ -35,6 +38,7 @@ export class TaskArraysService {
     date: new FormControl('', [Validators.required]),
     category: new FormControl('', [Validators.required]),
     subtask: new FormControl('', []),
+    assignedContacts: this.fb.array([]),
   });
 
   public addTaskFormFB: FormGroup;
@@ -43,7 +47,8 @@ export class TaskArraysService {
   constructor(
     public RemotestorageService: RemotestorageService,
     public ArraysService: ArraysService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private boardService: BoardService
   ) {
     this.addTaskFormFB = this.fb.group({
       title: new FormControl('', [Validators.required]),
@@ -51,6 +56,7 @@ export class TaskArraysService {
       date: new FormControl('', [Validators.required]),
       category: new FormControl('', [Validators.required]),
       subtask: new FormControl('', []),
+      assignedContacts: this.fb.array([]),
     });
     this.addTaskForm.valueChanges.subscribe(console.log);
 
@@ -60,6 +66,7 @@ export class TaskArraysService {
       date: new FormControl('', [Validators.required]),
       category: new FormControl('', [Validators.required]),
       subtask: new FormControl('', []),
+      assignedContacts: this.fb.array([]),
     });
     this.editTaskForm.valueChanges.subscribe(console.log);
 
@@ -126,8 +133,42 @@ export class TaskArraysService {
    */
   subtasks = [];
 
-  selectedContacts: any[] = [];
+  assignedUser = [];
 
+  pushToAssignedArray(contactName: string) {
+    const assignedContacts = this.addTaskForm.get('assignedContacts') as FormArray;
+  
+    // Check if the contact is already in the array
+    const index = assignedContacts.value.indexOf(contactName);
+  
+    if (index === -1) {
+      // Contact is not in the array, so add it to the form control
+      assignedContacts.push(this.fb.control(contactName));
+  
+      // Push the contact to the local array
+      this.assignedUser.push(contactName);
+    } else {
+      // Contact is already in the array, so remove it from the form control
+      assignedContacts.removeAt(index);
+  
+      // Remove the contact from the local array
+      this.assignedUser.splice(index, 1);
+    }
+  }
+  
+  
+  
+  removeFromAssignedArray(index: number) {
+    let assignedContacts = this.addTaskForm.get('assignedContacts') as FormArray;
+    assignedContacts.removeAt(index);
+  }
+
+  clearAssignedData() {
+    this.assignedUser = []; // Clear the local assignedUser array
+  
+    const assignedContacts = this.addTaskForm.get('assignedContacts') as FormArray;
+    assignedContacts.clear(); // Clear the FormArray
+  }
 
   async generateTaskId() {
     // first filter out IDs from the "task" array and convert them to numbers (from strings)
@@ -144,9 +185,20 @@ export class TaskArraysService {
    * Asynchronous function to add a new task to the "task" array
    */
   async addTask(data) {
-    debugger;
     let status = 'toDo';
-    this.taskId = this.taskId + 1;
+
+    let maxId = 0;
+    this.tasks.forEach((contact) => {
+      if (contact.id > maxId) {
+        maxId = contact.id;
+      }
+    });
+
+    // find max id in contacts array + 1
+    let newId = maxId + 1;
+
+    this.taskId = newId;
+
     if (data.title != '' && data.date != '' && data.category != '') {
       let selectedContacts = this.ArraysService.contacts
         .filter((contact) => contact.selected)
@@ -156,8 +208,8 @@ export class TaskArraysService {
         this.taskId,
         data.title,
         data.description,
-        data.dueDate,
-        this.selectedContacts,
+        data.date,
+        data.assignedContacts,
         data.category,
         this.subtasks,
         status
@@ -168,8 +220,8 @@ export class TaskArraysService {
         this.taskId,
         data.title,
         data.description,
-        data.dueDate,
-        selectedContacts,
+        data.date,
+        data.assignedContacts,
         data.category,
         data.subtask
       );
@@ -177,23 +229,17 @@ export class TaskArraysService {
     await this.findNearestDate(this.urgent);
     await this.resetAddTaskForm();
     this.subtasks = [];
+    this.clearAssignedData();
+    this.ngOnInit();
+
+    setInterval(() => {
+      this.boardService.showAddTask = false;
+      this.boardService.showBoard = true;
+    }, 1000);
     //TODO confimationMessage();
   }
 
-  //todo non functional
-  toggleContactSelection(contact) {
-    console.log('toggleContactSelection', 'active');
-    contact.selected = !contact.selected;
-    if (contact.selected) {
-      this.selectedContacts.push(contact);
-      console.log('selectedContacts', this.selectedContacts);
-    } else {
-      const index = this.selectedContacts.findIndex((c) => c.name === contact.name);
-      if (index !== -1) {
-        this.selectedContacts.splice(index, 1);
-      }
-    }
-  }
+
 
   /**
    * Asynchronous function to add a new task to the "task" array

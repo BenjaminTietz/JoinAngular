@@ -195,7 +195,7 @@
               </div>
               <span class="assigned-user-name">{{ contact.name }}</span>
               <div>
-                <input (click)="this.TaskArrayService.toggleContactSelection(contact)" type="checkbox" name="assigned" />
+                <input (click)="this.TaskArrayService.pushToAssignedArray(this.ArraysService.contacts[i].name)" type="checkbox" name="assigned" />
               </div>
             </div>
           </div>
