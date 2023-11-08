@@ -262,12 +262,13 @@ export class TaskArraysService {
     let taskIndex = this.selectedTaskIndex ;
   
     if (taskIndex >= 0 && taskIndex < this.tasks.length) {
-      console.log('Edited task', data.title, data.description, data.dueDate, data.category, data.subtask);
+      console.log('Edited task', data.title, data.description, data.dueDate, data.assignedContacts, data.category, data.subtask);
   
       // Update the task properties
       this.tasks[taskIndex].title = data.title;
       this.tasks[taskIndex].description = data.description;
       this.tasks[taskIndex].date = data.date;
+      this.tasks[taskIndex].assigned = this.assignedUser;
       this.tasks[taskIndex].prio = this.selectedPriority;
       this.tasks[taskIndex].category = data.category;
   

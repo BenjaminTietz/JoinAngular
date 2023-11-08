@@ -96,12 +96,14 @@
       .floating-task-content {
         .floating-task-title {
           h1 {
+            margin-block-start: 0;
+            margin-block-end: 0;
             @include OpenSans(700, 61px, 73.2px, $black);
           }
         }
         .floating-task-description {
-          span {
-            @include OpenSans(400, 23px, 27.6px, $board-text);
+          h2 {
+            @include OpenSans(400, 19px, 22.8px, $black);
           }
         }
         .floating-task-date {
@@ -111,7 +113,8 @@
             @include Inter(700, 21px, 25.2px, $menu-color);
           }
           span {
-            @include Inter(400, 19px, 22.8px, $menu-color);
+            margin-left: 24px;
+            @include OpenSans(400, 19px, 22.8px, $menu-color);
           }
         }
         .floating-task-prio {
@@ -121,7 +124,8 @@
             @include Inter(700, 21px, 25.2px, $menu-color);
           }
           span {
-            @include Inter(400, 19px, 22.8px, $menu-color);
+            margin-left: 24px;
+            @include OpenSans(400, 19px, 22.8px, $menu-color);
           }
         }
         .floating-task-assign {
@@ -129,7 +133,7 @@
             @include Inter(700, 21px, 25.2px, $menu-color);
           }
           span {
-            @include Inter(400, 19px, 22.8px, $menu-color);
+            @include OpenSans(400, 19px, 22.8px, $menu-color);
           }
         }
         .floating-task-subtask {
@@ -137,7 +141,7 @@
             @include Inter(700, 21px, 25.2px, $menu-color);
           }
           span {
-            @include Inter(400, 19px, 22.8px, $menu-color);
+            @include OpenSans(400, 19px, 22.8px, $menu-color);
           }
         }
       }

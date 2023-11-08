@@ -13,7 +13,12 @@
     height: calc(100vh - 96px);
     gap: 30px;
     padding-left: 32px;
+    padding-right: 32px;
+    padding-bottom: 64px;
     background-color: $bg-color;
+
+    overflow-y: scroll;
+
     .privacy-headline {
         display: flex;
         justify-content: space-between;
@@ -44,9 +49,13 @@
         margin-left: 0px;
         width: 100vw;
         max-width: 100%;
-        height: calc(100vh - 156px);
+        height: calc(100vh - 96px);
+        max-height: 100%;
         gap: 30px;
         padding-left: 16px;
         padding-right: 16px;
+    }
+
+    .privacy-content {
     }
 }

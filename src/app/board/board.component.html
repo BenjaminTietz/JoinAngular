@@ -3,7 +3,7 @@
   <div #floatingTaskContainer class="floating-task-wrapper">
     <div *ngIf="this.TaskArrayService.selectedTask" class="floating-task-container">
       <div class="floating-task-top">
-        <div class="floating-task-category">
+        <div [style.background-color]="getCategoryColor(this.TaskArrayService.selectedTask.category)" class="floating-task-category">
           <span>{{ this.TaskArrayService.selectedTask.category }}</span>
         </div>
         <div (click)="closeTask()" class="floating-close-btn">
@@ -23,6 +23,7 @@
         </div>
         <div class="floating-task-prio">
           <h2>Priority:</h2>
+          <span>{{ this.TaskArrayService.selectedTask.prio }}</span>
           <img class="prio" src="assets/img/board/prio_{{ this.TaskArrayService.selectedTask.prio }}.svg" />
         </div>
         <div class="floating-task-assign">
@@ -182,8 +183,24 @@
               />
             </div>
           </div>
-          <div class="assigned-dropdown-container" #assignedDropdown>
+          <div class="assigned-dropdown-container" #assignedDropdownEdit>
+
             <div
+            *ngFor="let contact of this.ArraysService.contacts; let i = index"
+            class="assigned-user"
+          >
+            <div
+              [style.background-color]="this.ArraysService.contacts[i].color"
+              class="assigned-user-circle"
+            >
+              <div class="assigned-user-Initials">AT</div>
+            </div>
+            <span class="assigned-user-name">{{ contact.name }}</span>
+            <div>
+              <input (change)="this.TaskArrayService.pushToAssignedArray(contact.name)" type="checkbox" name="assigned" />
+            </div>
+          </div>
+            <!-- <div
               *ngFor="let contact of this.ArraysService.contacts; let i = index"
               class="assigned-user"
             >
@@ -197,7 +214,7 @@
               <div>
                 <input (click)="this.TaskArrayService.pushToAssignedArray(this.ArraysService.contacts[i].name)" type="checkbox" name="assigned" />
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
   

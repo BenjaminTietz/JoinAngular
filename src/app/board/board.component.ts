@@ -21,6 +21,7 @@ export class BoardComponent {
   @ViewChild('prioMedium') prioMedium: ElementRef;
   @ViewChild('prioLow') prioLow: ElementRef;
   @ViewChild('assignedDropdown') assignedDropdown: ElementRef;
+  @ViewChild('assignedDropdownEdit') assignedDropdownEdit: ElementRef;
   @ViewChild('addtaskWrapper') addtaskWrapper: ElementRef;
   @ViewChild('editTaskWrapper') editTaskWrapper: ElementRef;
   @ViewChild('taskCategoryWrapper') taskCategoryWrapper: ElementRef;
@@ -173,6 +174,9 @@ export class BoardComponent {
 
   showAssignDropdown() {
     this.assignedDropdown.nativeElement.classList.toggle(
+      'show-assigned-dropdown'
+    );
+    this.assignedDropdownEdit.nativeElement.classList.toggle(
       'show-assigned-dropdown'
     );
     if (this.TaskArrayService.assignedDropdownVisible == false) {
