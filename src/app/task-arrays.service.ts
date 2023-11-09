@@ -245,6 +245,7 @@ export class TaskArraysService {
     }
     await this.findNearestDate(this.urgent);
     await this.resetAddTaskForm();
+    this.assignStatus = '';
     this.subtasks = [];
     this.clearAssignedData();
     this.ngOnInit();

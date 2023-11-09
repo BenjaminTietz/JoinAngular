@@ -191,7 +191,7 @@
         [style.background-color]="this.ArraysService.sortedalphabetically[i].color"
         class="contacts-left-usercircle"
       >
-        AM
+        {{contact.initials}}
       </div>
       <div class="contacts-left-content">
         <div class="contacts-left-content-name">{{ contact.name }}</div>
@@ -216,7 +216,7 @@
           "
           class="user-circle"
         >
-          <div class="user-initials">AM</div>
+          <div class="user-initials">{{this.ArraysService.sortedalphabetically[selectedContactIndex].initials}}</div>
         </div>
         <div class="contact-name-container">
           <div class="contact-name">

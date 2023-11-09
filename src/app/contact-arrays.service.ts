@@ -64,6 +64,8 @@ export class ArraysService {
     this.sortedalphabetically = [];
   }
 
+  sortedAndGroupedContacts;
+
   ngOnInit() {
     this.loadContacts();
     this.sortContactsAlphabetically(this.contacts);

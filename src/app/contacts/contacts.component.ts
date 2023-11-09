@@ -65,6 +65,7 @@ export class ContactsComponent {
     this.ArraysService.sortContactsAlphabetically(this.ArraysService.contacts);
     this.ammountOfDisplayedcontacts = this.ArraysService.contacts.length;
     this.generateContactId();
+    this.groupAndSortContacts();
   }
   /**
    * Function to push the entered contacts into the "contacts" array
@@ -127,17 +128,29 @@ export class ContactsComponent {
         maxId = contact.id;
       }
     });
-
+  
     // find max id in contacts array + 1
     let newId = maxId + 1;
-
-    this.contactId = newId;
-    console.log('Added contact', data.name, data.email, data.phone);
+  
+    const initials = this.extractInitials(data.name);
+    const color = this.getRandomUserCircleColor();
+  
+    const newContact = {
+      id: newId,
+      name: data.name,
+      email: data.email,
+      phone: data.phone,
+      color: color,
+      initials: initials,
+    };
+  
+    this.ArraysService.contacts.push(newContact);
     this.ArraysService.sortedalphabetically = [];
+  
     if (data.name != '' && data.email != '' && data.phone != '') {
-      this.pushToArray(data.name, data.email, data.phone);
-      await this.ArraysService.safeContacts();
+      this.ArraysService.safeContacts();
     }
+  
     this.ammountOfDisplayedcontacts++;
     await this.ArraysService.resetAddContactForm();
     this.showCreatePopup();
@@ -199,15 +212,46 @@ export class ContactsComponent {
    * Extracts the uppercase initials from the array "contacts"['name']
    * @param {Array} sortedContacts - This is the sorted Contacts Array
    */
-  async extractInitials() {
-    this.ArraysService.initials = this.ArraysService.contacts.map((contact) => {
-      let name = contact.name;
-      let matches = name.match(/[A-Z]/g);
-      let initialsString = matches ? matches.join('') : '';
-      return initialsString;
-    });
-    this.ArraysService.safeContacts();
+  extractInitials(name: string): string {
+    const match = name.match(/[A-Z]/g);
+    return match ? match.join('') : '';
   }
+
+  groupAndSortContacts() {
+    this.ArraysService.sortedAndGroupedContacts = this.getInitials(this.ArraysService.contacts);
+  }
+
+  getInitials(contacts: any[]): any {
+    const groupedContacts: { [key: string]: any[] } = {};
+  
+    contacts.forEach((contact) => {
+      const match = contact.name.match(/[A-Z]/g);
+      const firstLetters = match ? match.join('') : '';
+  
+      if (!groupedContacts[firstLetters]) {
+        groupedContacts[firstLetters] = [];
+      }
+  
+      groupedContacts[firstLetters].push(contact);
+    });
+  
+    // Sortiere die Gruppen nach dem Anfangsbuchstaben
+    const sortedGroups = Object.keys(groupedContacts).sort();
+  
+    // Erstelle ein sortiertes Array der Kontakte
+    const sortedContacts = [];
+    sortedGroups.forEach((group) => {
+      sortedContacts.push({
+        letter: group,
+        contacts: groupedContacts[group],
+      });
+    });
+  
+    return sortedContacts;
+  }
+  
+
+
   showSlider() {
     this.addContactContainer.nativeElement.classList.toggle('show-slider');
   }
