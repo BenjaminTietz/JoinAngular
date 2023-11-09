@@ -3,4 +3,26 @@
 body {
     margin: 0;
     font-family: 'Open Sans', sans-serif;
+
+/* ===== Scrollbar CSS ===== */
+  /* Firefox */
+  * {
+    scrollbar-width: auto;
+    scrollbar-color: #4589ff #647188;
+  }
+
+  /* Chrome, Edge, and Safari */
+  *::-webkit-scrollbar {
+    width: 16px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: #647188;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: #4589ff;
+    border-radius: 10px;
+    border: 2px solid #d2e3ff;
+  }
 }
