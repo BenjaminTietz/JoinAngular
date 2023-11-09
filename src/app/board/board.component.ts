@@ -41,7 +41,10 @@ export class BoardComponent {
   }
 
   async ngOnInit() {
+    await this.ArraysService.loadContacts();
+    await this.TaskArrayService.loadTasks();
     await this.TaskArrayService.mapTaskStatus();
+    await this.TaskArrayService.safeTasks(); // Speichere die aktualisierten Tasks
   }
 
   onSearch(event: any) {

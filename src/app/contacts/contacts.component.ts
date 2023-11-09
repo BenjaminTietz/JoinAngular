@@ -132,10 +132,10 @@ export class ContactsComponent {
     // find max id in contacts array + 1
     let newId = maxId + 1;
   
-    const initials = this.extractInitials(data.name);
-    const color = this.getRandomUserCircleColor();
+    let initials = this.extractInitials(data.name);
+    let color = this.getRandomUserCircleColor();
   
-    const newContact = {
+    let newContact = {
       id: newId,
       name: data.name,
       email: data.email,
@@ -213,7 +213,7 @@ export class ContactsComponent {
    * @param {Array} sortedContacts - This is the sorted Contacts Array
    */
   extractInitials(name: string): string {
-    const match = name.match(/[A-Z]/g);
+    let match = name.match(/[A-Z]/g);
     return match ? match.join('') : '';
   }
 
@@ -222,11 +222,11 @@ export class ContactsComponent {
   }
 
   getInitials(contacts: any[]): any {
-    const groupedContacts: { [key: string]: any[] } = {};
+    let groupedContacts: { [key: string]: any[] } = {};
   
     contacts.forEach((contact) => {
-      const match = contact.name.match(/[A-Z]/g);
-      const firstLetters = match ? match.join('') : '';
+      let match = contact.name.match(/[A-Z]/g);
+      let firstLetters = match ? match.join('') : '';
   
       if (!groupedContacts[firstLetters]) {
         groupedContacts[firstLetters] = [];
@@ -236,10 +236,10 @@ export class ContactsComponent {
     });
   
     // Sortiere die Gruppen nach dem Anfangsbuchstaben
-    const sortedGroups = Object.keys(groupedContacts).sort();
+    let sortedGroups = Object.keys(groupedContacts).sort();
   
     // Erstelle ein sortiertes Array der Kontakte
-    const sortedContacts = [];
+    let sortedContacts = [];
     sortedGroups.forEach((group) => {
       sortedContacts.push({
         letter: group,

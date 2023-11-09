@@ -82,9 +82,9 @@ export class TaskArraysService {
   selectedTask: any;
   selectedTaskIndex: number;
 
-  ngOnInit() {
-    this.loadTasks();
-    this.generateTaskId();
+  async ngOnInit() {
+    await this.loadTasks();
+    await this.generateTaskId();
     this.editTaskForm.patchValue(this.selectedTask);
   }
 
@@ -95,62 +95,97 @@ export class TaskArraysService {
   tasks = [];
 
   /**
-   * An array to filtered store tasks.
+   * An array to store filtered tasks.
    * @type {Array}
    */
   filteredTasks = [];
+  
+  /**
+   * An subarray to store filtered tasks splitted into status 'toDo'.
+   * @type {Array}
+   */
   filteredToDo = [];
+
+    /**
+   * An subarray to store filtered tasks splitted into status 'inProgress'.
+   * @type {Array}
+   */
   filteredInProgress = [];
+
+    /**
+   * An subarray to store filtered tasks splitted into status 'awaitFeedback'.
+   * @type {Array}
+   */
   filteredAwaitFeedback = [];
+
+    /**
+   * An subarray to store filtered tasks splitted into status 'done'.
+   * @type {Array}
+   */
   filteredDone = [];
+
   /**
    * An subarray to store tasks with status = "toDo".
    * @type {Array}
    */
   toDo = [];
+
   /**
    * An subarray to store tasks with status = "inProgress".
    * @type {Array}
    */
   inProgress = [];
+
   /**
    * An subarray to store tasks with status = "awaitFeedback".
    * @type {Array}
    */
   awaitFeedback = [];
+
   /**
    * An subarray to store tasks with status = "done".
    * @type {Array}
    */
   done = [];
+
   /**
    * An subarray to store tasks with prio = "urgent".
    * @type {Array}
    */
   urgent = [];
+
   /**
    * An subarray to store subtasks .
    * @type {Array}
    */
   subtasks = [];
 
+  /**
+   * An subarray to store assigned User .
+   * @type {Array}
+   */
   assignedUser = [];
 
+  /**
+   * An array to store string of status of the Task which gets added e.g('toDo,inProgress,awaitingFeedback') .
+   * @type {Array}
+   */
   assignStatus: string ;
 
 
-  pushToAssignedArray(contactName: string) {
+  pushToAssignedArray(contact: any) {
     const assignedContacts = this.addTaskForm.get('assignedContacts') as FormArray;
   
     // Check if the contact is already in the array
-    const index = assignedContacts.value.indexOf(contactName);
+    const index = assignedContacts.value.findIndex(c => c.id === contact.id);
   
     if (index === -1) {
       // Contact is not in the array, so add it to the form control
-      assignedContacts.push(this.fb.control(contactName));
+      assignedContacts.push(this.fb.control(contact));
   
       // Push the contact to the local array
-      this.assignedUser.push(contactName);
+      this.assignedUser.push(contact);
+      console.log('new assigned contact is:', contact)
     } else {
       // Contact is already in the array, so remove it from the form control
       assignedContacts.removeAt(index);
@@ -454,8 +489,7 @@ export class TaskArraysService {
       this.assignStatus
     );
   }
-
-
+  
   /**
    * Asynchronous function to save all tasks from array "contacts" to remote storage
    */
