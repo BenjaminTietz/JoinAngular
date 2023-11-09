@@ -4,7 +4,7 @@
             <img src="assets/img/summary/summary_icon.png" alt="logo">
             <span>Summary</span>
         </div>
-        <div #addTask (click)="selectComponent('app-addtask')" class="sidebar-row">
+        <div #addTask (click)="selectComponent('app-addtask');this.TaskArraysService.getNewStatus('toDo')" class="sidebar-row">
             <img src="assets/img/summary/addtask_icon.png" alt="logo">
             <span>Add Task</span>
         </div>

@@ -459,10 +459,10 @@
     margin-top: 0px;
     margin-left: 0px;
     padding-top: 80px;
-    padding-bottom: 80px;
+    padding-bottom: unset;
     width: 100vw;
     max-width: 100%;
-    height: calc(100vh - 156px);
+    height: calc(100vh - 78px);
     gap: 24px;
   }
 }

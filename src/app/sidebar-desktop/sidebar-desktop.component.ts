@@ -1,6 +1,7 @@
 import { Component, Output, EventEmitter, ViewChild, ElementRef  } from '@angular/core';
 import { Router } from '@angular/router';
 import { BoardService } from '../board.service';
+import { TaskArraysService } from '../task-arrays.service';
 
 @Component({
   selector: 'app-sidebar-desktop',
@@ -16,7 +17,7 @@ export class SidebarDesktopComponent {
   @ViewChild('legal') legal: ElementRef;
 
   @Output() componentSelected = new EventEmitter<string>();  
-  constructor(public router: Router, private boardService: BoardService) { }
+  constructor(public router: Router, private boardService: BoardService, public TaskArraysService: TaskArraysService) { }
 
   selectComponent(componentName: string) {
     switch (componentName) {

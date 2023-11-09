@@ -136,6 +136,9 @@ export class TaskArraysService {
 
   assignedUser = [];
 
+  assignStatus: string ;
+
+
   pushToAssignedArray(contactName: string) {
     const assignedContacts = this.addTaskForm.get('assignedContacts') as FormArray;
   
@@ -198,7 +201,8 @@ export class TaskArraysService {
    * Asynchronous function to add a new task to the "task" array
    */
   async addTask(data) {
-    let status = 'toDo';
+
+    let status = this.assignStatus;
 
     let maxId = 0;
     this.tasks.forEach((contact) => {
@@ -440,6 +444,16 @@ export class TaskArraysService {
 
     this.nearestUrgendTaskDate = formattedDate;
   }
+
+
+  async getNewStatus (status: string) {
+    this.assignStatus = status;
+    console.log(
+      'this.TaskArrayService.assignStatus',
+      this.assignStatus
+    );
+  }
+
 
   /**
    * Asynchronous function to save all tasks from array "contacts" to remote storage

@@ -10,13 +10,14 @@
   box-sizing: border-box;
   margin-top: 96px;
   margin-left: 238px;
-  width: calc(100vw - 260px);
+  width: calc(100vw - 238px);
   height: calc(100vh - 96px);
   padding-left: 16px;
   padding-right: 16px;
   gap: 72px;
   background-color: $bg-color;
   overflow-y: scroll;
+  overflow-x: hidden;
 
   .floating-task-wrapper {
     display: none;

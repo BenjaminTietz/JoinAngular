@@ -533,7 +533,7 @@
     <div class="search">
       <input type="text" placeholder="Find Task" (input)="onSearch($event)">
     </div>
-    <button (click)="showAddtaskFloatingContainer()" class="addtask-btn">
+    <button (click)="showAddtaskFloatingContainer('toDo')" class="addtask-btn">
       Add task <img src="assets/img/board/addtask_btn.svg" />
     </button>
   </div>
@@ -541,7 +541,7 @@
     <div class="category">
       <div class="headline">
         <h2>To do</h2>
-        <img (click)="showAddtaskFloatingContainer()" src="assets/img/board/plus button.svg" />
+        <img (click)="showAddtaskFloatingContainer('toDo')" src="assets/img/board/plus button.svg" />
       </div>
       <div
         #toDo
@@ -625,7 +625,7 @@
     <div class="category">
       <div class="headline">
         <h2>In progress</h2>
-        <img (click)="showAddtaskFloatingContainer()" src="assets/img/board/plus button.svg" />
+        <img (click)="showAddtaskFloatingContainer('inProgress')" src="assets/img/board/plus button.svg" />
       </div>
       <div
         #inProgress
@@ -728,7 +728,7 @@
     <div class="category">
       <div class="headline">
         <h2>Await feedback</h2>
-        <img (click)="showAddtaskFloatingContainer()" src="assets/img/board/plus button.svg" />
+        <img (click)="showAddtaskFloatingContainer('awaitFeedback')" src="assets/img/board/plus button.svg" />
       </div>
       <div
         #awaitFeedback

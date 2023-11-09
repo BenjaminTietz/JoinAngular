@@ -35,7 +35,7 @@ export class BoardComponent {
     public TaskArrayService: TaskArraysService,
     public RemotestorageService: RemotestorageService,
     public DragAndDropService: DragAndDropService,
-    public ArraysService: ArraysService,
+    public ArraysService: ArraysService
   ) {
     console.log('board loaded', this.TaskArrayService.selectedTask);
   }
@@ -47,39 +47,62 @@ export class BoardComponent {
   onSearch(event: any) {
     const searchTerm = event.target.value;
     console.log('searchTerm', searchTerm);
-  
+
     if (searchTerm.trim() === '') {
       this.searchFieldActive = false;
       this.TaskArrayService.filteredTasks = this.TaskArrayService.tasks;
     } else {
       this.searchFieldActive = true;
-      this.TaskArrayService.filteredTasks = this.TaskArrayService.tasks.filter(task => task.title.includes(searchTerm));
-  
+      this.TaskArrayService.filteredTasks = this.TaskArrayService.tasks.filter(
+        (task) => task.title.includes(searchTerm)
+      );
+
       // Filtered tasks by status
-      this.TaskArrayService.filteredToDo = this.TaskArrayService.filteredTasks.filter(task => task.status === 'toDo');
-      this.TaskArrayService.filteredInProgress = this.TaskArrayService.filteredTasks.filter(task => task.status === 'inProgress');
-      this.TaskArrayService.filteredAwaitFeedback = this.TaskArrayService.filteredTasks.filter(task => task.status === 'awaitFeedback');
-      this.TaskArrayService.filteredDone = this.TaskArrayService.filteredTasks.filter(task => task.status === 'done');
+      this.TaskArrayService.filteredToDo =
+        this.TaskArrayService.filteredTasks.filter(
+          (task) => task.status === 'toDo'
+        );
+      this.TaskArrayService.filteredInProgress =
+        this.TaskArrayService.filteredTasks.filter(
+          (task) => task.status === 'inProgress'
+        );
+      this.TaskArrayService.filteredAwaitFeedback =
+        this.TaskArrayService.filteredTasks.filter(
+          (task) => task.status === 'awaitFeedback'
+        );
+      this.TaskArrayService.filteredDone =
+        this.TaskArrayService.filteredTasks.filter(
+          (task) => task.status === 'done'
+        );
     }
   }
 
   openTask(i: number, subArrayName: string) {
-    if (['toDo', 'inProgress', 'awaitFeedback', 'done'].includes(subArrayName)) {
+    if (
+      ['toDo', 'inProgress', 'awaitFeedback', 'done'].includes(subArrayName)
+    ) {
       let subArray = this.TaskArrayService[subArrayName]; // choose subarray
       if (i >= 0 && i < subArray.length) {
         let subTask = subArray[i];
         if (subTask && subTask.id !== undefined) {
           let taskId = subTask.id; // extract ID from subtask
           // find index of the task inside th main array
-          let taskIndex = this.TaskArrayService.tasks.findIndex(task => task.id === taskId);
+          let taskIndex = this.TaskArrayService.tasks.findIndex(
+            (task) => task.id === taskId
+          );
           this.taskToDelete = taskIndex;
           console.log('taskToDelete', this.taskToDelete);
           if (taskIndex !== -1) {
-            this.TaskArrayService.selectedTask = this.TaskArrayService.tasks[taskIndex];
+            this.TaskArrayService.selectedTask =
+              this.TaskArrayService.tasks[taskIndex];
             console.log('board loaded', this.TaskArrayService.selectedTask);
-            this.floatingTaskContainer.nativeElement.classList.add('show-floating-container');
+            this.floatingTaskContainer.nativeElement.classList.add(
+              'show-floating-container'
+            );
           } else {
-            console.log(`Task with ID ${taskId} was not found in the main array.`);
+            console.log(
+              `Task with ID ${taskId} was not found in the main array.`
+            );
           }
         } else {
           console.log(`ID could not be extracted from subarray entry.`);
@@ -99,13 +122,13 @@ export class BoardComponent {
   }
 
   async deleteTask() {
-        console.log('taskToDelete', this.taskToDelete);
-        this.TaskArrayService.tasks.splice(this.taskToDelete, 1);
-        this.TaskArrayService.safeTasks();
-        this.closeTask();
-        await this.ngOnInit();
+    console.log('taskToDelete', this.taskToDelete);
+    this.TaskArrayService.tasks.splice(this.taskToDelete, 1);
+    this.TaskArrayService.safeTasks();
+    this.closeTask();
+    await this.ngOnInit();
   }
-  
+
   getCategoryColor(category: string): string {
     switch (category) {
       case 'sales':
@@ -123,27 +146,27 @@ export class BoardComponent {
     }
   }
 
-  highlight (id) {
+  highlight(id) {
     if (id === 'toDo') {
-    this.toDo.nativeElement.classList.add('drag-area-heighlight');
+      this.toDo.nativeElement.classList.add('drag-area-heighlight');
     } else if (id === 'inProgress') {
-    this.inProgress.nativeElement.classList.add('drag-area-heighlight');
+      this.inProgress.nativeElement.classList.add('drag-area-heighlight');
     } else if (id === 'awaitFeedback') {
-    this.awaitFeedback.nativeElement.classList.add('drag-area-heighlight');
+      this.awaitFeedback.nativeElement.classList.add('drag-area-heighlight');
     } else if (id === 'done') {
-    this.done.nativeElement.classList.add('drag-area-heighlight');
+      this.done.nativeElement.classList.add('drag-area-heighlight');
     }
   }
-  
-  removeHighlight (id) {
+
+  removeHighlight(id) {
     if (id === 'toDo') {
-    this.toDo.nativeElement.classList.remove('drag-area-heighlight');
+      this.toDo.nativeElement.classList.remove('drag-area-heighlight');
     } else if (id === 'inProgress') {
-    this.inProgress.nativeElement.classList.remove('drag-area-heighlight');
+      this.inProgress.nativeElement.classList.remove('drag-area-heighlight');
     } else if (id === 'awaitFeedback') {
-    this.awaitFeedback.nativeElement.classList.remove('drag-area-heighlight');
+      this.awaitFeedback.nativeElement.classList.remove('drag-area-heighlight');
     } else if (id === 'done') {
-    this.done.nativeElement.classList.remove('drag-area-heighlight');
+      this.done.nativeElement.classList.remove('drag-area-heighlight');
     }
   }
 
@@ -151,26 +174,20 @@ export class BoardComponent {
     this.TaskArrayService.selectedPriority = priority;
     console.log(this.TaskArrayService.selectedPriority);
 
-    if (this.TaskArrayService.selectedPriority === 'urgent')
-    {
+    if (this.TaskArrayService.selectedPriority === 'urgent') {
       this.prioUrgent.nativeElement.classList.toggle('assign-color-urgent');
       this.prioMedium.nativeElement.classList.remove('assign-color-medium');
       this.prioLow.nativeElement.classList.remove('assign-color-low');
-    } 
-    else if (this.TaskArrayService.selectedPriority === 'medium') 
-    {
+    } else if (this.TaskArrayService.selectedPriority === 'medium') {
       this.prioMedium.nativeElement.classList.toggle('assign-color-medium');
       this.prioUrgent.nativeElement.classList.remove('assign-color-urgent');
       this.prioLow.nativeElement.classList.remove('assign-color-low');
-    } 
-    else if (this.TaskArrayService.selectedPriority === 'low') 
-    {
+    } else if (this.TaskArrayService.selectedPriority === 'low') {
       this.prioLow.nativeElement.classList.toggle('assign-color-low');
       this.prioUrgent.nativeElement.classList.remove('assign-color-urgent');
       this.prioMedium.nativeElement.classList.remove('assign-color-medium');
     }
   }
-
 
   showAssignDropdown() {
     this.assignedDropdown.nativeElement.classList.toggle(
@@ -185,9 +202,16 @@ export class BoardComponent {
       this.TaskArrayService.assignedDropdownVisible = false;
     }
   }
-  
-  async showAddtaskFloatingContainer() {
+
+
+  async showAddtaskFloatingContainer(status: string) {
+    console.log('Received status:', status);
     await this.ngOnInit();
+    this.TaskArrayService.assignStatus = status;
+    console.log(
+      'this.TaskArrayService.assignStatus',
+      this.TaskArrayService.assignStatus
+    );
     this.addtaskWrapper.nativeElement.classList.add('show-addtask-wrapper');
     this.taskCategoryWrapper.nativeElement.classList.add('display-none');
     console.log('this.taskCategoryWrapper', this.taskCategoryWrapper);
@@ -211,6 +235,8 @@ export class BoardComponent {
   async hideEditTaskFloatingContainer() {
     this.closeTask();
     await this.ngOnInit();
-    this.editTaskWrapper.nativeElement.classList.remove('show-edittask-wrapper');
+    this.editTaskWrapper.nativeElement.classList.remove(
+      'show-edittask-wrapper'
+    );
   }
 }
