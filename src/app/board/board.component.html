@@ -462,6 +462,14 @@
               </div>
             </div>
           </div>
+<!-- TODO Assigned contacts section -->
+<!-- <div class="assigned-contacts">
+  <div *ngFor="let assignedContact of this.TaskArrayService.tasks[this.TaskArrayService.selectedTaskIndex] let j = index" class="assigned-box">
+    <div [style.background-color]="assignedContact.color" class="contacts-usercircle">
+      {{ assignedContact.initials }}
+    </div>
+  </div>
+</div> -->
         </div>
   
         <div class="edittask-left-bottom">
@@ -586,9 +594,16 @@
         *ngFor="let task of this.TaskArrayService.filteredToDo; let i = index"
         class="single-task"
       >
-        <div [style.background-color]="getCategoryColor(task.category)"  class="task-category">
+      <div class="single-task-top">
+        <div [style.background-color]="getCategoryColor(task.category)"   class="task-category">
           {{ task.category }}
         </div>
+        <div class="btn-container">
+          <div (click)="this.DragAndDropService.moveToMobile(i,'inProgress');$event.stopPropagation()" class="btn-down">
+            <img src="assets/img/board/down.png" />
+          </div>
+        </div>
+      </div>
         <div class="task-content">
           <div class="task-name">
             {{ task.title }}
@@ -597,10 +612,9 @@
             {{ task.description }}
           </div>
         </div>
-        <div
-          *ngIf="this.TaskArrayService.tasks[i].subtask.length > 0"
-          class="progressbar"
-        ><progress id="file" value="2" max="{{this.TaskArrayService.tasks[i].subtask.length}} "></progress>
+        <div *ngIf="task.subtask && task.subtask.length > 0" class="progressbar">
+          <progress id="file"  [max]="task.subtask.length"></progress>
+          
         </div>
         <div class="single-task-bottom">
           <div class="assigned-contacts">
@@ -624,9 +638,16 @@
           *ngFor="let task of this.TaskArrayService.toDo; let i = index"
           class="single-task"
         >
-          <div [style.background-color]="getCategoryColor(task.category)" class="task-category">
+        <div class="single-task-top">
+          <div [style.background-color]="getCategoryColor(task.category)"   class="task-category">
             {{ task.category }}
           </div>
+          <div class="btn-container">
+            <div (click)="this.DragAndDropService.moveToMobile(i,'inProgress');$event.stopPropagation()" class="btn-down">
+              <img src="assets/img/board/down.png" />
+            </div>
+          </div>
+        </div>
           <div class="task-content">
             <div class="task-name">
               {{ task.title }}
@@ -635,11 +656,9 @@
               {{ task.description }}
             </div>
           </div>
-          <div
-          *ngIf="this.TaskArrayService.tasks[i].subtask.length > 0"
-          class="progressbar"
-        ><progress id="file" value="2" max="{{this.TaskArrayService.tasks[i].subtask.length}} ">  </progress>
-        </div>
+          <div *ngIf="task.subtask && task.subtask.length > 0" class="progressbar">
+            <progress id="file"  [max]="task.subtask.length"></progress>
+          </div>
         <div class="single-task-bottom">
           <div class="assigned-contacts">
             <div *ngFor="let assignedContact of task.assigned; let j = index" class="assigned-box">
@@ -685,8 +704,18 @@
           (click)="openTask(i, 'inProgress')"
           class="single-task"
         >
-          <div [style.background-color]="getCategoryColor(task.category)"  class="task-category">
-            {{ task.category }}
+          <div class="single-task-top">
+            <div [style.background-color]="getCategoryColor(task.category)" class="task-category">
+              {{ task.category }}
+            </div>
+            <div class="btn-container">
+              <div (click)="this.DragAndDropService.moveToMobile(i, 'toDo');$event.stopPropagation()" class="btn-up">
+                <img src="assets/img/board/up.png" />
+              </div>
+              <div (click)="this.DragAndDropService.moveToMobile(i,'awaitFeedback');$event.stopPropagation()" class="btn-down">
+                <img src="assets/img/board/down.png" />
+              </div>
+            </div>
           </div>
           <div class="task-content">
             <div class="task-name">
@@ -696,30 +725,19 @@
               {{ task.description }}
             </div>
           </div>
-          <div
-          *ngIf="this.TaskArrayService.tasks[i].subtask.length > 0"
-          class="progressbar"
-        ><progress id="file" value="2" max="{{this.TaskArrayService.tasks[i].subtask.length}} ">  </progress>
-        </div>
-        <div class="single-task-bottom">
-          <div class="assigned-contacts">
-            <div *ngFor="let assignedContact of task.assigned; let j = index" class="assigned-box">
-              <div [style.background-color]="assignedContact.color" class="contacts-usercircle">
-                {{ assignedContact.initials }}
-              </div>
-              
-            </div>
+          <div *ngIf="task.subtask && task.subtask.length > 0" class="progressbar">
+            <progress id="file" [max]="task.subtask.length"></progress>
           </div>
-          <img class="prio" src="assets/img/board/prio_{{ task.prio }}.svg" />
-        </div>
-          <!--TODO-- <div class="btn-container">
-            <div class="btn-up">
-              <img src="assets/img/board/up.png" />
+          <div class="single-task-bottom">
+            <div class="assigned-contacts">
+              <div *ngFor="let assignedContact of task.assigned; let j = index" class="assigned-box">
+                <div [style.background-color]="assignedContact.color" class="contacts-usercircle">
+                  {{ assignedContact.initials }}
+                </div>
+              </div>
             </div>
-            <div class="btn-down">
-              <img src="assets/img/board/down.png" />
-            </div>
-          </div> -->
+            <img class="prio" src="assets/img/board/prio_{{ task.prio }}.svg" />
+          </div>
         </div>
       </div>
       <div *ngIf="!searchFieldActive">
@@ -730,9 +748,19 @@
           (click)="openTask(i, 'inProgress')"
           class="single-task"
         >
+        <div class="single-task-top">
           <div [style.background-color]="getCategoryColor(task.category)"   class="task-category">
             {{ task.category }}
           </div>
+          <div class="btn-container">
+            <div (click)="this.DragAndDropService.moveToMobile(i,'toDo');$event.stopPropagation()" class="btn-up">
+              <img src="assets/img/board/up.png" />
+            </div>
+            <div (click)="this.DragAndDropService.moveToMobile(i,'awaitFeedback');$event.stopPropagation()" class="btn-down">
+              <img src="assets/img/board/down.png" />
+            </div>
+          </div>
+        </div>
           <div class="task-content">
             <div class="task-name">
               {{ task.title }}
@@ -741,11 +769,9 @@
               {{ task.description }}
             </div>
           </div>
-          <div
-          *ngIf="this.TaskArrayService.tasks[i].subtask.length > 0"
-          class="progressbar"
-        ><progress id="file" value="2" max="{{this.TaskArrayService.tasks[i].subtask.length}} ">  </progress>
-        </div>
+          <div *ngIf="task.subtask && task.subtask.length > 0" class="progressbar">
+            <progress id="file"  [max]="task.subtask.length"></progress>
+          </div>
         <div class="single-task-bottom">
           <div class="assigned-contacts">
             <div *ngFor="let assignedContact of task.assigned; let j = index" class="assigned-box">
@@ -757,14 +783,6 @@
           </div>
           <img class="prio" src="assets/img/board/prio_{{ task.prio }}.svg" />
         </div>
-          <!--TODO-- <div class="btn-container">
-            <div class="btn-up">
-              <img src="assets/img/board/up.png" />
-            </div>
-            <div class="btn-down">
-              <img src="assets/img/board/down.png" />
-            </div>
-          </div> -->
         </div>
       </div>
         <div
@@ -805,9 +823,22 @@
           (click)="openTask(i, 'awaitFeedback')"
           class="single-task"
         >
-          <div [style.background-color]="getCategoryColor(task.category)"  class="task-category">
+
+        <div class="single-task-top">
+          <div [style.background-color]="getCategoryColor(task.category)"   class="task-category">
             {{ task.category }}
           </div>
+          <div class="btn-container">
+            <div (click)="this.DragAndDropService.moveToMobile(i,'inProgress');$event.stopPropagation()" class="btn-up">
+              <img src="assets/img/board/up.png" />
+            </div>
+            <div (click)="this.DragAndDropService.moveToMobile(i,'done');$event.stopPropagation()" class="btn-down">
+              <img src="assets/img/board/down.png" />
+            </div>
+          </div>
+        </div>
+
+
           <div class="task-content">
             <div class="task-name">
               {{ task.title }}
@@ -816,11 +847,9 @@
               {{ task.description }}
             </div>
           </div>
-          <div
-          *ngIf="this.TaskArrayService.tasks[i].subtask.length > 0"
-          class="progressbar"
-        ><progress id="file" value="2" max="{{this.TaskArrayService.tasks[i].subtask.length}} ">  </progress>
-        </div>
+          <div *ngIf="task.subtask && task.subtask.length > 0" class="progressbar">
+            <progress id="file"  [max]="task.subtask.length"></progress>
+          </div>
         <div class="single-task-bottom">
           <div class="assigned-contacts">
             <div *ngFor="let assignedContact of task.assigned; let j = index" class="assigned-box">
@@ -845,9 +874,19 @@
           (click)="openTask(i, 'awaitFeedback')"
           class="single-task"
         >
-          <div [style.background-color]="getCategoryColor(task.category)"  class="task-category">
+        <div class="single-task-top">
+          <div [style.background-color]="getCategoryColor(task.category)"   class="task-category">
             {{ task.category }}
           </div>
+          <div class="btn-container">
+            <div (click)="this.DragAndDropService.moveToMobile(i,'inProgress');$event.stopPropagation()" class="btn-up">
+              <img src="assets/img/board/up.png" />
+            </div>
+            <div (click)="this.DragAndDropService.moveToMobile(i,'done');$event.stopPropagation()" class="btn-down">
+              <img src="assets/img/board/down.png" />
+            </div>
+          </div>
+        </div>
           <div class="task-content">
             <div class="task-name">
               {{ task.title }}
@@ -856,11 +895,9 @@
               {{ task.description }}
             </div>
           </div>
-          <div
-          *ngIf="this.TaskArrayService.tasks[i].subtask.length > 0"
-          class="progressbar"
-        ><progress id="file" value="2" max="{{this.TaskArrayService.tasks[i].subtask.length}} ">  </progress>
-        </div>
+          <div *ngIf="task.subtask && task.subtask.length > 0" class="progressbar">
+            <progress id="file"  [max]="task.subtask.length"></progress>
+          </div>
         <div class="single-task-bottom">
           <div class="assigned-contacts">
             <div *ngFor="let assignedContact of task.assigned; let j = index" class="assigned-box">
@@ -905,9 +942,16 @@
           (click)="openTask(i, 'done')"
           class="single-task"
         >
-          <div [style.background-color]="getCategoryColor(task.category)"  class="task-category">
+        <div class="single-task-top">
+          <div [style.background-color]="getCategoryColor(task.category)"   class="task-category">
             {{ task.category }}
           </div>
+          <div class="btn-container">
+            <div (click)="this.DragAndDropService.moveToMobile(i,'awaitFeedback');$event.stopPropagation()" class="btn-up">
+              <img src="assets/img/board/up.png" />
+            </div>
+          </div>
+        </div>
           <div class="task-content">
             <div class="task-name">
               {{ task.title }}
@@ -916,11 +960,9 @@
               {{ task.description }}
             </div>
           </div>
-          <div
-          *ngIf="this.TaskArrayService.tasks[i].subtask.length > 0"
-          class="progressbar"
-        ><progress id="file" value="2" max="{{this.TaskArrayService.tasks[i].subtask.length}} ">  </progress>
-        </div>
+          <div *ngIf="task.subtask && task.subtask.length > 0" class="progressbar">
+            <progress id="file"  [max]="task.subtask.length"></progress>
+          </div>
         <div class="single-task-bottom">
           <div class="assigned-contacts">
             <div *ngFor="let assignedContact of task.assigned; let j = index" class="assigned-box">
@@ -942,9 +984,16 @@
           (click)="openTask(i, 'done')"
           class="single-task"
         >
-          <div [style.background-color]="getCategoryColor(task.category)"  class="task-category">
+        <div class="single-task-top">
+          <div [style.background-color]="getCategoryColor(task.category)"   class="task-category">
             {{ task.category }}
           </div>
+          <div class="btn-container">
+            <div (click)="this.DragAndDropService.moveToMobile(i,'awaitFeedback');$event.stopPropagation()" class="btn-up">
+              <img src="assets/img/board/up.png" />
+            </div>
+          </div>
+        </div>
           <div class="task-content">
             <div class="task-name">
               {{ task.title }}
@@ -953,12 +1002,9 @@
               {{ task.description }}
             </div>
           </div>
-          <div
-          *ngIf="this.TaskArrayService.tasks[i].subtask.length > 0"
-          class="progressbar"
-        ><progress id="file" value="2" max="{{this.TaskArrayService.tasks[i].subtask.length}} "></progress>
-        <span>X/{{this.TaskArrayService.tasks[i].subtask.length}} Subtasks </span>
-        </div>
+          <div *ngIf="task.subtask && task.subtask.length > 0" class="progressbar">
+            <progress id="file"  [max]="task.subtask.length"></progress>
+          </div>
         <div class="single-task-bottom">
           <div class="assigned-contacts">
             <div *ngFor="let assignedContact of task.assigned; let j = index" class="assigned-box">

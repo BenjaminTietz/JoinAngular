@@ -333,6 +333,7 @@
     }
 
     .single-task {
+      position: relative;
       box-sizing: border-box;
       display: flex;
       flex-direction: column;
@@ -350,6 +351,22 @@
         transition: all 225ms ease-in-out;
         box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.719);
         scale: 1.01;
+      }
+      .single-task-top {
+        display: none;
+        justify-content: space-between;
+        width: 100%;
+
+        .btn-container {
+          position: absolute;
+          right: 24px;
+          .btn-up{
+            margin-bottom: 16px;
+          }
+          .btn-down{
+            margin-top: 16px;
+          }
+        }
       }
       .progressbar {
         display: flex;
@@ -458,17 +475,45 @@
   .board-wrapper {
     gap: unset;
     height: calc(100vh - 160px);
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 16px;
 
     .task-category-wrapper {
       flex-wrap: wrap;
       gap: unset;
       padding: 0px 0px 0px 0px;
+
+      .headline {
+        width: 100%;
+        margin-bottom: 16px;
+      }
       .category {
         flex-basis: 100%;
         height: unset;
       }
       .task-container {
         height: unset;
+
+        .single-task{
+          width: 100vw;
+          max-width: 95%;
+
+          .single-task-top {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+
+            .btn-container {
+              .btn-up{
+                margin-bottom: 16px;
+              }
+              .btn-down{
+                margin-top: 16px;
+              }
+            }
+          }
+        }
       }
     }
   }

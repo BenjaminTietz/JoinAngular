@@ -9,6 +9,7 @@ import { BoardComponent } from './board/board.component';
 export class DragAndDropService {
 
   currentDraggedTask: any;
+  currentClickedTask: any;
   currentStatus: any;
   taskIndex: any;
   constructor(public TaskArrayService: TaskArraysService) { }
@@ -20,6 +21,7 @@ export class DragAndDropService {
 
 
   dragStart(index: number, status: string) {
+    
     // Istead of saving index, the id of the task of the subarry get stored
     if (status === 'toDo') {
       this.currentDraggedTask = this.TaskArrayService.toDo[index].id;
@@ -34,6 +36,8 @@ export class DragAndDropService {
     this.currentStatus = status;
     console.log('dragStart', this.currentDraggedTask);
   }
+
+
 
   allowDrop (event: Event) {
     event.preventDefault();
@@ -52,5 +56,17 @@ export class DragAndDropService {
     }
   }
 
+  async moveToMobile(index,status: string) {
+    let taskIndex = index;
+    console.log('taskIndex', taskIndex);
+  
+    if (taskIndex >= 0) {
+      // Aktualisiere den Task im Haupt-Array
+      this.TaskArrayService.tasks[taskIndex].status = status;
+      await this.TaskArrayService.updateTask(taskIndex, status);
+      await this.TaskArrayService.safeTasks();
+      await this.TaskArrayService.mapTaskStatus();
+    }
+  }
 
 } 

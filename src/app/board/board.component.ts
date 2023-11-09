@@ -226,8 +226,8 @@ export class BoardComponent {
     this.taskCategoryWrapper.nativeElement.classList.remove('display-none');
     //TO-DO: Reset form
   }
-  showEditTaskFloatingContainer(selectedTask) {
-    this.TaskArrayService.getIndexOfSelectedTask();
+  async showEditTaskFloatingContainer(selectedTask) {
+    await this.TaskArrayService.getIndexOfSelectedTask();
     this.TaskArrayService.pushFromTaskArraytoSubtaskArray();
     this.TaskArrayService.selectedTask = selectedTask;
     this.TaskArrayService.editTaskForm.patchValue(selectedTask);
