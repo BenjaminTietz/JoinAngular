@@ -49,8 +49,8 @@
           <div class="floating-task-subtask">
             <h2>Subtasks:</h2>
             <ul>
-              <li *ngFor="let subtask of TaskArrayService.selectedTask.subtask">
-                <span>{{ subtask }}</span>
+              <li *ngFor="let subtask of TaskArrayService.selectedTask.subtask; let i = index">
+                <span>{{ subtask }}<input type="checkbox"></span>
               </li>
             </ul>
           </div>

@@ -31,6 +31,8 @@ export class BoardComponent {
   searchFieldActive: boolean = false;
   searchTerm: string = '';
 
+
+
   constructor(
     public TaskArrayService: TaskArraysService,
     public RemotestorageService: RemotestorageService,
@@ -242,4 +244,6 @@ export class BoardComponent {
       'show-edittask-wrapper'
     );
   }
+
+
 }

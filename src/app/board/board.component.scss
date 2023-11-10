@@ -130,7 +130,7 @@
           }
         }
         .floating-task-assign-wrapper {
-          .assigned-wrapper{
+          .assigned-wrapper {
             display: flex;
             .assigned-box {
               margin-left: -8px;
@@ -360,14 +360,14 @@
         .btn-container {
           position: absolute;
           right: 24px;
-          .btn-up{
+          .btn-up {
             margin-bottom: 8px;
             img {
               width: 64px;
               height: 64px;
             }
           }
-          .btn-down{
+          .btn-down {
             margin-top: 8px;
             img {
               width: 64px;
@@ -449,6 +449,8 @@
 
 @media screen and (max-width: 1200px) {
   .board-wrapper {
+    justify-content: flex-start;
+    align-items: flex-start;
     width: 100vw;
     max-width: 100%;
     height: calc(100vh - 156px);
@@ -473,8 +475,10 @@
     .floating-task-wrapper {
       left: unset;
       min-width: unset;
+      min-height: unset;
       width: 100vw;
       max-width: 100%;
+      top: unset;
     }
   }
 }
@@ -503,7 +507,7 @@
       .task-container {
         height: unset;
 
-        .single-task{
+        .single-task {
           width: 100vw;
           max-width: 95%;
 
@@ -513,10 +517,313 @@
             width: 100%;
 
             .btn-container {
-              .btn-up{
+              .btn-up {
                 margin-bottom: 16px;
               }
-              .btn-down{
+              .btn-down {
+                margin-top: 16px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .board-wrapper {
+    .floating-task-wrapper {
+      .floating-task-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        box-sizing: border-box;
+        width: 420px;
+        height: 932px;
+        border-radius: 30px;
+        padding: 28px 20px 28px 20px;
+        gap: 24px;
+        background-color: $white;
+        box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.16);
+        animation: slide-in-bottom 1s;
+        transition: 225ms ease-in-out all;
+
+        @keyframes slide-in-bottom {
+          0% {
+            transform: translateY(100%);
+          }
+          100% {
+            transform: translateY(0);
+          }
+        }
+
+        .floating-task-top {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          width: 390px;
+          height: 36px;
+
+          .floating-task-category {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 160px;
+            height: 36px;
+            border-radius: 8px;
+            padding: 4px 24px 4px 24px;
+            gap: 10px;
+            background-color: #ff7a00;
+
+            span {
+              @include OpenSans(400, 23px, 27.6px, $white);
+            }
+          }
+        }
+        .floating-task-content {
+          .floating-task-title {
+            h1 {
+              margin-block-start: 0;
+              margin-block-end: 0;
+              @include OpenSans(700, 61px, 73.2px, $black);
+            }
+          }
+          .floating-task-description {
+            h2 {
+              @include OpenSans(400, 19px, 22.8px, $black);
+            }
+          }
+          .floating-task-date {
+            display: flex;
+            align-items: center;
+            h2 {
+              @include Inter(700, 21px, 25.2px, $menu-color);
+            }
+            span {
+              margin-left: 24px;
+              @include OpenSans(400, 19px, 22.8px, $menu-color);
+            }
+          }
+          .floating-task-prio {
+            display: flex;
+            align-items: center;
+            h2 {
+              @include Inter(700, 21px, 25.2px, $menu-color);
+            }
+            span {
+              margin-left: 24px;
+              @include OpenSans(400, 19px, 22.8px, $menu-color);
+            }
+          }
+          .floating-task-assign-wrapper {
+            .assigned-wrapper {
+              display: flex;
+              .assigned-box {
+                margin-left: -8px;
+
+                .contacts-usercircle {
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  width: 42px;
+                  height: 42px;
+                  border: solid 1px $white;
+                  border-radius: 50%;
+                  @include Inter(400, 12px, 14.4px, $white);
+                }
+              }
+
+              h2 {
+                @include Inter(700, 21px, 25.2px, $menu-color);
+              }
+              span {
+                @include OpenSans(400, 19px, 22.8px, $menu-color);
+              }
+            }
+            .floating-task-subtask {
+              h2 {
+                @include Inter(700, 21px, 25.2px, $menu-color);
+              }
+              span {
+                @include OpenSans(400, 19px, 22.8px, $menu-color);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .board-wrapper {
+    gap: unset;
+    height: calc(100vh - 160px);
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 16px;
+
+    .floating-task-wrapper {
+
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      max-height: 100%;
+      height: 100vh;
+      .floating-task-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        box-sizing: border-box;
+        width: 100vw;
+        max-width: 90%;
+        height: 932px;
+        border-radius: 30px;
+        padding: 28px 20px 28px 20px;
+        gap: 24px;
+        background-color: $white;
+        box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.16);
+        animation: slide-in-bottom 1s;
+        transition: 225ms ease-in-out all;
+
+        @keyframes slide-in-bottom {
+          0% {
+            transform: translateY(100%);
+          }
+          100% {
+            transform: translateY(0);
+          }
+        }
+
+        .floating-task-top {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          width: 245px;
+          height: 36px;
+
+          .floating-task-category {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 160px;
+            height: 36px;
+            border-radius: 8px;
+            padding: 4px 24px 4px 24px;
+            gap: 10px;
+            background-color: #ff7a00;
+
+            span {
+              @include OpenSans(400, 23px, 27.6px, $white);
+            }
+          }
+        }
+        .floating-task-content {
+          .floating-task-title {
+            h1 {
+              margin-block-start: 0;
+              margin-block-end: 0;
+              @include OpenSans(700, 32px, 36.2px, $black);
+            }
+          }
+          .floating-task-description {
+            h2 {
+              @include OpenSans(400, 19px, 22.8px, $black);
+            }
+          }
+          .floating-task-date {
+            display: flex;
+            align-items: center;
+            h2 {
+              @include Inter(700, 21px, 25.2px, $menu-color);
+            }
+            span {
+              margin-left: 24px;
+              @include OpenSans(400, 19px, 22.8px, $menu-color);
+            }
+          }
+          .floating-task-prio {
+            display: flex;
+            align-items: center;
+            h2 {
+              @include Inter(700, 21px, 25.2px, $menu-color);
+            }
+            span {
+              margin-left: 24px;
+              @include OpenSans(400, 19px, 22.8px, $menu-color);
+            }
+          }
+          .floating-task-assign-wrapper {
+            .assigned-wrapper {
+              display: flex;
+              .assigned-box {
+                margin-left: -8px;
+
+                .contacts-usercircle {
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  width: 42px;
+                  height: 42px;
+                  border: solid 1px $white;
+                  border-radius: 50%;
+                  @include Inter(400, 12px, 14.4px, $white);
+                }
+              }
+
+              h2 {
+                @include Inter(700, 21px, 25.2px, $menu-color);
+              }
+              span {
+                @include OpenSans(400, 19px, 22.8px, $menu-color);
+              }
+            }
+            .floating-task-subtask {
+              h2 {
+                @include Inter(700, 21px, 25.2px, $menu-color);
+              }
+              span {
+                @include OpenSans(400, 19px, 22.8px, $menu-color);
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .task-category-wrapper {
+      flex-wrap: wrap;
+      gap: unset;
+      padding: 0px 0px 0px 0px;
+
+      .headline {
+        width: 100%;
+        margin-bottom: 16px;
+      }
+      .category {
+        flex-basis: 100%;
+        height: unset;
+      }
+      .task-container {
+        height: unset;
+
+        .single-task {
+          width: 100vw;
+          max-width: 90%;
+
+          .single-task-top {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+
+            .btn-container {
+              .btn-up {
+                margin-bottom: 16px;
+              }
+              .btn-down {
                 margin-top: 16px;
               }
             }
