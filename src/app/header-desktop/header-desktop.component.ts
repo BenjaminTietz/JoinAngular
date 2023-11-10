@@ -16,7 +16,8 @@ export class HeaderDesktopComponent {
     this.dropdown.nativeElement.classList.toggle('show');
   }
 
-  selectComponent(componentName: string) {
+  selectComponent(componentName: string, e: Event) {
+    e.stopPropagation();
     switch (componentName) {
       case 'app-introduction':
         this.boardService.showSummary = false;

@@ -4,11 +4,11 @@
     </div>
     <div class="header-right">
         <span>Kanban Project Management Tool</span>
-        <img (click)="selectComponent('app-introduction')" class="info" src="assets/img/help_white.png" alt="info">
+        <img (click)="selectComponent('app-introduction' , $event)" class="info" src="assets/img/help_white.png" alt="info">
         <img (click)="showDropdown()" src="assets/img/User profile initials.png" alt="usercircle">
         <div class="dropdown" #dropdown>
-                <a (click)="selectComponent('app-privacy-policy')">Privacy Policy</a>
-                <a (click)="selectComponent('app-legal-notice')">Legal Notice</a>
+                <a (click)="selectComponent('app-privacy-policy', $event)">Privacy Policy</a>
+                <a (click)="selectComponent('app-legal-notice' , $event)">Legal Notice</a>
                 <a (click)="this.LoginService.logout()">Logout</a>
         </div>
     </div>

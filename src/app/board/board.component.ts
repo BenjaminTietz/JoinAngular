@@ -20,6 +20,9 @@ export class BoardComponent {
   @ViewChild('prioUrgent') prioUrgent: ElementRef;
   @ViewChild('prioMedium') prioMedium: ElementRef;
   @ViewChild('prioLow') prioLow: ElementRef;
+  @ViewChild('prioUrgentEdit') prioUrgentEdit: ElementRef;
+  @ViewChild('prioMediumEdit') prioMediumEdit: ElementRef;
+  @ViewChild('prioLowEdit') prioLowEdit: ElementRef;
   @ViewChild('assignedDropdown') assignedDropdown: ElementRef;
   @ViewChild('assignedDropdownEdit') assignedDropdownEdit: ElementRef;
   @ViewChild('addtaskWrapper') addtaskWrapper: ElementRef;
@@ -34,8 +37,6 @@ export class BoardComponent {
   searchFieldActive: boolean = false;
   searchTerm: string = '';
 
-
-
   constructor(
     public TaskArrayService: TaskArraysService,
     public RemotestorageService: RemotestorageService,
@@ -49,6 +50,7 @@ export class BoardComponent {
     await this.ArraysService.loadContacts();
     await this.TaskArrayService.loadTasks();
     await this.TaskArrayService.mapTaskStatus();
+    await this.TaskArrayService.mapUrgentTasks()
     await this.TaskArrayService.safeTasks(); // Speichere die aktualisierten Tasks
   }
 
@@ -123,7 +125,6 @@ export class BoardComponent {
     }
   }
 
-
   closeTask() {
     this.floatingTaskContainer.nativeElement.classList.toggle(
       'show-floating-container'
@@ -180,9 +181,7 @@ export class BoardComponent {
     }
   }
 
-  highlightTask() {
-
-  }
+  highlightTask() {}
 
   selectPriority(priority: string) {
     this.TaskArrayService.selectedPriority = priority;
@@ -200,6 +199,25 @@ export class BoardComponent {
       this.prioLow.nativeElement.classList.toggle('assign-color-low');
       this.prioUrgent.nativeElement.classList.remove('assign-color-urgent');
       this.prioMedium.nativeElement.classList.remove('assign-color-medium');
+    }
+  }
+
+  selectPriorityEdit(priority: string) {
+    this.TaskArrayService.selectedPriority = priority;
+    console.log(this.TaskArrayService.selectedPriority);
+
+    if (this.TaskArrayService.selectedPriority === 'urgent') {
+      this.prioUrgentEdit.nativeElement.classList.toggle('assign-color-urgent');
+      this.prioMediumEdit.nativeElement.classList.remove('assign-color-medium');
+      this.prioLowEdit.nativeElement.classList.remove('assign-color-low');
+    } else if (this.TaskArrayService.selectedPriority === 'medium') {
+      this.prioMediumEdit.nativeElement.classList.toggle('assign-color-medium');
+      this.prioUrgentEdit.nativeElement.classList.remove('assign-color-urgent');
+      this.prioLowEdit.nativeElement.classList.remove('assign-color-low');
+    } else if (this.TaskArrayService.selectedPriority === 'low') {
+      this.prioLowEdit.nativeElement.classList.toggle('assign-color-low');
+      this.prioUrgentEdit.nativeElement.classList.remove('assign-color-urgent');
+      this.prioMediumEdit.nativeElement.classList.remove('assign-color-medium');
     }
   }
 
@@ -255,26 +273,22 @@ export class BoardComponent {
     );
   }
   showSuccessEditMessage() {
-
-      this.popupEditedContainer.nativeElement.classList.add('showPopup');
+    this.popupEditedContainer.nativeElement.classList.add('showPopup');
     setTimeout(() => {
       this.popupEditedContainer.nativeElement.classList.remove('showPopup');
     }, 3000);
   }
   showSuccessCreateMessage() {
-
     this.popupCreateContainer.nativeElement.classList.add('showPopup');
-  setTimeout(() => {
-    this.popupCreateContainer.nativeElement.classList.remove('showPopup');
-  }, 3000);
-}
+    setTimeout(() => {
+      this.popupCreateContainer.nativeElement.classList.remove('showPopup');
+    }, 3000);
+  }
 
   showSuccessDeleteMessage() {
-
     this.popupdeletedContainer.nativeElement.classList.add('showPopup');
-  setTimeout(() => {
-    this.popupdeletedContainer.nativeElement.classList.remove('showPopup');
-  }, 3000);
-}
- 
+    setTimeout(() => {
+      this.popupdeletedContainer.nativeElement.classList.remove('showPopup');
+    }, 3000);
+  }
 }
