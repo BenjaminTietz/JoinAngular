@@ -270,26 +270,20 @@
           </div>
           <div class="assigned-dropdown-container" #assignedDropdownEdit>
             <div
-              *ngFor="let contact of this.ArraysService.contacts; let i = index"
-              class="assigned-user"
+            *ngFor="let contact of this.ArraysService.contacts; let i = index"
+            class="assigned-user"
+          >
+            <div
+              [style.background-color]="this.ArraysService.contacts[i].color"
+              class="assigned-user-circle"
             >
-              <div
-                [style.background-color]="this.ArraysService.contacts[i].color"
-                class="assigned-user-circle"
-              >
-                <div class="assigned-user-Initials">AT</div>
-              </div>
-              <span class="assigned-user-name">{{ contact.name }}</span>
-              <div>
-                <input
-                  (change)="
-                    this.TaskArrayService.pushToAssignedArray(contact.name)
-                  "
-                  type="checkbox"
-                  name="assigned"
-                />
-              </div>
+              <div class="assigned-user-Initials">AT</div>
             </div>
+            <span class="assigned-user-name">{{ contact.name }}</span>
+            <div>
+              <input (change)="this.TaskArrayService.pushToAssignedArray(contact)" type="checkbox" name="assigned" />
+            </div>
+          </div>
             <!-- <div
               *ngFor="let contact of this.ArraysService.contacts; let i = index"
               class="assigned-user"
@@ -436,12 +430,22 @@
           </div>
         </div>
         <div class="edittask-left-prio">
-          <h2>Priority <span>(optional)</span></h2>
+          <!-- TODO Prio NOW in Edit Task <div class="floating-task-prio">
+            <h2>Priority now:</h2>
+            <span>{{ this.TaskArrayService.tasks[this.TaskArrayService.selectedTaskIndex].prio }}</span>
+            <img
+              class="prio"
+              src="assets/img/board/prio_{{
+                this.TaskArrayService.tasks[this.TaskArrayService.selectedTaskIndex].prio 
+              }}.svg"
+            />
+          </div> -->
+          <h2>new Priority <span>(optional)</span></h2>
           <div class="prio-box">
             <div
-              #prioUrgent
+              #prioUrgentEdit
               class="prio-container-urgent"
-              (click)="this.selectPriority('urgent')"
+              (click)="this.selectPriorityEdit('urgent')"
             >
               <span>Urgent</span>
               <svg
@@ -459,9 +463,9 @@
               </svg>
             </div>
             <div
-              #prioMedium
+              #prioMediumEdit
               class="prio-container-medium"
-              (click)="this.selectPriority('medium')"
+              (click)="this.selectPriorityEdit('medium')"
             >
               <span>Medium</span>
               <svg
@@ -479,9 +483,9 @@
               </svg>
             </div>
             <div
-              #prioLow
+              #prioLowEdit
               class="prio-container-low"
-              (click)="this.selectPriority('low')"
+              (click)="this.selectPriorityEdit('low')"
             >
               <span>Low</span>
               <svg
