@@ -22,6 +22,8 @@ export class TaskArraysService {
   @ViewChild('inputPhone') inputPhone: ElementRef;
   @ViewChild('addContactContainer') addContactContainer: ElementRef;
   @ViewChild('editContactContainer') editContactContainer: ElementRef;
+  @ViewChild('popupCreatedContainer') popupCreatedContainer: ElementRef;
+
 
   public addTaskForm: FormGroup = new FormGroup({
     title: new FormControl('', [Validators.required]),
@@ -84,9 +86,14 @@ export class TaskArraysService {
 
   async ngOnInit() {
     await this.loadTasks();
+    await this.ArraysService.loadContacts(); 
+    this.ArraysService.contacts.forEach(contact => {
+        contact.selected = false;
+      });
     await this.generateTaskId();
     this.editTaskForm.patchValue(this.selectedTask);
   }
+
 
   /**
    * An array to store tasks.
@@ -306,12 +313,12 @@ export class TaskArraysService {
     this.subtasks = [];
     this.clearAssignedData();
     this.ngOnInit();
-
-    setInterval(() => {
+    
+    setTimeout(() => {
       this.boardService.showAddTask = false;
       this.boardService.showBoard = true;
-    }, 1000);
-    //TODO confimationMessage();
+    }, 2000);
+
   }
 
 
@@ -359,7 +366,10 @@ export class TaskArraysService {
     this.subtasks = [];
     this.clearAssignedData();
     this.ngOnInit();
-  
+
+    setTimeout(() => {
+      // todo confirmationMessage(); hideSlider();
+    }, 1000);
     // todo confirmationMessage(); hideSlider();
   }
 
@@ -520,6 +530,8 @@ export class TaskArraysService {
     this.tasks[i].assigned.splice(j, 1);
     this.safeTasks();
   }
+
+
 
   /**
    * Asynchronous function to save all tasks from array "contacts" to remote storage

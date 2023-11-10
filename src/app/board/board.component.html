@@ -1,4 +1,22 @@
 <div class="board-wrapper">
+      <!--Hidden popup Container Task edited-->
+      <div #popupEditedContainer class="popup-container">
+        <div class="create-popup">
+          <span>Task succesfully edited</span>
+        </div>
+      </div>
+            <!--Hidden popup Container Task created-->
+            <div #popupCreateContainer class="popup-container">
+              <div class="create-popup">
+                <span>Task succesfully created</span>
+              </div>
+            </div>
+        <!--Hidden popup Container Task created-->
+        <div #popupdeletedContainer class="popup-container">
+          <div class="create-popup">
+            <span>Task succesfully deleted</span>
+          </div>
+        </div>
   <!----Hidden Task floating Container---->
   <div #floatingTaskContainer class="floating-task-wrapper">
     <div
@@ -125,7 +143,8 @@
           this.TaskArrayService.addTask(
             this.TaskArrayService.addTaskForm.value
           );
-          this.hideAddtaskFloatingContainer()
+          this.hideAddtaskFloatingContainer();
+          this.showSuccessEditMessage()
         "
       >
         <div class="addtask-left-top">
@@ -383,7 +402,8 @@
           this.TaskArrayService.editTask(
             this.TaskArrayService.editTaskForm.value
           );
-          this.hideEditTaskFloatingContainer()
+          this.hideEditTaskFloatingContainer();
+          this.showSuccessEditMessage();
         "
       >
         <div class="edittask-left-top">

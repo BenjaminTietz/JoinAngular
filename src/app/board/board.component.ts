@@ -25,6 +25,9 @@ export class BoardComponent {
   @ViewChild('addtaskWrapper') addtaskWrapper: ElementRef;
   @ViewChild('editTaskWrapper') editTaskWrapper: ElementRef;
   @ViewChild('taskCategoryWrapper') taskCategoryWrapper: ElementRef;
+  @ViewChild('popupEditedContainer') popupEditedContainer: ElementRef;
+  @ViewChild('popupdeletedContainer') popupdeletedContainer: ElementRef;
+  @ViewChild('popupCreateContainer') popupCreateContainer: ElementRef;
 
   event: Event;
   taskToDelete;
@@ -128,6 +131,7 @@ export class BoardComponent {
   }
 
   async deleteTask() {
+    this.showSuccessDeleteMessage();
     console.log('taskToDelete', this.taskToDelete);
     this.TaskArrayService.tasks.splice(this.taskToDelete, 1);
     this.TaskArrayService.safeTasks();
@@ -177,7 +181,7 @@ export class BoardComponent {
   }
 
   highlightTask() {
-    
+
   }
 
   selectPriority(priority: string) {
@@ -243,11 +247,34 @@ export class BoardComponent {
 
   async hideEditTaskFloatingContainer() {
     this.closeTask();
+    this.TaskArrayService.clearAssignedData();
+
     await this.ngOnInit();
     this.editTaskWrapper.nativeElement.classList.remove(
       'show-edittask-wrapper'
     );
   }
+  showSuccessEditMessage() {
 
+      this.popupEditedContainer.nativeElement.classList.add('showPopup');
+    setTimeout(() => {
+      this.popupEditedContainer.nativeElement.classList.remove('showPopup');
+    }, 3000);
+  }
+  showSuccessCreateMessage() {
 
+    this.popupCreateContainer.nativeElement.classList.add('showPopup');
+  setTimeout(() => {
+    this.popupCreateContainer.nativeElement.classList.remove('showPopup');
+  }, 3000);
+}
+
+  showSuccessDeleteMessage() {
+
+    this.popupdeletedContainer.nativeElement.classList.add('showPopup');
+  setTimeout(() => {
+    this.popupdeletedContainer.nativeElement.classList.remove('showPopup');
+  }, 3000);
+}
+ 
 }

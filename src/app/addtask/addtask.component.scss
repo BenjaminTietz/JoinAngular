@@ -14,6 +14,50 @@
   background-color: $bg-color;
   overflow: hidden;
 
+  .popup-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    max-width: 100%;
+    max-height: 100%;
+    background-color: rgba(255, 254, 247, 0.4);
+    z-index: 3;
+    transition: all 0.2s ease-in-out;
+    .create-popup {
+        width: 326px;
+        height: 74px;
+        border-radius: 20px;
+        background-color: $light-blue;
+        box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.16);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: all 225ms ease-in-out;
+        animation: slide-up 1s;
+        @keyframes slide-up {
+            0% {
+                transform: translateY(850%);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+        span {
+            @include OpenSans(400, 23px, 27.6px, $white);
+        }
+    }
+}
+
+.showPopup {
+    display: flex!important;
+    transition: all 0.2s ease-in-out;
+}
+
   .addtask-left {
     box-sizing: border-box;
     max-width: 100%;

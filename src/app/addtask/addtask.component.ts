@@ -27,6 +27,9 @@ export class AddtaskComponent {
   @ViewChild('prioUrgent') prioUrgent: ElementRef;
   @ViewChild('prioMedium') prioMedium: ElementRef;
   @ViewChild('prioLow') prioLow: ElementRef;
+  @ViewChild('popupCreatedContainer') popupCreatedContainer: ElementRef;
+  @ViewChild('popupdeletedContainer') popupdeletedContainer: ElementRef;
+
 
   form: FormGroup;
 
@@ -85,6 +88,13 @@ export class AddtaskComponent {
     }
   }
 
+  showSuccessMessage() {
+
+      this.popupCreatedContainer.nativeElement.classList.add('showPopup');
+    setTimeout(() => {
+      this.popupCreatedContainer.nativeElement.classList.remove('showPopup');
+    }, 3000);
+  }
 
 }
 

@@ -1,4 +1,12 @@
 <div class="addtask-wrapper">
+  <!--Hidden Container-->
+    <!--Hidden popup Container Task created-->
+  <div #popupCreatedContainer class="popup-container">
+    <div class="create-popup">
+      <span>Task succesfully created</span>
+    </div>
+  </div>
+    <!--Hidden Add Contact Container-->
   <div class="addtask-left">
     <div class="headline">
       <h1>Add Task</h1>
@@ -6,7 +14,7 @@
     <form
       [formGroup]="this.TaskArraysService.addTaskForm"
       (ngSubmit)="
-        this.TaskArraysService.addTask(this.TaskArraysService.addTaskForm.value)
+        this.TaskArraysService.addTask(this.TaskArraysService.addTaskForm.value);this.showSuccessMessage()
       "
     >
       <div class="addtask-left-top">
