@@ -453,7 +453,8 @@
     align-items: flex-start;
     width: 100vw;
     max-width: 100%;
-    height: calc(100vh - 156px);
+    height: 100%;
+
     margin-top: 80px;
     margin-left: 0;
     padding-left: unset;
@@ -477,6 +478,7 @@
       min-width: unset;
       min-height: unset;
       width: 100vw;
+      height: 100%;
       max-width: 100%;
       top: unset;
     }
@@ -1818,10 +1820,31 @@
     align-items: flex-start;
     gap: 8px;
     width: 440px;
-    height: 79px;
+    height: 140px;
     margin-top: 22px;
+    margin-left: 4px;
     background-color: $bg-color;
+    .assigned-box {
+      margin-left: 0;
+      display: flex;
+      .contacts-usercircle {
+        margin-left: -8px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 42px;
+        height: 42px;
+        border: solid 1px $white;
+        border-radius: 50%;
+        @include Inter(400, 12px, 14.4px, $white);
+        cursor: pointer;
 
+        &:hover {
+          background-color: red!important;
+        }
+
+      }
+    }
     h2 {
       @include OpenSans(700, 19px, 22.8px, $menu-color);
       span {

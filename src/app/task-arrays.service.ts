@@ -174,10 +174,32 @@ export class TaskArraysService {
 
 
   pushToAssignedArray(contact: any) {
-    const assignedContacts = this.addTaskForm.get('assignedContacts') as FormArray;
+    let assignedContacts = this.addTaskForm.get('assignedContacts') as FormArray;
   
     // Check if the contact is already in the array
-    const index = assignedContacts.value.findIndex(c => c.id === contact.id);
+    let index = assignedContacts.value.findIndex(c => c.id === contact.id);
+  
+    if (index === -1) {
+      // Contact is not in the array, so add it to the form control
+      assignedContacts.push(this.fb.control(contact));
+  
+      // Push the contact to the local array
+      this.assignedUser.push(contact);
+      console.log('new assigned contact is:', contact)
+    } else {
+      // Contact is already in the array, so remove it from the form control
+      assignedContacts.removeAt(index);
+  
+      // Remove the contact from the local array
+      this.assignedUser.splice(index, 1);
+    }
+  }
+
+  pushToAssignedArrayFromEdit(contact: any) {
+    let assignedContacts = this.editTaskForm.get('assignedContacts') as FormArray;
+  
+    // Check if the contact is already in the array
+    let index = assignedContacts.value.findIndex(c => c.id === contact.id);
   
     if (index === -1) {
       // Contact is not in the array, so add it to the form control
@@ -299,7 +321,7 @@ export class TaskArraysService {
    */
   async editTask(data) {
     // Find the index in the main tasks array
-    let taskIndex = this.selectedTaskIndex ;
+    let taskIndex = this.selectedTaskIndex;
   
     if (taskIndex >= 0 && taskIndex < this.tasks.length) {
       console.log('Edited task', data.title, data.description, data.dueDate, data.assignedContacts, data.category, data.subtask);
@@ -308,9 +330,12 @@ export class TaskArraysService {
       this.tasks[taskIndex].title = data.title;
       this.tasks[taskIndex].description = data.description;
       this.tasks[taskIndex].date = data.date;
-      this.tasks[taskIndex].assigned = this.assignedUser;
       this.tasks[taskIndex].prio = this.selectedPriority;
       this.tasks[taskIndex].category = data.category;
+  
+      // Combine existing assigned contacts with new ones
+      let existingAssignedContacts = this.tasks[taskIndex].assigned || [];
+      this.tasks[taskIndex].assigned = [...existingAssignedContacts, ...data.assignedContacts];
   
       // Push each entry from data.subtask into this.tasks[taskIndex].subtask
       for (let subtask of data.subtask) {
@@ -330,6 +355,7 @@ export class TaskArraysService {
     }
   
     await this.findNearestDate(this.urgent);
+    this.assignStatus = '';
     this.subtasks = [];
     this.clearAssignedData();
     this.ngOnInit();
@@ -490,6 +516,11 @@ export class TaskArraysService {
     );
   }
   
+  deleteAssignedFromTask(i,j) {
+    this.tasks[i].assigned.splice(j, 1);
+    this.safeTasks();
+  }
+
   /**
    * Asynchronous function to save all tasks from array "contacts" to remote storage
    */

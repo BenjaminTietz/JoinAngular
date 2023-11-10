@@ -176,6 +176,10 @@ export class BoardComponent {
     }
   }
 
+  highlightTask() {
+    
+  }
+
   selectPriority(priority: string) {
     this.TaskArrayService.selectedPriority = priority;
     console.log(this.TaskArrayService.selectedPriority);
