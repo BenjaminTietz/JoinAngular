@@ -361,10 +361,18 @@
           position: absolute;
           right: 24px;
           .btn-up{
-            margin-bottom: 16px;
+            margin-bottom: 8px;
+            img {
+              width: 64px;
+              height: 64px;
+            }
           }
           .btn-down{
-            margin-top: 16px;
+            margin-top: 8px;
+            img {
+              width: 64px;
+              height: 64px;
+            }
           }
         }
       }

@@ -118,6 +118,7 @@ export class BoardComponent {
     }
   }
 
+
   closeTask() {
     this.floatingTaskContainer.nativeElement.classList.toggle(
       'show-floating-container'
@@ -205,7 +206,6 @@ export class BoardComponent {
       this.TaskArrayService.assignedDropdownVisible = false;
     }
   }
-
 
   async showAddtaskFloatingContainer(status: string) {
     console.log('Received status:', status);

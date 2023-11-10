@@ -599,7 +599,7 @@
           {{ task.category }}
         </div>
         <div class="btn-container">
-          <div (click)="this.DragAndDropService.moveToMobile(i,'inProgress');$event.stopPropagation()" class="btn-down">
+          <div (click)="this.DragAndDropService.moveToNewStatusMobile(i,'toDo','inProgress');$event.stopPropagation()" class="btn-down">
             <img src="assets/img/board/down.png" />
           </div>
         </div>
@@ -643,7 +643,7 @@
             {{ task.category }}
           </div>
           <div class="btn-container">
-            <div (click)="this.DragAndDropService.moveToMobile(i,'inProgress');$event.stopPropagation()" class="btn-down">
+            <div (click)="this.DragAndDropService.moveToNewStatusMobile(i,'toDo','inProgress');$event.stopPropagation()" class="btn-down">
               <img src="assets/img/board/down.png" />
             </div>
           </div>
@@ -709,10 +709,10 @@
               {{ task.category }}
             </div>
             <div class="btn-container">
-              <div (click)="this.DragAndDropService.moveToMobile(i, 'toDo');$event.stopPropagation()" class="btn-up">
+              <div (click)="this.DragAndDropService.moveToNewStatusMobile(i,'inProgress', 'toDo');$event.stopPropagation()" class="btn-up">
                 <img src="assets/img/board/up.png" />
               </div>
-              <div (click)="this.DragAndDropService.moveToMobile(i,'awaitFeedback');$event.stopPropagation()" class="btn-down">
+              <div (click)="this.DragAndDropService.moveToNewStatusMobile(i,'inProgress', 'awaitFeedback');event.stopPropagation()" class="btn-down">
                 <img src="assets/img/board/down.png" />
               </div>
             </div>
@@ -753,10 +753,10 @@
             {{ task.category }}
           </div>
           <div class="btn-container">
-            <div (click)="this.DragAndDropService.moveToMobile(i,'toDo');$event.stopPropagation()" class="btn-up">
+            <div (click)="this.DragAndDropService.moveToNewStatusMobile(i,'inProgress','toDo');$event.stopPropagation()" class="btn-up">
               <img src="assets/img/board/up.png" />
             </div>
-            <div (click)="this.DragAndDropService.moveToMobile(i,'awaitFeedback');$event.stopPropagation()" class="btn-down">
+            <div (click)="this.DragAndDropService.moveToNewStatusMobile(i,'inProgress','awaitFeedback');$event.stopPropagation()" class="btn-down">
               <img src="assets/img/board/down.png" />
             </div>
           </div>
@@ -829,10 +829,10 @@
             {{ task.category }}
           </div>
           <div class="btn-container">
-            <div (click)="this.DragAndDropService.moveToMobile(i,'inProgress');$event.stopPropagation()" class="btn-up">
+            <div (click)="this.DragAndDropService.moveToNewStatusMobile(i,'awaitFeedback','inProgress');$event.stopPropagation()" class="btn-up">
               <img src="assets/img/board/up.png" />
             </div>
-            <div (click)="this.DragAndDropService.moveToMobile(i,'done');$event.stopPropagation()" class="btn-down">
+            <div (click)="this.DragAndDropService.moveToNewStatusMobile(i,'awaitFeedback','done');$event.stopPropagation()" class="btn-down">
               <img src="assets/img/board/down.png" />
             </div>
           </div>
@@ -879,10 +879,10 @@
             {{ task.category }}
           </div>
           <div class="btn-container">
-            <div (click)="this.DragAndDropService.moveToMobile(i,'inProgress');$event.stopPropagation()" class="btn-up">
+            <div (click)="this.DragAndDropService.moveToNewStatusMobile(i,'awaitFeedback','inProgress');$event.stopPropagation()" class="btn-up">
               <img src="assets/img/board/up.png" />
             </div>
-            <div (click)="this.DragAndDropService.moveToMobile(i,'done');$event.stopPropagation()" class="btn-down">
+            <div (click)="this.DragAndDropService.moveToNewStatusMobile(i,'awaitFeedback','done');$event.stopPropagation()" class="btn-down">
               <img src="assets/img/board/down.png" />
             </div>
           </div>
@@ -947,7 +947,7 @@
             {{ task.category }}
           </div>
           <div class="btn-container">
-            <div (click)="this.DragAndDropService.moveToMobile(i,'awaitFeedback');$event.stopPropagation()" class="btn-up">
+            <div (click)="this.DragAndDropService.moveToNewStatusMobile(i,'done','awaitFeedback');$event.stopPropagation()" class="btn-up">
               <img src="assets/img/board/up.png" />
             </div>
           </div>
@@ -989,7 +989,7 @@
             {{ task.category }}
           </div>
           <div class="btn-container">
-            <div (click)="this.DragAndDropService.moveToMobile(i,'awaitFeedback');$event.stopPropagation()" class="btn-up">
+            <div (click)="this.DragAndDropService.moveToNewStatusMobile(i,'done','awaitFeedback');$event.stopPropagation()" class="btn-up">
               <img src="assets/img/board/up.png" />
             </div>
           </div>
