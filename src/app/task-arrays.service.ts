@@ -215,6 +215,21 @@ export class TaskArraysService {
   pushToAssignedArrayFromEdit(contact: any) {
     let assignedContacts = this.editTaskForm.get('assignedContacts') as FormArray;
   
+    // Get the IDs of the contacts in assignedContacts
+    const assignedContactIds = assignedContacts.value.map((c) => c.id);
+  
+    // Check if the contact is already in tasks[i].assigned
+    if (this.selectedTask) {
+      const isContactAlreadyAssigned = this.selectedTask.assigned.some((assignedContact) =>
+        assignedContactIds.includes(assignedContact.id)
+      );
+  
+      if (isContactAlreadyAssigned) {
+        console.log('Contact is already assigned to the task.');
+        return; // Exit early, do not add the contact again
+      }
+    }
+  
     // Check if the contact is already in the array
     let index = assignedContacts.value.findIndex(c => c.id === contact.id);
   
@@ -224,13 +239,14 @@ export class TaskArraysService {
   
       // Push the contact to the local array
       this.assignedUser.push(contact);
-      console.log('new assigned contact is:', contact)
+      console.log('New assigned contact is:', contact);
     } else {
       // Contact is already in the array, so remove it from the form control
       assignedContacts.removeAt(index);
   
       // Remove the contact from the local array
       this.assignedUser.splice(index, 1);
+      console.log('Removed assigned contact:', contact);
     }
   }
 
@@ -245,6 +261,8 @@ export class TaskArraysService {
     const assignedContacts = this.addTaskForm.get('assignedContacts') as FormArray;
     assignedContacts.clear(); // Clear the FormArray
   }
+
+
 
   pushFromTaskArraytoSubtaskArray() {
     console.log('selectedTask', this.selectedTaskIndex);
@@ -318,55 +336,114 @@ export class TaskArraysService {
   /**
    * Asynchronous function to add a new task to the "task" array
    */
-  async editTask(data) {
-    // Find the index in the main tasks array
-    let taskIndex = this.selectedTaskIndex;
-  
-    if (taskIndex >= 0 && taskIndex < this.tasks.length) {
-      console.log('Edited task', data.title, data.description, data.dueDate, data.assignedContacts, data.category, data.subtask);
-  
-      // Update the task properties
-      this.tasks[taskIndex].title = data.title;
-      this.tasks[taskIndex].description = data.description;
-      this.tasks[taskIndex].date = data.date;
-      this.tasks[taskIndex].prio = this.selectedPriority;
-      this.tasks[taskIndex].category = data.category;
-  
-      // Combine existing assigned contacts with new ones
-      let existingAssignedContacts = this.tasks[taskIndex].assigned || [];
-      this.tasks[taskIndex].assigned = [...existingAssignedContacts, ...data.assignedContacts];
-  
-      // Push each entry from data.subtask into this.tasks[taskIndex].subtask
-      for (let subtaskName of data.subtask) {
-        this.subtasks.push({ name: subtaskName, completed: false });
-      }
-  
-      // Push each entry from this.subtasks into this.tasks[taskIndex].subtask
-      for (let subtask of this.subtasks) {
-        this.tasks[taskIndex].subtask.push(subtask);
-      }
-  
-      this.safeTasks();
-  
-      console.log('Edited task', data.title, data.description, data.dueDate);
-    } else {
-      console.log('Invalid task index.');
-    }
-  
-    await this.findNearestDate(this.urgent);
-    this.assignStatus = '';
-    this.subtasks = [];
-    this.clearAssignedData();
-    this.ngOnInit();
+//   async editTask(data) {
+//     let taskIndex = this.selectedTaskIndex;
 
-    setTimeout(() => {
-      // todo confirmationMessage(); hideSlider();
-    }, 1000);
+//     if (taskIndex >= 0 && taskIndex < this.tasks.length) {
+//         // ...
+
+        // // Setzen Sie this.selectedPriority basierend auf der ausgewählten Priorität
+        // if (this.selectedPriority === 'urgent') {
+        //     this.selectedPriority = 'urgent';
+        // } else if (this.selectedPriority === 'medium') {
+        //     this.selectedPriority = 'medium';
+        // } else if (this.selectedPriority === 'low') {
+        //     this.selectedPriority = 'low';
+        // }
+
+//         // ...
+
+//         this.safeTasks();
+
+//         console.log('Edited task', data.title, data.description, data.dueDate);
+//         this.selectedTask.assigned.data = [];
+//     } else {
+//         console.log('Invalid task index.');
+//     }
+
+//     await this.findNearestDate(this.urgent);
+//     this.assignStatus = '';
+//     this.subtasks = [];
+//     this.clearAssignedData();
+//     this.ngOnInit();
+
+//     setTimeout(() => {
+//         // todo confirmationMessage(); hideSlider();
+//     }, 1000);
+// }
+async editTask(data) {
+  await this.getIndexOfSelectedTask();
+  // Find the index in the main tasks array
+  let taskIndex = this.selectedTaskIndex;
+
+  if (taskIndex >= 0 && taskIndex < this.tasks.length) {
+    console.log('Edited task', data.title, data.description, data.dueDate, data.assignedContacts, data.category, data.subtask);
+
+            // Setzen Sie this.selectedPriority basierend auf der ausgewählten Priorität
+            if (this.selectedPriority === 'urgent') {
+              this.selectedPriority = 'urgent';
+          } else if (this.selectedPriority === 'medium') {
+              this.selectedPriority = 'medium';
+          } else if (this.selectedPriority === 'low') {
+              this.selectedPriority = 'low';
+          }
+  
+
+    // Update the task properties
+    this.tasks[taskIndex].title = data.title;
+    this.tasks[taskIndex].description = data.description;
+    this.tasks[taskIndex].date = data.date;
+    this.tasks[taskIndex].prio = this.selectedPriority;
+    this.tasks[taskIndex].category = data.category;
+    this.tasks[taskIndex].subtasks = this.subtasks;
+    this.tasks[taskIndex].subtasksDone = this.subtasksDone;
+
+    // Combine existing assigned contacts with new ones
+    let existingAssignedContacts = this.tasks[taskIndex].assigned || [];
+    this.tasks[taskIndex].assigned = [...existingAssignedContacts, ...data.assignedContacts];
+
+    // Push each entry from data.subtask into this.tasks[taskIndex].subtask
+    for (let subtaskName of data.subtask) {
+      this.subtasks.push({ name: subtaskName, completed: false });
+    }
+
+    // Push each entry from this.subtasks into this.tasks[taskIndex].subtask
+    for (let subtask of this.subtasks) {
+      this.tasks[taskIndex].subtask.push(subtask);
+    }
+
+    this.safeTasks();
+
+    console.log('Edited task', data.title, data.description, data.dueDate);
+  } else {
+    console.log('Invalid task index.');
+  }
+
+  await this.findNearestDate(this.urgent);
+  this.assignStatus = '';
+  this.subtasks = [];
+  this.clearAssignedData();
+  this.ngOnInit();
+  await this.resetEditTaskForm();
+
+  setTimeout(() => {
     // todo confirmationMessage(); hideSlider();
+  }, 1000);
+  // todo confirmationMessage(); hideSlider();
+}
+
+  removeDuplicates(array) {
+    return array.filter((item, index, self) => {
+      return self.findIndex((t) => t.id === item.id) === index;
+    });
   }
 
   resetAddTaskForm() {
     this.addTaskForm.reset();
+  }
+
+  resetEditTaskForm() {
+    this.editTaskForm.reset();
   }
 
 

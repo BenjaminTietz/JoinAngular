@@ -444,12 +444,12 @@ class="edittask-wrapper"
       </div>
     </div>
     <div class="edittask-left-prio">
-      <h2>Priority <span>(optional)</span></h2>
+      <h2>change Priority <span>(optional)</span></h2>
       <div class="prio-box">
         <div
-          #prioUrgent
+          #prioUrgentEdit
           class="prio-container-urgent"
-          (click)="this.selectPriority('urgent')"
+          (click)="this.selectPriorityEdit('urgent')"
         >
           <span>Urgent</span>
           <svg
@@ -467,9 +467,9 @@ class="edittask-wrapper"
           </svg>
         </div>
         <div
-          #prioMedium
+          #prioMediumEdit
           class="prio-container-medium"
-          (click)="this.selectPriority('medium')"
+          (click)="this.selectPriorityEdit('medium')"
         >
           <span>Medium</span>
           <svg
@@ -487,9 +487,9 @@ class="edittask-wrapper"
           </svg>
         </div>
         <div
-          #prioLow
+          #prioLowEdit
           class="prio-container-low"
-          (click)="this.selectPriority('low')"
+          (click)="this.selectPriorityEdit('low')"
         >
           <span>Low</span>
           <svg
@@ -611,17 +611,6 @@ class="edittask-wrapper"
           ]
         "
       >
-        <!-- <div *ngFor="let subtask of this.TaskArrayService.tasks[this.TaskArrayService.selectedTaskIndex].subtask; let i = index">         
-        <div class="subtask-container">
-          <span>{{ subtask }} </span>
-          <div class="subtask-btn-container">
-            <img
-              src="assets/img/board/delete.png"
-              (click)="this.TaskArrayService.deleteSubtaskFromEdit(i)"
-            />
-          </div>
-        </div>
-      </div> -->
 
         <div
           *ngFor="
@@ -704,7 +693,7 @@ class="edittask-wrapper"
       <div
         draggable="true"
         (dragstart)="this.DragAndDropService.dragStart(i, 'toDo')"
-        (click)="openTask(i, 'toDo')"
+        (click)="openTask(i, 'toDo'); this.TaskArrayService.getIndexOfSelectedTask()"
         *ngFor="
           let task of this.TaskArrayService.filteredToDo;
           let i = index
@@ -774,7 +763,7 @@ class="edittask-wrapper"
       <div
         draggable="true"
         (dragstart)="this.DragAndDropService.dragStart(i, 'toDo')"
-        (click)="openTask(i, 'toDo')"
+        (click)="openTask(i, 'toDo'); this.TaskArrayService.getIndexOfSelectedTask()"
         *ngFor="let task of this.TaskArrayService.toDo; let i = index"
         class="single-task"
       >
@@ -877,7 +866,7 @@ class="edittask-wrapper"
           let i = index
         "
         (dragstart)="this.DragAndDropService.dragStart(i, 'inProgress')"
-        (click)="openTask(i, 'inProgress')"
+        (click)="openTask(i, 'inProgress'); this.TaskArrayService.getIndexOfSelectedTask()"
         class="single-task"
       >
         <div class="single-task-top">
@@ -956,7 +945,7 @@ class="edittask-wrapper"
         draggable="true"
         *ngFor="let task of this.TaskArrayService.inProgress; let i = index"
         (dragstart)="this.DragAndDropService.dragStart(i, 'inProgress')"
-        (click)="openTask(i, 'inProgress')"
+        (click)="openTask(i, 'inProgress'); this.TaskArrayService.getIndexOfSelectedTask()"
         class="single-task"
       >
         <div class="single-task-top">
@@ -1071,7 +1060,7 @@ class="edittask-wrapper"
           let i = index
         "
         (dragstart)="this.DragAndDropService.dragStart(i, 'awaitFeedback')"
-        (click)="openTask(i, 'awaitFeedback')"
+        (click)="openTask(i, 'awaitFeedback'); this.TaskArrayService.getIndexOfSelectedTask()"
         class="single-task"
       >
         <div class="single-task-top">
@@ -1154,7 +1143,7 @@ class="edittask-wrapper"
           let i = index
         "
         (dragstart)="this.DragAndDropService.dragStart(i, 'awaitFeedback')"
-        (click)="openTask(i, 'awaitFeedback')"
+        (click)="openTask(i, 'awaitFeedback'); this.TaskArrayService.getIndexOfSelectedTask()"
         class="single-task"
       >
         <div class="single-task-top">
@@ -1205,7 +1194,7 @@ class="edittask-wrapper"
           *ngIf="task.subtask && task.subtask.length > 0"
           class="progressbar"
         >
-          <progress id="file" [max]="task.subtask.length"></progress>
+          <progress id="file" [value]="task.subtask.length"  [max]="task.subtask.length"></progress>
         </div>
         <div class="single-task-bottom">
           <div *ngIf="this.TaskArrayService.tasks[i].assigned >= 0" class="assigned-contacts">
@@ -1263,7 +1252,7 @@ class="edittask-wrapper"
           let i = index
         "
         (dragstart)="this.DragAndDropService.dragStart(i, 'done')"
-        (click)="openTask(i, 'done')"
+        (click)="openTask(i, 'done'); this.TaskArrayService.getIndexOfSelectedTask()"
         class="single-task"
       >
         <div class="single-task-top">
@@ -1329,7 +1318,7 @@ class="edittask-wrapper"
         draggable="true"
         *ngFor="let task of this.TaskArrayService.done; let i = index"
         (dragstart)="this.DragAndDropService.dragStart(i, 'done')"
-        (click)="openTask(i, 'done')"
+        (click)="openTask(i, 'done'); this.TaskArrayService.getIndexOfSelectedTask()"
         class="single-task"
       >
         <div class="single-task-top">

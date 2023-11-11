@@ -87,7 +87,7 @@ export class BoardComponent {
     }
   }
 
-  openTask(i: number, subArrayName: string) {
+  async openTask(i: number, subArrayName: string) {
     if (
       ['toDo', 'inProgress', 'awaitFeedback', 'done'].includes(subArrayName)
     ) {
@@ -272,23 +272,31 @@ export class BoardComponent {
       'show-edittask-wrapper'
     );
   }
+
+  get totalMaxValue(): number {
+    return this.TaskArrayService.selectedTask.subtasksDone.length + this.TaskArrayService.selectedTask.subtasks.length;
+  }
+
   showSuccessEditMessage() {
     this.popupEditedContainer.nativeElement.classList.add('showPopup');
     setTimeout(() => {
       this.popupEditedContainer.nativeElement.classList.remove('showPopup');
-    }, 3000);
+    }, 1000);
+    this.prioUrgentEdit.nativeElement.classList.remove('assign-color-urgent');
+    this.prioMediumEdit.nativeElement.classList.remove('assign-color-urgent');
+    this.prioMediumEdit.nativeElement.classList.remove('assign-color-medium');
   }
   showSuccessCreateMessage() {
     this.popupCreateContainer.nativeElement.classList.add('showPopup');
     setTimeout(() => {
       this.popupCreateContainer.nativeElement.classList.remove('showPopup');
-    }, 3000);
+    }, 1000);
   }
 
   showSuccessDeleteMessage() {
     this.popupdeletedContainer.nativeElement.classList.add('showPopup');
     setTimeout(() => {
       this.popupdeletedContainer.nativeElement.classList.remove('showPopup');
-    }, 3000);
+    }, 1000);
   }
 }
