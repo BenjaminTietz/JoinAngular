@@ -555,7 +555,7 @@ class="edittask-wrapper"
         </div>
       </div>
       <span>delete already assigned contacts:</span>
-      <div *ngIf="this.TaskArrayService.selectedTaskIndex" class="assigned-box">
+      <div *ngIf="this.TaskArrayService.selectedTask" class="assigned-box">
         <div
         (click)="this.TaskArrayService.deleteAssignedFromTask(this.TaskArrayService.selectedTaskIndex,j)" 
         *ngFor = "let assigned of this.TaskArrayService.tasks[this.TaskArrayService.selectedTaskIndex].assigned; let j = index"
@@ -738,23 +738,15 @@ class="edittask-wrapper"
           <progress id="file" [max]="task.subtask.length"></progress>
         </div>
         <div class="single-task-bottom">
-          <div *ngIf="this.TaskArrayService.tasks[i].assigned >= 0" class="assigned-contacts">
-            <div
-              *ngFor="let assignedContact of task.assigned; let j = index"
-              class="assigned-box"
-            >
-              <div
-                [style.background-color]="assignedContact.color"
-                class="contacts-usercircle"
-              >
+          <div class="assigned-contacts">
+            <div *ngFor="let assignedContact of task.assigned; let j = index" class="assigned-box">
+              <div [style.background-color]="assignedContact.color" class="contacts-usercircle">
                 {{ assignedContact.initials }}
               </div>
+
             </div>
           </div>
-          <img
-            class="prio"
-            src="assets/img/board/prio_{{ task.prio }}.svg"
-          />
+          <img class="prio" src="assets/img/board/prio_{{ task.prio }}.svg" />
         </div>
       </div>
     </div>
@@ -805,23 +797,15 @@ class="edittask-wrapper"
           <progress id="file" [max]="task.subtask.length"></progress>
         </div>
         <div class="single-task-bottom">
-          <div *ngIf="this.TaskArrayService.tasks[i].assigned >= 0" class="assigned-contacts">
-            <div
-              *ngFor="let assignedContact of task.assigned; let j = index"
-              class="assigned-box"
-            >
-              <div
-                [style.background-color]="assignedContact.color"
-                class="contacts-usercircle"
-              >
+          <div class="assigned-contacts">
+            <div *ngFor="let assignedContact of task.assigned; let j = index" class="assigned-box">
+              <div [style.background-color]="assignedContact.color" class="contacts-usercircle">
                 {{ assignedContact.initials }}
               </div>
+
             </div>
           </div>
-          <img
-            class="prio"
-            src="assets/img/board/prio_{{ task.prio }}.svg"
-          />
+          <img class="prio" src="assets/img/board/prio_{{ task.prio }}.svg" />
         </div>
       </div>
     </div>
@@ -920,23 +904,15 @@ class="edittask-wrapper"
           <progress id="file" [max]="task.subtask.length"></progress>
         </div>
         <div class="single-task-bottom">
-          <div *ngIf="this.TaskArrayService.tasks[i].assigned >= 0" class="assigned-contacts">
-            <div
-              *ngFor="let assignedContact of task.assigned; let j = index"
-              class="assigned-box"
-            >
-              <div
-                [style.background-color]="assignedContact.color"
-                class="contacts-usercircle"
-              >
+          <div class="assigned-contacts">
+            <div *ngFor="let assignedContact of task.assigned; let j = index" class="assigned-box">
+              <div [style.background-color]="assignedContact.color" class="contacts-usercircle">
                 {{ assignedContact.initials }}
               </div>
+
             </div>
           </div>
-          <img
-            class="prio"
-            src="assets/img/board/prio_{{ task.prio }}.svg"
-          />
+          <img class="prio" src="assets/img/board/prio_{{ task.prio }}.svg" />
         </div>
       </div>
     </div>
@@ -999,23 +975,14 @@ class="edittask-wrapper"
           <progress id="file" [max]="task.subtask.length"></progress>
         </div>
         <div class="single-task-bottom">
-          <div *ngIf="this.TaskArrayService.tasks[i].assigned >= 0" class="assigned-contacts">
-            <div
-              *ngFor="let assignedContact of task.assigned; let j = index"
-              class="assigned-box"
-            >
-              <div
-                [style.background-color]="assignedContact.color"
-                class="contacts-usercircle"
-              >
-                {{ assignedContact.initials }}
+          <div class="assigned-contacts">
+            <div *ngFor="let assigned of task.assigned; let j = index" class="assigned-box">
+              <div [style.background-color]="assigned.color" class="contacts-usercircle">
+                {{ assigned.initials }}
               </div>
             </div>
           </div>
-          <img
-            class="prio"
-            src="assets/img/board/prio_{{ task.prio }}.svg"
-          />
+          <img class="prio" src="assets/img/board/prio_{{ task.prio }}.svg" />
         </div>
       </div>
     </div>
@@ -1115,23 +1082,15 @@ class="edittask-wrapper"
           <progress id="file" [max]="task.subtask.length"></progress>
         </div>
         <div class="single-task-bottom">
-          <div *ngIf="this.TaskArrayService.tasks[i].assigned >= 0" class="assigned-contacts">
-            <div
-              *ngFor="let assignedContact of task.assigned; let j = index"
-              class="assigned-box"
-            >
-              <div
-                [style.background-color]="assignedContact.color"
-                class="contacts-usercircle"
-              >
+          <div class="assigned-contacts">
+            <div *ngFor="let assignedContact of task.assigned; let j = index" class="assigned-box">
+              <div [style.background-color]="assignedContact.color" class="contacts-usercircle">
                 {{ assignedContact.initials }}
               </div>
+
             </div>
           </div>
-          <img
-            class="prio"
-            src="assets/img/board/prio_{{ task.prio }}.svg"
-          />
+          <img class="prio" src="assets/img/board/prio_{{ task.prio }}.svg" />
         </div>
       </div>
     </div>
@@ -1194,26 +1153,18 @@ class="edittask-wrapper"
           *ngIf="task.subtask && task.subtask.length > 0"
           class="progressbar"
         >
-          <progress id="file" [value]="task.subtask.length"  [max]="task.subtask.length"></progress>
+          <progress id="file"  [max]="task.subtask.length"></progress>
         </div>
         <div class="single-task-bottom">
-          <div *ngIf="this.TaskArrayService.tasks[i].assigned >= 0" class="assigned-contacts">
-            <div
-              *ngFor="let assignedContact of task.assigned; let j = index"
-              class="assigned-box"
-            >
-              <div
-                [style.background-color]="assignedContact.color"
-                class="contacts-usercircle"
-              >
+          <div class="assigned-contacts">
+            <div *ngFor="let assignedContact of task.assigned; let j = index" class="assigned-box">
+              <div [style.background-color]="assignedContact.color" class="contacts-usercircle">
                 {{ assignedContact.initials }}
               </div>
+
             </div>
           </div>
-          <img
-            class="prio"
-            src="assets/img/board/prio_{{ task.prio }}.svg"
-          />
+          <img class="prio" src="assets/img/board/prio_{{ task.prio }}.svg" />
         </div>
       </div>
     </div>
@@ -1293,23 +1244,15 @@ class="edittask-wrapper"
           <progress id="file" [max]="task.subtask.length"></progress>
         </div>
         <div class="single-task-bottom">
-          <div *ngIf="this.TaskArrayService.tasks[i].assigned >= 0" class="assigned-contacts">
-            <div
-              *ngFor="let assignedContact of task.assigned; let j = index"
-              class="assigned-box"
-            >
-              <div
-                [style.background-color]="assignedContact.color"
-                class="contacts-usercircle"
-              >
+          <div class="assigned-contacts">
+            <div *ngFor="let assignedContact of task.assigned; let j = index" class="assigned-box">
+              <div [style.background-color]="assignedContact.color" class="contacts-usercircle">
                 {{ assignedContact.initials }}
               </div>
+
             </div>
           </div>
-          <img
-            class="prio"
-            src="assets/img/board/prio_{{ task.prio }}.svg"
-          />
+          <img class="prio" src="assets/img/board/prio_{{ task.prio }}.svg" />
         </div>
       </div>
     </div>
@@ -1359,23 +1302,15 @@ class="edittask-wrapper"
           <progress id="file" [max]="task.subtask.length"></progress>
         </div>
         <div class="single-task-bottom">
-          <div *ngIf="this.TaskArrayService.tasks[i].assigned >= 0" class="assigned-contacts">
-            <div
-              *ngFor="let assignedContact of task.assigned; let j = index"
-              class="assigned-box"
-            >
-              <div
-                [style.background-color]="assignedContact.color"
-                class="contacts-usercircle"
-              >
+          <div class="assigned-contacts">
+            <div *ngFor="let assignedContact of task.assigned; let j = index" class="assigned-box">
+              <div [style.background-color]="assignedContact.color" class="contacts-usercircle">
                 {{ assignedContact.initials }}
               </div>
+
             </div>
           </div>
-          <img
-            class="prio"
-            src="assets/img/board/prio_{{ task.prio }}.svg"
-          />
+          <img class="prio" src="assets/img/board/prio_{{ task.prio }}.svg" />
         </div>
       </div>
     </div>

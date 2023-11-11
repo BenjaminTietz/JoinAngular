@@ -59,6 +59,7 @@ export class TaskArraysService {
       category: new FormControl('', [Validators.required]),
       subtask: new FormControl('', []),
       assignedContacts: this.fb.array([]),
+
     });
     this.addTaskForm.valueChanges.subscribe(console.log);
 
@@ -69,6 +70,7 @@ export class TaskArraysService {
       category: new FormControl('', [Validators.required]),
       subtask: new FormControl('', []),
       assignedContacts: this.fb.array([]),
+
     });
     this.editTaskForm.valueChanges.subscribe(console.log);
 
@@ -79,6 +81,7 @@ export class TaskArraysService {
 
   minDate: string;
   selectedPriority: string = '';
+  selectedEditPriority: string = '';
   assignedDropdownVisible: boolean = false;
   taskId: number = 0;
   nearestUrgendTaskDate: any = '';
@@ -293,26 +296,29 @@ export class TaskArraysService {
    * Asynchronous function to add a new task to the "task" array
    */
   async addTask(data) {
+
     if (this.isDataValid(data)) {
       let newId = this.generateNewTaskId();
       this.addNewTask(newId, data);
-      await this.safeTasks();
-      await this.findNearestDate(this.urgent);
-      await this.resetAddTaskForm();
-      this.assignStatus = '';
-      this.subtasks = [];
-      this.clearAssignedData();
-      this.ngOnInit();
+
+
   
       setTimeout(() => {
+
         this.boardService.showAddTask = false;
         this.boardService.showBoard = true;
       }, 2000);
+      await this.safeTasks();
+      await this.findNearestDate(this.urgent);
+      await this.resetAddTaskForm();
+      await this.clearAssignedData();
+      await this.ngOnInit();
+
     }
   }
   
   isDataValid(data) {
-    return data.title !== '' && data.date !== '' && data.category !== '';
+    return data.title !== '' && data.date !== '' && data.category !== '' && data.assignedContacts.length > 0 ;
   }
   
   generateNewTaskId() {
@@ -325,8 +331,7 @@ export class TaskArraysService {
       .filter((contact) => contact.selected)
       .map((contact) => contact.name);
   
-    this.pushToArray(newId, data.title, data.description, data.date, data.assignedContacts, data.category, this.subtasks, this.assignStatus);
-  
+this.pushToArray(newId, data.assignedContacts, data.title, data.description, data.date, this.selectedPriority, data.category, this.subtasks, this.assignStatus)
     console.log('Added task', newId, data.title, data.description, data.date, data.assignedContacts, data.category, data.subtask);
   }
   
@@ -377,34 +382,27 @@ async editTask(data) {
   let taskIndex = this.selectedTaskIndex;
 
   if (taskIndex >= 0 && taskIndex < this.tasks.length) {
-    console.log('Edited task', data.title, data.description, data.dueDate, data.assignedContacts, data.category, data.subtask);
+    console.log('Edited task', data.title, data.description, data.dueDate, data.prio, data.assignedContacts, data.category, data.subtask);
 
-            // Setzen Sie this.selectedPriority basierend auf der ausgewählten Priorität
-            if (this.selectedPriority === 'urgent') {
-              this.selectedPriority = 'urgent';
-          } else if (this.selectedPriority === 'medium') {
-              this.selectedPriority = 'medium';
-          } else if (this.selectedPriority === 'low') {
-              this.selectedPriority = 'low';
-          }
+
   
 
     // Update the task properties
-    this.tasks[taskIndex].title = data.title;
-    this.tasks[taskIndex].description = data.description;
-    this.tasks[taskIndex].date = data.date;
-    this.tasks[taskIndex].prio = this.selectedPriority;
-    this.tasks[taskIndex].category = data.category;
-    this.tasks[taskIndex].subtasks = this.subtasks;
-    this.tasks[taskIndex].subtasksDone = this.subtasksDone;
+    this.tasks[taskIndex].title.push(data.title);
+    this.tasks[taskIndex].description.push(data.description);
+    this.tasks[taskIndex].date.push(data.date);
+    this.tasks[taskIndex].prio.push(this.selectedEditPriority);
+    console.log('this.selectedPriority', this.selectedEditPriority);
+    this.tasks[taskIndex].category.push(data.title);
+    this.tasks[taskIndex].subtasks.push(this.subtasks);
+    this.tasks[taskIndex].subtasksDone.push(this.subtasksDone);
+    this.tasks[taskIndex].assigned.push(this.assignedUser);
+    this.tasks[taskIndex].status.push(this.assignStatus);
 
-    // Combine existing assigned contacts with new ones
-    let existingAssignedContacts = this.tasks[taskIndex].assigned || [];
-    this.tasks[taskIndex].assigned = [...existingAssignedContacts, ...data.assignedContacts];
 
     // Push each entry from data.subtask into this.tasks[taskIndex].subtask
     for (let subtaskName of data.subtask) {
-      this.subtasks.push({ name: subtaskName, completed: false });
+      this.tasks[taskIndex].subtasks.push({ name: subtaskName, completed: false });
     }
 
     // Push each entry from this.subtasks into this.tasks[taskIndex].subtask
@@ -420,7 +418,7 @@ async editTask(data) {
   }
 
   await this.findNearestDate(this.urgent);
-  this.assignStatus = '';
+
   this.subtasks = [];
   this.clearAssignedData();
   this.ngOnInit();
@@ -505,24 +503,26 @@ async editTask(data) {
       console.error('Invalid task index');
     }
   }
-
+  //this.pushToArray(newId, data.assignedContacts, data.title, data.description, data.date, this.selectedPriority, data.category, this.subtasks, this.assignStatus);
+  
   pushToArray(
     id,
+    assigned,
     title,
     description,
     date,
-    assigned,
+    prio,
     category,
     subtask,
-    status
+    status,
   ) {
     this.tasks.push({
-      id: this.taskId,
+      id: id,
+      assigned: this.assignedUser,
       title: title,
       description: description,
       date: date,
       prio: this.selectedPriority,
-      assigned: assigned,
       category: category,
       subtask: subtask,
       status: status,

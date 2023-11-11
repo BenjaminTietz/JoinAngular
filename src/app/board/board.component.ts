@@ -51,8 +51,9 @@ export class BoardComponent {
     await this.TaskArrayService.loadTasks();
     await this.TaskArrayService.mapTaskStatus();
     await this.TaskArrayService.mapUrgentTasks()
-    await this.TaskArrayService.safeTasks(); // Speichere die aktualisierten Tasks
   }
+
+
 
   onSearch(event: any) {
     const searchTerm = event.target.value;
@@ -203,18 +204,18 @@ export class BoardComponent {
   }
 
   selectPriorityEdit(priority: string) {
-    this.TaskArrayService.selectedPriority = priority;
-    console.log(this.TaskArrayService.selectedPriority);
+    this.TaskArrayService.selectedEditPriority = priority;
+    console.log(this.TaskArrayService.selectedEditPriority);
 
-    if (this.TaskArrayService.selectedPriority === 'urgent') {
+    if (this.TaskArrayService.selectedEditPriority === 'urgent') {
       this.prioUrgentEdit.nativeElement.classList.toggle('assign-color-urgent');
       this.prioMediumEdit.nativeElement.classList.remove('assign-color-medium');
       this.prioLowEdit.nativeElement.classList.remove('assign-color-low');
-    } else if (this.TaskArrayService.selectedPriority === 'medium') {
+    } else if (this.TaskArrayService.selectedEditPriority === 'medium') {
       this.prioMediumEdit.nativeElement.classList.toggle('assign-color-medium');
       this.prioUrgentEdit.nativeElement.classList.remove('assign-color-urgent');
       this.prioLowEdit.nativeElement.classList.remove('assign-color-low');
-    } else if (this.TaskArrayService.selectedPriority === 'low') {
+    } else if (this.TaskArrayService.selectedEditPriority === 'low') {
       this.prioLowEdit.nativeElement.classList.toggle('assign-color-low');
       this.prioUrgentEdit.nativeElement.classList.remove('assign-color-urgent');
       this.prioMediumEdit.nativeElement.classList.remove('assign-color-medium');
@@ -237,7 +238,6 @@ export class BoardComponent {
 
   async showAddtaskFloatingContainer(status: string) {
     console.log('Received status:', status);
-    await this.ngOnInit();
     this.TaskArrayService.assignStatus = status;
     console.log(
       'this.TaskArrayService.assignStatus',
@@ -258,24 +258,40 @@ export class BoardComponent {
     await this.TaskArrayService.getIndexOfSelectedTask();
     this.TaskArrayService.pushFromTaskArraytoSubtaskArray();
     this.TaskArrayService.selectedTask = selectedTask;
-    this.TaskArrayService.editTaskForm.patchValue(selectedTask);
+  
+    // Löschen Sie das `subtask`-Feld aus dem ausgewählten Task
+    selectedTask.subtask = [];
+  
+    // Löschen Sie das `subtask`-Formularfeld
+    this.TaskArrayService.editTaskForm.get('subtask').reset();
+  
+    // Aktualisieren Sie das Formular mit den Werten aus dem ausgewählten Task
+    this.TaskArrayService.editTaskForm.patchValue({
+      title: selectedTask.title,
+      description: selectedTask.description,
+      date: selectedTask.date,
+      category: selectedTask.category,
+    });
+  
     console.log('selectedTask', this.TaskArrayService.selectedTask);
     this.editTaskWrapper.nativeElement.classList.add('show-edittask-wrapper');
   }
 
   async hideEditTaskFloatingContainer() {
+  
     this.closeTask();
+    this.TaskArrayService.assignStatus = '';
+    this.TaskArrayService.subtasks = [];
     this.TaskArrayService.clearAssignedData();
 
+    await this.TaskArrayService.resetEditTaskForm();
     await this.ngOnInit();
     this.editTaskWrapper.nativeElement.classList.remove(
       'show-edittask-wrapper'
     );
   }
 
-  get totalMaxValue(): number {
-    return this.TaskArrayService.selectedTask.subtasksDone.length + this.TaskArrayService.selectedTask.subtasks.length;
-  }
+
 
   showSuccessEditMessage() {
     this.popupEditedContainer.nativeElement.classList.add('showPopup');
