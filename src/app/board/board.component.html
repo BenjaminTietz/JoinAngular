@@ -1,1401 +1,1398 @@
 <div class="board-wrapper">
-      <!--Hidden popup Container Task edited-->
-      <div #popupEditedContainer class="popup-container">
-        <div class="create-popup">
-          <span>Task succesfully edited</span>
-        </div>
-      </div>
-            <!--Hidden popup Container Task created-->
-            <div #popupCreateContainer class="popup-container">
-              <div class="create-popup">
-                <span>Task succesfully created</span>
-              </div>
-            </div>
+  <!--Hidden popup Container Task edited-->
+  <div #popupEditedContainer class="popup-container">
+    <div class="create-popup">
+      <span>Task succesfully edited</span>
+    </div>
+  </div>
         <!--Hidden popup Container Task created-->
-        <div #popupdeletedContainer class="popup-container">
+        <div #popupCreateContainer class="popup-container">
           <div class="create-popup">
-            <span>Task succesfully deleted</span>
+            <span>Task succesfully created</span>
           </div>
         </div>
-  <!----Hidden Task floating Container---->
-  <div #floatingTaskContainer class="floating-task-wrapper">
+    <!--Hidden popup Container Task created-->
+    <div #popupdeletedContainer class="popup-container">
+      <div class="create-popup">
+        <span>Task succesfully deleted</span>
+      </div>
+    </div>
+<!----Hidden Task floating Container---->
+<div #floatingTaskContainer class="floating-task-wrapper">
+<div
+  *ngIf="this.TaskArrayService.selectedTask"
+  class="floating-task-container"
+>
+  <div class="floating-task-top">
     <div
-      *ngIf="this.TaskArrayService.selectedTask"
-      class="floating-task-container"
+      [style.background-color]="
+        getCategoryColor(this.TaskArrayService.selectedTask.category)
+      "
+      class="floating-task-category"
     >
-      <div class="floating-task-top">
+      <span>{{ this.TaskArrayService.selectedTask.category }}</span>
+    </div>
+    <div (click)="closeTask()" class="floating-close-btn">
+      <img src="assets/img/board/close.png" />
+    </div>
+  </div>
+  <div class="floating-task-content">
+    <div class="floating-task-title">
+      <h1>{{ this.TaskArrayService.selectedTask.title }}</h1>
+    </div>
+    <div class="floating-task-description">
+      <h2>{{ this.TaskArrayService.selectedTask.description }}</h2>
+    </div>
+    <div class="floating-task-date">
+      <h2>Due date:</h2>
+      <span>{{ this.TaskArrayService.selectedTask.date }}</span>
+    </div>
+    <div class="floating-task-prio">
+      <h2>Priority:</h2>
+      <span>{{ this.TaskArrayService.selectedTask.prio }}</span>
+      <img
+        class="prio"
+        src="assets/img/board/prio_{{
+          this.TaskArrayService.selectedTask.prio
+        }}.svg"
+      />
+    </div>
+    <div
+      class="floating-task-assign-wrapper"
+      *ngIf="
+        TaskArrayService.selectedTask &&
+        TaskArrayService.selectedTask.assigned &&
+        TaskArrayService.selectedTask.assigned.length > 0
+      "
+    >
+      <h2>Assigned to:</h2>
+      <div class="assigned-wrapper">
         <div
-          [style.background-color]="
-            getCategoryColor(this.TaskArrayService.selectedTask.category)
+          *ngFor="
+            let assignedContact of TaskArrayService.selectedTask.assigned;
+            let i = index
           "
-          class="floating-task-category"
+          class="assigned-box"
         >
-          <span>{{ this.TaskArrayService.selectedTask.category }}</span>
-        </div>
-        <div (click)="closeTask()" class="floating-close-btn">
-          <img src="assets/img/board/close.png" />
+          <div
+            [style.background-color]="
+              this.TaskArrayService.selectedTask.assigned[i].color
+            "
+            class="contacts-usercircle"
+          >
+            {{ assignedContact.initials }}
+          </div>
         </div>
       </div>
-      <div class="floating-task-content">
-        <div class="floating-task-title">
-          <h1>{{ this.TaskArrayService.selectedTask.title }}</h1>
+    </div>
+
+    <div
+      *ngIf="
+        TaskArrayService.selectedTask &&
+        TaskArrayService.selectedTask.subtask &&
+        TaskArrayService.selectedTask.subtask.length > 0
+      "
+    >
+      <div class="floating-task-subtask">
+        <h2>Subtasks:</h2>
+        <ul>
+          <li
+            *ngFor="
+              let subtask of TaskArrayService.selectedTask.subtask;
+              let i = index
+            "
+          >
+            <span>{{ subtask }}<input type="checkbox" /></span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="floating-task-bottom">
+    <div class="floating-task-btn">
+      <button
+        type="button"
+        (click)="deleteTask()"
+        class="floating-task-btn-cancel"
+      >
+        <img src="assets/img/board/delete.png" />
+        Delete
+      </button>
+      <button
+        (click)="
+          showEditTaskFloatingContainer(this.TaskArrayService.selectedTask)
+        "
+        class="floating-task-btn-edit"
+      >
+        <img src="assets/img/board/edit.png" />Edit
+      </button>
+    </div>
+  </div>
+</div>
+</div>
+<!---- End of Hidden Task floating Container---->
+<!--hidden add Task floating container-->
+<div #addtaskWrapper class="addtask-wrapper">
+<div class="addtask-left">
+  <div class="headline">
+    <h1>Add Task</h1>
+  </div>
+  <form
+    [formGroup]="this.TaskArrayService.addTaskForm"
+    (ngSubmit)="
+      this.TaskArrayService.addTask(
+        this.TaskArrayService.addTaskForm.value
+      );
+      this.hideAddtaskFloatingContainer();
+      this.showSuccessEditMessage()
+    "
+  >
+    <div class="addtask-left-top">
+      <div class="input-wrapper">
+        <input
+          formControlName="title"
+          name="title"
+          type="text"
+          placeholder="Enter a title"
+        />
+      </div>
+      <h2>Description <span>(optional)</span></h2>
+      <textarea
+        formControlName="description"
+        name="description"
+        type="text"
+        placeholder="Enter a description"
+        cols="30"
+        rows="10"
+      ></textarea>
+      <h2>Due date</h2>
+      <div>
+        <input
+          formControlName="date"
+          name="date"
+          type="date"
+          placeholder="dd/mm/yyyy"
+          min="{{ this.TaskArrayService.minDate }}"
+        />
+      </div>
+    </div>
+    <div class="addtask-left-prio">
+      <h2>Priority <span>(optional)</span></h2>
+      <div class="prio-box">
+        <div
+          #prioUrgent
+          class="prio-container-urgent"
+          (click)="this.selectPriority('urgent')"
+        >
+          <span>Urgent</span>
+          <svg
+            width="20"
+            height="15"
+            viewBox="0 0 20 15"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M18.9041 14.7547C18.6695 14.7551 18.441 14.6803 18.2521 14.5412L10 8.458L1.74797 14.5412C1.63212 14.6267 1.50054 14.6887 1.36073 14.7234C1.22093 14.7582 1.07565 14.7651 0.933183 14.7437C0.790715 14.7223 0.653851 14.6732 0.530406 14.599C0.406961 14.5247 0.299352 14.427 0.213723 14.3112C0.128094 14.1954 0.0661217 14.0639 0.031345 13.9243C-0.00343163 13.7846 -0.0103318 13.6394 0.0110384 13.497C0.0541974 13.2095 0.209888 12.9509 0.44386 12.7781L9.34797 6.20761C9.53667 6.06802 9.76524 5.99268 10 5.99268C10.2348 5.99268 10.4634 6.06802 10.6521 6.20761L19.5562 12.7781C19.7421 12.915 19.88 13.1071 19.9501 13.327C20.0203 13.5469 20.0191 13.7833 19.9468 14.0025C19.8745 14.2216 19.7348 14.4124 19.5475 14.5475C19.3603 14.6826 19.1351 14.7551 18.9041 14.7547Z"
+            />
+            <path
+              d="M18.9041 9.00568C18.6695 9.00609 18.441 8.93124 18.2521 8.79214L10 2.70898L1.74797 8.79214C1.514 8.96495 1.22091 9.0378 0.933188 8.99468C0.645461 8.95155 0.386663 8.79597 0.213727 8.56218C0.0407916 8.32838 -0.0321162 8.03551 0.0110429 7.74799C0.0542019 7.46048 0.209892 7.20187 0.443864 7.02906L9.34797 0.458588C9.53667 0.318997 9.76525 0.243652 10 0.243652C10.2348 0.243652 10.4634 0.318997 10.6521 0.458588L19.5562 7.02906C19.7421 7.16598 19.88 7.35809 19.9501 7.57797C20.0203 7.79785 20.0191 8.03426 19.9468 8.25344C19.8745 8.47262 19.7348 8.66338 19.5475 8.79847C19.3603 8.93356 19.1351 9.00608 18.9041 9.00568Z"
+            />
+          </svg>
         </div>
-        <div class="floating-task-description">
-          <h2>{{ this.TaskArrayService.selectedTask.description }}</h2>
+        <div
+          #prioMedium
+          class="prio-container-medium"
+          (click)="this.selectPriority('medium')"
+        >
+          <span>Medium</span>
+          <svg
+            width="20"
+            height="9"
+            viewBox="0 0 20 9"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M18.9041 8.22528H1.09589C0.805242 8.22528 0.526498 8.10898 0.320979 7.90197C0.11546 7.69495 0 7.41419 0 7.12143C0 6.82867 0.11546 6.5479 0.320979 6.34089C0.526498 6.13388 0.805242 6.01758 1.09589 6.01758H18.9041C19.1948 6.01758 19.4735 6.13388 19.679 6.34089C19.8845 6.5479 20 6.82867 20 7.12143C20 7.41419 19.8845 7.69495 19.679 7.90197C19.4735 8.10898 19.1948 8.22528 18.9041 8.22528Z"
+            />
+            <path
+              d="M18.9041 2.98211H1.09589C0.805242 2.98211 0.526498 2.86581 0.320979 2.6588C0.11546 2.45179 0 2.17102 0 1.87826C0 1.5855 0.11546 1.30474 0.320979 1.09772C0.526498 0.890712 0.805242 0.774414 1.09589 0.774414L18.9041 0.774414C19.1948 0.774414 19.4735 0.890712 19.679 1.09772C19.8845 1.30474 20 1.5855 20 1.87826C20 2.17102 19.8845 2.45179 19.679 2.6588C19.4735 2.86581 19.1948 2.98211 18.9041 2.98211Z"
+            />
+          </svg>
         </div>
-        <div class="floating-task-date">
-          <h2>Due date:</h2>
-          <span>{{ this.TaskArrayService.selectedTask.date }}</span>
+        <div
+          #prioLow
+          class="prio-container-low"
+          (click)="this.selectPriority('low')"
+        >
+          <span>Low</span>
+          <svg
+            width="21"
+            height="15"
+            viewBox="0 0 21 15"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M10.5 9.00589C10.2654 9.0063 10.0369 8.93145 9.84802 8.79238L0.944913 2.22264C0.829075 2.13708 0.731235 2.02957 0.65698 1.90623C0.582724 1.78289 0.533508 1.64614 0.51214 1.50379C0.468986 1.21631 0.541885 0.923473 0.714802 0.689701C0.887718 0.455928 1.14649 0.300371 1.43418 0.257248C1.72188 0.214126 2.01493 0.286972 2.24888 0.45976L10.5 6.54224L18.7511 0.45976C18.867 0.374204 18.9985 0.312285 19.1383 0.277538C19.2781 0.242791 19.4234 0.235896 19.5658 0.257248C19.7083 0.2786 19.8451 0.32778 19.9685 0.401981C20.092 0.476181 20.1996 0.573948 20.2852 0.689701C20.3708 0.805453 20.4328 0.936923 20.4676 1.07661C20.5023 1.21629 20.5092 1.36145 20.4879 1.50379C20.4665 1.64614 20.4173 1.78289 20.343 1.90623C20.2688 2.02957 20.1709 2.13708 20.0551 2.22264L11.152 8.79238C10.9631 8.93145 10.7346 9.0063 10.5 9.00589Z"
+            />
+            <path
+              d="M10.5 14.7544C10.2654 14.7548 10.0369 14.68 9.84802 14.5409L0.944913 7.97117C0.710967 7.79839 0.555294 7.53981 0.51214 7.25233C0.468986 6.96485 0.541886 6.67201 0.714802 6.43824C0.887718 6.20446 1.14649 6.04891 1.43418 6.00578C1.72188 5.96266 2.01493 6.03551 2.24888 6.2083L10.5 12.2908L18.7511 6.2083C18.9851 6.03551 19.2781 5.96266 19.5658 6.00578C19.8535 6.04891 20.1123 6.20446 20.2852 6.43824C20.4581 6.67201 20.531 6.96485 20.4879 7.25233C20.4447 7.53981 20.289 7.79839 20.0551 7.97117L11.152 14.5409C10.9631 14.68 10.7346 14.7548 10.5 14.7544Z"
+            />
+          </svg>
         </div>
-        <div class="floating-task-prio">
-          <h2>Priority:</h2>
-          <span>{{ this.TaskArrayService.selectedTask.prio }}</span>
+      </div>
+    </div>
+    <div class="addtask-assigned-box">
+      <h2>Assigned to<span> (optional)</span></h2>
+      <div class="assigned-contacts">
+        <div class="assigned-dropdown-menu">
+          <span>Select contacts to assign</span>
+        </div>
+        <div
+          *ngIf="!this.TaskArrayService.assignedDropdownVisible"
+          (click)="showAssignDropdown()"
+          class="arrow-container"
+        >
           <img
-            class="prio"
-            src="assets/img/board/prio_{{
-              this.TaskArrayService.selectedTask.prio
-            }}.svg"
+            src="assets/img/addtask/arrow_drop_down.png"
+            alt="arrow_down"
           />
         </div>
         <div
-          class="floating-task-assign-wrapper"
-          *ngIf="
-            TaskArrayService.selectedTask &&
-            TaskArrayService.selectedTask.assigned &&
-            TaskArrayService.selectedTask.assigned.length > 0
+          *ngIf="this.TaskArrayService.assignedDropdownVisible"
+          (click)="showAssignDropdown()"
+          class="arrow-container"
+        >
+          <img
+            src="assets/img/addtask/arrow_drop_down_up.png"
+            alt="arrow_up"
+          />
+        </div>
+      </div>
+      <div class="assigned-dropdown-container" #assignedDropdownEdit>
+        <div
+          *ngFor="let contact of this.ArraysService.contacts; let i = index"
+          class="assigned-user"
+        >
+          <div
+            [style.background-color]="this.ArraysService.contacts[i].color"
+            class="assigned-user-circle"
+          >
+            <div class="assigned-user-Initials">AT</div>
+          </div>
+          <span class="assigned-user-name">{{ contact.name }}</span>
+          <div>
+            <input
+              (change)="
+                this.TaskArrayService.pushToAssignedArray(contact.name)
+              "
+              type="checkbox"
+              name="assigned"
+            />
+          </div>
+        </div>
+        <!-- <div
+          *ngFor="let contact of this.ArraysService.contacts; let i = index"
+          class="assigned-user"
+        >
+          <div
+            [style.background-color]="this.ArraysService.contacts[i].color"
+            class="assigned-user-circle"
+          >
+            <div class="assigned-user-Initials">AT</div>
+          </div>
+          <span class="assigned-user-name">{{ contact.name }}</span>
+          <div>
+            <input (click)="this.TaskArrayService.pushToAssignedArray(this.ArraysService.contacts[i].name)" type="checkbox" name="assigned" />
+          </div>
+        </div> -->
+      </div>
+    </div>
+
+    <div class="addtask-left-bottom">
+      <h2>Category</h2>
+      <select
+        formControlName="category"
+        class="inputfield-add-task"
+        type="text"
+        name="category"
+      >
+        <option value="" disabled selected>Select a category</option>
+        <option class="sales" value="sales">Sales</option>
+        <option class="marketing" value="marketing">Marketing</option>
+        <option class="accounting" value="accounting">Accounting</option>
+        <option class="development" value="development">Development</option>
+        <option class="purchase" value="purchase">Purchase</option>
+      </select>
+    </div>
+    <div class="addtask-left-bottom">
+      <h2>Subtasks<span>(optional)</span></h2>
+      <div class="input-wrapper">
+        <input
+          formControlName="subtask"
+          name="subtask"
+          type="text"
+          placeholder="Enter a subtask"
+        />
+      </div>
+      <div class="add-btn-container">
+        <img
+          src="assets/img/addtask/add_btn.png"
+          (click)="this.TaskArrayService.addSubtask()"
+        />
+      </div>
+
+      <div
+        *ngFor="
+          let subtask of this.TaskArrayService.subtasks;
+          let i = index
+        "
+      >
+        <div class="subtask-container">
+          <span>{{ subtask }} </span>
+          <div class="subtask-btn-container">
+            <img
+              src="assets/img/board/delete.png"
+              (click)="this.TaskArrayService.deleteSubtask(i)"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="btn-container">
+        <button
+          (click)="hideAddtaskFloatingContainer()"
+          type="button"
+          class="clear-btn"
+        >
+          Close<img src="assets/img/addtask/clear_btn.svg" />
+        </button>
+        <button
+          [disabled]="
+            !(
+              this.TaskArrayService.addTaskForm.valid &&
+              (this.TaskArrayService.addTaskForm.dirty ||
+                this.TaskArrayService.addTaskForm.touched)
+            )
+          "
+          type="submit"
+          class="create-btn"
+        >
+          Create Task<img src="assets/img/addtask/create_btn.svg" />
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+</div>
+<!--end of hidden add Task floating container-->
+
+<!--hidden edit Task floating container-->
+<div
+*ngIf="this.TaskArrayService.selectedTask !== -1"
+#editTaskWrapper
+class="edittask-wrapper"
+>
+<div class="edittask-left">
+  <div class="headline">
+    <h1>Edit Task</h1>
+  </div>
+  <form
+    #editTaskForm="ngForm"
+    [formGroup]="this.TaskArrayService.editTaskForm"
+    (ngSubmit)="
+      this.TaskArrayService.editTask(
+        this.TaskArrayService.editTaskForm.value
+      );
+      this.hideEditTaskFloatingContainer();
+      this.showSuccessEditMessage();
+    "
+  >
+    <div class="edittask-left-top">
+      <div class="input-wrapper">
+        <input
+          formControlName="title"
+          name="title"
+          type="text"
+          placeholder="Enter a title"
+        />
+      </div>
+      <h2>Description <span>(optional)</span></h2>
+      <textarea
+        formControlName="description"
+        name="description"
+        type="text"
+        placeholder="Enter a description"
+        cols="30"
+        rows="10"
+      ></textarea>
+      <h2>Due date</h2>
+      <div>
+        <input
+          formControlName="date"
+          name="date"
+          type="date"
+          placeholder="dd/mm/yyyy"
+          min="{{ this.TaskArrayService.minDate }}"
+        />
+      </div>
+    </div>
+    <div class="edittask-left-prio">
+      <h2>Priority <span>(optional)</span></h2>
+      <div class="prio-box">
+        <div
+          #prioUrgent
+          class="prio-container-urgent"
+          (click)="this.selectPriority('urgent')"
+        >
+          <span>Urgent</span>
+          <svg
+            width="20"
+            height="15"
+            viewBox="0 0 20 15"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M18.9041 14.7547C18.6695 14.7551 18.441 14.6803 18.2521 14.5412L10 8.458L1.74797 14.5412C1.63212 14.6267 1.50054 14.6887 1.36073 14.7234C1.22093 14.7582 1.07565 14.7651 0.933183 14.7437C0.790715 14.7223 0.653851 14.6732 0.530406 14.599C0.406961 14.5247 0.299352 14.427 0.213723 14.3112C0.128094 14.1954 0.0661217 14.0639 0.031345 13.9243C-0.00343163 13.7846 -0.0103318 13.6394 0.0110384 13.497C0.0541974 13.2095 0.209888 12.9509 0.44386 12.7781L9.34797 6.20761C9.53667 6.06802 9.76524 5.99268 10 5.99268C10.2348 5.99268 10.4634 6.06802 10.6521 6.20761L19.5562 12.7781C19.7421 12.915 19.88 13.1071 19.9501 13.327C20.0203 13.5469 20.0191 13.7833 19.9468 14.0025C19.8745 14.2216 19.7348 14.4124 19.5475 14.5475C19.3603 14.6826 19.1351 14.7551 18.9041 14.7547Z"
+            />
+            <path
+              d="M18.9041 9.00568C18.6695 9.00609 18.441 8.93124 18.2521 8.79214L10 2.70898L1.74797 8.79214C1.514 8.96495 1.22091 9.0378 0.933188 8.99468C0.645461 8.95155 0.386663 8.79597 0.213727 8.56218C0.0407916 8.32838 -0.0321162 8.03551 0.0110429 7.74799C0.0542019 7.46048 0.209892 7.20187 0.443864 7.02906L9.34797 0.458588C9.53667 0.318997 9.76525 0.243652 10 0.243652C10.2348 0.243652 10.4634 0.318997 10.6521 0.458588L19.5562 7.02906C19.7421 7.16598 19.88 7.35809 19.9501 7.57797C20.0203 7.79785 20.0191 8.03426 19.9468 8.25344C19.8745 8.47262 19.7348 8.66338 19.5475 8.79847C19.3603 8.93356 19.1351 9.00608 18.9041 9.00568Z"
+            />
+          </svg>
+        </div>
+        <div
+          #prioMedium
+          class="prio-container-medium"
+          (click)="this.selectPriority('medium')"
+        >
+          <span>Medium</span>
+          <svg
+            width="20"
+            height="9"
+            viewBox="0 0 20 9"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M18.9041 8.22528H1.09589C0.805242 8.22528 0.526498 8.10898 0.320979 7.90197C0.11546 7.69495 0 7.41419 0 7.12143C0 6.82867 0.11546 6.5479 0.320979 6.34089C0.526498 6.13388 0.805242 6.01758 1.09589 6.01758H18.9041C19.1948 6.01758 19.4735 6.13388 19.679 6.34089C19.8845 6.5479 20 6.82867 20 7.12143C20 7.41419 19.8845 7.69495 19.679 7.90197C19.4735 8.10898 19.1948 8.22528 18.9041 8.22528Z"
+            />
+            <path
+              d="M18.9041 2.98211H1.09589C0.805242 2.98211 0.526498 2.86581 0.320979 2.6588C0.11546 2.45179 0 2.17102 0 1.87826C0 1.5855 0.11546 1.30474 0.320979 1.09772C0.526498 0.890712 0.805242 0.774414 1.09589 0.774414L18.9041 0.774414C19.1948 0.774414 19.4735 0.890712 19.679 1.09772C19.8845 1.30474 20 1.5855 20 1.87826C20 2.17102 19.8845 2.45179 19.679 2.6588C19.4735 2.86581 19.1948 2.98211 18.9041 2.98211Z"
+            />
+          </svg>
+        </div>
+        <div
+          #prioLow
+          class="prio-container-low"
+          (click)="this.selectPriority('low')"
+        >
+          <span>Low</span>
+          <svg
+            width="21"
+            height="15"
+            viewBox="0 0 21 15"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M10.5 9.00589C10.2654 9.0063 10.0369 8.93145 9.84802 8.79238L0.944913 2.22264C0.829075 2.13708 0.731235 2.02957 0.65698 1.90623C0.582724 1.78289 0.533508 1.64614 0.51214 1.50379C0.468986 1.21631 0.541885 0.923473 0.714802 0.689701C0.887718 0.455928 1.14649 0.300371 1.43418 0.257248C1.72188 0.214126 2.01493 0.286972 2.24888 0.45976L10.5 6.54224L18.7511 0.45976C18.867 0.374204 18.9985 0.312285 19.1383 0.277538C19.2781 0.242791 19.4234 0.235896 19.5658 0.257248C19.7083 0.2786 19.8451 0.32778 19.9685 0.401981C20.092 0.476181 20.1996 0.573948 20.2852 0.689701C20.3708 0.805453 20.4328 0.936923 20.4676 1.07661C20.5023 1.21629 20.5092 1.36145 20.4879 1.50379C20.4665 1.64614 20.4173 1.78289 20.343 1.90623C20.2688 2.02957 20.1709 2.13708 20.0551 2.22264L11.152 8.79238C10.9631 8.93145 10.7346 9.0063 10.5 9.00589Z"
+            />
+            <path
+              d="M10.5 14.7544C10.2654 14.7548 10.0369 14.68 9.84802 14.5409L0.944913 7.97117C0.710967 7.79839 0.555294 7.53981 0.51214 7.25233C0.468986 6.96485 0.541886 6.67201 0.714802 6.43824C0.887718 6.20446 1.14649 6.04891 1.43418 6.00578C1.72188 5.96266 2.01493 6.03551 2.24888 6.2083L10.5 12.2908L18.7511 6.2083C18.9851 6.03551 19.2781 5.96266 19.5658 6.00578C19.8535 6.04891 20.1123 6.20446 20.2852 6.43824C20.4581 6.67201 20.531 6.96485 20.4879 7.25233C20.4447 7.53981 20.289 7.79839 20.0551 7.97117L11.152 14.5409C10.9631 14.68 10.7346 14.7548 10.5 14.7544Z"
+            />
+          </svg>
+        </div>
+      </div>
+    </div>
+    <div class="edittask-assigned-box">
+      <h2>Assigned to<span> (optional)</span></h2>
+       <div class="assigned-contacts">
+        <div class="assigned-dropdown-menu">
+          <span>Select more contacts to assign</span>
+        </div>
+        <div
+          *ngIf="!this.TaskArrayService.assignedDropdownVisible"
+          (click)="showAssignDropdown()"
+          class="arrow-container"
+        >
+          <img
+            src="assets/img/addtask/arrow_drop_down.png"
+            alt="arrow_down"
+          />
+        </div>
+        <div
+          *ngIf="this.TaskArrayService.assignedDropdownVisible"
+          (click)="showAssignDropdown()"
+          class="arrow-container"
+        >
+          <img
+            src="assets/img/addtask/arrow_drop_down_up.png"
+            alt="arrow_up"
+          />
+        </div>
+      </div>
+      <div class="assigned-dropdown-container" #assignedDropdown>
+        <div
+          *ngFor="let contact of this.ArraysService.contacts; let i = index"
+          class="assigned-user"
+        >
+          <div
+            [style.background-color]="this.ArraysService.contacts[i].color"
+            class="assigned-user-circle"
+          >
+            <div class="assigned-user-Initials">AT</div>
+          </div>
+          <span class="assigned-user-name">{{ contact.name }}</span>
+          <div>
+            <input (change)="
+            this.TaskArrayService.pushToAssignedArrayFromEdit(contact)
+          " type="checkbox" name="assigned" />
+          </div>
+        </div>
+      </div>
+      <span>delete already assigned contacts:</span>
+      <div *ngIf="this.TaskArrayService.selectedTaskIndex" class="assigned-box">
+        <div
+        (click)="this.TaskArrayService.deleteAssignedFromTask(this.TaskArrayService.selectedTaskIndex,j)" 
+        *ngFor = "let assigned of this.TaskArrayService.tasks[this.TaskArrayService.selectedTaskIndex].assigned; let j = index"
+        class="assigned-box">
+        <div
+        [style.background-color]="assigned.color"
+        class="contacts-usercircle"
+      >
+        {{ assigned.initials }}
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="edittask-left-bottom">
+      <h2>Category</h2>
+      <select
+        formControlName="category"
+        class="inputfield-add-task"
+        type="text"
+        name="category"
+      >
+        <option value="" disabled selected>Select a category</option>
+        <option class="sales" value="sales">Sales</option>
+        <option class="marketing" value="marketing">Marketing</option>
+        <option class="accounting" value="accounting">Accounting</option>
+        <option class="development" value="development">Development</option>
+        <option class="purchase" value="purchase">Purchase</option>
+      </select>
+    </div>
+    <div class="edittask-left-bottom">
+      <h2>Subtasks<span>(optional)</span></h2>
+      <div class="input-wrapper">
+        <input
+          formControlName="subtask"
+          name="subtask"
+          type="text"
+          placeholder="Enter a subtask"
+        />
+      </div>
+      <div class="add-btn-container">
+        <img
+          src="assets/img/addtask/add_btn.png"
+          (click)="this.TaskArrayService.addSubtaskFromEdit()"
+        />
+      </div>
+
+      <div
+        *ngIf="
+          this.TaskArrayService.tasks &&
+          this.TaskArrayService.tasks[
+            this.TaskArrayService.selectedTaskIndex
+          ]
+        "
+      >
+        <!-- <div *ngFor="let subtask of this.TaskArrayService.tasks[this.TaskArrayService.selectedTaskIndex].subtask; let i = index">         
+        <div class="subtask-container">
+          <span>{{ subtask }} </span>
+          <div class="subtask-btn-container">
+            <img
+              src="assets/img/board/delete.png"
+              (click)="this.TaskArrayService.deleteSubtaskFromEdit(i)"
+            />
+          </div>
+        </div>
+      </div> -->
+
+        <div
+          *ngFor="
+            let subtask of this.TaskArrayService.subtasks;
+            let i = index
           "
         >
-          <h2>Assigned to:</h2>
-          <div class="assigned-wrapper">
+          <div class="subtask-container">
+            <span>{{ subtask }} </span>
+            <div class="subtask-btn-container">
+              <img
+                src="assets/img/board/delete.png"
+                (click)="
+                  this.TaskArrayService.deleteSubtask(i);
+                  this.TaskArrayService.deleteSubtaskFromEdit(i)
+                "
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="btn-container">
+        <button
+          (click)="hideEditTaskFloatingContainer()"
+          type="button"
+          class="clear-btn"
+        >
+          Close<img src="assets/img/addtask/clear_btn.svg" />
+        </button>
+        <button
+          [disabled]="
+            !(
+              this.TaskArrayService.editTaskForm.valid &&
+              (this.TaskArrayService.editTaskForm.dirty ||
+                this.TaskArrayService.editTaskForm.touched)
+            )
+          "
+          type="submit"
+          class="create-btn"
+        >
+          Edit Task<img src="assets/img/addtask/create_btn.svg" />
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+</div>
+<!--end of hidden edit Task floating container-->
+<div class="board-top">
+<div class="search">
+  <input type="text" placeholder="Find Task" (input)="onSearch($event)" />
+</div>
+<button (click)="showAddtaskFloatingContainer('toDo')" class="addtask-btn">
+  Add task <img src="assets/img/board/addtask_btn.svg" />
+</button>
+</div>
+<div #taskCategoryWrapper class="task-category-wrapper">
+<div class="category">
+  <div class="headline">
+    <h2>To do</h2>
+    <img
+      (click)="showAddtaskFloatingContainer('toDo')"
+      src="assets/img/board/plus button.svg"
+    />
+  </div>
+  <div
+    #toDo
+    (drop)="
+      this.DragAndDropService.moveTo('toDo'); this.removeHighlight('toDo')
+    "
+    (dragover)="
+      this.DragAndDropService.allowDrop($event); this.highlight('toDo')
+    "
+    (dragleave)="this.removeHighlight('toDo')"
+    id="toDo"
+    class="task-container"
+  >
+    <div *ngIf="searchFieldActive">
+      <div
+        draggable="true"
+        (dragstart)="this.DragAndDropService.dragStart(i, 'toDo')"
+        (click)="openTask(i, 'toDo')"
+        *ngFor="
+          let task of this.TaskArrayService.filteredToDo;
+          let i = index
+        "
+        class="single-task"
+      >
+        <div class="single-task-top">
+          <div
+            [style.background-color]="getCategoryColor(task.category)"
+            class="task-category"
+          >
+            {{ task.category }}
+          </div>
+          <div class="btn-container">
             <div
-              *ngFor="
-                let assignedContact of TaskArrayService.selectedTask.assigned;
-                let i = index
+              (click)="
+                this.DragAndDropService.moveToNewStatusMobile(
+                  i,
+                  'toDo',
+                  'inProgress'
+                );
+                $event.stopPropagation()
               "
+              class="btn-down"
+            >
+              <img src="assets/img/board/down.png" />
+            </div>
+          </div>
+        </div>
+        <div class="task-content">
+          <div class="task-name">
+            {{ task.title }}
+          </div>
+          <div class="task-description">
+            {{ task.description }}
+          </div>
+        </div>
+        <div
+          *ngIf="task.subtask && task.subtask.length > 0"
+          class="progressbar"
+        >
+          <progress id="file" [max]="task.subtask.length"></progress>
+        </div>
+        <div class="single-task-bottom">
+          <div *ngIf="this.TaskArrayService.tasks[i].assigned >= 0" class="assigned-contacts">
+            <div
+              *ngFor="let assignedContact of task.assigned; let j = index"
               class="assigned-box"
             >
               <div
-                [style.background-color]="
-                  this.TaskArrayService.selectedTask.assigned[i].color
-                "
+                [style.background-color]="assignedContact.color"
                 class="contacts-usercircle"
               >
                 {{ assignedContact.initials }}
               </div>
             </div>
           </div>
-        </div>
-
-        <div
-          *ngIf="
-            TaskArrayService.selectedTask &&
-            TaskArrayService.selectedTask.subtask &&
-            TaskArrayService.selectedTask.subtask.length > 0
-          "
-        >
-          <div class="floating-task-subtask">
-            <h2>Subtasks:</h2>
-            <ul>
-              <li
-                *ngFor="
-                  let subtask of TaskArrayService.selectedTask.subtask;
-                  let i = index
-                "
-              >
-                <span>{{ subtask }}<input type="checkbox" /></span>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="floating-task-bottom">
-        <div class="floating-task-btn">
-          <button
-            type="button"
-            (click)="deleteTask()"
-            class="floating-task-btn-cancel"
-          >
-            <img src="assets/img/board/delete.png" />
-            Delete
-          </button>
-          <button
-            (click)="
-              showEditTaskFloatingContainer(this.TaskArrayService.selectedTask)
-            "
-            class="floating-task-btn-edit"
-          >
-            <img src="assets/img/board/edit.png" />Edit
-          </button>
+          <img
+            class="prio"
+            src="assets/img/board/prio_{{ task.prio }}.svg"
+          />
         </div>
       </div>
     </div>
-  </div>
-  <!---- End of Hidden Task floating Container---->
-  <!--hidden add Task floating container-->
-  <div #addtaskWrapper class="addtask-wrapper">
-    <div class="addtask-left">
-      <div class="headline">
-        <h1>Add Task</h1>
-      </div>
-      <form
-        [formGroup]="this.TaskArrayService.addTaskForm"
-        (ngSubmit)="
-          this.TaskArrayService.addTask(
-            this.TaskArrayService.addTaskForm.value
-          );
-          this.hideAddtaskFloatingContainer();
-          this.showSuccessEditMessage()
-        "
+
+    <div *ngIf="!searchFieldActive">
+      <div
+        draggable="true"
+        (dragstart)="this.DragAndDropService.dragStart(i, 'toDo')"
+        (click)="openTask(i, 'toDo')"
+        *ngFor="let task of this.TaskArrayService.toDo; let i = index"
+        class="single-task"
       >
-        <div class="addtask-left-top">
-          <div class="input-wrapper">
-            <input
-              formControlName="title"
-              name="title"
-              type="text"
-              placeholder="Enter a title"
-            />
-          </div>
-          <h2>Description <span>(optional)</span></h2>
-          <textarea
-            formControlName="description"
-            name="description"
-            type="text"
-            placeholder="Enter a description"
-            cols="30"
-            rows="10"
-          ></textarea>
-          <h2>Due date</h2>
-          <div>
-            <input
-              formControlName="date"
-              name="date"
-              type="date"
-              placeholder="dd/mm/yyyy"
-              min="{{ this.TaskArrayService.minDate }}"
-            />
-          </div>
-        </div>
-        <div class="addtask-left-prio">
-          <h2>Priority <span>(optional)</span></h2>
-          <div class="prio-box">
-            <div
-              #prioUrgent
-              class="prio-container-urgent"
-              (click)="this.selectPriority('urgent')"
-            >
-              <span>Urgent</span>
-              <svg
-                width="20"
-                height="15"
-                viewBox="0 0 20 15"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M18.9041 14.7547C18.6695 14.7551 18.441 14.6803 18.2521 14.5412L10 8.458L1.74797 14.5412C1.63212 14.6267 1.50054 14.6887 1.36073 14.7234C1.22093 14.7582 1.07565 14.7651 0.933183 14.7437C0.790715 14.7223 0.653851 14.6732 0.530406 14.599C0.406961 14.5247 0.299352 14.427 0.213723 14.3112C0.128094 14.1954 0.0661217 14.0639 0.031345 13.9243C-0.00343163 13.7846 -0.0103318 13.6394 0.0110384 13.497C0.0541974 13.2095 0.209888 12.9509 0.44386 12.7781L9.34797 6.20761C9.53667 6.06802 9.76524 5.99268 10 5.99268C10.2348 5.99268 10.4634 6.06802 10.6521 6.20761L19.5562 12.7781C19.7421 12.915 19.88 13.1071 19.9501 13.327C20.0203 13.5469 20.0191 13.7833 19.9468 14.0025C19.8745 14.2216 19.7348 14.4124 19.5475 14.5475C19.3603 14.6826 19.1351 14.7551 18.9041 14.7547Z"
-                />
-                <path
-                  d="M18.9041 9.00568C18.6695 9.00609 18.441 8.93124 18.2521 8.79214L10 2.70898L1.74797 8.79214C1.514 8.96495 1.22091 9.0378 0.933188 8.99468C0.645461 8.95155 0.386663 8.79597 0.213727 8.56218C0.0407916 8.32838 -0.0321162 8.03551 0.0110429 7.74799C0.0542019 7.46048 0.209892 7.20187 0.443864 7.02906L9.34797 0.458588C9.53667 0.318997 9.76525 0.243652 10 0.243652C10.2348 0.243652 10.4634 0.318997 10.6521 0.458588L19.5562 7.02906C19.7421 7.16598 19.88 7.35809 19.9501 7.57797C20.0203 7.79785 20.0191 8.03426 19.9468 8.25344C19.8745 8.47262 19.7348 8.66338 19.5475 8.79847C19.3603 8.93356 19.1351 9.00608 18.9041 9.00568Z"
-                />
-              </svg>
-            </div>
-            <div
-              #prioMedium
-              class="prio-container-medium"
-              (click)="this.selectPriority('medium')"
-            >
-              <span>Medium</span>
-              <svg
-                width="20"
-                height="9"
-                viewBox="0 0 20 9"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M18.9041 8.22528H1.09589C0.805242 8.22528 0.526498 8.10898 0.320979 7.90197C0.11546 7.69495 0 7.41419 0 7.12143C0 6.82867 0.11546 6.5479 0.320979 6.34089C0.526498 6.13388 0.805242 6.01758 1.09589 6.01758H18.9041C19.1948 6.01758 19.4735 6.13388 19.679 6.34089C19.8845 6.5479 20 6.82867 20 7.12143C20 7.41419 19.8845 7.69495 19.679 7.90197C19.4735 8.10898 19.1948 8.22528 18.9041 8.22528Z"
-                />
-                <path
-                  d="M18.9041 2.98211H1.09589C0.805242 2.98211 0.526498 2.86581 0.320979 2.6588C0.11546 2.45179 0 2.17102 0 1.87826C0 1.5855 0.11546 1.30474 0.320979 1.09772C0.526498 0.890712 0.805242 0.774414 1.09589 0.774414L18.9041 0.774414C19.1948 0.774414 19.4735 0.890712 19.679 1.09772C19.8845 1.30474 20 1.5855 20 1.87826C20 2.17102 19.8845 2.45179 19.679 2.6588C19.4735 2.86581 19.1948 2.98211 18.9041 2.98211Z"
-                />
-              </svg>
-            </div>
-            <div
-              #prioLow
-              class="prio-container-low"
-              (click)="this.selectPriority('low')"
-            >
-              <span>Low</span>
-              <svg
-                width="21"
-                height="15"
-                viewBox="0 0 21 15"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M10.5 9.00589C10.2654 9.0063 10.0369 8.93145 9.84802 8.79238L0.944913 2.22264C0.829075 2.13708 0.731235 2.02957 0.65698 1.90623C0.582724 1.78289 0.533508 1.64614 0.51214 1.50379C0.468986 1.21631 0.541885 0.923473 0.714802 0.689701C0.887718 0.455928 1.14649 0.300371 1.43418 0.257248C1.72188 0.214126 2.01493 0.286972 2.24888 0.45976L10.5 6.54224L18.7511 0.45976C18.867 0.374204 18.9985 0.312285 19.1383 0.277538C19.2781 0.242791 19.4234 0.235896 19.5658 0.257248C19.7083 0.2786 19.8451 0.32778 19.9685 0.401981C20.092 0.476181 20.1996 0.573948 20.2852 0.689701C20.3708 0.805453 20.4328 0.936923 20.4676 1.07661C20.5023 1.21629 20.5092 1.36145 20.4879 1.50379C20.4665 1.64614 20.4173 1.78289 20.343 1.90623C20.2688 2.02957 20.1709 2.13708 20.0551 2.22264L11.152 8.79238C10.9631 8.93145 10.7346 9.0063 10.5 9.00589Z"
-                />
-                <path
-                  d="M10.5 14.7544C10.2654 14.7548 10.0369 14.68 9.84802 14.5409L0.944913 7.97117C0.710967 7.79839 0.555294 7.53981 0.51214 7.25233C0.468986 6.96485 0.541886 6.67201 0.714802 6.43824C0.887718 6.20446 1.14649 6.04891 1.43418 6.00578C1.72188 5.96266 2.01493 6.03551 2.24888 6.2083L10.5 12.2908L18.7511 6.2083C18.9851 6.03551 19.2781 5.96266 19.5658 6.00578C19.8535 6.04891 20.1123 6.20446 20.2852 6.43824C20.4581 6.67201 20.531 6.96485 20.4879 7.25233C20.4447 7.53981 20.289 7.79839 20.0551 7.97117L11.152 14.5409C10.9631 14.68 10.7346 14.7548 10.5 14.7544Z"
-                />
-              </svg>
-            </div>
-          </div>
-        </div>
-        <div class="addtask-assigned-box">
-          <h2>Assigned to<span> (optional)</span></h2>
-          <div class="assigned-contacts">
-            <div class="assigned-dropdown-menu">
-              <span>Select contacts to assign</span>
-            </div>
-            <div
-              *ngIf="!this.TaskArrayService.assignedDropdownVisible"
-              (click)="showAssignDropdown()"
-              class="arrow-container"
-            >
-              <img
-                src="assets/img/addtask/arrow_drop_down.png"
-                alt="arrow_down"
-              />
-            </div>
-            <div
-              *ngIf="this.TaskArrayService.assignedDropdownVisible"
-              (click)="showAssignDropdown()"
-              class="arrow-container"
-            >
-              <img
-                src="assets/img/addtask/arrow_drop_down_up.png"
-                alt="arrow_up"
-              />
-            </div>
-          </div>
-          <div class="assigned-dropdown-container" #assignedDropdownEdit>
-            <div
-            *ngFor="let contact of this.ArraysService.contacts; let i = index"
-            class="assigned-user"
-          >
-            <div
-              [style.background-color]="this.ArraysService.contacts[i].color"
-              class="assigned-user-circle"
-            >
-              <div class="assigned-user-Initials">AT</div>
-            </div>
-            <span class="assigned-user-name">{{ contact.name }}</span>
-            <div>
-              <input (change)="this.TaskArrayService.pushToAssignedArray(contact)" type="checkbox" name="assigned" />
-            </div>
-          </div>
-            <!-- <div
-              *ngFor="let contact of this.ArraysService.contacts; let i = index"
-              class="assigned-user"
-            >
-              <div
-                [style.background-color]="this.ArraysService.contacts[i].color"
-                class="assigned-user-circle"
-              >
-                <div class="assigned-user-Initials">AT</div>
-              </div>
-              <span class="assigned-user-name">{{ contact.name }}</span>
-              <div>
-                <input (click)="this.TaskArrayService.pushToAssignedArray(this.ArraysService.contacts[i].name)" type="checkbox" name="assigned" />
-              </div>
-            </div> -->
-          </div>
-        </div>
-
-        <div class="addtask-left-bottom">
-          <h2>Category</h2>
-          <select
-            formControlName="category"
-            class="inputfield-add-task"
-            type="text"
-            name="category"
-          >
-            <option value="" disabled selected>Select a category</option>
-            <option class="sales" value="sales">Sales</option>
-            <option class="marketing" value="marketing">Marketing</option>
-            <option class="accounting" value="accounting">Accounting</option>
-            <option class="development" value="development">Development</option>
-            <option class="purchase" value="purchase">Purchase</option>
-          </select>
-        </div>
-        <div class="addtask-left-bottom">
-          <h2>Subtasks<span>(optional)</span></h2>
-          <div class="input-wrapper">
-            <input
-              formControlName="subtask"
-              name="subtask"
-              type="text"
-              placeholder="Enter a subtask"
-            />
-          </div>
-          <div class="add-btn-container">
-            <img
-              src="assets/img/addtask/add_btn.png"
-              (click)="this.TaskArrayService.addSubtask()"
-            />
-          </div>
-
+        <div class="single-task-top">
           <div
-            *ngFor="
-              let subtask of this.TaskArrayService.subtasks;
-              let i = index
-            "
+            [style.background-color]="getCategoryColor(task.category)"
+            class="task-category"
           >
-            <div class="subtask-container">
-              <span>{{ subtask }} </span>
-              <div class="subtask-btn-container">
-                <img
-                  src="assets/img/board/delete.png"
-                  (click)="this.TaskArrayService.deleteSubtask(i)"
-                />
-              </div>
-            </div>
+            {{ task.category }}
           </div>
           <div class="btn-container">
-            <button
-              (click)="hideAddtaskFloatingContainer()"
-              type="button"
-              class="clear-btn"
-            >
-              Close<img src="assets/img/addtask/clear_btn.svg" />
-            </button>
-            <button
-              [disabled]="
-                !(
-                  this.TaskArrayService.addTaskForm.valid &&
-                  (this.TaskArrayService.addTaskForm.dirty ||
-                    this.TaskArrayService.addTaskForm.touched)
-                )
+            <div
+              (click)="
+                this.DragAndDropService.moveToNewStatusMobile(
+                  i,
+                  'toDo',
+                  'inProgress'
+                );
+                $event.stopPropagation()
               "
-              type="submit"
-              class="create-btn"
+              class="btn-down"
             >
-              Create Task<img src="assets/img/addtask/create_btn.svg" />
-            </button>
-          </div>
-        </div>
-      </form>
-    </div>
-  </div>
-  <!--end of hidden add Task floating container-->
-
-  <!--hidden edit Task floating container-->
-  <div
-    *ngIf="this.TaskArrayService.selectedTask !== -1"
-    #editTaskWrapper
-    class="edittask-wrapper"
-  >
-    <div class="edittask-left">
-      <div class="headline">
-        <h1>Edit Task</h1>
-      </div>
-      <form
-        #editTaskForm="ngForm"
-        [formGroup]="this.TaskArrayService.editTaskForm"
-        (ngSubmit)="
-          this.TaskArrayService.editTask(
-            this.TaskArrayService.editTaskForm.value
-          );
-          this.hideEditTaskFloatingContainer();
-          this.showSuccessEditMessage();
-        "
-      >
-        <div class="edittask-left-top">
-          <div class="input-wrapper">
-            <input
-              formControlName="title"
-              name="title"
-              type="text"
-              placeholder="Enter a title"
-            />
-          </div>
-          <h2>Description <span>(optional)</span></h2>
-          <textarea
-            formControlName="description"
-            name="description"
-            type="text"
-            placeholder="Enter a description"
-            cols="30"
-            rows="10"
-          ></textarea>
-          <h2>Due date</h2>
-          <div>
-            <input
-              formControlName="date"
-              name="date"
-              type="date"
-              placeholder="dd/mm/yyyy"
-              min="{{ this.TaskArrayService.minDate }}"
-            />
-          </div>
-        </div>
-        <div class="edittask-left-prio">
-          <!-- TODO Prio NOW in Edit Task <div class="floating-task-prio">
-            <h2>Priority now:</h2>
-            <span>{{ this.TaskArrayService.tasks[this.TaskArrayService.selectedTaskIndex].prio }}</span>
-            <img
-              class="prio"
-              src="assets/img/board/prio_{{
-                this.TaskArrayService.tasks[this.TaskArrayService.selectedTaskIndex].prio 
-              }}.svg"
-            />
-          </div> -->
-          <h2>new Priority <span>(optional)</span></h2>
-          <div class="prio-box">
-            <div
-              #prioUrgentEdit
-              class="prio-container-urgent"
-              (click)="this.selectPriorityEdit('urgent')"
-            >
-              <span>Urgent</span>
-              <svg
-                width="20"
-                height="15"
-                viewBox="0 0 20 15"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M18.9041 14.7547C18.6695 14.7551 18.441 14.6803 18.2521 14.5412L10 8.458L1.74797 14.5412C1.63212 14.6267 1.50054 14.6887 1.36073 14.7234C1.22093 14.7582 1.07565 14.7651 0.933183 14.7437C0.790715 14.7223 0.653851 14.6732 0.530406 14.599C0.406961 14.5247 0.299352 14.427 0.213723 14.3112C0.128094 14.1954 0.0661217 14.0639 0.031345 13.9243C-0.00343163 13.7846 -0.0103318 13.6394 0.0110384 13.497C0.0541974 13.2095 0.209888 12.9509 0.44386 12.7781L9.34797 6.20761C9.53667 6.06802 9.76524 5.99268 10 5.99268C10.2348 5.99268 10.4634 6.06802 10.6521 6.20761L19.5562 12.7781C19.7421 12.915 19.88 13.1071 19.9501 13.327C20.0203 13.5469 20.0191 13.7833 19.9468 14.0025C19.8745 14.2216 19.7348 14.4124 19.5475 14.5475C19.3603 14.6826 19.1351 14.7551 18.9041 14.7547Z"
-                />
-                <path
-                  d="M18.9041 9.00568C18.6695 9.00609 18.441 8.93124 18.2521 8.79214L10 2.70898L1.74797 8.79214C1.514 8.96495 1.22091 9.0378 0.933188 8.99468C0.645461 8.95155 0.386663 8.79597 0.213727 8.56218C0.0407916 8.32838 -0.0321162 8.03551 0.0110429 7.74799C0.0542019 7.46048 0.209892 7.20187 0.443864 7.02906L9.34797 0.458588C9.53667 0.318997 9.76525 0.243652 10 0.243652C10.2348 0.243652 10.4634 0.318997 10.6521 0.458588L19.5562 7.02906C19.7421 7.16598 19.88 7.35809 19.9501 7.57797C20.0203 7.79785 20.0191 8.03426 19.9468 8.25344C19.8745 8.47262 19.7348 8.66338 19.5475 8.79847C19.3603 8.93356 19.1351 9.00608 18.9041 9.00568Z"
-                />
-              </svg>
-            </div>
-            <div
-              #prioMediumEdit
-              class="prio-container-medium"
-              (click)="this.selectPriorityEdit('medium')"
-            >
-              <span>Medium</span>
-              <svg
-                width="20"
-                height="9"
-                viewBox="0 0 20 9"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M18.9041 8.22528H1.09589C0.805242 8.22528 0.526498 8.10898 0.320979 7.90197C0.11546 7.69495 0 7.41419 0 7.12143C0 6.82867 0.11546 6.5479 0.320979 6.34089C0.526498 6.13388 0.805242 6.01758 1.09589 6.01758H18.9041C19.1948 6.01758 19.4735 6.13388 19.679 6.34089C19.8845 6.5479 20 6.82867 20 7.12143C20 7.41419 19.8845 7.69495 19.679 7.90197C19.4735 8.10898 19.1948 8.22528 18.9041 8.22528Z"
-                />
-                <path
-                  d="M18.9041 2.98211H1.09589C0.805242 2.98211 0.526498 2.86581 0.320979 2.6588C0.11546 2.45179 0 2.17102 0 1.87826C0 1.5855 0.11546 1.30474 0.320979 1.09772C0.526498 0.890712 0.805242 0.774414 1.09589 0.774414L18.9041 0.774414C19.1948 0.774414 19.4735 0.890712 19.679 1.09772C19.8845 1.30474 20 1.5855 20 1.87826C20 2.17102 19.8845 2.45179 19.679 2.6588C19.4735 2.86581 19.1948 2.98211 18.9041 2.98211Z"
-                />
-              </svg>
-            </div>
-            <div
-              #prioLowEdit
-              class="prio-container-low"
-              (click)="this.selectPriorityEdit('low')"
-            >
-              <span>Low</span>
-              <svg
-                width="21"
-                height="15"
-                viewBox="0 0 21 15"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M10.5 9.00589C10.2654 9.0063 10.0369 8.93145 9.84802 8.79238L0.944913 2.22264C0.829075 2.13708 0.731235 2.02957 0.65698 1.90623C0.582724 1.78289 0.533508 1.64614 0.51214 1.50379C0.468986 1.21631 0.541885 0.923473 0.714802 0.689701C0.887718 0.455928 1.14649 0.300371 1.43418 0.257248C1.72188 0.214126 2.01493 0.286972 2.24888 0.45976L10.5 6.54224L18.7511 0.45976C18.867 0.374204 18.9985 0.312285 19.1383 0.277538C19.2781 0.242791 19.4234 0.235896 19.5658 0.257248C19.7083 0.2786 19.8451 0.32778 19.9685 0.401981C20.092 0.476181 20.1996 0.573948 20.2852 0.689701C20.3708 0.805453 20.4328 0.936923 20.4676 1.07661C20.5023 1.21629 20.5092 1.36145 20.4879 1.50379C20.4665 1.64614 20.4173 1.78289 20.343 1.90623C20.2688 2.02957 20.1709 2.13708 20.0551 2.22264L11.152 8.79238C10.9631 8.93145 10.7346 9.0063 10.5 9.00589Z"
-                />
-                <path
-                  d="M10.5 14.7544C10.2654 14.7548 10.0369 14.68 9.84802 14.5409L0.944913 7.97117C0.710967 7.79839 0.555294 7.53981 0.51214 7.25233C0.468986 6.96485 0.541886 6.67201 0.714802 6.43824C0.887718 6.20446 1.14649 6.04891 1.43418 6.00578C1.72188 5.96266 2.01493 6.03551 2.24888 6.2083L10.5 12.2908L18.7511 6.2083C18.9851 6.03551 19.2781 5.96266 19.5658 6.00578C19.8535 6.04891 20.1123 6.20446 20.2852 6.43824C20.4581 6.67201 20.531 6.96485 20.4879 7.25233C20.4447 7.53981 20.289 7.79839 20.0551 7.97117L11.152 14.5409C10.9631 14.68 10.7346 14.7548 10.5 14.7544Z"
-                />
-              </svg>
+              <img src="assets/img/board/down.png" />
             </div>
           </div>
         </div>
-        <div class="edittask-assigned-box">
-          <h2>Assigned to<span> (optional)</span></h2>
-           <div class="assigned-contacts">
-            <div class="assigned-dropdown-menu">
-              <span>Select more contacts to assign</span>
-            </div>
-            <div
-              *ngIf="!this.TaskArrayService.assignedDropdownVisible"
-              (click)="showAssignDropdown()"
-              class="arrow-container"
-            >
-              <img
-                src="assets/img/addtask/arrow_drop_down.png"
-                alt="arrow_down"
-              />
-            </div>
-            <div
-              *ngIf="this.TaskArrayService.assignedDropdownVisible"
-              (click)="showAssignDropdown()"
-              class="arrow-container"
-            >
-              <img
-                src="assets/img/addtask/arrow_drop_down_up.png"
-                alt="arrow_up"
-              />
-            </div>
+        <div class="task-content">
+          <div class="task-name">
+            {{ task.title }}
           </div>
-          <div class="assigned-dropdown-container" #assignedDropdown>
-            <div
-              *ngFor="let contact of this.ArraysService.contacts; let i = index"
-              class="assigned-user"
-            >
-              <div
-                [style.background-color]="this.ArraysService.contacts[i].color"
-                class="assigned-user-circle"
-              >
-                <div class="assigned-user-Initials">AT</div>
-              </div>
-              <span class="assigned-user-name">{{ contact.name }}</span>
-              <div>
-                <input (change)="
-                this.TaskArrayService.pushToAssignedArrayFromEdit(contact)
-              " type="checkbox" name="assigned" />
-              </div>
-            </div>
-          </div>
-          <span>delete already assigned contacts:</span>
-          <div *ngIf="this.TaskArrayService.selectedTaskIndex" class="assigned-box">
-            <div
-            (click)="this.TaskArrayService.deleteAssignedFromTask(this.TaskArrayService.selectedTaskIndex,j)" 
-            *ngFor = "let assigned of this.TaskArrayService.tasks[this.TaskArrayService.selectedTaskIndex].assigned; let j = index"
-            class="assigned-box">
-            <div
-            [style.background-color]="assigned.color"
-            class="contacts-usercircle"
-          >
-            {{ assigned.initials }}
-          </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="edittask-left-bottom">
-          <h2>Category</h2>
-          <select
-            formControlName="category"
-            class="inputfield-add-task"
-            type="text"
-            name="category"
-          >
-            <option value="" disabled selected>Select a category</option>
-            <option class="sales" value="sales">Sales</option>
-            <option class="marketing" value="marketing">Marketing</option>
-            <option class="accounting" value="accounting">Accounting</option>
-            <option class="development" value="development">Development</option>
-            <option class="purchase" value="purchase">Purchase</option>
-          </select>
-        </div>
-        <div class="edittask-left-bottom">
-          <h2>Subtasks<span>(optional)</span></h2>
-          <div class="input-wrapper">
-            <input
-              formControlName="subtask"
-              name="subtask"
-              type="text"
-              placeholder="Enter a subtask"
-            />
-          </div>
-          <div class="add-btn-container">
-            <img
-              src="assets/img/addtask/add_btn.png"
-              (click)="this.TaskArrayService.addSubtaskFromEdit()"
-            />
-          </div>
-
-          <div
-            *ngIf="
-              this.TaskArrayService.tasks &&
-              this.TaskArrayService.tasks[
-                this.TaskArrayService.selectedTaskIndex
-              ]
-            "
-          >
-            <!-- <div *ngFor="let subtask of this.TaskArrayService.tasks[this.TaskArrayService.selectedTaskIndex].subtask; let i = index">         
-            <div class="subtask-container">
-              <span>{{ subtask }} </span>
-              <div class="subtask-btn-container">
-                <img
-                  src="assets/img/board/delete.png"
-                  (click)="this.TaskArrayService.deleteSubtaskFromEdit(i)"
-                />
-              </div>
-            </div>
-          </div> -->
-
-            <div
-              *ngFor="
-                let subtask of this.TaskArrayService.subtasks;
-                let i = index
-              "
-            >
-              <div class="subtask-container">
-                <span>{{ subtask }} </span>
-                <div class="subtask-btn-container">
-                  <img
-                    src="assets/img/board/delete.png"
-                    (click)="
-                      this.TaskArrayService.deleteSubtask(i);
-                      this.TaskArrayService.deleteSubtaskFromEdit(i)
-                    "
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="btn-container">
-            <button
-              (click)="hideEditTaskFloatingContainer()"
-              type="button"
-              class="clear-btn"
-            >
-              Close<img src="assets/img/addtask/clear_btn.svg" />
-            </button>
-            <button
-              [disabled]="
-                !(
-                  this.TaskArrayService.editTaskForm.valid &&
-                  (this.TaskArrayService.editTaskForm.dirty ||
-                    this.TaskArrayService.editTaskForm.touched)
-                )
-              "
-              type="submit"
-              class="create-btn"
-            >
-              Edit Task<img src="assets/img/addtask/create_btn.svg" />
-            </button>
-          </div>
-        </div>
-      </form>
-    </div>
-  </div>
-  <!--end of hidden edit Task floating container-->
-  <div class="board-top">
-    <div class="search">
-      <input type="text" placeholder="Find Task" (input)="onSearch($event)" />
-    </div>
-    <button (click)="showAddtaskFloatingContainer('toDo')" class="addtask-btn">
-      Add task <img src="assets/img/board/addtask_btn.svg" />
-    </button>
-  </div>
-  <div #taskCategoryWrapper class="task-category-wrapper">
-    <div class="category">
-      <div class="headline">
-        <h2>To do</h2>
-        <img
-          (click)="showAddtaskFloatingContainer('toDo')"
-          src="assets/img/board/plus button.svg"
-        />
-      </div>
-      <div
-        #toDo
-        (drop)="
-          this.DragAndDropService.moveTo('toDo'); this.removeHighlight('toDo')
-        "
-        (dragover)="
-          this.DragAndDropService.allowDrop($event); this.highlight('toDo')
-        "
-        (dragleave)="this.removeHighlight('toDo')"
-        id="toDo"
-        class="task-container"
-      >
-        <div *ngIf="searchFieldActive">
-          <div
-            draggable="true"
-            (dragstart)="this.DragAndDropService.dragStart(i, 'toDo')"
-            (click)="openTask(i, 'toDo')"
-            *ngFor="
-              let task of this.TaskArrayService.filteredToDo;
-              let i = index
-            "
-            class="single-task"
-          >
-            <div class="single-task-top">
-              <div
-                [style.background-color]="getCategoryColor(task.category)"
-                class="task-category"
-              >
-                {{ task.category }}
-              </div>
-              <div class="btn-container">
-                <div
-                  (click)="
-                    this.DragAndDropService.moveToNewStatusMobile(
-                      i,
-                      'toDo',
-                      'inProgress'
-                    );
-                    $event.stopPropagation()
-                  "
-                  class="btn-down"
-                >
-                  <img src="assets/img/board/down.png" />
-                </div>
-              </div>
-            </div>
-            <div class="task-content">
-              <div class="task-name">
-                {{ task.title }}
-              </div>
-              <div class="task-description">
-                {{ task.description }}
-              </div>
-            </div>
-            <div
-              *ngIf="task.subtask && task.subtask.length > 0"
-              class="progressbar"
-            >
-              <progress id="file" [max]="task.subtask.length"></progress>
-            </div>
-            <div class="single-task-bottom">
-              <div class="assigned-contacts">
-                <div
-                  *ngFor="let assignedContact of task.assigned; let j = index"
-                  class="assigned-box"
-                >
-                  <div
-                    [style.background-color]="assignedContact.color"
-                    class="contacts-usercircle"
-                  >
-                    {{ assignedContact.initials }}
-                  </div>
-                </div>
-              </div>
-              <img
-                class="prio"
-                src="assets/img/board/prio_{{ task.prio }}.svg"
-              />
-            </div>
-          </div>
-        </div>
-
-        <div *ngIf="!searchFieldActive">
-          <div
-            draggable="true"
-            (dragstart)="this.DragAndDropService.dragStart(i, 'toDo')"
-            (click)="openTask(i, 'toDo')"
-            *ngFor="let task of this.TaskArrayService.toDo; let i = index"
-            class="single-task"
-          >
-            <div class="single-task-top">
-              <div
-                [style.background-color]="getCategoryColor(task.category)"
-                class="task-category"
-              >
-                {{ task.category }}
-              </div>
-              <div class="btn-container">
-                <div
-                  (click)="
-                    this.DragAndDropService.moveToNewStatusMobile(
-                      i,
-                      'toDo',
-                      'inProgress'
-                    );
-                    $event.stopPropagation()
-                  "
-                  class="btn-down"
-                >
-                  <img src="assets/img/board/down.png" />
-                </div>
-              </div>
-            </div>
-            <div class="task-content">
-              <div class="task-name">
-                {{ task.title }}
-              </div>
-              <div class="task-description">
-                {{ task.description }}
-              </div>
-            </div>
-            <div
-              *ngIf="task.subtask && task.subtask.length > 0"
-              class="progressbar"
-            >
-              <progress id="file" [max]="task.subtask.length"></progress>
-            </div>
-            <div class="single-task-bottom">
-              <div class="assigned-contacts">
-                <div
-                  *ngFor="let assignedContact of task.assigned; let j = index"
-                  class="assigned-box"
-                >
-                  <div
-                    [style.background-color]="assignedContact.color"
-                    class="contacts-usercircle"
-                  >
-                    {{ assignedContact.initials }}
-                  </div>
-                </div>
-              </div>
-              <img
-                class="prio"
-                src="assets/img/board/prio_{{ task.prio }}.svg"
-              />
-            </div>
+          <div class="task-description">
+            {{ task.description }}
           </div>
         </div>
         <div
-          *ngIf="
-            this.TaskArrayService.toDo.length === 0 &&
-            this.TaskArrayService.filteredToDo.length === 0
-          "
-          class="no-task-msg"
+          *ngIf="task.subtask && task.subtask.length > 0"
+          class="progressbar"
         >
-          <h2>No tasks in this category</h2>
+          <progress id="file" [max]="task.subtask.length"></progress>
+        </div>
+        <div class="single-task-bottom">
+          <div *ngIf="this.TaskArrayService.tasks[i].assigned >= 0" class="assigned-contacts">
+            <div
+              *ngFor="let assignedContact of task.assigned; let j = index"
+              class="assigned-box"
+            >
+              <div
+                [style.background-color]="assignedContact.color"
+                class="contacts-usercircle"
+              >
+                {{ assignedContact.initials }}
+              </div>
+            </div>
+          </div>
+          <img
+            class="prio"
+            src="assets/img/board/prio_{{ task.prio }}.svg"
+          />
         </div>
       </div>
     </div>
-    <div class="category">
-      <div class="headline">
-        <h2>In progress</h2>
-        <img
-          (click)="showAddtaskFloatingContainer('inProgress')"
-          src="assets/img/board/plus button.svg"
-        />
-      </div>
-      <div
-        #inProgress
-        (drop)="
-          this.DragAndDropService.moveTo('inProgress');
-          this.removeHighlight('inProgress')
-        "
-        (dragover)="
-          this.DragAndDropService.allowDrop($event);
-          this.highlight('inProgress')
-        "
-        (dragleave)="this.removeHighlight('inProgress')"
-        class="task-container"
-        id="inProgress"
-      >
-        <div *ngIf="searchFieldActive">
-          <div
-            draggable="true"
-            *ngFor="
-              let task of this.TaskArrayService.filteredInProgress;
-              let i = index
-            "
-            (dragstart)="this.DragAndDropService.dragStart(i, 'inProgress')"
-            (click)="openTask(i, 'inProgress')"
-            class="single-task"
-          >
-            <div class="single-task-top">
-              <div
-                [style.background-color]="getCategoryColor(task.category)"
-                class="task-category"
-              >
-                {{ task.category }}
-              </div>
-              <div class="btn-container">
-                <div
-                  (click)="
-                    this.DragAndDropService.moveToNewStatusMobile(
-                      i,
-                      'inProgress',
-                      'toDo'
-                    );
-                    $event.stopPropagation()
-                  "
-                  class="btn-up"
-                >
-                  <img src="assets/img/board/up.png" />
-                </div>
-                <div
-                  (click)="
-                    this.DragAndDropService.moveToNewStatusMobile(
-                      i,
-                      'inProgress',
-                      'awaitFeedback'
-                    );
-                    event.stopPropagation()
-                  "
-                  class="btn-down"
-                >
-                  <img src="assets/img/board/down.png" />
-                </div>
-              </div>
-            </div>
-            <div class="task-content">
-              <div class="task-name">
-                {{ task.title }}
-              </div>
-              <div class="task-description">
-                {{ task.description }}
-              </div>
-            </div>
-            <div
-              *ngIf="task.subtask && task.subtask.length > 0"
-              class="progressbar"
-            >
-              <progress id="file" [max]="task.subtask.length"></progress>
-            </div>
-            <div class="single-task-bottom">
-              <div class="assigned-contacts">
-                <div
-                  *ngFor="let assignedContact of task.assigned; let j = index"
-                  class="assigned-box"
-                >
-                  <div
-                    [style.background-color]="assignedContact.color"
-                    class="contacts-usercircle"
-                  >
-                    {{ assignedContact.initials }}
-                  </div>
-                </div>
-              </div>
-              <img
-                class="prio"
-                src="assets/img/board/prio_{{ task.prio }}.svg"
-              />
-            </div>
-          </div>
-        </div>
-        <div *ngIf="!searchFieldActive">
-          <div
-            draggable="true"
-            *ngFor="let task of this.TaskArrayService.inProgress; let i = index"
-            (dragstart)="this.DragAndDropService.dragStart(i, 'inProgress')"
-            (click)="openTask(i, 'inProgress')"
-            class="single-task"
-          >
-            <div class="single-task-top">
-              <div
-                [style.background-color]="getCategoryColor(task.category)"
-                class="task-category"
-              >
-                {{ task.category }}
-              </div>
-              <div class="btn-container">
-                <div
-                  (click)="
-                    this.DragAndDropService.moveToNewStatusMobile(
-                      i,
-                      'inProgress',
-                      'toDo'
-                    );
-                    $event.stopPropagation()
-                  "
-                  class="btn-up"
-                >
-                  <img src="assets/img/board/up.png" />
-                </div>
-                <div
-                  (click)="
-                    this.DragAndDropService.moveToNewStatusMobile(
-                      i,
-                      'inProgress',
-                      'awaitFeedback'
-                    );
-                    $event.stopPropagation()
-                  "
-                  class="btn-down"
-                >
-                  <img src="assets/img/board/down.png" />
-                </div>
-              </div>
-            </div>
-            <div class="task-content">
-              <div class="task-name">
-                {{ task.title }}
-              </div>
-              <div class="task-description">
-                {{ task.description }}
-              </div>
-            </div>
-            <div
-              *ngIf="task.subtask && task.subtask.length > 0"
-              class="progressbar"
-            >
-              <progress id="file" [max]="task.subtask.length"></progress>
-            </div>
-            <div class="single-task-bottom">
-              <div class="assigned-contacts">
-                <div
-                  *ngFor="let assignedContact of task.assigned; let j = index"
-                  class="assigned-box"
-                >
-                  <div
-                    [style.background-color]="assignedContact.color"
-                    class="contacts-usercircle"
-                  >
-                    {{ assignedContact.initials }}
-                  </div>
-                </div>
-              </div>
-              <img
-                class="prio"
-                src="assets/img/board/prio_{{ task.prio }}.svg"
-              />
-            </div>
-          </div>
-        </div>
-        <div
-          *ngIf="
-            this.TaskArrayService.inProgress.length == 0 &&
-            this.TaskArrayService.filteredInProgress.length == 0
-          "
-          class="no-task-msg"
-        >
-          <h2>No tasks in this category</h2>
-        </div>
-      </div>
-    </div>
-    <div class="category">
-      <div class="headline">
-        <h2>Await feedback</h2>
-        <img
-          (click)="showAddtaskFloatingContainer('awaitFeedback')"
-          src="assets/img/board/plus button.svg"
-        />
-      </div>
-      <div
-        #awaitFeedback
-        (drop)="
-          this.DragAndDropService.moveTo('awaitFeedback');
-          this.removeHighlight('awaitFeedback')
-        "
-        (dragover)="
-          this.DragAndDropService.allowDrop($event);
-          this.highlight('awaitFeedback')
-        "
-        (dragleave)="this.removeHighlight('awaitFeedback')"
-        class="task-container"
-        id="awaitFeedback"
-      >
-        <div *ngIf="searchFieldActive">
-          <div
-            draggable="true"
-            *ngFor="
-              let task of this.TaskArrayService.filteredAwaitFeedback;
-              let i = index
-            "
-            (dragstart)="this.DragAndDropService.dragStart(i, 'awaitFeedback')"
-            (click)="openTask(i, 'awaitFeedback')"
-            class="single-task"
-          >
-            <div class="single-task-top">
-              <div
-                [style.background-color]="getCategoryColor(task.category)"
-                class="task-category"
-              >
-                {{ task.category }}
-              </div>
-              <div class="btn-container">
-                <div
-                  (click)="
-                    this.DragAndDropService.moveToNewStatusMobile(
-                      i,
-                      'awaitFeedback',
-                      'inProgress'
-                    );
-                    $event.stopPropagation()
-                  "
-                  class="btn-up"
-                >
-                  <img src="assets/img/board/up.png" />
-                </div>
-                <div
-                  (click)="
-                    this.DragAndDropService.moveToNewStatusMobile(
-                      i,
-                      'awaitFeedback',
-                      'done'
-                    );
-                    $event.stopPropagation()
-                  "
-                  class="btn-down"
-                >
-                  <img src="assets/img/board/down.png" />
-                </div>
-              </div>
-            </div>
-
-            <div class="task-content">
-              <div class="task-name">
-                {{ task.title }}
-              </div>
-              <div class="task-description">
-                {{ task.description }}
-              </div>
-            </div>
-            <div
-              *ngIf="task.subtask && task.subtask.length > 0"
-              class="progressbar"
-            >
-              <progress id="file" [max]="task.subtask.length"></progress>
-            </div>
-            <div class="single-task-bottom">
-              <div class="assigned-contacts">
-                <div
-                  *ngFor="let assignedContact of task.assigned; let j = index"
-                  class="assigned-box"
-                >
-                  <div
-                    [style.background-color]="assignedContact.color"
-                    class="contacts-usercircle"
-                  >
-                    {{ assignedContact.initials }}
-                  </div>
-                </div>
-              </div>
-              <img
-                class="prio"
-                src="assets/img/board/prio_{{ task.prio }}.svg"
-              />
-            </div>
-          </div>
-        </div>
-        <div *ngIf="!searchFieldActive">
-          <div
-            draggable="true"
-            *ngFor="
-              let task of this.TaskArrayService.awaitFeedback;
-              let i = index
-            "
-            (dragstart)="this.DragAndDropService.dragStart(i, 'awaitFeedback')"
-            (click)="openTask(i, 'awaitFeedback')"
-            class="single-task"
-          >
-            <div class="single-task-top">
-              <div
-                [style.background-color]="getCategoryColor(task.category)"
-                class="task-category"
-              >
-                {{ task.category }}
-              </div>
-              <div class="btn-container">
-                <div
-                  (click)="
-                    this.DragAndDropService.moveToNewStatusMobile(
-                      i,
-                      'awaitFeedback',
-                      'inProgress'
-                    );
-                    $event.stopPropagation()
-                  "
-                  class="btn-up"
-                >
-                  <img src="assets/img/board/up.png" />
-                </div>
-                <div
-                  (click)="
-                    this.DragAndDropService.moveToNewStatusMobile(
-                      i,
-                      'awaitFeedback',
-                      'done'
-                    );
-                    $event.stopPropagation()
-                  "
-                  class="btn-down"
-                >
-                  <img src="assets/img/board/down.png" />
-                </div>
-              </div>
-            </div>
-            <div class="task-content">
-              <div class="task-name">
-                {{ task.title }}
-              </div>
-              <div class="task-description">
-                {{ task.description }}
-              </div>
-            </div>
-            <div
-              *ngIf="task.subtask && task.subtask.length > 0"
-              class="progressbar"
-            >
-              <progress id="file" [max]="task.subtask.length"></progress>
-            </div>
-            <div class="single-task-bottom">
-              <div class="assigned-contacts">
-                <div
-                  *ngFor="let assignedContact of task.assigned; let j = index"
-                  class="assigned-box"
-                >
-                  <div
-                    [style.background-color]="assignedContact.color"
-                    class="contacts-usercircle"
-                  >
-                    {{ assignedContact.initials }}
-                  </div>
-                </div>
-              </div>
-              <img
-                class="prio"
-                src="assets/img/board/prio_{{ task.prio }}.svg"
-              />
-            </div>
-          </div>
-        </div>
-        <div
-          *ngIf="
-            this.TaskArrayService.awaitFeedback.length == 0 &&
-            this.TaskArrayService.filteredAwaitFeedback.length == 0
-          "
-          class="no-task-msg"
-        >
-          <h2>No tasks in this category</h2>
-        </div>
-      </div>
-    </div>
-    <div class="category">
-      <div class="headline">
-        <h2>Done</h2>
-      </div>
-      <div
-        #done
-        (drop)="
-          this.DragAndDropService.moveTo('done'); this.removeHighlight('done')
-        "
-        (dragover)="
-          this.DragAndDropService.allowDrop($event); this.highlight('done')
-        "
-        (dragleave)="this.removeHighlight('done')"
-        class="task-container"
-        id="done"
-      >
-        <div *ngIf="searchFieldActive">
-          <div
-            draggable="true"
-            *ngFor="
-              let task of this.TaskArrayService.filteredDone;
-              let i = index
-            "
-            (dragstart)="this.DragAndDropService.dragStart(i, 'done')"
-            (click)="openTask(i, 'done')"
-            class="single-task"
-          >
-            <div class="single-task-top">
-              <div
-                [style.background-color]="getCategoryColor(task.category)"
-                class="task-category"
-              >
-                {{ task.category }}
-              </div>
-              <div class="btn-container">
-                <div
-                  (click)="
-                    this.DragAndDropService.moveToNewStatusMobile(
-                      i,
-                      'done',
-                      'awaitFeedback'
-                    );
-                    $event.stopPropagation()
-                  "
-                  class="btn-up"
-                >
-                  <img src="assets/img/board/up.png" />
-                </div>
-              </div>
-            </div>
-            <div class="task-content">
-              <div class="task-name">
-                {{ task.title }}
-              </div>
-              <div class="task-description">
-                {{ task.description }}
-              </div>
-            </div>
-            <div
-              *ngIf="task.subtask && task.subtask.length > 0"
-              class="progressbar"
-            >
-              <progress id="file" [max]="task.subtask.length"></progress>
-            </div>
-            <div class="single-task-bottom">
-              <div class="assigned-contacts">
-                <div
-                  *ngFor="let assignedContact of task.assigned; let j = index"
-                  class="assigned-box"
-                >
-                  <div
-                    [style.background-color]="assignedContact.color"
-                    class="contacts-usercircle"
-                  >
-                    {{ assignedContact.initials }}
-                  </div>
-                </div>
-              </div>
-              <img
-                class="prio"
-                src="assets/img/board/prio_{{ task.prio }}.svg"
-              />
-            </div>
-          </div>
-        </div>
-        <div *ngIf="!searchFieldActive">
-          <div
-            draggable="true"
-            *ngFor="let task of this.TaskArrayService.done; let i = index"
-            (dragstart)="this.DragAndDropService.dragStart(i, 'done')"
-            (click)="openTask(i, 'done')"
-            class="single-task"
-          >
-            <div class="single-task-top">
-              <div
-                [style.background-color]="getCategoryColor(task.category)"
-                class="task-category"
-              >
-                {{ task.category }}
-              </div>
-              <div class="btn-container">
-                <div
-                  (click)="
-                    this.DragAndDropService.moveToNewStatusMobile(
-                      i,
-                      'done',
-                      'awaitFeedback'
-                    );
-                    $event.stopPropagation()
-                  "
-                  class="btn-up"
-                >
-                  <img src="assets/img/board/up.png" />
-                </div>
-              </div>
-            </div>
-            <div class="task-content">
-              <div class="task-name">
-                {{ task.title }}
-              </div>
-              <div class="task-description">
-                {{ task.description }}
-              </div>
-            </div>
-            <div
-              *ngIf="task.subtask && task.subtask.length > 0"
-              class="progressbar"
-            >
-              <progress id="file" [max]="task.subtask.length"></progress>
-            </div>
-            <div class="single-task-bottom">
-              <div class="assigned-contacts">
-                <div
-                  *ngFor="let assignedContact of task.assigned; let j = index"
-                  class="assigned-box"
-                >
-                  <div
-                    [style.background-color]="assignedContact.color"
-                    class="contacts-usercircle"
-                  >
-                    {{ assignedContact.initials }}
-                  </div>
-                </div>
-              </div>
-              <img
-                class="prio"
-                src="assets/img/board/prio_{{ task.prio }}.svg"
-              />
-            </div>
-          </div>
-        </div>
-        <div
-          *ngIf="
-            this.TaskArrayService.done.length == 0 &&
-            this.TaskArrayService.filteredDone.length == 0
-          "
-          class="no-task-msg"
-        >
-          <h2>No tasks in this category</h2>
-        </div>
-      </div>
+    <div
+      *ngIf="
+        this.TaskArrayService.toDo.length === 0 &&
+        this.TaskArrayService.filteredToDo.length === 0
+      "
+      class="no-task-msg"
+    >
+      <h2>No tasks in this category</h2>
     </div>
   </div>
 </div>
+<div class="category">
+  <div class="headline">
+    <h2>In progress</h2>
+    <img
+      (click)="showAddtaskFloatingContainer('inProgress')"
+      src="assets/img/board/plus button.svg"
+    />
+  </div>
+  <div
+    #inProgress
+    (drop)="
+      this.DragAndDropService.moveTo('inProgress');
+      this.removeHighlight('inProgress')
+    "
+    (dragover)="
+      this.DragAndDropService.allowDrop($event);
+      this.highlight('inProgress')
+    "
+    (dragleave)="this.removeHighlight('inProgress')"
+    class="task-container"
+    id="inProgress"
+  >
+    <div *ngIf="searchFieldActive">
+      <div
+        draggable="true"
+        *ngFor="
+          let task of this.TaskArrayService.filteredInProgress;
+          let i = index
+        "
+        (dragstart)="this.DragAndDropService.dragStart(i, 'inProgress')"
+        (click)="openTask(i, 'inProgress')"
+        class="single-task"
+      >
+        <div class="single-task-top">
+          <div
+            [style.background-color]="getCategoryColor(task.category)"
+            class="task-category"
+          >
+            {{ task.category }}
+          </div>
+          <div class="btn-container">
+            <div
+              (click)="
+                this.DragAndDropService.moveToNewStatusMobile(
+                  i,
+                  'inProgress',
+                  'toDo'
+                );
+                $event.stopPropagation()
+              "
+              class="btn-up"
+            >
+              <img src="assets/img/board/up.png" />
+            </div>
+            <div
+              (click)="
+                this.DragAndDropService.moveToNewStatusMobile(
+                  i,
+                  'inProgress',
+                  'awaitFeedback'
+                );
+                event.stopPropagation()
+              "
+              class="btn-down"
+            >
+              <img src="assets/img/board/down.png" />
+            </div>
+          </div>
+        </div>
+        <div class="task-content">
+          <div class="task-name">
+            {{ task.title }}
+          </div>
+          <div class="task-description">
+            {{ task.description }}
+          </div>
+        </div>
+        <div
+          *ngIf="task.subtask && task.subtask.length > 0"
+          class="progressbar"
+        >
+          <progress id="file" [max]="task.subtask.length"></progress>
+        </div>
+        <div class="single-task-bottom">
+          <div *ngIf="this.TaskArrayService.tasks[i].assigned >= 0" class="assigned-contacts">
+            <div
+              *ngFor="let assignedContact of task.assigned; let j = index"
+              class="assigned-box"
+            >
+              <div
+                [style.background-color]="assignedContact.color"
+                class="contacts-usercircle"
+              >
+                {{ assignedContact.initials }}
+              </div>
+            </div>
+          </div>
+          <img
+            class="prio"
+            src="assets/img/board/prio_{{ task.prio }}.svg"
+          />
+        </div>
+      </div>
+    </div>
+    <div *ngIf="!searchFieldActive">
+      <div
+        draggable="true"
+        *ngFor="let task of this.TaskArrayService.inProgress; let i = index"
+        (dragstart)="this.DragAndDropService.dragStart(i, 'inProgress')"
+        (click)="openTask(i, 'inProgress')"
+        class="single-task"
+      >
+        <div class="single-task-top">
+          <div
+            [style.background-color]="getCategoryColor(task.category)"
+            class="task-category"
+          >
+            {{ task.category }}
+          </div>
+          <div class="btn-container">
+            <div
+              (click)="
+                this.DragAndDropService.moveToNewStatusMobile(
+                  i,
+                  'inProgress',
+                  'toDo'
+                );
+                $event.stopPropagation()
+              "
+              class="btn-up"
+            >
+              <img src="assets/img/board/up.png" />
+            </div>
+            <div
+              (click)="
+                this.DragAndDropService.moveToNewStatusMobile(
+                  i,
+                  'inProgress',
+                  'awaitFeedback'
+                );
+                $event.stopPropagation()
+              "
+              class="btn-down"
+            >
+              <img src="assets/img/board/down.png" />
+            </div>
+          </div>
+        </div>
+        <div class="task-content">
+          <div class="task-name">
+            {{ task.title }}
+          </div>
+          <div class="task-description">
+            {{ task.description }}
+          </div>
+        </div>
+        <div
+          *ngIf="task.subtask && task.subtask.length > 0"
+          class="progressbar"
+        >
+          <progress id="file" [max]="task.subtask.length"></progress>
+        </div>
+        <div class="single-task-bottom">
+          <div *ngIf="this.TaskArrayService.tasks[i].assigned >= 0" class="assigned-contacts">
+            <div
+              *ngFor="let assignedContact of task.assigned; let j = index"
+              class="assigned-box"
+            >
+              <div
+                [style.background-color]="assignedContact.color"
+                class="contacts-usercircle"
+              >
+                {{ assignedContact.initials }}
+              </div>
+            </div>
+          </div>
+          <img
+            class="prio"
+            src="assets/img/board/prio_{{ task.prio }}.svg"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      *ngIf="
+        this.TaskArrayService.inProgress.length == 0 &&
+        this.TaskArrayService.filteredInProgress.length == 0
+      "
+      class="no-task-msg"
+    >
+      <h2>No tasks in this category</h2>
+    </div>
+  </div>
+</div>
+<div class="category">
+  <div class="headline">
+    <h2>Await feedback</h2>
+    <img
+      (click)="showAddtaskFloatingContainer('awaitFeedback')"
+      src="assets/img/board/plus button.svg"
+    />
+  </div>
+  <div
+    #awaitFeedback
+    (drop)="
+      this.DragAndDropService.moveTo('awaitFeedback');
+      this.removeHighlight('awaitFeedback')
+    "
+    (dragover)="
+      this.DragAndDropService.allowDrop($event);
+      this.highlight('awaitFeedback')
+    "
+    (dragleave)="this.removeHighlight('awaitFeedback')"
+    class="task-container"
+    id="awaitFeedback"
+  >
+    <div *ngIf="searchFieldActive">
+      <div
+        draggable="true"
+        *ngFor="
+          let task of this.TaskArrayService.filteredAwaitFeedback;
+          let i = index
+        "
+        (dragstart)="this.DragAndDropService.dragStart(i, 'awaitFeedback')"
+        (click)="openTask(i, 'awaitFeedback')"
+        class="single-task"
+      >
+        <div class="single-task-top">
+          <div
+            [style.background-color]="getCategoryColor(task.category)"
+            class="task-category"
+          >
+            {{ task.category }}
+          </div>
+          <div class="btn-container">
+            <div
+              (click)="
+                this.DragAndDropService.moveToNewStatusMobile(
+                  i,
+                  'awaitFeedback',
+                  'inProgress'
+                );
+                $event.stopPropagation()
+              "
+              class="btn-up"
+            >
+              <img src="assets/img/board/up.png" />
+            </div>
+            <div
+              (click)="
+                this.DragAndDropService.moveToNewStatusMobile(
+                  i,
+                  'awaitFeedback',
+                  'done'
+                );
+                $event.stopPropagation()
+              "
+              class="btn-down"
+            >
+              <img src="assets/img/board/down.png" />
+            </div>
+          </div>
+        </div>
+
+        <div class="task-content">
+          <div class="task-name">
+            {{ task.title }}
+          </div>
+          <div class="task-description">
+            {{ task.description }}
+          </div>
+        </div>
+        <div
+          *ngIf="task.subtask && task.subtask.length > 0"
+          class="progressbar"
+        >
+          <progress id="file" [max]="task.subtask.length"></progress>
+        </div>
+        <div class="single-task-bottom">
+          <div *ngIf="this.TaskArrayService.tasks[i].assigned >= 0" class="assigned-contacts">
+            <div
+              *ngFor="let assignedContact of task.assigned; let j = index"
+              class="assigned-box"
+            >
+              <div
+                [style.background-color]="assignedContact.color"
+                class="contacts-usercircle"
+              >
+                {{ assignedContact.initials }}
+              </div>
+            </div>
+          </div>
+          <img
+            class="prio"
+            src="assets/img/board/prio_{{ task.prio }}.svg"
+          />
+        </div>
+      </div>
+    </div>
+    <div *ngIf="!searchFieldActive">
+      <div
+        draggable="true"
+        *ngFor="
+          let task of this.TaskArrayService.awaitFeedback;
+          let i = index
+        "
+        (dragstart)="this.DragAndDropService.dragStart(i, 'awaitFeedback')"
+        (click)="openTask(i, 'awaitFeedback')"
+        class="single-task"
+      >
+        <div class="single-task-top">
+          <div
+            [style.background-color]="getCategoryColor(task.category)"
+            class="task-category"
+          >
+            {{ task.category }}
+          </div>
+          <div class="btn-container">
+            <div
+              (click)="
+                this.DragAndDropService.moveToNewStatusMobile(
+                  i,
+                  'awaitFeedback',
+                  'inProgress'
+                );
+                $event.stopPropagation()
+              "
+              class="btn-up"
+            >
+              <img src="assets/img/board/up.png" />
+            </div>
+            <div
+              (click)="
+                this.DragAndDropService.moveToNewStatusMobile(
+                  i,
+                  'awaitFeedback',
+                  'done'
+                );
+                $event.stopPropagation()
+              "
+              class="btn-down"
+            >
+              <img src="assets/img/board/down.png" />
+            </div>
+          </div>
+        </div>
+        <div class="task-content">
+          <div class="task-name">
+            {{ task.title }}
+          </div>
+          <div class="task-description">
+            {{ task.description }}
+          </div>
+        </div>
+        <div
+          *ngIf="task.subtask && task.subtask.length > 0"
+          class="progressbar"
+        >
+          <progress id="file" [max]="task.subtask.length"></progress>
+        </div>
+        <div class="single-task-bottom">
+          <div *ngIf="this.TaskArrayService.tasks[i].assigned >= 0" class="assigned-contacts">
+            <div
+              *ngFor="let assignedContact of task.assigned; let j = index"
+              class="assigned-box"
+            >
+              <div
+                [style.background-color]="assignedContact.color"
+                class="contacts-usercircle"
+              >
+                {{ assignedContact.initials }}
+              </div>
+            </div>
+          </div>
+          <img
+            class="prio"
+            src="assets/img/board/prio_{{ task.prio }}.svg"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      *ngIf="
+        this.TaskArrayService.awaitFeedback.length == 0 &&
+        this.TaskArrayService.filteredAwaitFeedback.length == 0
+      "
+      class="no-task-msg"
+    >
+      <h2>No tasks in this category</h2>
+    </div>
+  </div>
+</div>
+<div class="category">
+  <div class="headline">
+    <h2>Done</h2>
+  </div>
+  <div
+    #done
+    (drop)="
+      this.DragAndDropService.moveTo('done'); this.removeHighlight('done')
+    "
+    (dragover)="
+      this.DragAndDropService.allowDrop($event); this.highlight('done')
+    "
+    (dragleave)="this.removeHighlight('done')"
+    class="task-container"
+    id="done"
+  >
+    <div *ngIf="searchFieldActive">
+      <div
+        draggable="true"
+        *ngFor="
+          let task of this.TaskArrayService.filteredDone;
+          let i = index
+        "
+        (dragstart)="this.DragAndDropService.dragStart(i, 'done')"
+        (click)="openTask(i, 'done')"
+        class="single-task"
+      >
+        <div class="single-task-top">
+          <div
+            [style.background-color]="getCategoryColor(task.category)"
+            class="task-category"
+          >
+            {{ task.category }}
+          </div>
+          <div class="btn-container">
+            <div
+              (click)="
+                this.DragAndDropService.moveToNewStatusMobile(
+                  i,
+                  'done',
+                  'awaitFeedback'
+                );
+                $event.stopPropagation()
+              "
+              class="btn-up"
+            >
+              <img src="assets/img/board/up.png" />
+            </div>
+          </div>
+        </div>
+        <div class="task-content">
+          <div class="task-name">
+            {{ task.title }}
+          </div>
+          <div class="task-description">
+            {{ task.description }}
+          </div>
+        </div>
+        <div
+          *ngIf="task.subtask && task.subtask.length > 0"
+          class="progressbar"
+        >
+          <progress id="file" [max]="task.subtask.length"></progress>
+        </div>
+        <div class="single-task-bottom">
+          <div *ngIf="this.TaskArrayService.tasks[i].assigned >= 0" class="assigned-contacts">
+            <div
+              *ngFor="let assignedContact of task.assigned; let j = index"
+              class="assigned-box"
+            >
+              <div
+                [style.background-color]="assignedContact.color"
+                class="contacts-usercircle"
+              >
+                {{ assignedContact.initials }}
+              </div>
+            </div>
+          </div>
+          <img
+            class="prio"
+            src="assets/img/board/prio_{{ task.prio }}.svg"
+          />
+        </div>
+      </div>
+    </div>
+    <div *ngIf="!searchFieldActive">
+      <div
+        draggable="true"
+        *ngFor="let task of this.TaskArrayService.done; let i = index"
+        (dragstart)="this.DragAndDropService.dragStart(i, 'done')"
+        (click)="openTask(i, 'done')"
+        class="single-task"
+      >
+        <div class="single-task-top">
+          <div
+            [style.background-color]="getCategoryColor(task.category)"
+            class="task-category"
+          >
+            {{ task.category }}
+          </div>
+          <div class="btn-container">
+            <div
+              (click)="
+                this.DragAndDropService.moveToNewStatusMobile(
+                  i,
+                  'done',
+                  'awaitFeedback'
+                );
+                $event.stopPropagation()
+              "
+              class="btn-up"
+            >
+              <img src="assets/img/board/up.png" />
+            </div>
+          </div>
+        </div>
+        <div class="task-content">
+          <div class="task-name">
+            {{ task.title }}
+          </div>
+          <div class="task-description">
+            {{ task.description }}
+          </div>
+        </div>
+        <div
+          *ngIf="task.subtask && task.subtask.length > 0"
+          class="progressbar"
+        >
+          <progress id="file" [max]="task.subtask.length"></progress>
+        </div>
+        <div class="single-task-bottom">
+          <div *ngIf="this.TaskArrayService.tasks[i].assigned >= 0" class="assigned-contacts">
+            <div
+              *ngFor="let assignedContact of task.assigned; let j = index"
+              class="assigned-box"
+            >
+              <div
+                [style.background-color]="assignedContact.color"
+                class="contacts-usercircle"
+              >
+                {{ assignedContact.initials }}
+              </div>
+            </div>
+          </div>
+          <img
+            class="prio"
+            src="assets/img/board/prio_{{ task.prio }}.svg"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      *ngIf="
+        this.TaskArrayService.done.length == 0 &&
+        this.TaskArrayService.filteredDone.length == 0
+      "
+      class="no-task-msg"
+    >
+      <h2>No tasks in this category</h2>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+
