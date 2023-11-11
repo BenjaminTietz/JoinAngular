@@ -74,6 +74,7 @@ export class TaskArraysService {
 
     const currentDate = new Date();
     this.minDate = currentDate.toISOString().split('T')[0];
+    this.subtasks = [];
   }
 
   minDate: string;
@@ -165,8 +166,17 @@ export class TaskArraysService {
    * An subarray to store subtasks .
    * @type {Array}
    */
-  subtasks = [];
-
+  subtasks: { name: string, completed: boolean }[] = [];
+  /**
+   * An subarray to store state of subtasks .
+   * @type {Array}
+   */
+  subtaskStatus: boolean[] = [];
+  /**
+   * An subarray to store state of subtasks .
+   * @type {Array}
+   */
+  subtasksDone = [];
   /**
    * An subarray to store assigned User .
    * @type {Array}
@@ -265,61 +275,43 @@ export class TaskArraysService {
    * Asynchronous function to add a new task to the "task" array
    */
   async addTask(data) {
-
-    let status = this.assignStatus;
-
-    let maxId = 0;
-    this.tasks.forEach((contact) => {
-      if (contact.id > maxId) {
-        maxId = contact.id;
-      }
-    });
-
-    // find max id in contacts array + 1
-    let newId = maxId + 1;
-
-    this.taskId = newId;
-
-    if (data.title != '' && data.date != '' && data.category != '') {
-      let selectedContacts = this.ArraysService.contacts
-        .filter((contact) => contact.selected)
-        .map((contact) => contact.name);
-
-      this.pushToArray(
-        this.taskId,
-        data.title,
-        data.description,
-        data.date,
-        data.assignedContacts,
-        data.category,
-        this.subtasks,
-        status
-      );
+    if (this.isDataValid(data)) {
+      let newId = this.generateNewTaskId();
+      this.addNewTask(newId, data);
       await this.safeTasks();
-      console.log(
-        'Added task',
-        this.taskId,
-        data.title,
-        data.description,
-        data.date,
-        data.assignedContacts,
-        data.category,
-        data.subtask
-      );
+      await this.findNearestDate(this.urgent);
+      await this.resetAddTaskForm();
+      this.assignStatus = '';
+      this.subtasks = [];
+      this.clearAssignedData();
+      this.ngOnInit();
+  
+      setTimeout(() => {
+        this.boardService.showAddTask = false;
+        this.boardService.showBoard = true;
+      }, 2000);
     }
-    await this.findNearestDate(this.urgent);
-    await this.resetAddTaskForm();
-    this.assignStatus = '';
-    this.subtasks = [];
-    this.clearAssignedData();
-    this.ngOnInit();
-    
-    setTimeout(() => {
-      this.boardService.showAddTask = false;
-      this.boardService.showBoard = true;
-    }, 2000);
-
   }
+  
+  isDataValid(data) {
+    return data.title !== '' && data.date !== '' && data.category !== '';
+  }
+  
+  generateNewTaskId() {
+    let maxId = this.tasks.reduce((max, task) => (task.id > max ? task.id : max), 0);
+    return maxId + 1;
+  }
+  
+  addNewTask(newId, data) {
+    let selectedContacts = this.ArraysService.contacts
+      .filter((contact) => contact.selected)
+      .map((contact) => contact.name);
+  
+    this.pushToArray(newId, data.title, data.description, data.date, data.assignedContacts, data.category, this.subtasks, this.assignStatus);
+  
+    console.log('Added task', newId, data.title, data.description, data.date, data.assignedContacts, data.category, data.subtask);
+  }
+  
 
 
 
@@ -345,8 +337,8 @@ export class TaskArraysService {
       this.tasks[taskIndex].assigned = [...existingAssignedContacts, ...data.assignedContacts];
   
       // Push each entry from data.subtask into this.tasks[taskIndex].subtask
-      for (let subtask of data.subtask) {
-        this.tasks[taskIndex].subtask.push(subtask);
+      for (let subtaskName of data.subtask) {
+        this.subtasks.push({ name: subtaskName, completed: false });
       }
   
       // Push each entry from this.subtasks into this.tasks[taskIndex].subtask
@@ -464,6 +456,49 @@ export class TaskArraysService {
     this.selectedPriority = assigned;
     console.log(this.selectedPriority);
   }
+
+// TODO updateSubtaskStatus
+async updateSubtaskStatus(subtaskIndex: number) {
+  await this.getIndexOfSelectedTask();
+
+  if (this.selectedTask && subtaskIndex >= 0) {
+    if (this.selectedTask.subtask && subtaskIndex < this.selectedTask.subtask.length) {
+      // Verschiebe den Subtask von subtask zu subtasksDone
+      const completedSubtask = this.selectedTask.subtask.splice(subtaskIndex, 1)[0];
+
+      if (!this.selectedTask.subtasksDone) {
+        this.selectedTask.subtasksDone = []; // Initialisiere subtasksDone, falls es noch nicht existiert
+      }
+
+      this.selectedTask.subtasksDone.push(completedSubtask);
+    } else if (this.selectedTask.subtasksDone && subtaskIndex < this.selectedTask.subtasksDone.length) {
+      // Verschiebe den Subtask von subtasksDone zu subtask
+      const completedSubtask = this.selectedTask.subtasksDone.splice(subtaskIndex, 1)[0];
+
+      if (!this.selectedTask.subtask) {
+        this.selectedTask.subtask = []; // Initialisiere subtask, falls es noch nicht existiert
+      }
+
+      this.selectedTask.subtask.push(completedSubtask);
+    } else {
+      console.error('Ungültiger subtaskIndex oder ausgewählter Task');
+    }
+
+    // Nachdem die Änderungen durchgeführt wurden, speichern Sie die Aufgaben
+    await this.safeTasks();
+  }
+}
+
+deleteSubtaskDone(subtaskIndex: number) {
+  if (this.selectedTask && subtaskIndex >= 0 && this.selectedTask.subtasksDone) {
+    if (subtaskIndex < this.selectedTask.subtasksDone.length) {
+      this.selectedTask.subtasksDone.splice(subtaskIndex, 1);
+      this.safeTasks(); // Speichern Sie die Änderungen
+    } else {
+      console.error('Ungültiger subtaskIndex für subtasksDone oder ausgewählter Task');
+    }
+  }
+}
 
   /**
    * Asynchronous function to store tasks according status in subarrays.

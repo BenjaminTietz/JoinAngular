@@ -41,7 +41,7 @@ export class BoardComponent {
     public TaskArrayService: TaskArraysService,
     public RemotestorageService: RemotestorageService,
     public DragAndDropService: DragAndDropService,
-    public ArraysService: ArraysService
+    public ArraysService: ArraysService,
   ) {
     console.log('board loaded', this.TaskArrayService.selectedTask);
   }
