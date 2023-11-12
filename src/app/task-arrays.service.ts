@@ -96,7 +96,6 @@ export class TaskArraysService {
         contact.selected = false;
       });
     await this.generateTaskId();
-    this.editTaskForm.patchValue(this.selectedTask);
   }
 
 
@@ -230,14 +229,14 @@ export class TaskArraysService {
   }
 
   pushToAssignedArrayFromEdit(contact: any) {
-    let assignedContacts = this.editTaskForm.get('assignedContacts') as FormArray;
-    let index = assignedContacts.value.findIndex(c => c.id === contact.id);
+    let assigned = this.editTaskForm.get('assignedContacts') as FormArray;
+    let index = assigned.value.findIndex(c => c.id === contact.id);
   
     if (index === -1) {
-      assignedContacts.push(this.fb.control(contact));
+      assigned.push(this.fb.control(contact));
       this.assignedUser.push(contact);
     } else {
-      assignedContacts.removeAt(index);
+      assigned.removeAt(index);
       this.assignedUser = this.assignedUser.filter(c => c.id !== contact.id);
     }
   }
@@ -309,7 +308,7 @@ export class TaskArraysService {
   }
   
   isDataValid(data) {
-    return data.title !== '' && data.date !== '' && data.category !== '' && data.assignedContacts.length > 0 ;
+    return data.title !== '' && data.date !== '' && data.category !== '';
   }
   
   generateNewTaskId() {
@@ -327,56 +326,15 @@ this.pushToArray(newId, data.assignedContacts, data.title, data.description, dat
   }
   
 
-
-
   /**
    * Asynchronous function to add a new task to the "task" array
    */
-//   async editTask(data) {
-//     let taskIndex = this.selectedTaskIndex;
-
-//     if (taskIndex >= 0 && taskIndex < this.tasks.length) {
-//         // ...
-
-        // // Setzen Sie this.selectedPriority basierend auf der ausgewählten Priorität
-        // if (this.selectedPriority === 'urgent') {
-        //     this.selectedPriority = 'urgent';
-        // } else if (this.selectedPriority === 'medium') {
-        //     this.selectedPriority = 'medium';
-        // } else if (this.selectedPriority === 'low') {
-        //     this.selectedPriority = 'low';
-        // }
-
-//         // ...
-
-//         this.safeTasks();
-
-//         console.log('Edited task', data.title, data.description, data.dueDate);
-//         this.selectedTask.assigned.data = [];
-//     } else {
-//         console.log('Invalid task index.');
-//     }
-
-//     await this.findNearestDate(this.urgent);
-//     this.assignStatus = '';
-//     this.subtasks = [];
-//     this.clearAssignedData();
-//     this.ngOnInit();
-
-//     setTimeout(() => {
-//         // todo confirmationMessage(); hideSlider();
-//     }, 1000);
-// }
 async editTask(data) {
   await this.getIndexOfSelectedTask();
   // Find the index in the main tasks array
   let taskIndex = this.selectedTaskIndex;
 
   if (taskIndex >= 0 && taskIndex < this.tasks.length) {
-   
-
-
-
 
 // Update the task properties
 this.tasks[taskIndex].title = data.title;
@@ -388,7 +346,7 @@ console.log('this.selectedPriority', this.selectedEditPriority);
 this.tasks[taskIndex].category = data.category;
 console.log('this.category', data.category);
 
-
+debugger;
 // Kombinieren Sie this.subtasks und this.newSubtasks zu einem neuen Array.
 const combinedSubtasks = [...this.subtasks, ...this.newSubtasks];
 
@@ -400,7 +358,7 @@ this.tasks[taskIndex].subtasks = combinedSubtasks;
 // Angenommen, this.tasks[taskIndex].assigned ist ein Array von bereits zugewiesenen Kontakten und data.assignedContacts ist ein Array von neuen Zuweisungen.
 
 // Kombinieren Sie die vorhandenen Zuweisungen und die neuen Zuweisungen, unter Berücksichtigung der ID.
-let combinedAssigned = this.tasks[taskIndex].assigned.concat(data.assignedContacts);
+let combinedAssigned = [...this.tasks[taskIndex].assigned, ...data.assignedContacts];
 
 // Entfernen Sie doppelte Kontakte anhand ihrer ID.
 let uniqueCombinedAssigned = combinedAssigned.filter((contact, index, self) =>
@@ -409,7 +367,6 @@ let uniqueCombinedAssigned = combinedAssigned.filter((contact, index, self) =>
 
 // Aktualisieren Sie this.tasks[taskIndex].assigned mit den eindeutigen Zuweisungen.
 this.tasks[taskIndex].assigned = uniqueCombinedAssigned;
-
 
     this.safeTasks();
 
@@ -424,6 +381,7 @@ this.tasks[taskIndex].assigned = uniqueCombinedAssigned;
   this.subtasks = [];
   this.clearAssignedData();
   this.ngOnInit();
+  data.assignedContacts = [];
   await this.resetEditTaskForm();
 
   setTimeout(() => {

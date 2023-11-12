@@ -285,7 +285,7 @@
             [style.background-color]="this.ArraysService.contacts[i].color"
             class="assigned-user-circle"
           >
-            <div class="assigned-user-Initials">AT</div>
+            <div class="assigned-user-Initials">{{ contact.initials }}</div>
           </div>
           <span class="assigned-user-name">{{ contact.name }}</span>
           <div>
@@ -530,13 +530,17 @@ class="edittask-wrapper"
             [style.background-color]="this.ArraysService.contacts[i].color"
             class="assigned-user-circle"
           >
-            <div class="assigned-user-Initials">AT</div>
+            <div class="assigned-user-Initials">{{ contact.initials }}</div>
           </div>
           <span class="assigned-user-name">{{ contact.name }}</span>
           <div>
-            <input (change)="
-            this.TaskArrayService.pushToAssignedArrayFromEdit(contact)
-          " type="checkbox" name="assigned" />
+            <input
+              (change)="
+                this.TaskArrayService.pushToAssignedArrayFromEdit(contact)
+              "
+              type="checkbox"
+              name="assigned"
+            />
           </div>
         </div>
       </div>
@@ -675,7 +679,7 @@ class="edittask-wrapper"
     id="toDo"
     class="task-container"
   >
-    <div *ngIf="searchFieldActive">
+    <div *ngIf="searchFieldActive && this.TaskArrayService.tasks.length >0">
       <div
         draggable="true"
         (dragstart)="this.DragAndDropService.dragStart(i, 'toDo')"
@@ -739,7 +743,7 @@ class="edittask-wrapper"
       </div>
     </div>
 
-    <div *ngIf="!searchFieldActive">
+    <div *ngIf="!searchFieldActive && this.TaskArrayService.tasks.length >0">
       <div
         draggable="true"
         (dragstart)="this.DragAndDropService.dragStart(i, 'toDo')"
@@ -832,7 +836,7 @@ class="edittask-wrapper"
     class="task-container"
     id="inProgress"
   >
-    <div *ngIf="searchFieldActive">
+    <div *ngIf="searchFieldActive && this.TaskArrayService.tasks.length >0">
       <div
         draggable="true"
         *ngFor="
@@ -908,7 +912,7 @@ class="edittask-wrapper"
         </div>
       </div>
     </div>
-    <div *ngIf="!searchFieldActive">
+    <div *ngIf="!searchFieldActive && this.TaskArrayService.tasks.length >0">
       <div
         draggable="true"
         *ngFor="let task of this.TaskArrayService.inProgress; let i = index"
@@ -1013,7 +1017,7 @@ class="edittask-wrapper"
     class="task-container"
     id="awaitFeedback"
   >
-    <div *ngIf="searchFieldActive">
+    <div *ngIf="searchFieldActive && this.TaskArrayService.tasks.length >0">
       <div
         draggable="true"
         *ngFor="
@@ -1090,7 +1094,7 @@ class="edittask-wrapper"
         </div>
       </div>
     </div>
-    <div *ngIf="!searchFieldActive">
+    <div *ngIf="!searchFieldActive && this.TaskArrayService.tasks.length >0">
       <div
         draggable="true"
         *ngFor="
@@ -1193,7 +1197,7 @@ class="edittask-wrapper"
     class="task-container"
     id="done"
   >
-    <div *ngIf="searchFieldActive">
+    <div *ngIf="searchFieldActive && this.TaskArrayService.tasks.length >0">
       <div
         draggable="true"
         *ngFor="
@@ -1256,7 +1260,7 @@ class="edittask-wrapper"
         </div>
       </div>
     </div>
-    <div *ngIf="!searchFieldActive">
+    <div *ngIf="!searchFieldActive && this.TaskArrayService.tasks.length >0">
       <div
         draggable="true"
         *ngFor="let task of this.TaskArrayService.done; let i = index"

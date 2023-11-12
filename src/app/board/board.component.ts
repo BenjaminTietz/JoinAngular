@@ -133,14 +133,15 @@ export class BoardComponent {
     );
   }
 
-  async deleteTask() {
+  deleteTask() {
     this.showSuccessDeleteMessage();
     console.log('taskToDelete', this.taskToDelete);
     this.TaskArrayService.tasks.splice(this.taskToDelete, 1);
+    this.TaskArrayService.selectedTask = null;
     this.TaskArrayService.safeTasks();
     this.closeTask();
-    await this.TaskArrayService.ngOnInit();
-    await this.ngOnInit();
+    this.TaskArrayService.ngOnInit();
+    this.ngOnInit();
   }
 
   getCategoryColor(category: string): string {
@@ -251,6 +252,11 @@ export class BoardComponent {
     //TO-DO: Reset form
   }
   async hideAddtaskFloatingContainer() {
+
+      this.prioUrgentEdit.nativeElement.classList.remove('assign-color-urgent');
+      this.prioMediumEdit.nativeElement.classList.remove('assign-color-medium');
+      this.prioLowEdit.nativeElement.classList.remove('assign-color-low');
+
     await this.ngOnInit();
     this.addtaskWrapper.nativeElement.classList.remove('show-addtask-wrapper');
     this.taskCategoryWrapper.nativeElement.classList.remove('display-none');
@@ -281,7 +287,7 @@ export class BoardComponent {
   }
 
   async hideEditTaskFloatingContainer() {
-  
+    this.TaskArrayService.selectedTask = null;
     this.closeTask();
 
     this.TaskArrayService.clearAssignedData();
