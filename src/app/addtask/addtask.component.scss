@@ -279,7 +279,7 @@
     justify-content: flex-start;
     align-items: flex-start;
     gap: 8px;
-    width: 440px;
+    width: 464px;
     height: 79px;
     margin-top: 22px;
     background-color: $bg-color;
@@ -651,6 +651,7 @@
 
       .prio-box {
         height: 48px;
+        justify-content: flex-start;
       }
     }
     .addtask-right {
@@ -666,6 +667,9 @@
 
 @media screen and (max-width: 500px) {
   .addtask-wrapper {
+    .addtask-assigned-box {
+      width: 300px;
+    }
     .btn-container {
       display: flex;
       justify-content: center;
@@ -729,12 +733,12 @@
     }
     .addtask-left-bottom {
       .add-btn-container {
-        left: 300px;
+        left: 280px;
         bottom: -14px;
       }
       .input-wrapper {
         input {
-          width: 300px;
+          width: 280px;
         }
       }
       h2 {

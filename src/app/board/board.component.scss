@@ -1640,6 +1640,10 @@
   z-index: 2;
   animation: slide-in-right 1.5s ease-in-out;
 
+  .btn-container {
+    margin-left: unset!important;
+  }
+
   @keyframes slide-in-right {
     0% {
       transform: translateX(100%);
@@ -1675,9 +1679,10 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    width: 440px;
+    width: 380px;
     height: 361px;
     gap: 12px;
+
 
     .input-wrapper {
       width: 100vw;
@@ -1711,7 +1716,7 @@
     input {
       border-style: dashed;
       background-color: $bg-color;
-      width: 460px;
+      width: 400px;
       height: 64px;
       @include OpenSans(400, 19px, 22.8px, $menu-color);
     }
@@ -1913,7 +1918,7 @@
         justify-content: space-between;
         align-items: center;
         box-sizing: border-box;
-        width: 440px;
+        width: 380px;
         height: 22px;
         gap: 8px;
         padding: unset;
@@ -1993,7 +1998,7 @@
     justify-content: flex-start;
     align-items: flex-start;
     gap: 8px;
-    width: 440px;
+    width: 380px;
     height: 79px;
     margin-top: 22px;
 
@@ -2016,7 +2021,7 @@
     }
 
     select {
-      width: 105%;
+      width: 90%;
       height: 64px;
       gap: 10px;
       border-top: none;
@@ -2030,7 +2035,7 @@
       width: 100vw;
       max-width: 100%;
       input {
-        width: 100%;
+        width: 90%;
         height: 24px;
         gap: 10px;
         border-top: none;
@@ -2248,7 +2253,7 @@
 
     .edittask-left-top {
       input {
-        width: 65%;
+        width: 200%;
       }
       textarea {
         width: 65%;
