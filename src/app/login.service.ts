@@ -50,7 +50,7 @@ export class LoginService {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
-    this.logInForm.valueChanges.subscribe(console.log);
+
 
     this.signUpFormFB = this.fb.group({
       name: ['', [Validators.required]],
@@ -58,7 +58,7 @@ export class LoginService {
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', [Validators.required, Validators.minLength(6)]],
     });
-    this.signUpFormFB.valueChanges.subscribe(console.log);
+
   }
 
   /**
@@ -92,7 +92,6 @@ export class LoginService {
 
       // Add the current user to the guestUser array
       this.ArraysService.guestUser.push(this.ArraysService.currentUser);
-      console.log('guestUser: ', this.ArraysService.guestUser);
       // Clear the guestUser array
       this.ArraysService.guestUser = [];
 
@@ -101,7 +100,6 @@ export class LoginService {
         'user',
         JSON.stringify(this.ArraysService.guestUser) || ''
       );
-      console.log('guestUser: ', this.ArraysService.guestUser);
       // Redirect to the "summary-component" page
       this.currentUser = 'Guest'; // Set the current user's name
       await this.safeUser();
@@ -118,7 +116,6 @@ export class LoginService {
    * This function search for User Data and than try with that data to login into JOIN
    */
   async logIn(data) {
-    console.log('UserInput: ', data, 'users array: ', this.ArraysService.users);
     let user = this.ArraysService.users.find(
       (u) => u.email == data.email && u.password == data.password
     );
@@ -164,7 +161,6 @@ export class LoginService {
       // Add other user data here
     };
     await this.RemotestorageService.setItem('current_user_array', JSON.stringify(userData));
-    console.log('Login Service saved current user', userData);
   }
   /**
    * Asynchronous function to load current user from remote storage
@@ -172,7 +168,6 @@ export class LoginService {
   async loadUser() {
     let userData = JSON.parse(await this.RemotestorageService.getItem('current_user_array'));
     this.currentUser = userData.name;
-    console.log('Login Service loaded current user', this.currentUser);
   }
 
   /**

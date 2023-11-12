@@ -41,20 +41,16 @@ export class BoardComponent {
     public TaskArrayService: TaskArraysService,
     public RemotestorageService: RemotestorageService,
     public DragAndDropService: DragAndDropService,
-    public ArraysService: ArraysService,
-  ) {
-    console.log('board loaded', this.TaskArrayService.selectedTask);
-  }
+    public ArraysService: ArraysService
+  ) {}
 
   async ngOnInit() {
     // await this.TaskArrayService.clearTasksArray();
     await this.ArraysService.loadContacts();
     await this.TaskArrayService.loadTasks();
     await this.TaskArrayService.mapTaskStatus();
-    await this.TaskArrayService.mapUrgentTasks()
+    await this.TaskArrayService.mapUrgentTasks();
   }
-
-
 
   onSearch(event: any) {
     const searchTerm = event.target.value;
@@ -103,11 +99,9 @@ export class BoardComponent {
             (task) => task.id === taskId
           );
           this.taskToDelete = taskIndex;
-          console.log('taskToDelete', this.taskToDelete);
           if (taskIndex !== -1) {
             this.TaskArrayService.selectedTask =
               this.TaskArrayService.tasks[taskIndex];
-            console.log('board loaded', this.TaskArrayService.selectedTask);
             this.floatingTaskContainer.nativeElement.classList.add(
               'show-floating-container'
             );
@@ -135,7 +129,6 @@ export class BoardComponent {
 
   deleteTask() {
     this.showSuccessDeleteMessage();
-    console.log('taskToDelete', this.taskToDelete);
     this.TaskArrayService.tasks.splice(this.taskToDelete, 1);
     this.TaskArrayService.selectedTask = null;
     this.TaskArrayService.safeTasks();
@@ -189,7 +182,6 @@ export class BoardComponent {
 
   selectPriority(priority: string) {
     this.TaskArrayService.selectedPriority = priority;
-    console.log(this.TaskArrayService.selectedPriority);
 
     if (this.TaskArrayService.selectedPriority === 'urgent') {
       this.prioUrgent.nativeElement.classList.toggle('assign-color-urgent');
@@ -208,7 +200,6 @@ export class BoardComponent {
 
   selectPriorityEdit(priority: string) {
     this.TaskArrayService.selectedEditPriority = priority;
-    console.log(this.TaskArrayService.selectedEditPriority);
 
     if (this.TaskArrayService.selectedEditPriority === 'urgent') {
       this.prioUrgentEdit.nativeElement.classList.toggle('assign-color-urgent');
@@ -240,34 +231,27 @@ export class BoardComponent {
   }
 
   async showAddtaskFloatingContainer(status: string) {
-    console.log('Received status:', status);
     this.TaskArrayService.assignStatus = status;
-    console.log(
-      'this.TaskArrayService.assignStatus',
-      this.TaskArrayService.assignStatus
-    );
     this.addtaskWrapper.nativeElement.classList.add('show-addtask-wrapper');
     this.taskCategoryWrapper.nativeElement.classList.add('display-none');
-    console.log('this.taskCategoryWrapper', this.taskCategoryWrapper);
     //TO-DO: Reset form
   }
-  async hideAddtaskFloatingContainer() {
 
-      this.prioUrgentEdit.nativeElement.classList.remove('assign-color-urgent');
-      this.prioMediumEdit.nativeElement.classList.remove('assign-color-medium');
-      this.prioLowEdit.nativeElement.classList.remove('assign-color-low');
+  async hideAddtaskFloatingContainer() {
+    this.prioUrgentEdit.nativeElement.classList.remove('assign-color-urgent');
+    this.prioMediumEdit.nativeElement.classList.remove('assign-color-medium');
+    this.prioLowEdit.nativeElement.classList.remove('assign-color-low');
 
     await this.ngOnInit();
     this.addtaskWrapper.nativeElement.classList.remove('show-addtask-wrapper');
     this.taskCategoryWrapper.nativeElement.classList.remove('display-none');
     //TO-DO: Reset form
   }
+
   async showEditTaskFloatingContainer(selectedTask) {
     await this.TaskArrayService.getIndexOfSelectedTask();
     this.TaskArrayService.pushFromTaskArraytoSubtaskArray();
     this.TaskArrayService.selectedTask = selectedTask;
-    
-  
 
     this.TaskArrayService.editTaskForm.patchValue({
       title: selectedTask.title,
@@ -278,11 +262,8 @@ export class BoardComponent {
       status: selectedTask.status,
       subtasks: selectedTask.subtasks,
     });
-    this.TaskArrayService.selectedTask.subtasks = this.TaskArrayService.subtasks;
-    console.log('subtasks', this.TaskArrayService.subtasks);
-
-    
-    console.log('selectedTask', this.TaskArrayService.selectedTask);
+    this.TaskArrayService.selectedTask.subtasks =
+      this.TaskArrayService.subtasks;
     this.editTaskWrapper.nativeElement.classList.add('show-edittask-wrapper');
   }
 
@@ -300,8 +281,6 @@ export class BoardComponent {
     );
   }
 
-
-
   showSuccessEditMessage() {
     this.popupEditedContainer.nativeElement.classList.add('showPopup');
     setTimeout(() => {
@@ -311,6 +290,7 @@ export class BoardComponent {
     this.prioMediumEdit.nativeElement.classList.remove('assign-color-urgent');
     this.prioMediumEdit.nativeElement.classList.remove('assign-color-medium');
   }
+
   showSuccessCreateMessage() {
     this.popupCreateContainer.nativeElement.classList.add('showPopup');
     setTimeout(() => {

@@ -27,7 +27,7 @@ export class LoginComponent {
     public LoginService: LoginService,
     private fb: FormBuilder,
     ) { 
-      this.LoginService.logInForm.valueChanges.subscribe(console.log);
+
     }
 
   async ngOnInit() {

@@ -79,25 +79,76 @@ export class TaskArraysService {
     this.subtasks = [];
   }
 
-  minDate: string;
-  selectedPriority: string = '';
-  selectedEditPriority: string = 'low';
-  assignedDropdownVisible: boolean = false;
-  taskId: number = 0;
-  nearestUrgendTaskDate: any = '';
-  selectedTask: any;
-  selectedTaskIndex: number;
+/**
+ * The minimum date value used for date selection.
+ * @type {string}
+ */
+minDate: string;
 
-  async ngOnInit() {
-    // await this.clearTasksArray();
-    await this.loadTasks();
-    await this.ArraysService.loadContacts(); 
-    this.ArraysService.contacts.forEach(contact => {
-        contact.selected = false;
-      });
-    await this.generateTaskId();
-  }
+/**
+ * The selected priority for a task.
+ * @type {string}
+ */
+selectedPriority: string = '';
 
+/**
+ * The selected priority for editing a task.
+ * @type {string}
+ */
+selectedEditPriority: string = 'low';
+
+/**
+ * Indicates whether the assigned dropdown for a task is visible.
+ * @type {boolean}
+ */
+assignedDropdownVisible: boolean = false;
+
+/**
+ * The identifier for a task.
+ * @type {number}
+ */
+taskId: number = 0;
+
+/**
+ * The date of the nearest urgent task.
+ * @type {any}
+ */
+nearestUrgentTaskDate: any = '';
+
+/**
+ * The selected task object.
+ * @type {any}
+ */
+selectedTask: any;
+
+/**
+ * The index of the selected task.
+ * @type {number}
+ */
+selectedTaskIndex: number;
+
+/**
+ * Asynchronous lifecycle method that initializes the component.
+ * It loads tasks, loads contacts, updates the "selected" status of contacts,
+ * and generates task IDs.
+ *
+ * @returns {Promise<void>}
+ */
+async ngOnInit() {
+  // Clear tasks array (if needed).
+  // await this.clearTasksArray();
+
+  // Load tasks from a data source.
+  await this.loadTasks();
+  // Load contacts from a data source.
+  await this.ArraysService.loadContacts();
+  // Update the "selected" status of contacts.
+  this.ArraysService.contacts.forEach(contact => {
+    contact.selected = false;
+  });
+  // Generate task IDs.
+  await this.generateTaskId();
+}
 
   /**
    * An array to store tasks.
@@ -170,29 +221,36 @@ export class TaskArraysService {
    * @type {Array}
    */
   subtasks: { name: string, completed: boolean }[] = [];
+
     /**
    * An subarray to store subtasks .
    * @type {Array}
    */
     newSubtasks: { name: string, completed: boolean }[] = [];
+
   /**
    * An subarray to store state of subtasks .
    * @type {Array}
    */
   subtaskStatus: boolean[] = [];
+
   /**
    * An subarray to store state of subtasks .
    * @type {Array}
    */
   subtasksDone = [];
+
   /**
    * An subarray to store assigned User .
    * @type {Array}
    */
   assignedUser = [];
 
-  assignedContacts = [new FormArray([])];
-
+/**
+ * An array representing assigned contacts, typically used in a FormArray.
+ * @type {FormArray[]}
+ */
+assignedContacts = [new FormArray([])];
 
   /**
    * An array to store string of status of the Task which gets added e.g('toDo,inProgress,awaitingFeedback') .
@@ -200,195 +258,385 @@ export class TaskArraysService {
    */
   assignStatus: string ;
 
+/**
+ * For development mode only: Clears the entire Tasks array by overwriting it with an empty array.
+ * This function should not be used in production.
+ */
   clearTasksArray() {
-    // Leeren Sie das gesamte Tasks-Array, indem Sie es mit einem leeren Array überschreiben.
-    this.tasks = [];
-    this.safeTasks();
-  }
+  // Clear the entire Tasks array by overwriting it with an empty array.
+  this.tasks = [];
+  // Save the updated tasks.
+  this.safeTasks();
+}
 
-  pushToAssignedArray(contact: any) {
-    let assignedContacts = this.addTaskForm.get('assignedContacts') as FormArray;
-  
-    // Check if the contact is already in the array
-    let index = assignedContacts.value.findIndex(c => c.id === contact.id);
-  
-    if (index === -1) {
-      // Contact is not in the array, so add it to the form control
-      assignedContacts.push(this.fb.control(contact));
-  
-      // Push the contact to the local array
-      this.assignedUser.push(contact);
-      console.log('new assigned contact is:', contact)
-    } else {
-      // Contact is already in the array, so remove it from the form control
-      assignedContacts.removeAt(index);
-  
-      // Remove the contact from the local array
-      this.assignedUser.splice(index, 1);
-    }
-  }
+/**
+ * Add or remove a contact from the assigned contacts array and form control.
+ *
+ * @param {any} contact - The contact to be added or removed from the assigned contacts.
+ */
+  pushToAssignedArray(contact) {
+  /**
+   * The FormArray representing assigned contacts within the add task form.
+   * @type {FormArray}
+   */
+  let assignedContacts = this.addTaskForm.get('assignedContacts') as FormArray;
 
-  pushToAssignedArrayFromEdit(contact: any) {
-    let assigned = this.editTaskForm.get('assignedContacts') as FormArray;
-    let index = assigned.value.findIndex(c => c.id === contact.id);
-  
-    if (index === -1) {
-      assigned.push(this.fb.control(contact));
-      this.assignedUser.push(contact);
-    } else {
-      assigned.removeAt(index);
-      this.assignedUser = this.assignedUser.filter(c => c.id !== contact.id);
-    }
-  }
-  
+  // Check if the contact is already in the array
+  let index = assignedContacts.value.findIndex(c => c.id === contact.id);
 
-  removeFromAssignedArray(index: number) {
-    let assignedContacts = this.addTaskForm.get('assignedContacts') as FormArray;
+  if (index === -1) {
+    // Contact is not in the array, so add it to the form control
+    assignedContacts.push(this.fb.control(contact));
+
+    // Push the contact to the local array
+    this.assignedUser.push(contact);
+  } else {
+    // Contact is already in the array, so remove it from the form control
     assignedContacts.removeAt(index);
-  }
 
+    // Remove the contact from the local array
+    this.assignedUser.splice(index, 1);
+  }
+}
+
+/**
+ * Add or remove a contact from the assigned contacts array within the edit task form.
+ *
+ * @param {any} contact - The contact to be added or removed from the assigned contacts.
+ */
+  pushToAssignedArrayFromEdit(contact) {
+  /**
+   * The FormArray representing assigned contacts within the edit task form.
+   * @type {FormArray}
+   */
+  let assigned = this.editTaskForm.get('assignedContacts') as FormArray;
+
+  // Check if the contact is already in the array
+  let index = assigned.value.findIndex(c => c.id === contact.id);
+
+  if (index === -1) {
+    // Contact is not in the array, so add it to the form control
+    assigned.push(this.fb.control(contact));
+
+    // Push the contact to the local array
+    this.assignedUser.push(contact);
+  } else {
+    // Contact is already in the array, so remove it from the form control
+    assigned.removeAt(index);
+
+    // Filter out the contact from the local array
+    this.assignedUser = this.assignedUser.filter(c => c.id !== contact.id);
+  }
+}
+
+/**
+ * Remove a contact from the assigned contacts array within the add task form.
+ *
+ * @param {number} index - The index of the contact to be removed from the assigned contacts.
+ */
+  removeFromAssignedArray(index) {
+  /**
+   * The FormArray representing assigned contacts within the add task form.
+   * @type {FormArray}
+   */
+  let assignedContacts = this.addTaskForm.get('assignedContacts') as FormArray;
+
+  // Remove the contact at the specified index from the form control.
+  assignedContacts.removeAt(index);
+}
+
+/**
+ * Clear assigned contact data by resetting the local and form control representations.
+ */
   clearAssignedData() {
-    this.assignedUser = []; // Clear the local assignedUser array
-  
-    const assignedContacts = this.addTaskForm.get('assignedContacts') as FormArray;
-    assignedContacts.clear(); // Clear the FormArray
-  }
+  // Clear the local assignedUser array.
+  this.assignedUser = [];
+  /**
+   * The FormArray representing assigned contacts within the add task form.
+   * @type {FormArray}
+   */
+  let assignedContacts = this.addTaskForm.get('assignedContacts') as FormArray;
+  // Clear the FormArray.
+  assignedContacts.clear();
+}
 
-
-
+/**
+ * Push subtasks from the selected task in the task array to the subtask array.
+ */
   pushFromTaskArraytoSubtaskArray() {
-    console.log('selectedTask', this.selectedTaskIndex);
-    let subtask = this.tasks[this.selectedTaskIndex].subtask;
-    if (subtask) {
-      this.subtasks.push(...subtask);
-      console.log('subtasks', this.subtasks);
-    }
+  // Get the subtasks from the selected task in the task array.
+  let subtask = this.tasks[this.selectedTaskIndex].subtask;
+  if (subtask) {
+    // Push the subtasks to the subtask array.
+    this.subtasks.push(...subtask);
   }
+}
 
+/**
+ * Find and set the index of the selected task within the "tasks" array.
+ */
   getIndexOfSelectedTask() {
-    let index = this.tasks.findIndex(task => task.id === this.selectedTask.id);
-    this.selectedTaskIndex = index;
-  }
-
-  async generateTaskId() {
-    // first filter out IDs from the "task" array and convert them to numbers (from strings)
-    let taskIds = this.tasks.length;
-
-    // if taskarray is empty, set the ID to 1
-    if (this.tasks.length === 0) {
-      this.taskId = 1;
-    }
-
-    console.log('Task-ArrayService generated task id', this.taskId);
-  }
   /**
-   * Asynchronous function to add a new task to the "task" array
+   * The index of the selected task within the "tasks" array.
+   * @type {number}
    */
-  async addTask(data) {
+  let index = this.tasks.findIndex(task => task.id === this.selectedTask.id);
 
-    if (this.isDataValid(data)) {
-      let newId = this.generateNewTaskId();
-      this.addNewTask(newId, data);
+  // Set the selected task index.
+  this.selectedTaskIndex = index;
+}
 
-
-  
-      setTimeout(() => {
-
-        this.boardService.showAddTask = false;
-        this.boardService.showBoard = true;
-      }, 2000);
-      await this.safeTasks();
-      await this.findNearestDate(this.urgent);
-      await this.resetAddTaskForm();
-      await this.clearAssignedData();
-      this.subtasks = [];
-      await this.ngOnInit();
-
-    }
+/**
+ * Asynchronous function to generate a unique task ID.
+ * It filters out existing IDs from the "tasks" array and converts them to numbers.
+ * If the "tasks" array is empty, it sets the task ID to 1.
+ *
+ * @returns {Promise<void>}
+ */
+async generateTaskId() {
+  // Filter out existing IDs from the "tasks" array and convert them to numbers.
+  let taskIds = this.tasks.length;
+  // If the "tasks" array is empty, set the task ID to 1.
+  if (this.tasks.length === 0) {
+    this.taskId = 1;
   }
+}
+
+/**
+ * Asynchronous function to add a new task to the "task" array if the provided data is valid.
+ *
+ * @param {object} data - Data containing task details to be added.
+ * @returns {Promise<void>}
+ */
+async addTask(data) {
+  if (this.isDataValid(data)) {
+    // Generate a new task ID and add the new task.
+    let newId = this.generateNewTaskId();
+    this.addNewTask(newId, data);
+
+    // Set a timeout to control the UI display.
+    setTimeout(() => {
+      this.boardService.showAddTask = false;
+      this.boardService.showBoard = true;
+    }, 2000);
+
+    // Safely save the updated tasks and perform additional operations.
+    await this.safeTasks();
+    await this.findNearestDate(this.urgent);
+    await this.resetAddTaskForm();
+    await this.clearAssignedData();
+    this.subtasks = [];
+    await this.ngOnInit();
+  }
+}
   
+/**
+ * Check if the provided task data is valid, ensuring that the title, date, and category are not empty.
+ *
+ * @param {object} data - Data containing task details to be validated.
+ * @returns {boolean} True if the data is valid, false otherwise.
+ */
   isDataValid(data) {
-    return data.title !== '' && data.date !== '' && data.category !== '';
-  }
-  
-  generateNewTaskId() {
-    let maxId = this.tasks.reduce((max, task) => (task.id > max ? task.id : max), 0);
-    return maxId + 1;
-  }
-  
-  addNewTask(newId, data) {
-    let selectedContacts = this.ArraysService.contacts
-      .filter((contact) => contact.selected)
-      .map((contact) => contact.name);
-  
-this.pushToArray(newId, data.assignedContacts, data.title, data.description, data.date, this.selectedPriority, data.category, this.subtasks, this.subtasksDone, this.assignStatus)
-    console.log('Added task with parameter', newId, data.assignedContacts, data.title, data.description, data.date, this.selectedPriority, data.category, this.subtasks, this.subtasksDone, this.assignStatus);
-  }
-  
+  return data.title !== '' && data.date !== '' && data.category !== '';
+}
 
+/**
+ * Generate a new task ID by finding the maximum existing task ID and incrementing it by one.
+ *
+ * @returns {number} The newly generated task ID.
+ */
+  generateNewTaskId() {
   /**
-   * Asynchronous function to add a new task to the "task" array
+   * The maximum existing task ID within the "tasks" array.
+   * @type {number}
    */
+  let maxId = this.tasks.reduce((max, task) => (task.id > max ? task.id : max), 0);
+  // Return the newly generated task ID by incrementing the maximum ID by one.
+  return maxId + 1;
+}
+
+/**
+ * Add a new task to the "tasks" array using the provided data and a newly generated task ID.
+ *
+ * @param {number} newId - The newly generated task ID.
+ * @param {object} data - Data containing task details to be added.
+ */
+ addNewTask(newId, data) {
+  /**
+   * An array of selected contact names for assignment.
+   * @type {string[]}
+   */
+  let selectedContacts = this.ArraysService.contacts
+    .filter((contact) => contact.selected)
+    .map((contact) => contact.name);
+
+  // Add the new task to the "tasks" array.
+  this.pushToArray(
+    newId,
+    data.assignedContacts,
+    data.title,
+    data.description,
+    data.date,
+    this.selectedPriority,
+    data.category,
+    this.subtasks,
+    this.subtasksDone,
+    this.assignStatus
+  );
+}
+
+/**
+ * Asynchronous function to edit an existing task with the provided data.
+ *
+ * @param {object} data - Data containing updated task details.
+ */
 async editTask(data) {
   await this.getIndexOfSelectedTask();
+
   // Find the index in the main tasks array
   let taskIndex = this.selectedTaskIndex;
 
-  if (taskIndex >= 0 && taskIndex < this.tasks.length) {
-
-// Update the task properties
-this.tasks[taskIndex].title = data.title;
-this.tasks[taskIndex].description = data.description;
-this.tasks[taskIndex].date = data.date;
-console.log('this.date', data.date);
-this.tasks[taskIndex].prio = this.selectedEditPriority;
-console.log('this.selectedPriority', this.selectedEditPriority);
-this.tasks[taskIndex].category = data.category;
-console.log('this.category', data.category);
-
-debugger;
-// Kombinieren Sie this.subtasks und this.newSubtasks zu einem neuen Array.
-const combinedSubtasks = [...this.tasks[taskIndex].subtasks, ...this.newSubtasks];
-
-// Aktualisieren Sie this.tasks[taskIndex].subtasks mit der Kombination.
-this.tasks[taskIndex].subtasks = combinedSubtasks;
-
-
-
-// Angenommen, this.tasks[taskIndex].assigned ist ein Array von bereits zugewiesenen Kontakten und data.assignedContacts ist ein Array von neuen Zuweisungen.
-
-// Kombinieren Sie die vorhandenen Zuweisungen und die neuen Zuweisungen, unter Berücksichtigung der ID.
-let combinedAssigned = [...this.tasks[taskIndex].assigned, ...data.assignedContacts];
-
-// Entfernen Sie doppelte Kontakte anhand ihrer ID.
-let uniqueCombinedAssigned = combinedAssigned.filter((contact, index, self) =>
-  index === self.findIndex(c => c.id === contact.id)
-);
-
-// Aktualisieren Sie this.tasks[taskIndex].assigned mit den eindeutigen Zuweisungen.
-this.tasks[taskIndex].assigned = uniqueCombinedAssigned;
-
+  if (this.isValidTaskIndex(taskIndex)) {
+    this.updateTaskProperties(taskIndex, data);
+    this.combineAndSetSubtasks(taskIndex);
+    this.combineAndSetAssignedContacts(taskIndex, data.assignedContacts);
     this.safeTasks();
-
-    console.log('Edited task', data.title, data.description, data.dueDate, data.prio, data.assignedContacts, data.category, data.subtask);
+    this.postEditCleanup(data);
   } else {
     console.log('Invalid task index.');
   }
+}
 
-  await this.findNearestDate(this.urgent);
+/**
+ * Check if the provided task index is valid.
+ *
+ * @param {number} taskIndex - The index of the selected task.
+ * @returns {boolean} True if the index is valid, false otherwise.
+ */
+  isValidTaskIndex(taskIndex) {
+  return taskIndex >= 0 && taskIndex < this.tasks.length;
+}
 
+/**
+ * Update the task properties with the provided data.
+ *
+ * @param {number} taskIndex - The index of the task to update.
+ * @param {object} data - Data containing updated task details.
+ */
+  updateTaskProperties(taskIndex, data) {
+  let task = this.tasks[taskIndex];
+  task.title = data.title;
+  task.description = data.description;
+  task.date = data.date;
+  task.prio = this.selectedEditPriority;
+  task.category = data.category;
+}
 
+/**
+ * Combine and set subtasks for the selected task.
+ *
+ * @param {number} taskIndex - The index of the task to update.
+ */
+  combineAndSetSubtasks(taskIndex) {
+  let combinedSubtasks = [...this.tasks[taskIndex].subtasks, ...this.newSubtasks];
+  this.tasks[taskIndex].subtasks = combinedSubtasks;
+}
+
+/**
+ * Combine and set assigned contacts for the selected task, ensuring uniqueness.
+ *
+ * @param {number} taskIndex - The index of the task to update.
+ * @param {Array} assignedContacts - An array of newly assigned contacts.
+ */
+  combineAndSetAssignedContacts(taskIndex, assignedContacts) {
+  let existingAssigned = this.tasks[taskIndex].assigned;
+  let combinedAssigned = [...existingAssigned, ...assignedContacts];
+  let uniqueCombinedAssigned = combinedAssigned.filter(
+    (contact, index, self) => index === self.findIndex(c => c.id === contact.id)
+  );
+  this.tasks[taskIndex].assigned = uniqueCombinedAssigned;
+}
+
+/**
+ * Perform cleanup and UI updates after editing a task.
+ *
+ * @param {object} data - Data containing updated task details.
+ */
+  postEditCleanup(data) {
+  this.findNearestDate(this.urgent);
   this.subtasks = [];
   this.clearAssignedData();
   this.ngOnInit();
   data.assignedContacts = [];
-  await this.resetEditTaskForm();
 
   setTimeout(() => {
     // todo confirmationMessage(); hideSlider();
   }, 1000);
-  // todo confirmationMessage(); hideSlider();
 }
+
+//   /**
+//    * Asynchronous function to add a new task to the "task" array
+//    */
+// async editTask(data) {
+//   await this.getIndexOfSelectedTask();
+//   // Find the index in the main tasks array
+//   let taskIndex = this.selectedTaskIndex;
+
+//   if (taskIndex >= 0 && taskIndex < this.tasks.length) {
+
+// // Update the task properties
+// this.tasks[taskIndex].title = data.title;
+// this.tasks[taskIndex].description = data.description;
+// this.tasks[taskIndex].date = data.date;
+// console.log('this.date', data.date);
+// this.tasks[taskIndex].prio = this.selectedEditPriority;
+// console.log('this.selectedPriority', this.selectedEditPriority);
+// this.tasks[taskIndex].category = data.category;
+// console.log('this.category', data.category);
+
+// debugger;
+// // Kombinieren Sie this.subtasks und this.newSubtasks zu einem neuen Array.
+// const combinedSubtasks = [...this.tasks[taskIndex].subtasks, ...this.newSubtasks];
+
+// // Aktualisieren Sie this.tasks[taskIndex].subtasks mit der Kombination.
+// this.tasks[taskIndex].subtasks = combinedSubtasks;
+
+
+
+// // Angenommen, this.tasks[taskIndex].assigned ist ein Array von bereits zugewiesenen Kontakten und data.assignedContacts ist ein Array von neuen Zuweisungen.
+
+// // Kombinieren Sie die vorhandenen Zuweisungen und die neuen Zuweisungen, unter Berücksichtigung der ID.
+// let combinedAssigned = [...this.tasks[taskIndex].assigned, ...data.assignedContacts];
+
+// // Entfernen Sie doppelte Kontakte anhand ihrer ID.
+// let uniqueCombinedAssigned = combinedAssigned.filter((contact, index, self) =>
+//   index === self.findIndex(c => c.id === contact.id)
+// );
+
+// // Aktualisieren Sie this.tasks[taskIndex].assigned mit den eindeutigen Zuweisungen.
+// this.tasks[taskIndex].assigned = uniqueCombinedAssigned;
+
+//     this.safeTasks();
+
+//     console.log('Edited task', data.title, data.description, data.dueDate, data.prio, data.assignedContacts, data.category, data.subtask);
+//   } else {
+//     console.log('Invalid task index.');
+//   }
+
+//   await this.findNearestDate(this.urgent);
+
+
+//   this.subtasks = [];
+//   this.clearAssignedData();
+//   this.ngOnInit();
+//   data.assignedContacts = [];
+//   await this.resetEditTaskForm();
+
+//   setTimeout(() => {
+//     // todo confirmationMessage(); hideSlider();
+//   }, 1000);
+//   // todo confirmationMessage(); hideSlider();
+// }
 
   removeDuplicates(array) {
     return array.filter((item, index, self) => {
@@ -413,21 +661,7 @@ this.tasks[taskIndex].assigned = uniqueCombinedAssigned;
       this.subtasks.push(subtaskValue);
       subtaskControl.setValue(''); // Das Eingabefeld leeren
     }
-
-    console.log('subtasks', this.subtasks);
   }
-
-  // addSubtaskEdit() {
-  //   let subtaskControl = this.editTaskForm.get('subtask');
-  //   let subtaskValue = subtaskControl.value;
-
-  //   if (subtaskValue) {
-  //     this.newSubtasks.push(subtaskValue);
-  //     subtaskControl.setValue(''); // Das Eingabefeld leeren
-  //   }
-
-  //   console.log('newSubtasks', this.newSubtasks);
-  // }
 
   addSubtaskFromEdit() {
     let subtaskControl = this.editTaskForm.get('subtask');
@@ -437,8 +671,6 @@ this.tasks[taskIndex].assigned = uniqueCombinedAssigned;
       this.newSubtasks.push(subtaskValue);
       subtaskControl.setValue(''); // Das Eingabefeld leeren
     }
-
-    console.log('addSubtaskFromEdit generated subtasks', this.subtasks);
   }
 
   editSubtask() {
@@ -449,8 +681,6 @@ this.tasks[taskIndex].assigned = uniqueCombinedAssigned;
       this.subtasks.push(subtaskValue);
       subtaskControl.setValue(''); // Das Eingabefeld leeren
     }
-
-    console.log('subtasks', this.subtasks);
   }
 
   deleteSubtask(i) {
@@ -459,7 +689,6 @@ this.tasks[taskIndex].assigned = uniqueCombinedAssigned;
   }
 
   deleteSubtaskFromEdit(i) {
-    console.log('deleteSubtaskFromEdit aktive index to delete:', this.selectedTaskIndex);
     this.newSubtasks.splice(i, 1);
     this.safeTasks();
   }
@@ -505,7 +734,6 @@ this.tasks[taskIndex].assigned = uniqueCombinedAssigned;
 
   selectAssigned(assigned: string) {
     this.selectedPriority = assigned;
-    console.log(this.selectedPriority);
   }
 
 // TODO updateSubtaskStatus
@@ -577,7 +805,7 @@ deleteSubtaskDone(subtaskIndex: number) {
    */
   async findNearestDate(urgentArray: any[]): Promise<void> {
     if (!urgentArray || urgentArray.length === 0) {
-      this.nearestUrgendTaskDate = null;
+      this.nearestUrgentTaskDate = null;
       return;
     }
 
@@ -600,16 +828,12 @@ deleteSubtaskDone(subtaskIndex: number) {
     };
     let formattedDate = nearestDate.toLocaleDateString('en-US', options); // 'en-US' for English
 
-    this.nearestUrgendTaskDate = formattedDate;
+    this.nearestUrgentTaskDate = formattedDate;
   }
 
 
   async getNewStatus (status: string) {
     this.assignStatus = status;
-    console.log(
-      'this.TaskArrayService.assignStatus',
-      this.assignStatus
-    );
   }
   
   deleteAssignedFromTask(i,j) {
@@ -627,7 +851,6 @@ deleteSubtaskDone(subtaskIndex: number) {
       'tasks_array',
       JSON.stringify(this.tasks)
     );
-    console.log('Task-ArrayService Saved task', this.tasks);
   }
   /**
    * Asynchronous function to load all tasks from the remote storage and assign them to the "tasks" array
@@ -636,6 +859,5 @@ deleteSubtaskDone(subtaskIndex: number) {
     this.tasks = JSON.parse(
       await this.RemotestorageService.getItem('tasks_array')
     );
-    console.log('Task-ArrayService loaded task', this.tasks);
   }
 }

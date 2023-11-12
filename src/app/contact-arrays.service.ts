@@ -52,14 +52,14 @@ export class ArraysService {
       email: ['', [Validators.required, Validators.email]],
       phone: ['', [Validators.required, Validators.minLength(6)]],
     });
-    this.contactsFormFB.valueChanges.subscribe(console.log);
+
 
     this.editContactFormFB = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email]],
       phone: ['', [Validators.required, Validators.minLength(6)]],
     });
-    this.editContactFormFB.valueChanges.subscribe(console.log);
+
 
     this.sortedalphabetically = [];
   }
@@ -129,7 +129,6 @@ export class ArraysService {
     this.sortedalphabetically = contacts.slice().sort((a, b) =>
       a.name.localeCompare(b.name)
     );
-    console.log('sortedalphabetically', this.sortedalphabetically);
   }
 
   
@@ -151,7 +150,6 @@ export class ArraysService {
     this.contacts = JSON.parse(
       await this.RemotestorageService.getItem('contact_array')
     );
-    console.log('loaded this contacts from RS', this.contacts);
     // TODO this.initials = JSON.parse(await this.RemotestorageService.getItem('initials_array'));
   }
 }
