@@ -330,7 +330,7 @@
       <div class="add-btn-container">
         <img
           src="assets/img/addtask/add_btn.png"
-          (click)="this.TaskArrayService.addSubtaskEdit()"
+          (click)="this.TaskArrayService.addSubtask()"
         />
       </div>
 
@@ -589,22 +589,22 @@ class="edittask-wrapper"
       <div class="add-btn-container">
         <img
           src="assets/img/addtask/add_btn.png"
-          (click)="this.TaskArrayService.addSubtaskEdit()"
+          (click)="this.TaskArrayService.addSubtaskFromEdit()"
         />
       </div>
 
-      <div
+      <!-- TODO <div
         *ngIf="
           this.TaskArrayService.tasks &&
           this.TaskArrayService.tasks[
             this.TaskArrayService.selectedTaskIndex
           ]
         "
-      >
+      > -->
 
         <div
           *ngFor="
-            let subtask of this.TaskArrayService.subtasks;
+            let subtask of this.TaskArrayService.newSubtasks;
             let i = index
           "
         >
@@ -614,14 +614,13 @@ class="edittask-wrapper"
               <img
                 src="assets/img/board/delete.png"
                 (click)="
-                  this.TaskArrayService.deleteSubtask(i);
                   this.TaskArrayService.deleteSubtaskFromEdit(i)
                 "
               />
             </div>
           </div>
         </div>
-      </div>
+      <!-- </div> -->
       
       <div class="btn-container">
         <button

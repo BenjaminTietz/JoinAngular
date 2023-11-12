@@ -348,7 +348,7 @@ console.log('this.category', data.category);
 
 debugger;
 // Kombinieren Sie this.subtasks und this.newSubtasks zu einem neuen Array.
-const combinedSubtasks = [...this.subtasks, ...this.newSubtasks];
+const combinedSubtasks = [...this.tasks[taskIndex].subtasks, ...this.newSubtasks];
 
 // Aktualisieren Sie this.tasks[taskIndex].subtasks mit der Kombination.
 this.tasks[taskIndex].subtasks = combinedSubtasks;
@@ -417,24 +417,24 @@ this.tasks[taskIndex].assigned = uniqueCombinedAssigned;
     console.log('subtasks', this.subtasks);
   }
 
-  addSubtaskEdit() {
-    let subtaskControl = this.editTaskForm.get('subtask');
-    let subtaskValue = subtaskControl.value;
+  // addSubtaskEdit() {
+  //   let subtaskControl = this.editTaskForm.get('subtask');
+  //   let subtaskValue = subtaskControl.value;
 
-    if (subtaskValue) {
-      this.newSubtasks.push(subtaskValue);
-      subtaskControl.setValue(''); // Das Eingabefeld leeren
-    }
+  //   if (subtaskValue) {
+  //     this.newSubtasks.push(subtaskValue);
+  //     subtaskControl.setValue(''); // Das Eingabefeld leeren
+  //   }
 
-    console.log('newSubtasks', this.newSubtasks);
-  }
+  //   console.log('newSubtasks', this.newSubtasks);
+  // }
 
   addSubtaskFromEdit() {
     let subtaskControl = this.editTaskForm.get('subtask');
     let subtaskValue = subtaskControl.value;
 
     if (subtaskValue) {
-      this.subtasks.push(subtaskValue);
+      this.newSubtasks.push(subtaskValue);
       subtaskControl.setValue(''); // Das Eingabefeld leeren
     }
 
@@ -460,7 +460,7 @@ this.tasks[taskIndex].assigned = uniqueCombinedAssigned;
 
   deleteSubtaskFromEdit(i) {
     console.log('deleteSubtaskFromEdit aktive index to delete:', this.selectedTaskIndex);
-    this.tasks[this.selectedTaskIndex].subtask.splice(i, 1);
+    this.newSubtasks.splice(i, 1);
     this.safeTasks();
   }
 
