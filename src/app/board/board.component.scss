@@ -1734,12 +1734,18 @@
     }
   }
 
+
   .edittask-left-prio {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
     gap: 8px;
+
+    .floating-task-prio {
+      display: flex;
+
+    }
     h2 {
       @include OpenSans(700, 19px, 22.8px, $menu-color);
     }

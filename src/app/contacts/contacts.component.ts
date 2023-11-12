@@ -10,6 +10,7 @@ import { RemotestorageService } from '../remotestorage.service';
 import { ArraysService } from '../contact-arrays.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TaskArraysService } from '../task-arrays.service';
 
 @Component({
   selector: 'app-contacts',
@@ -56,7 +57,8 @@ export class ContactsComponent {
     private router: Router,
     public RemotestorageService: RemotestorageService,
     public ArraysService: ArraysService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    public TaskArraysService: TaskArraysService
   ) {
     this.ArraysService.contactsForm.valueChanges.subscribe(console.log);
   }
@@ -186,15 +188,30 @@ export class ContactsComponent {
    */
   async deleteContact() {
     await this.generateIndexToDelete();
-
+  
+    const contactToDelete = this.ArraysService.contacts[this.indexToDelete];
+  
+    // Loop through the TaskArrayService.tasks and remove the contact from the "assigned" array
+    for (let task of this.TaskArraysService.tasks) {
+      const index = task.assigned.findIndex(contact => contact.id === contactToDelete.id);
+      if (index !== -1) {
+        task.assigned.splice(index, 1);
+      }
+    }
+  
+    // Save the updated tasks
+    this.TaskArraysService.safeTasks();
+  
+    // Remove the contact from the ArraysService.contacts
     this.ArraysService.contacts.splice(this.indexToDelete, 1);
     this.ArraysService.safeContacts();
-
+  
     this.ngOnInit();
     this.showMobileDetailView();
-    //TODO confimationMessage()
-    //short delay before hiding the slider
+    // TODO: confimationMessage(CONTACT_DELETED)
+    // Short delay before hiding the slider
   }
+  
 
   getContactById(index: number) {
     this.selectedContactIndex = index;

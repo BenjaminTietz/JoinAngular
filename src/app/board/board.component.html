@@ -429,7 +429,24 @@ class="edittask-wrapper"
         />
       </div>
     </div>
+    <!-- //TODO prio in edit task -->
     <div class="edittask-left-prio">
+      <div *ngIf="this.TaskArrayService.selectedTaskIndex >= 0 && this.TaskArrayService.tasks[this.TaskArrayService.selectedTaskIndex]">
+        <div class="edittask-left-prio">
+
+
+          <div class="floating-task-prio">
+            <h2>Current Priority: <span>{{ this.TaskArrayService.tasks[this.TaskArrayService.selectedTaskIndex].prio }}</span></h2>
+            <img
+              class="prio"
+              src="assets/img/board/prio_{{
+                this.TaskArrayService.tasks[this.TaskArrayService.selectedTaskIndex].prio
+              }}.svg"
+            />
+          </div>
+
+        </div>
+      </div>
       <h2>change Priority <span>(optional)</span></h2>
       <div class="prio-box">
         <div
