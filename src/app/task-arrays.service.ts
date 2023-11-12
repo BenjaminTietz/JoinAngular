@@ -81,7 +81,7 @@ export class TaskArraysService {
 
   minDate: string;
   selectedPriority: string = '';
-  selectedEditPriority: string = '';
+  selectedEditPriority: string = 'low';
   assignedDropdownVisible: boolean = false;
   taskId: number = 0;
   nearestUrgendTaskDate: any = '';
@@ -89,6 +89,7 @@ export class TaskArraysService {
   selectedTaskIndex: number;
 
   async ngOnInit() {
+    // await this.clearTasksArray();
     await this.loadTasks();
     await this.ArraysService.loadContacts(); 
     this.ArraysService.contacts.forEach(contact => {
@@ -186,12 +187,20 @@ export class TaskArraysService {
    */
   assignedUser = [];
 
+  assignedContacts = [new FormArray([])];
+
+
   /**
    * An array to store string of status of the Task which gets added e.g('toDo,inProgress,awaitingFeedback') .
    * @type {Array}
    */
   assignStatus: string ;
 
+  clearTasksArray() {
+    // Leeren Sie das gesamte Tasks-Array, indem Sie es mit einem leeren Array überschreiben.
+    this.tasks = [];
+    this.safeTasks();
+  }
 
   pushToAssignedArray(contact: any) {
     let assignedContacts = this.addTaskForm.get('assignedContacts') as FormArray;
@@ -217,41 +226,17 @@ export class TaskArraysService {
 
   pushToAssignedArrayFromEdit(contact: any) {
     let assignedContacts = this.editTaskForm.get('assignedContacts') as FormArray;
-  
-    // Get the IDs of the contacts in assignedContacts
-    const assignedContactIds = assignedContacts.value.map((c) => c.id);
-  
-    // Check if the contact is already in tasks[i].assigned
-    if (this.selectedTask) {
-      const isContactAlreadyAssigned = this.selectedTask.assigned.some((assignedContact) =>
-        assignedContactIds.includes(assignedContact.id)
-      );
-  
-      if (isContactAlreadyAssigned) {
-        console.log('Contact is already assigned to the task.');
-        return; // Exit early, do not add the contact again
-      }
-    }
-  
-    // Check if the contact is already in the array
     let index = assignedContacts.value.findIndex(c => c.id === contact.id);
   
     if (index === -1) {
-      // Contact is not in the array, so add it to the form control
       assignedContacts.push(this.fb.control(contact));
-  
-      // Push the contact to the local array
       this.assignedUser.push(contact);
-      console.log('New assigned contact is:', contact);
     } else {
-      // Contact is already in the array, so remove it from the form control
       assignedContacts.removeAt(index);
-  
-      // Remove the contact from the local array
-      this.assignedUser.splice(index, 1);
-      console.log('Removed assigned contact:', contact);
+      this.assignedUser = this.assignedUser.filter(c => c.id !== contact.id);
     }
   }
+  
 
   removeFromAssignedArray(index: number) {
     let assignedContacts = this.addTaskForm.get('assignedContacts') as FormArray;
@@ -312,6 +297,7 @@ export class TaskArraysService {
       await this.findNearestDate(this.urgent);
       await this.resetAddTaskForm();
       await this.clearAssignedData();
+      this.subtasks = [];
       await this.ngOnInit();
 
     }
@@ -331,8 +317,8 @@ export class TaskArraysService {
       .filter((contact) => contact.selected)
       .map((contact) => contact.name);
   
-this.pushToArray(newId, data.assignedContacts, data.title, data.description, data.date, this.selectedPriority, data.category, this.subtasks, this.assignStatus)
-    console.log('Added task', newId, data.title, data.description, data.date, data.assignedContacts, data.category, data.subtask);
+this.pushToArray(newId, data.assignedContacts, data.title, data.description, data.date, this.selectedPriority, data.category, this.subtasks, this.subtasksDone, this.assignStatus)
+    console.log('Added task with parameter', newId, data.assignedContacts, data.title, data.description, data.date, this.selectedPriority, data.category, this.subtasks, this.subtasksDone, this.assignStatus);
   }
   
 
@@ -382,42 +368,47 @@ async editTask(data) {
   let taskIndex = this.selectedTaskIndex;
 
   if (taskIndex >= 0 && taskIndex < this.tasks.length) {
-    console.log('Edited task', data.title, data.description, data.dueDate, data.prio, data.assignedContacts, data.category, data.subtask);
+   
 
 
-  
-
-    // Update the task properties
-    this.tasks[taskIndex].title.push(data.title);
-    this.tasks[taskIndex].description.push(data.description);
-    this.tasks[taskIndex].date.push(data.date);
-    this.tasks[taskIndex].prio.push(this.selectedEditPriority);
-    console.log('this.selectedPriority', this.selectedEditPriority);
-    this.tasks[taskIndex].category.push(data.title);
-    this.tasks[taskIndex].subtasks.push(this.subtasks);
-    this.tasks[taskIndex].subtasksDone.push(this.subtasksDone);
-    this.tasks[taskIndex].assigned.push(this.assignedUser);
-    this.tasks[taskIndex].status.push(this.assignStatus);
 
 
-    // Push each entry from data.subtask into this.tasks[taskIndex].subtask
-    for (let subtaskName of data.subtask) {
-      this.tasks[taskIndex].subtasks.push({ name: subtaskName, completed: false });
-    }
+// Update the task properties
+this.tasks[taskIndex].title = data.title;
+this.tasks[taskIndex].description = data.description;
+this.tasks[taskIndex].date = data.date;
+console.log('this.date', data.date);
+this.tasks[taskIndex].prio = this.selectedEditPriority;
+console.log('this.selectedPriority', this.selectedEditPriority);
+this.tasks[taskIndex].category = data.category;
+console.log('this.category', data.category);
+this.tasks[taskIndex].subtasks = this.subtasks;
+console.log('this.subtasks', this.subtasks);
+this.tasks[taskIndex].subtasksDone = this.subtasksDone;
+console.log('this.subtasksDone', this.subtasksDone);
+// Angenommen, this.tasks[taskIndex].assigned ist ein Array von bereits zugewiesenen Kontakten und data.assignedContacts ist ein Array von neuen Zuweisungen.
 
-    // Push each entry from this.subtasks into this.tasks[taskIndex].subtask
-    for (let subtask of this.subtasks) {
-      this.tasks[taskIndex].subtask.push(subtask);
-    }
+// Kombinieren Sie die vorhandenen Zuweisungen und die neuen Zuweisungen, unter Berücksichtigung der ID.
+let combinedAssigned = this.tasks[taskIndex].assigned.concat(data.assignedContacts);
+
+// Entfernen Sie doppelte Kontakte anhand ihrer ID.
+let uniqueCombinedAssigned = combinedAssigned.filter((contact, index, self) =>
+  index === self.findIndex(c => c.id === contact.id)
+);
+
+// Aktualisieren Sie this.tasks[taskIndex].assigned mit den eindeutigen Zuweisungen.
+this.tasks[taskIndex].assigned = uniqueCombinedAssigned;
+
 
     this.safeTasks();
 
-    console.log('Edited task', data.title, data.description, data.dueDate);
+    console.log('Edited task', data.title, data.description, data.dueDate, data.prio, data.assignedContacts, data.category, data.subtask);
   } else {
     console.log('Invalid task index.');
   }
 
   await this.findNearestDate(this.urgent);
+
 
   this.subtasks = [];
   this.clearAssignedData();
@@ -513,7 +504,8 @@ async editTask(data) {
     date,
     prio,
     category,
-    subtask,
+    subtasks,
+    subtasksDone,
     status,
   ) {
     this.tasks.push({
@@ -524,8 +516,9 @@ async editTask(data) {
       date: date,
       prio: this.selectedPriority,
       category: category,
-      subtask: subtask,
-      status: status,
+      subtasks: this.subtasks,
+      subtasksDone: this.subtasksDone,
+      status: this.assignStatus,
     });
   }
 
@@ -539,9 +532,9 @@ async updateSubtaskStatus(subtaskIndex: number) {
   await this.getIndexOfSelectedTask();
 
   if (this.selectedTask && subtaskIndex >= 0) {
-    if (this.selectedTask.subtask && subtaskIndex < this.selectedTask.subtask.length) {
+    if (this.selectedTask.subtasks && subtaskIndex < this.selectedTask.subtasks.length) {
       // Verschiebe den Subtask von subtask zu subtasksDone
-      const completedSubtask = this.selectedTask.subtask.splice(subtaskIndex, 1)[0];
+      let completedSubtask = this.selectedTask.subtasks.splice(subtaskIndex, 1)[0];
 
       if (!this.selectedTask.subtasksDone) {
         this.selectedTask.subtasksDone = []; // Initialisiere subtasksDone, falls es noch nicht existiert
@@ -550,13 +543,13 @@ async updateSubtaskStatus(subtaskIndex: number) {
       this.selectedTask.subtasksDone.push(completedSubtask);
     } else if (this.selectedTask.subtasksDone && subtaskIndex < this.selectedTask.subtasksDone.length) {
       // Verschiebe den Subtask von subtasksDone zu subtask
-      const completedSubtask = this.selectedTask.subtasksDone.splice(subtaskIndex, 1)[0];
+      let completedSubtask = this.selectedTask.subtasksDone.splice(subtaskIndex, 1)[0];
 
-      if (!this.selectedTask.subtask) {
-        this.selectedTask.subtask = []; // Initialisiere subtask, falls es noch nicht existiert
+      if (!this.selectedTask.subtasks) {
+        this.selectedTask.subtasks = []; // Initialisiere subtask, falls es noch nicht existiert
       }
 
-      this.selectedTask.subtask.push(completedSubtask);
+      this.selectedTask.subtasks.push(completedSubtask);
     } else {
       console.error('Ungültiger subtaskIndex oder ausgewählter Task');
     }

@@ -395,6 +395,7 @@
         box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.719);
         scale: 1.01;
       }
+
       .single-task-top {
         display: none;
         justify-content: space-between;
@@ -419,16 +420,7 @@
           }
         }
       }
-      .progressbar {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        width: 100%;
-        progress {
-          width: 120px;
-          height: 32px;
-        }
-      }
+
       .task-category {
         display: flex;
         justify-content: center;
@@ -459,6 +451,21 @@
           margin-bottom: 16px;
           width: 220px;
           height: 12px;
+          @include OpenSans(400, 16px, 19.2px, $board-text);
+        }
+      }
+
+      .progressbar {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: flex-start;
+        width: 100%;
+        progress {
+          width: 120px;
+          height: 32px;
+        }
+        span {
           @include OpenSans(400, 16px, 19.2px, $board-text);
         }
       }

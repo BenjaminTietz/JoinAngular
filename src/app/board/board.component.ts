@@ -47,6 +47,7 @@ export class BoardComponent {
   }
 
   async ngOnInit() {
+    // await this.TaskArrayService.clearTasksArray();
     await this.ArraysService.loadContacts();
     await this.TaskArrayService.loadTasks();
     await this.TaskArrayService.mapTaskStatus();
@@ -138,6 +139,7 @@ export class BoardComponent {
     this.TaskArrayService.tasks.splice(this.taskToDelete, 1);
     this.TaskArrayService.safeTasks();
     this.closeTask();
+    await this.TaskArrayService.ngOnInit();
     await this.ngOnInit();
   }
 
@@ -259,19 +261,20 @@ export class BoardComponent {
     this.TaskArrayService.pushFromTaskArraytoSubtaskArray();
     this.TaskArrayService.selectedTask = selectedTask;
   
-    // Löschen Sie das `subtask`-Feld aus dem ausgewählten Task
-    selectedTask.subtask = [];
-  
-    // Löschen Sie das `subtask`-Formularfeld
-    this.TaskArrayService.editTaskForm.get('subtask').reset();
-  
-    // Aktualisieren Sie das Formular mit den Werten aus dem ausgewählten Task
+
     this.TaskArrayService.editTaskForm.patchValue({
       title: selectedTask.title,
       description: selectedTask.description,
       date: selectedTask.date,
       category: selectedTask.category,
+      prio: selectedTask.prio,
+      status: selectedTask.status,
     });
+    this.TaskArrayService.selectedTask.subtasks = this.TaskArrayService.subtasks;
+    console.log('subtasks', this.TaskArrayService.subtasks);
+    this.TaskArrayService.selectedTask.subtasksDone = this.TaskArrayService.subtasksDone;
+    console.log('subtasksDone', this.TaskArrayService.subtasksDone);
+
   
     console.log('selectedTask', this.TaskArrayService.selectedTask);
     this.editTaskWrapper.nativeElement.classList.add('show-edittask-wrapper');
@@ -280,11 +283,11 @@ export class BoardComponent {
   async hideEditTaskFloatingContainer() {
   
     this.closeTask();
-    this.TaskArrayService.assignStatus = '';
-    this.TaskArrayService.subtasks = [];
+
     this.TaskArrayService.clearAssignedData();
 
     await this.TaskArrayService.resetEditTaskForm();
+    await this.TaskArrayService.ngOnInit();
     await this.ngOnInit();
     this.editTaskWrapper.nativeElement.classList.remove(
       'show-edittask-wrapper'
