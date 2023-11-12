@@ -260,6 +260,7 @@ export class BoardComponent {
     await this.TaskArrayService.getIndexOfSelectedTask();
     this.TaskArrayService.pushFromTaskArraytoSubtaskArray();
     this.TaskArrayService.selectedTask = selectedTask;
+    
   
 
     this.TaskArrayService.editTaskForm.patchValue({
@@ -269,13 +270,12 @@ export class BoardComponent {
       category: selectedTask.category,
       prio: selectedTask.prio,
       status: selectedTask.status,
+      subtasks: selectedTask.subtasks,
     });
     this.TaskArrayService.selectedTask.subtasks = this.TaskArrayService.subtasks;
     console.log('subtasks', this.TaskArrayService.subtasks);
-    this.TaskArrayService.selectedTask.subtasksDone = this.TaskArrayService.subtasksDone;
-    console.log('subtasksDone', this.TaskArrayService.subtasksDone);
 
-  
+    
     console.log('selectedTask', this.TaskArrayService.selectedTask);
     this.editTaskWrapper.nativeElement.classList.add('show-edittask-wrapper');
   }

@@ -298,21 +298,6 @@
             />
           </div>
         </div>
-        <!-- <div
-          *ngFor="let contact of this.ArraysService.contacts; let i = index"
-          class="assigned-user"
-        >
-          <div
-            [style.background-color]="this.ArraysService.contacts[i].color"
-            class="assigned-user-circle"
-          >
-            <div class="assigned-user-Initials">AT</div>
-          </div>
-          <span class="assigned-user-name">{{ contact.name }}</span>
-          <div>
-            <input (click)="this.TaskArrayService.pushToAssignedArray(this.ArraysService.contacts[i].name)" type="checkbox" name="assigned" />
-          </div>
-        </div> -->
       </div>
     </div>
 
@@ -345,7 +330,7 @@
       <div class="add-btn-container">
         <img
           src="assets/img/addtask/add_btn.png"
-          (click)="this.TaskArrayService.addSubtask()"
+          (click)="this.TaskArrayService.addSubtaskEdit()"
         />
       </div>
 
@@ -365,6 +350,7 @@
           </div>
         </div>
       </div>
+      
       <div class="btn-container">
         <button
           (click)="hideAddtaskFloatingContainer()"
@@ -599,7 +585,7 @@ class="edittask-wrapper"
       <div class="add-btn-container">
         <img
           src="assets/img/addtask/add_btn.png"
-          (click)="this.TaskArrayService.addSubtaskFromEdit()"
+          (click)="this.TaskArrayService.addSubtaskEdit()"
         />
       </div>
 
@@ -632,7 +618,7 @@ class="edittask-wrapper"
           </div>
         </div>
       </div>
-
+      
       <div class="btn-container">
         <button
           (click)="hideEditTaskFloatingContainer()"

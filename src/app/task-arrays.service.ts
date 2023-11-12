@@ -171,6 +171,11 @@ export class TaskArraysService {
    * @type {Array}
    */
   subtasks: { name: string, completed: boolean }[] = [];
+    /**
+   * An subarray to store subtasks .
+   * @type {Array}
+   */
+    newSubtasks: { name: string, completed: boolean }[] = [];
   /**
    * An subarray to store state of subtasks .
    * @type {Array}
@@ -382,10 +387,16 @@ this.tasks[taskIndex].prio = this.selectedEditPriority;
 console.log('this.selectedPriority', this.selectedEditPriority);
 this.tasks[taskIndex].category = data.category;
 console.log('this.category', data.category);
-this.tasks[taskIndex].subtasks = this.subtasks;
-console.log('this.subtasks', this.subtasks);
-this.tasks[taskIndex].subtasksDone = this.subtasksDone;
-console.log('this.subtasksDone', this.subtasksDone);
+
+
+// Kombinieren Sie this.subtasks und this.newSubtasks zu einem neuen Array.
+const combinedSubtasks = [...this.subtasks, ...this.newSubtasks];
+
+// Aktualisieren Sie this.tasks[taskIndex].subtasks mit der Kombination.
+this.tasks[taskIndex].subtasks = combinedSubtasks;
+
+
+
 // Angenommen, this.tasks[taskIndex].assigned ist ein Array von bereits zugewiesenen Kontakten und data.assignedContacts ist ein Array von neuen Zuweisungen.
 
 // Kombinieren Sie die vorhandenen Zuweisungen und die neuen Zuweisungen, unter Berücksichtigung der ID.
@@ -446,6 +457,18 @@ this.tasks[taskIndex].assigned = uniqueCombinedAssigned;
     }
 
     console.log('subtasks', this.subtasks);
+  }
+
+  addSubtaskEdit() {
+    let subtaskControl = this.editTaskForm.get('subtask');
+    let subtaskValue = subtaskControl.value;
+
+    if (subtaskValue) {
+      this.newSubtasks.push(subtaskValue);
+      subtaskControl.setValue(''); // Das Eingabefeld leeren
+    }
+
+    console.log('newSubtasks', this.newSubtasks);
   }
 
   addSubtaskFromEdit() {
