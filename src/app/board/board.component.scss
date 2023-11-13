@@ -511,13 +511,13 @@
     align-items: flex-start;
     width: 100vw;
     max-width: 100%;
-    height: 100%;
-
+    height: 100vh;
     margin-top: 80px;
     margin-left: 0;
     padding-left: unset;
     padding-right: unset;
-    overflow-x: hidden;
+    overflow: hidden;
+
     .board-top {
       padding: unset;
 
@@ -1404,17 +1404,15 @@
     justify-content: flex-start;
     align-items: center;
     box-sizing: border-box;
-    margin-top: 78px;
+    margin-top: 0;
     margin-left: 0px;
     padding-left: 16px;
     padding-right: 16px;
-    width: 100vw;
-    max-width: 100%;
-    height: calc(100vh - 156px);
+    width: 100%;
+    height: calc(100vh - 180px);
     max-height: 100%;
     gap: 16px;
-    overflow-y: scroll;
-
+    overflow: hidden;
     .addtask-right {
       margin-bottom: 165px;
     }

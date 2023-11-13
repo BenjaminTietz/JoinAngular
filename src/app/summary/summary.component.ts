@@ -36,6 +36,5 @@ export class SummaryComponent {
     await this.TaskArraysService.mapUrgentTasks();
     this.loginService.getGreeting();
     this.TaskArraysService.findNearestDate(this.TaskArraysService.urgent);
-    console.log('LoginService.currentUser', this.loginService.currentUser);
   }
 }

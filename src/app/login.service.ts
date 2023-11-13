@@ -134,7 +134,7 @@ async logIn(data) {
       initials: this.extractInitialsFromName(user.name),
       color: this.getRandomUserColor(),
     };
-    console.log('LoginComponent.currentUser', this.currentUser);
+
     // Save the current user to remote storage
     await this.safeUser();
     this.router.navigate(['/summary']);
