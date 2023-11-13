@@ -892,11 +892,12 @@
 }
 .addtask-wrapper {
   position: absolute;
+  left:0;
   display: none;
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
-  width: calc(100vw - 294px);
+  width: calc(100vw - 252px);
   height: calc(100vh - 96px);
   background-color: $bg-color;
   overflow: hidden;
@@ -1635,11 +1636,12 @@
 }
 .edittask-wrapper {
   position: absolute;
+  left:0;
   display: none;
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
-  width: calc(100vw - 294px);
+  width: calc(100vw - 252px);
   height: calc(100vh - 96px);
   background-color: $bg-color;
   overflow: hidden;
@@ -2170,20 +2172,19 @@
 
 @media screen and (max-width: 1200px) {
   .edittask-wrapper {
-    flex-direction: column;
-    justify-content: flex-start;
+    position: absolute;
+    display: none;
+    justify-content: center;
     align-items: center;
     box-sizing: border-box;
-    margin-top: unset;
-    margin-left: 0px;
-    padding-left: 16px;
-    padding-right: 16px;
     width: 100vw;
-    max-width: 100%;
-    height: calc(100vh - 156px);
-    max-height: 100%;
-    gap: 16px;
+    max-width: 105%;
+    height: calc(100vh - 96px);
+    background-color: $bg-color;
     overflow-y: scroll;
+    z-index: 2;
+    animation: slide-in-right 1.5s ease-in-out;
+    top: 0;
 
     .edittask-right {
       margin-bottom: 165px;

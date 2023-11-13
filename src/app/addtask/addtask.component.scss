@@ -615,6 +615,7 @@
       }
     }
     .addtask-assigned-box {
+      width: 400px;
       .assigned-dropdown-container {
         width: 320px;
         .assigned-user {
@@ -658,6 +659,7 @@
       .prio-box {
         height: 48px;
         justify-content: flex-start;
+        gap: 4px;
       }
     }
     .addtask-right {
