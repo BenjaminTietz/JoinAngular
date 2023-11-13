@@ -161,6 +161,89 @@
                 }
             }
         }
+        .edit-contact-bottom {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            box-sizing: border-box;
+            width: 584px;
+            height: calc(100% - 362px);
+            background-color: $white;
+            border: 1px solid $input-boarder;
+            padding-top: 16px;
+            form {
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                width: 422px;
+                height: 193px;
+                gap: 24px;
+
+                input {
+                    width: 100%;
+                    height: 48px;
+                    padding-left: 16px;
+                    @include OpenSans(400, 19px, 22.8px, $black);
+
+                    &.ng-touched,
+                    &.ng-dirty {
+                      &.ng-invalid {
+                        border: 1px solid $red;
+                        border-radius: 10px;
+                      }
+                      &.ng-valid {
+                        border: 1px solid $green;
+                        border-radius: 10px;
+                      }
+                    }
+                }
+            }
+            .add-contact-btn {
+                display: flex;
+                gap: 4px;
+
+                .cancel-btn {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    box-sizing: border-box;
+                    white-space: nowrap;
+                    width: 136px;
+                    height: 61px;
+                    border-radius: 10px;
+                    border-style:solid 1px;
+                    border-color: $light-gray;
+                    background-color: $white;
+                    padding: 16px 10px 16px 10px;
+                    gap: 10px;
+                    @include OpenSans(400, 23px, 27.6px, $light-gray);
+                    cursor: pointer;
+
+                }
+        
+                .create-btn {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    width: 204px;
+                    height: 60px;
+                    border-radius: 8px;
+                    border-style: none;
+                    background-color: $light-blue;
+                    padding: 16px 10px 16px 10px;
+                    gap: 10px;
+                    @include OpenSans(400, 23px, 27.6px, $white);
+                    cursor: pointer;
+
+                    &:disabled {
+                        background-color: $light-gray;
+                        cursor: not-allowed;
+                      }
+                }
+            }
+        }
         .add-contact-top {
             position: relative;
             display: flex;
@@ -680,7 +763,7 @@
             left: unset;
             display: none;
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-start;
             align-items: center;
             width: 351px;
             height: 582px;
@@ -696,7 +779,7 @@
                 align-items: center;
                 box-sizing: border-box;
                 width: 351px;
-                height: 250px;
+                height: 190px;
                 padding: 91px 46px 91px 46px;
                 gap: 12px;
                 border-top-left-radius: 20px;
@@ -734,6 +817,36 @@
                         text-align: center;
                         @include Inter(400, 22px, 28.4px, $white);
                     }
+                }
+            }
+            .add-contact-bottom {
+                width: 350px;
+                padding-top: unset;
+                border: unset;
+                form {
+                    padding-top: 70px;
+                    width: 90%
+                }
+                .user-img{
+                    position: absolute;
+                    top: 165px;
+                    width: 80px;
+                    height: 80px;
+                }
+            }
+            .edit-contact-bottom {
+                width: 350px;
+                padding-top: unset;
+                border: unset;
+                form {
+                    padding-top: 70px;
+                    width: 90%
+                }
+                .user-img{
+                    position: absolute;
+                    top: 165px;
+                    width: 80px;
+                    height: 80px;
                 }
             }
         }

@@ -25,7 +25,7 @@
       </div>
     </div>
     <div class="add-contact-bottom">
-      <img src="assets/img/contacts/user-circle-add-contact.png" />
+      <img class="user-img" src="assets/img/contacts/user-circle-add-contact.png" />
       <form
         [formGroup]="this.ArraysService.contactsForm"
         (ngSubmit)="this.addContact(this.ArraysService.contactsForm.value)"
@@ -130,7 +130,7 @@
       </div>
     </div>
     <div class="edit-contact-bottom">
-      <img src="assets/img/contacts/user-circle-add-contact.png" />
+      <img class="user-img" src="assets/img/contacts/user-circle-add-contact.png" />
       <form
         #editContactForm="ngForm"
         [formGroup]="this.ArraysService.editContactForm"
