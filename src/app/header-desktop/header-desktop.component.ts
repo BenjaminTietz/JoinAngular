@@ -15,50 +15,39 @@ export class HeaderDesktopComponent {
   constructor(public router: Router, private boardService: BoardService, public LoginService: LoginService, public RemotestorageService: RemotestorageService, public ArraysService: ArraysService, public TaskArraysService: TaskArraysService ) { }
   @ViewChild('dropdown') dropdown: ElementRef;
   
-  showDropdown() {
-    this.dropdown.nativeElement.classList.toggle('show');
-  }
+/**
+ * Toggles the visibility of the dropdown element.
+ */
+showDropdown() {
+  /**
+   * This function toggles the 'show' CSS class on the native DOM element,
+   * making the dropdown visible or hidden.
+   */
+  this.dropdown.nativeElement.classList.toggle('show');
+}
 
-  selectComponent(componentName: string, e: Event) {
-    e.stopPropagation();
-    switch (componentName) {
-      case 'app-introduction':
-        this.boardService.showSummary = false;
-        this.boardService.showAddTask = false;
-        this.boardService.showBoard = false;
-        this.boardService.showContacts = false;
-        this.boardService.showPrivacyPolicy = false;
-        this.boardService.showLegalNotice = false;
-        this.boardService.showInfo = true;
-        break;
-        case 'app-summary':
-          this.boardService.showSummary = true;
-          this.boardService.showAddTask = false;
-          this.boardService.showBoard = false;
-          this.boardService.showContacts = false;
-          this.boardService.showPrivacyPolicy = false;
-          this.boardService.showLegalNotice = false;
-          this.boardService.showInfo = false;
-          break;
-          case 'app-privacy-policy':
-            this.boardService.showSummary = false;
-            this.boardService.showAddTask = false;
-            this.boardService.showBoard = false;
-            this.boardService.showContacts = false;
-            this.boardService.showPrivacyPolicy = true;
-            this.boardService.showLegalNotice = false;
-            this.boardService.showInfo = false;
-            break;
-            case 'app-legal-notice':
-              this.boardService.showSummary = false;
-              this.boardService.showAddTask = false;
-              this.boardService.showBoard = false;
-              this.boardService.showContacts = false;
-              this.boardService.showPrivacyPolicy = false;
-              this.boardService.showLegalNotice = true;
-              this.boardService.showInfo = false;
-              break;
-    }
+/**
+ * Selects a component based on its name and updates the visibility of related components.
+ *
+ * @param {string} componentName - The name of the component to select.
+ * @param {Event} e - The event object (click event) that triggered the component selection.
+ */
+selectComponent(componentName, e) {
+  e.stopPropagation();
+
+  // Define the mapping between component names and visibility properties
+  const componentVisibilityMap = {
+    'app-introduction': { showSummary: false, showAddTask: false, showBoard: false, showContacts: false, showPrivacyPolicy: false, showLegalNotice: false, showInfo: true },
+    'app-summary': { showSummary: true, showAddTask: false, showBoard: false, showContacts: false, showPrivacyPolicy: false, showLegalNotice: false, showInfo: false },
+    'app-privacy-policy': { showSummary: false, showAddTask: false, showBoard: false, showContacts: false, showPrivacyPolicy: true, showLegalNotice: false, showInfo: false },
+    'app-legal-notice': { showSummary: false, showAddTask: false, showBoard: false, showContacts: false, showPrivacyPolicy: false, showLegalNotice: true, showInfo: false },
+  };
+
+  // Update the visibility properties based on the selected component
+  let visibilityProperties = componentVisibilityMap[componentName];
+  if (visibilityProperties) {
+    Object.assign(this.boardService, visibilityProperties);
   }
+}
 }
 

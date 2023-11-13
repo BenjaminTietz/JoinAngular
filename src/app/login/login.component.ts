@@ -30,36 +30,59 @@ export class LoginComponent {
 
     }
 
-  async ngOnInit() {
-    this.LoginService.loadUsers();
-    this.form = this.fb.group({
-      email: [null, [Validators.required, Validators.email]],
-      password: [null, Validators.required],
-    });
-  }
-
-
-  redirectToSignup() {
-    this.router.navigate(['/signup']);
+/**
+ * Initializes the component by loading user data and setting up the form.
+ */
+async ngOnInit() {
+  this.LoginService.loadUsers();
+  this.form = this.fb.group({
+    email: [null, [Validators.required, Validators.email]],
+    password: [null, Validators.required],
+  });
 }
 
-  redirectToSummary() {
-    this.router.navigate(['/summary']);
+
+/**
+ * Redirects to the signup page.
+ */
+redirectToSignup() {
+  this.router.navigate(['/signup']);
 }
 
+/**
+ * Redirects to the summary page.
+ */
+redirectToSummary() {
+  this.router.navigate(['/summary']);
+}
+
+/**
+ * Shows the privacy policy section.
+ */
 showPrivacyPolicy() {
   this.privacyWrapper.nativeElement.classList.add('show');
   this.loginWrapper.nativeElement.classList.add('hide');
 }
+
+/**
+ * Hides the privacy policy section.
+ */
 hidePrivacyPolicy() {
   this.privacyWrapper.nativeElement.classList.remove('show');
   this.loginWrapper.nativeElement.classList.remove('hide');
 }
 
+/**
+ * Shows the legal notice section.
+ */
 showLegalNotice() {
   this.legalNoticeWrapper.nativeElement.classList.add('show');
   this.loginWrapper.nativeElement.classList.add('hide');
 }
+
+/**
+ * Hides the legal notice section.
+ */
 hideLegalNotice() {
   this.legalNoticeWrapper.nativeElement.classList.remove('show');
   this.loginWrapper.nativeElement.classList.remove('hide');

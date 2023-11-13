@@ -19,112 +19,70 @@ export class SidebarDesktopComponent {
   @Output() componentSelected = new EventEmitter<string>();  
   constructor(public router: Router, private boardService: BoardService, public TaskArraysService: TaskArraysService) { }
 
-  selectComponent(componentName: string) {
-    switch (componentName) {
-      case 'app-summary-dashboard':
-       
-        this.summary.nativeElement.classList.add('sidebar-row-active');
-        this.addTask.nativeElement.classList.remove('sidebar-row-active');
-        this.board.nativeElement.classList.remove('sidebar-row-active');
-        this.contacts.nativeElement.classList.remove('sidebar-row-active');
+/**
+ * Selects the specified component and updates the sidebar and component visibility.
+ *
+ * @param {string} componentName - The name of the component to select.
+ */
+selectComponent(componentName: string) {
+  /**
+   * Resets the state of the sidebar elements and component visibility.
+   */
+  let resetSidebarState = () => {
+    let elements = [
+      this.summary,
+      this.addTask,
+      this.board,
+      this.contacts,
+      this.privacy,
+      this.legal,
+    ];
 
-        this.privacy.nativeElement.classList.remove('sidebar-bottom-btn-container-active');
-        this.legal.nativeElement.classList.remove('sidebar-bottom-btn-container-active');
-
-
-        this.boardService.showSummary = true;
-        this.boardService.showAddTask = false;
-        this.boardService.showBoard = false;
-        this.boardService.showContacts = false;
-        this.boardService.showPrivacyPolicy = false;
-        this.boardService.showLegalNotice = false;
-        break;
-        case 'app-addtask':
-
-          this.summary.nativeElement.classList.remove('sidebar-row-active');
-          this.addTask.nativeElement.classList.add('sidebar-row-active');
-          this.board.nativeElement.classList.remove('sidebar-row-active');
-          this.contacts.nativeElement.classList.remove('sidebar-row-active');
-
-          this.privacy.nativeElement.classList.remove('sidebar-bottom-btn-container-active');
-          this.legal.nativeElement.classList.remove('sidebar-bottom-btn-container-active');
-
-          this.boardService.showSummary = false;
-          this.boardService.showAddTask = true;
-          this.boardService.showBoard = false;
-          this.boardService.showContacts = false;
-          this.boardService.showPrivacyPolicy = false;
-          this.boardService.showLegalNotice = false;
-          break;
-          case 'app-board':
-
-            this.summary.nativeElement.classList.remove('sidebar-row-active');
-            this.addTask.nativeElement.classList.remove('sidebar-row-active');
-            this.board.nativeElement.classList.add('sidebar-row-active');
-            this.contacts.nativeElement.classList.remove('sidebar-row-active');
-
-            this.privacy.nativeElement.classList.remove('sidebar-bottom-btn-container-active');
-            this.legal.nativeElement.classList.remove('sidebar-bottom-btn-container-active');
-
-          this.boardService.showSummary = false;
-          this.boardService.showAddTask = false;
-          this.boardService.showBoard = true;
-          this.boardService.showContacts = false;
-          this.boardService.showPrivacyPolicy = false;
-          this.boardService.showLegalNotice = false;
-          break;
-          case 'app-contacts':
-
-            this.summary.nativeElement.classList.remove('sidebar-row-active');
-            this.addTask.nativeElement.classList.remove('sidebar-row-active');
-            this.board.nativeElement.classList.remove('sidebar-row-active');
-            this.contacts.nativeElement.classList.add('sidebar-row-active');
-
-            this.privacy.nativeElement.classList.remove('sidebar-bottom-btn-container-active');
-            this.legal.nativeElement.classList.remove('sidebar-bottom-btn-container-active');
-
-          this.boardService.showSummary = false;
-          this.boardService.showAddTask = false;
-          this.boardService.showBoard = false;
-          this.boardService.showContacts = true;
-          this.boardService.showPrivacyPolicy = false;
-          this.boardService.showLegalNotice = false;
-          break;
-          case 'app-privacy-policy':
-
-            this.privacy.nativeElement.classList.add('sidebar-bottom-btn-container-active');
-            this.legal.nativeElement.classList.remove('sidebar-bottom-btn-container-active');
-
-            this.summary.nativeElement.classList.remove('sidebar-row-active');
-            this.addTask.nativeElement.classList.remove('sidebar-row-active');
-            this.board.nativeElement.classList.remove('sidebar-row-active');
-            this.contacts.nativeElement.classList.remove('sidebar-row-active');
-    
-            this.boardService.showSummary = false;
-            this.boardService.showAddTask = false;
-            this.boardService.showBoard = false;
-            this.boardService.showContacts = false;
-            this.boardService.showPrivacyPolicy = true;
-            this.boardService.showLegalNotice = false;
-          break;
-          case 'app-legal-notice':
-
-            this.privacy.nativeElement.classList.remove('sidebar-bottom-btn-container-active');
-            this.legal.nativeElement.classList.add('sidebar-bottom-btn-container-active');
-
-            this.summary.nativeElement.classList.remove('sidebar-row-active');
-            this.addTask.nativeElement.classList.remove('sidebar-row-active');
-            this.board.nativeElement.classList.remove('sidebar-row-active');
-            this.contacts.nativeElement.classList.remove('sidebar-row-active');
-    
-            this.boardService.showSummary = false;
-            this.boardService.showAddTask = false;
-            this.boardService.showBoard = false;
-            this.boardService.showContacts = false;
-            this.boardService.showPrivacyPolicy = false;
-            this.boardService.showLegalNotice = true;
-          break;
+    for (let element of elements) {
+      if (element) {
+        element.nativeElement.classList.remove('sidebar-row-active');
+        element.nativeElement.classList.remove('sidebar-bottom-btn-container-active');
+      }
     }
-  }
 
+    this.boardService.showSummary = false;
+    this.boardService.showAddTask = false;
+    this.boardService.showBoard = false;
+    this.boardService.showContacts = false;
+    this.boardService.showPrivacyPolicy = false;
+    this.boardService.showLegalNotice = false;
+  };
+
+  resetSidebarState();
+
+  switch (componentName) {
+    case 'app-summary-dashboard':
+      this.summary.nativeElement.classList.add('sidebar-row-active');
+      this.boardService.showSummary = true;
+      break;
+    case 'app-addtask':
+      this.addTask.nativeElement.classList.add('sidebar-row-active');
+      this.boardService.showAddTask = true;
+      break;
+    case 'app-board':
+      this.board.nativeElement.classList.add('sidebar-row-active');
+      this.boardService.showBoard = true;
+      break;
+    case 'app-contacts':
+      this.contacts.nativeElement.classList.add('sidebar-row-active');
+      this.boardService.showContacts = true;
+      break;
+    case 'app-privacy-policy':
+      this.privacy.nativeElement.classList.add('sidebar-bottom-btn-container-active');
+      this.boardService.showPrivacyPolicy = true;
+      break;
+    case 'app-legal-notice':
+      this.legal.nativeElement.classList.add('sidebar-bottom-btn-container-active');
+      this.boardService.showLegalNotice = true;
+      break;
+    default:
+      break;
+  }
+} 
+  
 }
