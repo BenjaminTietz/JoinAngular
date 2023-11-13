@@ -550,7 +550,7 @@
     padding-left: 16px;
     padding-right: 16px;
     padding-top: 16px;
-
+    overflow-y: scroll;
     .task-category-wrapper {
       flex-wrap: wrap;
       gap: unset;
@@ -570,7 +570,21 @@
         .single-task {
           width: 100vw;
           max-width: 95%;
+          height: 265px;
+          .progressbar {
+            top:145px;
+          }
+          .single-task-bottom {
+            right: 4px!important;
+            top: 225px!important;
+            width: 95%;
+            .assigned-contacts{
+              
+            .assigned-box {
 
+            }
+          }
+          }
           .single-task-top {
             display: flex;
             justify-content: space-between;
