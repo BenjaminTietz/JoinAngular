@@ -44,7 +44,6 @@ export class AddtaskComponent {
   async ngOninit() {
     await this.TaskArraysService.loadTasks();
     await this.ArraysService.loadContacts();
-
     
     this.ArraysService.contacts.forEach(contact => {
         contact.selected = false;

@@ -25,6 +25,14 @@
             type="text"
             placeholder="Enter a title"
           />
+          <ng-container
+          *ngIf="
+            this.TaskArraysService.addTaskForm.controls['title'].dirty ||
+            this.TaskArraysService.addTaskForm.controls['title'].touched
+          "
+        >
+          <p class="error-message" *ngIf="this.TaskArraysService.addTaskForm.controls['title'].errors">Choose a title</p>
+        </ng-container>
         </div>
         <h2>Description <span>(optional)</span></h2>
         <textarea
@@ -44,6 +52,14 @@
             placeholder="dd/mm/yyyy"
             min="{{ this.TaskArraysService.minDate }}"
           />
+          <ng-container
+          *ngIf="
+            this.TaskArraysService.addTaskForm.controls['date'].dirty ||
+            this.TaskArraysService.addTaskForm.controls['date'].touched
+          "
+        >
+          <p class="error-message" *ngIf="this.TaskArraysService.addTaskForm.controls['date'].errors">Choose a date</p>
+        </ng-container>
         </div>
       </div>
       <div class="addtask-left-prio">
@@ -177,6 +193,14 @@
           <option class="development" value="development">Development</option>
           <option class="purchase" value="purchase">Purchase</option>
         </select>
+        <ng-container
+        *ngIf="
+          this.TaskArraysService.addTaskForm.controls['category'].dirty ||
+          this.TaskArraysService.addTaskForm.controls['category'].touched
+        "
+      >
+        <p class="error-message" *ngIf="this.TaskArraysService.addTaskForm.controls['category'].errors">Choose a category</p>
+      </ng-container>
       </div>
       <div class="addtask-left-bottom">
         <h2>Subtasks<span>(optional)</span></h2>
@@ -210,7 +234,7 @@
         </div>
 
         <div class="btn-container">
-          <button type="button" class="clear-btn">
+          <button type="button" class="clear-btn" (click)="this.TaskArraysService.clearAddtaskForm()">
             Clear<img src="assets/img/addtask/clear_btn.svg" />
           </button>
           <button

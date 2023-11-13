@@ -14,6 +14,12 @@
   overflow: hidden;
   z-index: 2;
 
+  .error-message {
+    @include OpenSans(700, 16px, 18.8px, $red);
+    margin-block-start: unset;
+    margin-block-end: unset;
+  }
+  
   .popup-container {
     position: absolute;
     top: 0;

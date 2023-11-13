@@ -249,6 +249,7 @@ export class BoardComponent {
   }
 
   async showEditTaskFloatingContainer(selectedTask) {
+
     await this.TaskArrayService.getIndexOfSelectedTask();
     this.TaskArrayService.pushFromTaskArraytoSubtaskArray();
     this.TaskArrayService.selectedTask = selectedTask;
@@ -265,6 +266,10 @@ export class BoardComponent {
     this.TaskArrayService.selectedTask.subtasks =
       this.TaskArrayService.subtasks;
     this.editTaskWrapper.nativeElement.classList.add('show-edittask-wrapper');
+
+    this.TaskArrayService.editTaskFormFB.get('title').markAsTouched();
+    this.TaskArrayService.editTaskFormFB.get('description').markAsTouched();
+
   }
 
   async hideEditTaskFloatingContainer() {

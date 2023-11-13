@@ -61,20 +61,20 @@ export class TaskArraysService {
       assignedContacts: this.fb.array([]),
 
     });
-    this.addTaskForm.valueChanges.subscribe(console.log);
+
 
     this.editTaskFormFB = this.fb.group({
       title: new FormControl('', [Validators.required]),
-      description: new FormControl('', []),
+      description: new FormControl('', [Validators.required]),
       date: new FormControl('', [Validators.required]),
       category: new FormControl('', [Validators.required]),
       subtask: new FormControl('', []),
       assignedContacts: this.fb.array([]),
-
     });
-    this.editTaskForm.valueChanges.subscribe(console.log);
 
-    const currentDate = new Date();
+
+
+    let currentDate = new Date();
     this.minDate = currentDate.toISOString().split('T')[0];
     this.subtasks = [];
   }
@@ -841,7 +841,18 @@ deleteSubtaskDone(subtaskIndex: number) {
     this.safeTasks();
   }
 
-
+  clearAddtaskForm() {
+    console.log('clearAddtaskForm');
+    this.addTaskForm.get('title').setValue('');
+    this.addTaskForm.get('description').setValue('');
+    this.addTaskForm.get('date').setValue('');
+    this.addTaskForm.get('category').setValue('');
+    this.addTaskForm.get('subtask').setValue('');
+    this.addTaskForm.get('title').markAsUntouched();
+    this.addTaskForm.get('description').markAsUntouched();
+    this.addTaskForm.get('date').markAsUntouched();
+    this.addTaskForm.get('category').markAsUntouched();
+  }
 
   /**
    * Asynchronous function to save all tasks from array "contacts" to remote storage

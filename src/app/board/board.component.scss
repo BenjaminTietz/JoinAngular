@@ -912,6 +912,12 @@
     }
   }
 
+  .error-message {
+    @include OpenSans(700, 16px, 18.8px, $red);
+    margin-block-start: unset;
+    margin-block-end: unset;
+  }
+
   .addtask-left {
     box-sizing: border-box;
     max-width: 100%;
@@ -1640,6 +1646,12 @@
   z-index: 2;
   animation: slide-in-right 1.5s ease-in-out;
 
+  .error-message {
+    @include OpenSans(700, 16px, 18.8px, $red);
+    margin-block-start: unset;
+    margin-block-end: unset;
+  }
+  
   .btn-container {
     margin-left: unset!important;
   }
