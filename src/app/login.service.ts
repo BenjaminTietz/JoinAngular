@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { RemotestorageService } from './remotestorage.service';
 import { ArraysService } from './contact-arrays.service';
 
+
 import {
   FormBuilder,
   FormGroup,
@@ -44,7 +45,7 @@ export class LoginService {
     private router: Router,
     private fb: FormBuilder,
     public RemotestorageService: RemotestorageService,
-    public ArraysService: ArraysService
+    public ArraysService: ArraysService,
   ) {
     this.loginFormFB = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -81,59 +82,103 @@ export class LoginService {
    * After logging in as a guest, it redirects the user to the "summary-component" page.
    */
   async guestLogIn() {
-    if (
-      this.ArraysService.guestUser &&
-      this.ArraysService.guestUser.length > 0
-    ) {
+    if (this.ArraysService.guestUser && this.ArraysService.guestUser.length > 0) {
       // Get the current user data
-      this.ArraysService.currentUser = JSON.parse(
-        await this.RemotestorageService.getItem('user')
-      );
-
+      this.ArraysService.currentUser = JSON.parse(await this.RemotestorageService.getItem('user'));
+  
       // Add the current user to the guestUser array
       this.ArraysService.guestUser.push(this.ArraysService.currentUser);
       // Clear the guestUser array
       this.ArraysService.guestUser = [];
-
+  
       // Save the updated guestUser array to localStorage
-      await this.RemotestorageService.setItem(
-        'user',
-        JSON.stringify(this.ArraysService.guestUser) || ''
-      );
-      // Redirect to the "summary-component" page
-      this.currentUser = 'Guest'; // Set the current user's name
-      await this.safeUser();
-      this.router.navigate(['/summary']);
+      await this.RemotestorageService.setItem('user', JSON.stringify(this.ArraysService.guestUser) || '');
+  
+      // Set the current user's properties
+      this.currentUser = {
+        name: 'Guest', // Set the current user's name
+        initials: 'G', // Set the initial(s)
+        color: this.getRandomUserColor(), // Set a random color
+      };
     } else {
       // If no guest user data is present, simply redirect to the "summary-component" page
-      this.currentUser = 'Guest'; // Set the current user's name
-      await this.safeUser();
-      this.router.navigate(['/summary']);
+      this.currentUser = {
+        name: 'Guest', // Set the current user's name
+        initials: 'G', // Set the initial(s)
+        color: this.getRandomUserColor(), // Set a random color
+      };
     }
+  
+    // Save the current user to remote storage
+    await this.safeUser();
+    this.router.navigate(['/summary']);
   }
 
-  /**
-   * This function search for User Data and than try with that data to login into JOIN
-   */
-  async logIn(data) {
-    let user = this.ArraysService.users.find(
-      (u) => u.email == data.email && u.password == data.password
-    );
-    if (user) {
-      await this.RemotestorageService.setItem('user', JSON.stringify(user));
-      this.currentUserEmail = user.email;
-      await this.extractUserName();
-      this.currentUser = user.name; // Set the current user's name
-      await this.safeUser();
-      this.router.navigate(['/summary']);
-      data.email = '';
-      data.password = '';
-    } else {
-      console.log('User not found');
-      // TODO: Implementiere die Funktion failedLogIn(email, password);
+/**
+ * Logs in a user based on provided credentials.
+ *
+ * @param {Object} data - An object containing user credentials (email and password).
+ * @returns {void}
+ */
+async logIn(data) {
+  // Find the user with the provided email and password
+  let user = this.ArraysService.users.find((u) => u.email == data.email && u.password == data.password);
+
+  if (user) {
+    await this.RemotestorageService.setItem('user', JSON.stringify(user));
+    this.currentUserEmail = user.email;
+
+    // Set the current user's properties
+    this.currentUser = {
+      name: user.name,
+      initials: this.extractInitialsFromName(user.name),
+      color: this.getRandomUserColor(),
+    };
+    console.log('LoginComponent.currentUser', this.currentUser);
+    // Save the current user to remote storage
+    await this.safeUser();
+    this.router.navigate(['/summary']);
+    data.email = '';
+    data.password = '';
+  } else {
+    console.log('User not found');
+    // TODO: Implement the failedLogIn(email, password) function.
+  }
+}
+
+/**
+* Extracts initials from a user's name.
+*
+* @param {string} name - The user's full name.
+* @returns {string} The user's initials.
+*/
+extractInitialsFromName(name) {
+  if (name) {
+    let nameParts = name.split(' ');
+    if (nameParts.length === 2) {
+      let firstNameInitial = nameParts[0].charAt(0);
+      let lastNameInitial = nameParts[1].charAt(0);
+      return `${firstNameInitial}${lastNameInitial}`;
     }
   }
+  return '';
+}
 
+/**
+* Generates a random user color from a predefined list.
+* @returns {string} A random user color in the form of a hexadecimal color code.
+*/
+getRandomUserColor() {
+  let userColors = [
+      '#FF7A00', '#FF5EB3', '#6E52FF', '#9327FF', '#00BEE8',
+      '#1FD7C1', '#FF745E', '#FFA35E', '#FC71FF', '#FFC701',
+      '#0038FF', '#C3FF2B', '#FFE62B', '#FF4646', '#FFBB2B'
+  ];
+
+  // Choose a random color from the list of user colors
+  let randomIndex = Math.floor(Math.random() * userColors.length);
+  return userColors[randomIndex];
+}
   /**
    * This function search for User Data and than try with that data to login into JOIN
    */
@@ -152,39 +197,28 @@ export class LoginService {
   }
 
 
-  /**
-   * Asynchronous function to save current user to remote storage
-   */
-  async safeUser() {
-    let userData = {
-      name: this.currentUser,
-      // Add other user data here
-    };
-    await this.RemotestorageService.setItem('current_user_array', JSON.stringify(userData));
-  }
+/**
+ * Asynchronous function to save current user to remote storage
+ */
+async safeUser() {
+  let userData = {
+      name: this.currentUser.name,
+      initials: this.currentUser.initials,
+      color: this.currentUser.color,
+  };
+  await this.RemotestorageService.setItem('current_user_array', JSON.stringify(userData));
+}
   /**
    * Asynchronous function to load current user from remote storage
    */
   async loadUser() {
     let userData = JSON.parse(await this.RemotestorageService.getItem('current_user_array'));
-    this.currentUser = userData.name;
-  }
-
-  /**
-   * This function extracts the name of the current user from the "users" array
-   */
-  async extractUserName() {
-    let email = this.currentUserEmail;
-    let user = this.ArraysService.users.find(
-      (contact) => contact.email === email
-    );
-
-    if (user) {
-      this.currentUser = user.name;
-      console.log(`Der aktuelle Benutzer ist: ${this.currentUser}`);
-    } else {
-      console.log('Benutzer nicht gefunden');
-    }
+  
+    this.currentUser = {
+      name: userData.name,
+      initials: userData.initials,
+      color: userData.color
+    };
   }
 
   /**

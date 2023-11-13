@@ -27,22 +27,41 @@ header {
     justify-content: center;
     align-items: center;
     span {
-        @include OpenSans(400, 19px, 22.8px, $white);
+      @include OpenSans(400, 19px, 22.8px, $white);
     }
     img {
       cursor: pointer;
-      
+
       &:hover {
         transform: scale(1.1);
         transition: all 0.2s ease-in-out;
       }
     }
+    .usercircle {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 42px;
+      height: 42px;
+      border: solid 4px $white;
+      border-radius: 50%;
+      cursor: pointer;
 
+      &:hover {
+        transform: scale(1.1);
+        transition: all 0.2s ease-in-out;
+      }
+      .user-initals {
+        span{
+        @include Inter(700, 24px, 26.4px, $white);
+        }
+      }
+    }
     .dropdown {
-      display: none!important;
+      display: none !important;
       position: absolute;
-      top:50px;
-      right:25px;
+      top: 50px;
+      right: 25px;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -55,7 +74,7 @@ header {
       padding: 10px;
       box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.25);
 
-      a {      
+      a {
         display: flex;
         flex-direction: column;
         justify-content: flex-end;
@@ -78,14 +97,13 @@ header {
       }
     }
     .show {
-      display: flex!important;
+      display: flex !important;
       transition: all 0.2s ease-in-out;
     }
   }
 }
 
 @media screen and (max-width: 1200px) {
-
   header {
     height: 80px;
     padding: 20px 25px 20px 25px;
@@ -99,7 +117,6 @@ header {
     }
 
     .header-right {
-
       span {
         display: none;
       }
@@ -112,10 +129,9 @@ header {
       }
 
       .dropdown {
-        top:40px;
-        right:15px;
+        top: 40px;
+        right: 15px;
       }
     }
-
   }
 }

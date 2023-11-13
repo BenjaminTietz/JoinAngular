@@ -5,7 +5,19 @@
     <div class="header-right">
         <span>Kanban Project Management Tool</span>
         <img (click)="selectComponent('app-introduction' , $event)" class="info" src="assets/img/help_white.png" alt="info">
-        <img (click)="showDropdown()" src="assets/img/User profile initials.png" alt="usercircle">
+        <ng-container *ngIf="this.LoginService.currentUser">
+            <div (click)="showDropdown()" class="usercircle" [style.background-color]="this.LoginService.currentUser.color">
+              <div class="user-initals">
+                <span>{{ this.LoginService.currentUser.initials }}</span>
+              </div>
+            </div>
+          </ng-container>
+        
+        
+        
+        
+
+
         <div class="dropdown" #dropdown>
                 <a (click)="selectComponent('app-privacy-policy', $event)">Privacy Policy</a>
                 <a (click)="selectComponent('app-legal-notice' , $event)">Legal Notice</a>

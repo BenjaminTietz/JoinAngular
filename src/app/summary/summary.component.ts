@@ -29,12 +29,13 @@ export class SummaryComponent {
   @Input() showInfo: boolean;  
 
   async ngOnInit() {
+    await this.loginService.loadUser();
     await this.TaskArraysService.loadTasks();
     await this.ArraysService.loadContacts();
     await this.TaskArraysService.mapTaskStatus();
     await this.TaskArraysService.mapUrgentTasks();
-    await this.loginService.extractUserName();
     this.loginService.getGreeting();
     this.TaskArraysService.findNearestDate(this.TaskArraysService.urgent);
+    console.log('LoginService.currentUser', this.loginService.currentUser);
   }
 }

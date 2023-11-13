@@ -1,11 +1,13 @@
 <!--Summary desktop version-->
 <div class="dashboard-wrapper">
+  <ng-container *ngIf="this.loginService.currentUser">
   <div class="headline">
     <h1>
       {{ loginService.userGreeting }},
-      <span>{{ loginService.currentUser  }}</span>
+      <span>{{ loginService.currentUser.name  }}</span>
     </h1>
   </div>
+  </ng-container>
   <div class="task-overview">
     <div class="task-overview-top">
       <div

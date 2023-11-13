@@ -2,6 +2,9 @@ import { Component, Output, EventEmitter, ElementRef, ViewChild } from '@angular
 import { Router } from '@angular/router';
 import { BoardService } from '../board.service';
 import { LoginService } from '../login.service';
+import { RemotestorageService } from '../remotestorage.service';
+import { ArraysService } from '../contact-arrays.service';
+import { TaskArraysService } from '../task-arrays.service';
 @Component({
   selector: 'app-header-desktop',
   templateUrl: './header-desktop.component.html',
@@ -9,7 +12,7 @@ import { LoginService } from '../login.service';
 })
 export class HeaderDesktopComponent {
   @Output() componentSelected = new EventEmitter<string>();  
-  constructor(public router: Router, private boardService: BoardService, public LoginService: LoginService ) { }
+  constructor(public router: Router, private boardService: BoardService, public LoginService: LoginService, public RemotestorageService: RemotestorageService, public ArraysService: ArraysService, public TaskArraysService: TaskArraysService ) { }
   @ViewChild('dropdown') dropdown: ElementRef;
   
   showDropdown() {
