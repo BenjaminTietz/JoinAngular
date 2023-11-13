@@ -117,6 +117,33 @@ header {
     }
 
     .header-right {
+      display: flex;
+      .user-initals {
+        span{
+        @include Inter(700, 24px, 26.4px, $white);
+        }
+      }
+      .usercircle {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 42px;
+        height: 42px;
+        border: solid 4px $white;
+        border-radius: 50%;
+        cursor: pointer;
+  
+        &:hover {
+          transform: scale(1.1);
+          transition: all 0.2s ease-in-out;
+        }
+        .user-initals {
+          span{
+            display: flex;
+          @include Inter(700, 24px, 26.4px, $white);
+          }
+        }
+      }
       span {
         display: none;
       }
@@ -126,6 +153,7 @@ header {
       img {
         width: 40px;
         height: 40px;
+        
       }
 
       .dropdown {
