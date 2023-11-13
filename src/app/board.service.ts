@@ -4,11 +4,38 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class BoardService {
-  showSummary: boolean = true;
-  showAddTask: boolean = false;
-  showBoard: boolean = false;
-  showContacts: boolean = false;
-  showPrivacyPolicy: boolean = false;
-  showLegalNotice: boolean = false;
-  showInfo: boolean = false;
+/**
+   * Controls the visibility of the "Summary" component.
+   */
+showSummary: boolean = true;
+
+/**
+ * Controls the visibility of the "Add Task" component.
+ */
+showAddTask: boolean = false;
+
+/**
+ * Controls the visibility of the "Board" component.
+ */
+showBoard: boolean = false;
+
+/**
+ * Controls the visibility of the "Contacts" component.
+ */
+showContacts: boolean = false;
+
+/**
+ * Controls the visibility of the "Privacy Policy" component.
+ */
+showPrivacyPolicy: boolean = false;
+
+/**
+ * Controls the visibility of the "Legal Notice" component.
+ */
+showLegalNotice: boolean = false;
+
+/**
+ * Controls the visibility of the "Info" component.
+ */
+showInfo: boolean = false;
 }

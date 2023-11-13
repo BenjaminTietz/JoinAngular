@@ -18,23 +18,30 @@ export class SummaryDashboardComponent {
     public loginService: LoginService
   ) {}
 
-  ngOnInit(): void {
-    this.TaskArrayService.findNearestDate(this.TaskArrayService.urgent);
-    this.loginService.loadUser();
-    
-  }
+/**
+ * Initializes the component and performs necessary actions when it's created.
+ */
+ngOnInit(): void {
+  this.TaskArrayService.findNearestDate(this.TaskArrayService.urgent);
+  this.loginService.loadUser();
+}
 
-  selectComponent(componentName: string) {
-    switch (componentName) {
-          case 'app-board':
-          this.boardService.showSummary = false;
-          this.boardService.showAddTask = false;
-          this.boardService.showBoard = true;
-          this.boardService.showContacts = false;
-          this.boardService.showPrivacyPolicy = false;
-          this.boardService.showLegalNotice = false;
-          break;
-    }
+/**
+ * Selects a component based on the provided component name and updates the visibility of components.
+ *
+ * @param {string} componentName - The name of the component to select.
+ */
+selectComponent(componentName: string) {
+  switch (componentName) {
+    case 'app-board':
+      this.boardService.showSummary = false;
+      this.boardService.showAddTask = false;
+      this.boardService.showBoard = true;
+      this.boardService.showContacts = false;
+      this.boardService.showPrivacyPolicy = false;
+      this.boardService.showLegalNotice = false;
+      break;
   }
+}
 
 }

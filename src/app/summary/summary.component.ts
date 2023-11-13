@@ -20,15 +20,45 @@ export class SummaryComponent {
     public loginService: LoginService
     ) {}
 
-  @Input() showSummary: boolean;
-  @Input() showAddTask: boolean;
-  @Input() showBoard: boolean;
-  @Input() showContacts: boolean;
-  @Input() showPrivacyPolicy: boolean;
-  @Input() showLegalNotice: boolean;
-  @Input() showInfo: boolean;  
+/**
+ * Indicates whether the "Summary" component should be shown.
+ */
+@Input() showSummary: boolean;
 
-  async ngOnInit() {
+/**
+ * Indicates whether the "Add Task" component should be shown.
+ */
+@Input() showAddTask: boolean;
+
+/**
+ * Indicates whether the "Board" component should be shown.
+ */
+@Input() showBoard: boolean;
+
+/**
+ * Indicates whether the "Contacts" component should be shown.
+ */
+@Input() showContacts: boolean;
+
+/**
+ * Indicates whether the "Privacy Policy" component should be shown.
+ */
+@Input() showPrivacyPolicy: boolean;
+
+/**
+ * Indicates whether the "Legal Notice" component should be shown.
+ */
+@Input() showLegalNotice: boolean;
+
+/**
+ * Indicates whether the "Info" component should be shown.
+ */
+@Input() showInfo: boolean;
+
+/**
+ * Initializes the component by loading user data, tasks, and performing other necessary operations.
+ */
+async ngOnInit() {
     await this.loginService.loadUser();
     await this.TaskArraysService.loadTasks();
     await this.ArraysService.loadContacts();
@@ -36,5 +66,6 @@ export class SummaryComponent {
     await this.TaskArraysService.mapUrgentTasks();
     this.loginService.getGreeting();
     this.TaskArraysService.findNearestDate(this.TaskArraysService.urgent);
-  }
+}
+
 }

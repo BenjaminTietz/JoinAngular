@@ -8,7 +8,11 @@ import { BoardComponent } from './board/board.component';
 import { ContactsComponent } from './contacts/contacts.component';
 import { SummaryDashboardComponent } from './summary-dashboard/summary-dashboard.component';
 
-const routes: Routes = [
+/**
+ * Defines the routes for the Angular application.
+ * Each route maps a URL path to a corresponding component.
+ */
+let routes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'summary', component: SummaryComponent },
