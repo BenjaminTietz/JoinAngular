@@ -527,9 +527,21 @@
 }
 @media screen and (max-width: 1350px) {
   .board-wrapper {
-    
-    .task-category-wrapper{
+    .task-category-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      align-items: flex-start;
       width: 90%;
+      height: 100vh;
+      padding: 0px 0px 64px;
+      gap: 24px;
+
+      .category {
+        flex: 0 0 48%; /* Änderung der Breite, um Platz für den Abstand (gap) zu lassen */
+        height: 100%;
+        margin-bottom: 24px; /* Abstand zwischen den Zeilen hinzufügen */
+      }
     }
   }
 }
@@ -545,7 +557,7 @@
     padding-left: unset;
     padding-right: unset;
     overflow: hidden;
-    .task-category-wrapper{
+    .task-category-wrapper {
       width: 100%;
     }
     .board-top {
@@ -598,7 +610,7 @@
         height: unset;
 
         .single-task {
-          width: 100vw;
+          width: 96vw;
           max-width: 95%;
           height: 265px;
           .progressbar {
@@ -1440,8 +1452,6 @@
     }
   }
 }
-
-
 
 @media screen and (max-width: 1200px) {
   .addtask-wrapper {
@@ -2511,11 +2521,9 @@
         h2 {
           @include OpenSans(700, 16px, 19.2px, $menu-color);
         }
-        .input-wrapper{
-
+        .input-wrapper {
           width: 78%;
-
-      }
+        }
         span {
           @include OpenSans(400, 16px, 19.2px, $menu-color);
         }
