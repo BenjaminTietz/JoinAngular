@@ -736,45 +736,81 @@ async editTask(data) {
     this.selectedPriority = assigned;
   }
 
-// TODO updateSubtaskStatus
-async updateSubtaskStatus(subtaskIndex: number) {
+/**
+ * Asynchronously updates the status of a subtask by moving it between 'subtasks' and 'subtasksDone' arrays.
+ *
+ * @param {number} subtaskIndex - The index of the subtask to be updated.
+ * @param {boolean} moveToDone - A boolean flag indicating whether to move the subtask to the 'subtasksDone' array (true) or 'subtasks' array (false).
+ * @returns {Promise<void>} A promise that resolves after the task has been updated.
+ * @throws {Error} Throws an error if the subtaskIndex is invalid or if no task is selected.
+ *
+ * @example
+ * // Move a subtask from 'subtasks' to 'subtasksDone'
+ * await updateSubtaskStatus(0, true);
+ *
+ * // Move a subtask from 'subtasksDone' to 'subtasks'
+ * await updateSubtaskStatus(1, false);
+ */
+async updateSubtaskStatus(subtaskIndex: number, moveToDone: boolean) {
   await this.getIndexOfSelectedTask();
 
   if (this.selectedTask && subtaskIndex >= 0) {
-    if (this.selectedTask.subtasks && subtaskIndex < this.selectedTask.subtasks.length) {
-      // Verschiebe den Subtask von subtask zu subtasksDone
-      let completedSubtask = this.selectedTask.subtasks.splice(subtaskIndex, 1)[0];
+    let sourceArray = moveToDone ? this.selectedTask.subtasks : this.selectedTask.subtasksDone;
+    let destinationArray = moveToDone ? this.selectedTask.subtasksDone : this.selectedTask.subtasks;
 
-      if (!this.selectedTask.subtasksDone) {
-        this.selectedTask.subtasksDone = []; // Initialisiere subtasksDone, falls es noch nicht existiert
-      }
-
-      this.selectedTask.subtasksDone.push(completedSubtask);
-    } else if (this.selectedTask.subtasksDone && subtaskIndex < this.selectedTask.subtasksDone.length) {
-      // Verschiebe den Subtask von subtasksDone zu subtask
-      let completedSubtask = this.selectedTask.subtasksDone.splice(subtaskIndex, 1)[0];
-
-      if (!this.selectedTask.subtasks) {
-        this.selectedTask.subtasks = []; // Initialisiere subtask, falls es noch nicht existiert
-      }
-
-      this.selectedTask.subtasks.push(completedSubtask);
+    if (subtaskIndex < sourceArray?.length) {
+      this.moveSubtask(sourceArray, destinationArray, subtaskIndex);
     } else {
-      console.error('Ungültiger subtaskIndex oder ausgewählter Task');
+      console.error('Invalid subtaskIndex or selected task');
     }
 
-    // Nachdem die Änderungen durchgeführt wurden, speichern Sie die Aufgaben
+    // After the changes are made, save the tasks
     await this.safeTasks();
   }
 }
 
-deleteSubtaskDone(subtaskIndex: number) {
+
+/**
+ * Moves a subtask from a source array to a destination array at the specified index.
+ *
+ * @param {any[]} sourceArray - The array from which the subtask will be moved.
+ * @param {any[]} destinationArray - The array to which the subtask will be moved.
+ * @param {number} subtaskIndex - The index of the subtask to be moved.
+ * @returns {void} Returns nothing.
+ *
+ * @example
+ * // Move a subtask from 'subtasks' to 'subtasksDone'
+ * moveSubtask(this.selectedTask.subtasks, this.selectedTask.subtasksDone, 0);
+ *
+ * // Move a subtask from 'subtasksDone' to 'subtasks'
+ * moveSubtask(this.selectedTask.subtasksDone, this.selectedTask.subtasks, 1);
+ */
+private moveSubtask(sourceArray: any[], destinationArray: any[], subtaskIndex: number): void {
+  let completedSubtask = sourceArray.splice(subtaskIndex, 1)[0];
+
+  destinationArray ??= [];
+  destinationArray.push(completedSubtask);
+}
+
+/**
+ * Deletes a subtask from the 'subtasksDone' array at the specified index.
+ *
+ * @param {number} subtaskIndex - The index of the subtask to be deleted.
+ * @returns {void} Returns nothing.
+ * @throws {Error} Throws an error if the subtaskIndex is invalid, or if no task is selected.
+ *
+ * @example
+ * // Delete a subtask from 'subtasksDone' at index 0
+ * deleteSubtaskDone(0);
+ */
+deleteSubtaskDone(subtaskIndex: number): void {
   if (this.selectedTask && subtaskIndex >= 0 && this.selectedTask.subtasksDone) {
     if (subtaskIndex < this.selectedTask.subtasksDone.length) {
       this.selectedTask.subtasksDone.splice(subtaskIndex, 1);
-      this.safeTasks(); // Speichern Sie die Änderungen
+      this.safeTasks(); // Save the changes
+      console.log('Subtask deleted successfully.');
     } else {
-      console.error('Ungültiger subtaskIndex für subtasksDone oder ausgewählter Task');
+      console.error('Invalid subtaskIndex for subtasksDone or selected task');
     }
   }
 }

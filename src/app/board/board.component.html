@@ -92,7 +92,7 @@
           <li *ngFor="let subtask of TaskArrayService.selectedTask.subtasks; let i = index">
             <span>
               {{ subtask }}
-              <input type="checkbox" name="subtask{{i}}" (change)="TaskArrayService.updateSubtaskStatus(i)" /> move to done
+              <input type="checkbox" name="subtask{{i}}" (change)="this.TaskArrayService.updateSubtaskStatus(i, true)" /> move to done
             </span>
           </li>
         </ul>
@@ -107,7 +107,7 @@
             <span>
               {{ subtask }}
               <input type="checkbox" name="subtask{{i}}" 
-                (change)="this.TaskArrayService.updateSubtaskStatus(i)" />move to todo
+                (change)="this.TaskArrayService.updateSubtaskStatus(i, false)" />move to todo
                 <input type="checkbox" name="subtask{{i}}" 
                 (change)="this.TaskArrayService.deleteSubtaskDone(i)" />delete
             </span>
@@ -798,7 +798,6 @@ class="edittask-wrapper"
               <div [style.background-color]="assignedContact.color" class="contacts-usercircle">
                 {{ assignedContact.initials }}
               </div>
-
             </div>
           </div>
           <img class="prio" src="assets/img/board/prio_{{ task.prio }}.svg" />

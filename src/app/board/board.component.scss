@@ -738,7 +738,7 @@
     padding-left: 16px;
     padding-right: 16px;
     padding-top: 16px;
-
+    overflow: hidden;
     .floating-task-wrapper {
 
       flex-direction: column;
@@ -1426,7 +1426,8 @@
     height: calc(100vh - 180px);
     max-height: 100%;
     gap: 16px;
-    overflow: hidden;
+    overflow-y: scroll;
+    top:0;
     .addtask-right {
       margin-bottom: 165px;
     }
@@ -2289,12 +2290,13 @@
     align-items: flex-start;
     overflow-y: scroll;
 
+
     .edittask-left-top {
       input {
-        width: 200%;
+        width: 80%!important;
       }
       textarea {
-        width: 65%;
+        width: 88%!important;
       }
     }
     .edittask-left-prio {
