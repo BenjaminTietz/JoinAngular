@@ -144,6 +144,19 @@
           placeholder="Name"
           
         />
+        <ng-container
+        *ngIf="
+          this.ArraysService.editContactForm.controls['name'].dirty ||
+          this.ArraysService.editContactForm.controls['name'].touched
+        "
+      >
+        <p
+          class="error-message"
+          *ngIf="this.ArraysService.editContactForm.controls['name'].errors"
+        >
+          Enter correct Name
+        </p>
+      </ng-container>
         <input
           #inputEmail
           formControlName="email"
@@ -152,6 +165,19 @@
           placeholder="Email"
           
         />
+        <ng-container
+        *ngIf="
+          this.ArraysService.editContactForm.controls['email'].dirty ||
+          this.ArraysService.editContactForm.controls['email'].touched
+        "
+      >
+        <p
+          class="error-message"
+          *ngIf="this.ArraysService.editContactForm.controls['email'].errors"
+        >
+          Enter valid email adress
+        </p>
+      </ng-container>
         <input
           #inputPhone
           formControlName="phone"
@@ -160,6 +186,19 @@
           placeholder="Phone"
           
         />
+        <ng-container
+        *ngIf="
+          this.ArraysService.editContactForm.controls['phone'].dirty ||
+          this.ArraysService.editContactForm.controls['phone'].touched
+        "
+      >
+        <p
+          class="error-message"
+          *ngIf="this.ArraysService.editContactForm.controls['phone'].errors"
+        >
+          Enter correct phone number
+        </p>
+      </ng-container>
         <div class="add-contact-btn">
           <button class="cancel-btn" (click)="showSlider()" type="button">
             Delete<img src="assets/img/contacts/cancel.png" />
