@@ -536,8 +536,6 @@ async editTask(data) {
 
 // In der Methode combineAndSetSubtasks
 combineAndSetSubtasks(taskIndex) {
-  console.log('Existing Subtasks:', this.tasks[this.selectedTaskIndex].subtasks);
-  console.log('New Subtasks:', this.newSubtasks);
 
   let existingSubtasks = this.tasks[this.selectedTaskIndex].subtasks || [];
   let combinedSubtasks = [...existingSubtasks, ...this.newSubtasks];

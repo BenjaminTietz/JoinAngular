@@ -33,34 +33,34 @@
     z-index: 3;
     transition: all 0.2s ease-in-out;
     .create-popup {
-        width: 326px;
-        height: 74px;
-        border-radius: 20px;
-        background-color: $light-blue;
-        box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.16);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        transition: all 225ms ease-in-out;
-        animation: slide-up 1s;
-        @keyframes slide-up {
-            0% {
-                transform: translateY(850%);
-            }
-            100% {
-                transform: translateY(0);
-            }
+      width: 326px;
+      height: 74px;
+      border-radius: 20px;
+      background-color: $light-blue;
+      box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.16);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: all 225ms ease-in-out;
+      animation: slide-up 1s;
+      @keyframes slide-up {
+        0% {
+          transform: translateY(850%);
         }
-        span {
-            @include OpenSans(400, 23px, 27.6px, $white);
+        100% {
+          transform: translateY(0);
         }
+      }
+      span {
+        @include OpenSans(400, 23px, 27.6px, $white);
+      }
     }
-}
+  }
 
-.showPopup {
-    display: flex!important;
+  .showPopup {
+    display: flex !important;
     transition: all 0.2s ease-in-out;
-}
+  }
 
   .floating-task-wrapper {
     display: none;
@@ -364,6 +364,11 @@
         width: 24px;
         height: 24px;
         cursor: pointer;
+
+        &:hover {
+          transition: all 225ms ease-in-out;
+          scale: 1.15;
+        }
       }
     }
     .task-container {
@@ -588,18 +593,16 @@
           max-width: 95%;
           height: 265px;
           .progressbar {
-            top:145px;
+            top: 145px;
           }
           .single-task-bottom {
-            right: 4px!important;
-            top: 225px!important;
+            right: 4px !important;
+            top: 225px !important;
             width: 95%;
-            .assigned-contacts{
-              
-            .assigned-box {
-
+            .assigned-contacts {
+              .assigned-box {
+              }
             }
-          }
           }
           .single-task-top {
             display: flex;
@@ -756,7 +759,6 @@
     padding-top: 16px;
     overflow: hidden;
     .floating-task-wrapper {
-
       flex-direction: column;
       justify-content: flex-start;
       align-items: flex-start;
@@ -929,7 +931,7 @@
 }
 .addtask-wrapper {
   position: absolute;
-  left:0;
+  left: 0;
   display: none;
   justify-content: center;
   align-items: center;
@@ -1428,6 +1430,9 @@
     }
   }
 }
+
+
+
 @media screen and (max-width: 1200px) {
   .addtask-wrapper {
     flex-direction: column;
@@ -1443,7 +1448,7 @@
     max-height: 100%;
     gap: 16px;
     overflow-y: scroll;
-    top:0;
+    top: 0;
     .addtask-right {
       margin-bottom: 165px;
     }
@@ -1672,7 +1677,7 @@
 }
 .edittask-wrapper {
   position: absolute;
-  left:0;
+  left: 0;
   display: none;
   justify-content: center;
   align-items: center;
@@ -1689,9 +1694,9 @@
     margin-block-start: unset;
     margin-block-end: unset;
   }
-  
+
   .btn-container {
-    margin-left: unset!important;
+    margin-left: unset !important;
   }
 
   @keyframes slide-in-right {
@@ -1733,10 +1738,9 @@
     height: 361px;
     gap: 12px;
 
-
     .input-wrapper {
       width: 100vw;
-      max-width: 100%;
+      max-width: 108%;
       input {
         width: 100%;
         height: 24px;
@@ -1766,7 +1770,7 @@
     input {
       border-style: dashed;
       background-color: $bg-color;
-      width: 400px;
+      width: 440px;
       height: 64px;
       @include OpenSans(400, 19px, 22.8px, $menu-color);
     }
@@ -1776,14 +1780,13 @@
 
     textarea {
       width: 100vw !important;
-      max-width: 105%;
+      max-width: 115%;
       height: 123px;
       gap: 4px;
       background-color: $bg-color;
       @include OpenSans(400, 19px, 22.8px, $menu-color);
     }
   }
-
 
   .edittask-left-prio {
     display: flex;
@@ -1794,7 +1797,6 @@
 
     .floating-task-prio {
       display: flex;
-
     }
     h2 {
       @include OpenSans(700, 19px, 22.8px, $menu-color);
@@ -1809,7 +1811,7 @@
       flex-direction: row;
       justify-content: space-between;
       align-items: center;
-      width: 100%;
+      width: 440px;
       height: 51px;
       gap: 16px;
 
@@ -1952,9 +1954,8 @@
         cursor: pointer;
 
         &:hover {
-          background-color: red!important;
+          background-color: red !important;
         }
-
       }
     }
     h2 {
@@ -1968,6 +1969,7 @@
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
+      width: 440px;
       .assigned-dropdown-menu {
         display: flex;
         flex-direction: row;
@@ -2054,7 +2056,7 @@
     justify-content: flex-start;
     align-items: flex-start;
     gap: 8px;
-    width: 380px;
+    width: 500px;
     height: 79px;
     margin-top: 22px;
 
@@ -2208,6 +2210,7 @@
 
 @media screen and (max-width: 1200px) {
   .edittask-wrapper {
+    padding-left: 8px;
     position: absolute;
     display: none;
     justify-content: center;
@@ -2229,71 +2232,103 @@
 }
 
 @media screen and (max-width: 600px) {
-  .edittask-wrapper {
-    .edittask-left {
-      padding: 0px 0px 0px 0px;
-    }
-    .addtask-left-top {
-      h2 {
-        @include OpenSans(700, 16px, 19.2px, $menu-color);
-      }
+  .board-wrapper {
+    .edittask-wrapper {
+      padding-left: 8px;
+      .edittask-left {
+        padding: 0px 0px 0px 0px;
 
-      span {
-        @include OpenSans(400, 16px, 19.2px, $menu-color);
-      }
-    }
-    .edittask-left-bottom {
-      h2 {
-        @include OpenSans(700, 16px, 19.2px, $menu-color);
-      }
+        form {
+          .edittask-left-top {
+            .input-wrapper {
+              input {
+                width: 100%;
+              }
+            }
+            textarea {
+              width: 110% !important;
+            }
+            div {
+              input {
+                width: 240%;
+              }
+            }
+            h2 {
+              @include OpenSans(700, 16px, 19.2px, $menu-color);
+            }
 
-      span {
-        @include OpenSans(400, 16px, 19.2px, $menu-color);
+            span {
+              @include OpenSans(400, 16px, 19.2px, $menu-color);
+            }
+          }
+        }
       }
-    }
-    .edittask-left-prio {
-      gap: 16px;
-      h2 {
-        @include OpenSans(700, 16px, 19.2px, $menu-color);
-      }
+      .addtask-left-top {
+        h2 {
+          @include OpenSans(700, 16px, 19.2px, $menu-color);
+        }
 
-      span {
-        @include OpenSans(400, 16px, 19.2px, $menu-color);
+        span {
+          @include OpenSans(400, 16px, 19.2px, $menu-color);
+        }
       }
+      .edittask-left-bottom {
+        .add-btn-container {
+          left: 346px;
+        }
+        h2 {
+          @include OpenSans(700, 16px, 19.2px, $menu-color);
+        }
 
-      .prio-box {
-        height: 48px;
+        span {
+          @include OpenSans(400, 16px, 19.2px, $menu-color);
+        }
       }
-    }
-    .edittask-right {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100%;
-      width: 100%;
-      margin-bottom: 0px;
+      .edittask-left-prio {
+        gap: 16px;
+        h2 {
+          @include OpenSans(700, 16px, 19.2px, $menu-color);
+        }
 
-      .btn-container {
+        span {
+          @include OpenSans(400, 16px, 19.2px, $menu-color);
+        }
+
+        .prio-box {
+          height: 48px;
+          width: 80%;
+        }
+      }
+      .edittask-right {
         display: flex;
         justify-content: center;
         align-items: center;
+        height: 100%;
         width: 100%;
-        height: 48px;
-        gap: 4px;
-        margin-left: unset;
-        .clear-btn {
-          display: none;
-        }
+        margin-bottom: 0px;
 
-        .create-btn {
-          width: 148px;
+        .btn-container {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 100%;
           height: 48px;
-          padding: 12px 8px 12px 8px;
-          @include OpenSans(400, 19px, 22.8px, $white);
+          gap: 4px;
+          margin-left: unset;
+          .clear-btn {
+            display: none;
+          }
 
-          img {
-            width: 24px;
-            height: 24px;
+          .create-btn {
+            width: 148px;
+            height: 48px;
+            padding: 12px 8px 12px 8px;
+            @include OpenSans(400, 19px, 22.8px, $white);
+
+            img {
+              width: 24px;
+              height: 24px;
+            }
           }
         }
       }
@@ -2302,83 +2337,242 @@
 }
 
 @media screen and (max-width: 500px) {
-  .edittask-wrapper {
-    align-items: flex-start;
-    overflow-y: scroll;
+  .board-wrapper {
+    .edittask-wrapper {
+      padding-left: 8px;
+      .edittask-left {
+        padding: 0px 0px 0px 0px;
 
+        form {
+          .edittask-left-top {
+            .input-wrapper {
+              input {
+                width: 88%;
+              }
+            }
+            textarea {
+              width: 96% !important;
+            }
+            div {
+              input {
+                width: 220%;
+              }
+            }
+            h2 {
+              @include OpenSans(700, 16px, 19.2px, $menu-color);
+            }
 
-    .edittask-left-top {
-      input {
-        width: 80%!important;
-      }
-      textarea {
-        width: 88%!important;
-      }
-    }
-    .edittask-left-prio {
-      .prio-box {
-        gap: 4px;
-        justify-content: flex-start;
-        .prio-container {
-          width: 100px;
-          height: 40px;
-          padding: 12px 6px 12px 6px;
-          gap: 8px;
-
-          img {
-            width: 20px;
-            height: 14.5px;
+            span {
+              @include OpenSans(400, 16px, 19.2px, $menu-color);
+            }
           }
         }
       }
-    }
-    .edittask-left-bottom {
-      input {
-        width: 65%;
+      .addtask-left-top {
+        h2 {
+          @include OpenSans(700, 16px, 19.2px, $menu-color);
+        }
+
+        span {
+          @include OpenSans(400, 16px, 19.2px, $menu-color);
+        }
+      }
+      .edittask-left-bottom {
+        width: 400px;
+        .add-btn-container {
+          left: 346px;
+        }
+        h2 {
+          @include OpenSans(700, 16px, 19.2px, $menu-color);
+        }
+
+        span {
+          @include OpenSans(400, 16px, 19.2px, $menu-color);
+        }
+      }
+      .edittask-left-prio {
+        gap: 16px;
+        bottom: -14px;
+        h2 {
+          @include OpenSans(700, 16px, 19.2px, $menu-color);
+        }
+
+        span {
+          @include OpenSans(400, 16px, 19.2px, $menu-color);
+        }
+
+        .prio-box {
+          height: 48px;
+          width: 80%;
+        }
+      }
+      .edittask-assigned-box {
+        .assigned-contacts {
+          width: 360px;
+        }
+      }
+      .edittask-right {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        width: 100%;
+        margin-bottom: 0px;
+
+        .btn-container {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 100%;
+          height: 48px;
+          gap: 4px;
+          margin-left: unset;
+          .clear-btn {
+            display: none;
+          }
+
+          .create-btn {
+            width: 148px;
+            height: 48px;
+            padding: 12px 8px 12px 8px;
+            @include OpenSans(400, 19px, 22.8px, $white);
+
+            img {
+              width: 24px;
+              height: 24px;
+            }
+          }
+        }
       }
     }
   }
 }
 
 @media screen and (max-width: 400px) {
-  .edittask-wrapper {
-    align-items: flex-start;
-
-    .addtask-left-top {
-      input {
-        width: 55%;
+  .board-wrapper {
+    .edittask-wrapper {
+      padding-left: 8px;
+      .btn-container {
+        width: 285px;
       }
-      textarea {
-        width: 55%;
-      }
-    }
-    .edittask-left-prio {
-      .prio-box {
-        gap: 2px;
-        justify-content: flex-start;
-        .prio-container {
-          width: 80px;
-          height: 30px;
-          padding: 10px 4px 10px 4px;
-          gap: 4px;
+      .edittask-left {
+        padding: 0px 0px 0px 0px;
 
-          img {
-            width: 16px;
-            height: 10.5px;
+        form {
+          .edittask-left-top {
+            .input-wrapper {
+              input {
+                width: 78%;
+              }
+            }
+            textarea {
+              width: 74% !important;
+            }
+            div {
+              input {
+                width: 172%;
+              }
+            }
+            h2 {
+              @include OpenSans(700, 16px, 19.2px, $menu-color);
+            }
+
+            span {
+              @include OpenSans(400, 16px, 19.2px, $menu-color);
+            }
           }
         }
       }
-    }
-    .edittask-left-bottom {
-      input {
-        width: 50%;
+      .addtask-left-top {
+        h2 {
+          @include OpenSans(700, 16px, 19.2px, $menu-color);
+        }
+
+        span {
+          @include OpenSans(400, 16px, 19.2px, $menu-color);
+        }
       }
-    }
-    .edittask-right {
-      .btn-container {
-        bottom: -152px;
-        .create-btn {
-          margin-top: 40px;
+      .edittask-left-bottom {
+        width: 330px;
+        .add-btn-container {
+          left: 266px;
+          bottom: -13px;
+        }
+        h2 {
+          @include OpenSans(700, 16px, 19.2px, $menu-color);
+        }
+        .input-wrapper{
+
+          width: 78%;
+
+      }
+        span {
+          @include OpenSans(400, 16px, 19.2px, $menu-color);
+        }
+      }
+
+      .edittask-left-prio {
+        gap: 16px;
+        bottom: -14px;
+        h2 {
+          @include OpenSans(700, 16px, 19.2px, $menu-color);
+        }
+
+        span {
+          @include OpenSans(400, 16px, 19.2px, $menu-color);
+        }
+
+        .prio-box {
+          height: 48px;
+          width: 300px;
+
+          .prio-container-urgent {
+            width: 90px;
+          }
+          .prio-container-medium {
+            width: 90px;
+          }
+          .prio-container-low {
+            width: 90px;
+          }
+        }
+      }
+      .edittask-assigned-box {
+        .assigned-contacts {
+          width: 300px;
+        }
+      }
+      .edittask-right {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        width: 100%;
+        margin-bottom: 0px;
+
+        .btn-container {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 100%;
+          height: 48px;
+          gap: 4px;
+          margin-left: unset;
+          .clear-btn {
+            display: none;
+          }
+
+          .create-btn {
+            width: 148px;
+            height: 48px;
+            padding: 12px 8px 12px 8px;
+            @include OpenSans(400, 19px, 22.8px, $white);
+
+            img {
+              width: 24px;
+              height: 24px;
+            }
+          }
         }
       }
     }
