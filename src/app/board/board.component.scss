@@ -89,6 +89,22 @@
       }
     }
 
+    .floating-close-btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+      background-color: $input-boarder;
+      width: 32px;
+      height: 32px;
+      cursor: pointer;
+
+      &:hover {
+        transition: all 225ms ease-in-out;
+        scale: 1.15;
+      }
+    }
+
     .floating-task-container {
       display: flex;
       flex-direction: column;

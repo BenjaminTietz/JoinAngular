@@ -264,7 +264,7 @@ export class BoardComponent {
       subtasks: selectedTask.subtasks,
     });
     this.TaskArrayService.selectedTask.subtasks =
-      this.TaskArrayService.subtasks;
+      this.TaskArrayService.tasks[this.TaskArrayService.selectedTaskIndex].subtasks;
     this.editTaskWrapper.nativeElement.classList.add('show-edittask-wrapper');
 
     this.TaskArrayService.editTaskFormFB.get('title').markAsTouched();

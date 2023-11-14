@@ -496,12 +496,14 @@ async editTask(data) {
   // Find the index in the main tasks array
   let taskIndex = this.selectedTaskIndex;
 
+
   if (this.isValidTaskIndex(taskIndex)) {
     this.updateTaskProperties(taskIndex, data);
     this.combineAndSetSubtasks(taskIndex);
     this.combineAndSetAssignedContacts(taskIndex, data.assignedContacts);
     this.safeTasks();
     this.postEditCleanup(data);
+    this.newSubtasks = [];
   } else {
     console.log('Invalid task index.');
   }
@@ -532,14 +534,16 @@ async editTask(data) {
   task.category = data.category;
 }
 
-/**
- * Combine and set subtasks for the selected task.
- *
- * @param {number} taskIndex - The index of the task to update.
- */
-  combineAndSetSubtasks(taskIndex) {
-  let combinedSubtasks = [...this.tasks[taskIndex].subtasks, ...this.newSubtasks];
+// In der Methode combineAndSetSubtasks
+combineAndSetSubtasks(taskIndex) {
+  console.log('Existing Subtasks:', this.tasks[this.selectedTaskIndex].subtasks);
+  console.log('New Subtasks:', this.newSubtasks);
+
+  let existingSubtasks = this.tasks[this.selectedTaskIndex].subtasks || [];
+  let combinedSubtasks = [...existingSubtasks, ...this.newSubtasks];
   this.tasks[taskIndex].subtasks = combinedSubtasks;
+
+  console.log('Combined Subtasks:', combinedSubtasks);
 }
 
 /**
