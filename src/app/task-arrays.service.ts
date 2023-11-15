@@ -113,7 +113,7 @@ taskId: number = 0;
  * The date of the nearest urgent task.
  * @type {any}
  */
-nearestUrgentTaskDate: any = '';
+nearestTaskDate: any = '';
 
 /**
  * The selected task object.
@@ -826,37 +826,45 @@ deleteSubtaskDone(subtaskIndex: number): void {
   async mapUrgentTasks() {
     this.urgent = this.tasks.filter((task) => task.prio === 'urgent');
   }
-  /**
-   *  function to filter tasks with prio = urgent and return the nearest date.
-   * @type {Array}
-   */
-  async findNearestDate(urgentArray: any[]): Promise<void> {
-    if (!urgentArray || urgentArray.length === 0) {
-      this.nearestUrgentTaskDate = null;
-      return;
-    }
-
-    let today = new Date();
-    let nearestDate = new Date(urgentArray[0].date);
-
-    for (let item of urgentArray) {
-      let itemDate = new Date(item.date);
-      let timeDifference = Math.abs(itemDate.getTime() - today.getTime());
-
-      if (timeDifference < Math.abs(nearestDate.getTime() - today.getTime())) {
-        nearestDate = itemDate;
-      }
-    }
-
-    let options: Intl.DateTimeFormatOptions = {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    };
-    let formattedDate = nearestDate.toLocaleDateString('en-US', options); // 'en-US' for English
-
-    this.nearestUrgentTaskDate = formattedDate;
+ /**
+ * Finds the nearest date among the specified tasks and sets the result to nearestUrgentTaskDate.
+ *
+ * @param {Array} tasks - The array of tasks to search for the nearest date.
+ * @returns {Promise<void>} A promise that resolves after finding the nearest date.
+ *
+ * @example
+ * // Find the nearest date among all tasks
+ * await findNearestDate(allTasksArray);
+ */
+async findNearestDate(tasks: any[]): Promise<void> {
+  if (!tasks || tasks.length === 0) {
+    this.nearestTaskDate = null;
+    return;
   }
+
+  let today = new Date();
+  let nearestDate = new Date(tasks[0].date);
+
+  for (let task of tasks) {
+    let taskDate = new Date(task.date);
+    let timeDifference = Math.abs(taskDate.getTime() - today.getTime());
+
+    if (timeDifference < Math.abs(nearestDate.getTime() - today.getTime())) {
+      nearestDate = taskDate;
+    }
+  }
+
+  let options: Intl.DateTimeFormatOptions = {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  };
+  let formattedDate = nearestDate.toLocaleDateString('en-US', options); // 'en-US' for English
+
+  this.nearestTaskDate = formattedDate;
+  console.log('Nearest task date:', this.nearestTaskDate);
+}
+
 
 
   async getNewStatus (status: string) {

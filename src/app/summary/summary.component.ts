@@ -65,7 +65,8 @@ async ngOnInit() {
     await this.TaskArraysService.mapTaskStatus();
     await this.TaskArraysService.mapUrgentTasks();
     this.loginService.getGreeting();
-    this.TaskArraysService.findNearestDate(this.TaskArraysService.urgent);
+    this.TaskArraysService.findNearestDate(this.TaskArraysService.tasks);
+    await this.TaskArraysService.loadTasks();
 }
 
 }

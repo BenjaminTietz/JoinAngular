@@ -21,8 +21,9 @@ export class SummaryDashboardComponent {
 /**
  * Initializes the component and performs necessary actions when it's created.
  */
-ngOnInit(): void {
-  this.TaskArrayService.findNearestDate(this.TaskArrayService.urgent);
+async ngOnInit(): Promise<void> {
+  await this.TaskArrayService.loadTasks();
+  await this.TaskArrayService.findNearestDate(this.TaskArrayService.tasks);
   this.loginService.loadUser();
 }
 
