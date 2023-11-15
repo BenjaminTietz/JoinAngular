@@ -15,7 +15,7 @@ import { SummaryDashboardComponent } from './summary-dashboard/summary-dashboard
 let routes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
-  { path: 'summary', component: SummaryComponent },
+  { path: 'join', component: SummaryComponent },
   { path: 'summarydashboard', component: SummaryDashboardComponent },
   { path: 'addtask', component: AddtaskComponent },
   { path: 'board', component: BoardComponent },

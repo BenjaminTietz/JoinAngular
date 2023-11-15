@@ -115,7 +115,7 @@ export class LoginService {
   
     // Save the current user to remote storage
     await this.safeUser();
-    this.router.navigate(['/summary']);
+    this.router.navigate(['/join']);
   }
 
 /**
@@ -131,7 +131,6 @@ async logIn(data) {
   if (user) {
     // Save user data to local storage
     await this.RemotestorageService.setItem('user', JSON.stringify(user));
-    
     // Set current user's properties
     this.currentUserEmail = user.email;
     this.currentUser = {
@@ -139,13 +138,10 @@ async logIn(data) {
       initials: this.extractInitialsFromName(user.name),
       color: this.getRandomUserColor(),
     };
-
     // Save the current user to remote storage
     await this.safeUser();
-
     // Navigate to the summary route
-    this.router.navigate(['/summary']);
-
+    this.router.navigate(['/join']);
     // Clear email and password fields
     data.email = '';
     data.password = '';
@@ -161,7 +157,6 @@ async logIn(data) {
  */
 failedLogin() {
   this.loginAttempts++;
-  
   // Display "User not found" alert only after a certain number of failed attempts
   if (this.loginAttempts >= 3) {
     this.showFailedLogin = true;
@@ -197,7 +192,6 @@ getRandomUserColor() {
       '#1FD7C1', '#FF745E', '#FFA35E', '#FC71FF', '#FFC701',
       '#0038FF', '#C3FF2B', '#FFE62B', '#FF4646', '#FFBB2B'
   ];
-
   // Choose a random color from the list of user colors
   let randomIndex = Math.floor(Math.random() * userColors.length);
   return userColors[randomIndex];
@@ -208,13 +202,9 @@ getRandomUserColor() {
   async logout() {
     // Clear the current user data in remote storage
     await this.RemotestorageService.setItem('current_user_array', JSON.stringify({}));
-  
     // Reset the currentUser and currentUserEmail properties
     this.currentUser = null;
     this.currentUserEmail = null;
-  
-    // You can also add any other necessary logout logic here
-  
     // Redirect to a login page or any other destination
     this.router.navigate(['']);
   }
@@ -236,7 +226,6 @@ async safeUser() {
    */
   async loadUser() {
     let userData = JSON.parse(await this.RemotestorageService.getItem('current_user_array'));
-  
     this.currentUser = {
       name: userData.name,
       initials: userData.initials,
@@ -250,7 +239,6 @@ async safeUser() {
   getGreeting(): void {
     let currentTime = new Date().getHours();
     let greeting: string;
-
     if (currentTime >= 5 && currentTime < 12) {
       greeting = 'Good Morning';
     } else if (currentTime >= 12 && currentTime < 18) {

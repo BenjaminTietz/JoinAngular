@@ -3,6 +3,8 @@ import { RemotestorageService } from '../remotestorage.service';
 import { TaskArraysService } from '../task-arrays.service';
 import { BoardService } from '../board.service';
 import { LoginService } from '../login.service';
+import {Title} from "@angular/platform-browser";
+
 @Component({
   selector: 'app-summary-dashboard',
   templateUrl: './summary-dashboard.component.html',
@@ -15,8 +17,9 @@ export class SummaryDashboardComponent {
     public TaskArrayService: TaskArraysService,
     public RemoteStorageService: RemotestorageService,
     public boardService: BoardService,
-    public loginService: LoginService
-  ) {}
+    public loginService: LoginService,
+    private titleService:Title
+  ) {this.titleService.setTitle("Join - Summary");}
 
 /**
  * Initializes the component and performs necessary actions when it's created.

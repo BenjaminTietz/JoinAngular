@@ -34,9 +34,8 @@ showDropdown() {
  */
 selectComponent(componentName, e) {
   e.stopPropagation();
-
   // Define the mapping between component names and visibility properties
-  const componentVisibilityMap = {
+  let componentVisibilityMap = {
     'app-introduction': { showSummary: false, showAddTask: false, showBoard: false, showContacts: false, showPrivacyPolicy: false, showLegalNotice: false, showInfo: true },
     'app-summary': { showSummary: true, showAddTask: false, showBoard: false, showContacts: false, showPrivacyPolicy: false, showLegalNotice: false, showInfo: false },
     'app-privacy-policy': { showSummary: false, showAddTask: false, showBoard: false, showContacts: false, showPrivacyPolicy: true, showLegalNotice: false, showInfo: false },
