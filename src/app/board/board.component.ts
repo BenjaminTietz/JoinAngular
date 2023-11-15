@@ -5,6 +5,7 @@ import { DragAndDropService } from '../drag-and-drop.service';
 import { ArraysService } from '../contact-arrays.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-board',
@@ -32,7 +33,7 @@ export class BoardComponent {
   @ViewChild('popupdeletedContainer') popupdeletedContainer: ElementRef;
   @ViewChild('popupCreateContainer') popupCreateContainer: ElementRef;
   @ViewChild('boardWrapper') boardWrapper: ElementRef;
-  
+
 
   event: Event;
   taskToDelete;
@@ -43,8 +44,9 @@ export class BoardComponent {
     public TaskArrayService: TaskArraysService,
     public RemotestorageService: RemotestorageService,
     public DragAndDropService: DragAndDropService,
-    public ArraysService: ArraysService
-  ) {}
+    public ArraysService: ArraysService,
+    private titleService:Title
+  ) {this.titleService.setTitle("Join - Board")}
 
   async ngOnInit() {
     // await this.TaskArrayService.clearTasksArray();
@@ -52,7 +54,6 @@ export class BoardComponent {
     await this.TaskArrayService.loadTasks();
     await this.TaskArrayService.mapTaskStatus();
     await this.TaskArrayService.mapUrgentTasks();
-    console.log('tasks', this.TaskArrayService.tasks);
   }
 
 /**
@@ -65,9 +66,6 @@ onSearch(event: any) {
    * @type {string}
    */
   const searchTerm = event.target.value.toLowerCase(); // Convert to lowercase for case-insensitive search
-
-  console.log('searchTerm', searchTerm);
-
   if (searchTerm.trim() === '') {
     /**
      * Indicates whether the search field is active.

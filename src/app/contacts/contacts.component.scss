@@ -66,10 +66,26 @@
         margin-block-start: unset !important;
         margin-block-end: unset !important;
     }
+    .show-slider {
+        display: flex!important;
+        transition: all 0.2s ease-in-out;
+        animation: slide-in 1s;
+    }
+    .slide-wrapper {
+        position: absolute;
+        width: calc(100vw - 270px);
+        height: 100vh;
+        backdrop-filter: blur(2px)!important;
+        display: none;
+        justify-content: flex-end;
+        align-items: flex-start;
+        z-index: 15;
+        
     .add-contact-container {
         position: absolute;
-        top: 16px;
-        display: none;
+        top: 0;
+        right: 0;
+        display: flex;
         flex-direction: column;
         justify-content: flex-start;
         align-items: center;
@@ -97,25 +113,25 @@
                 width: 422px;
                 height: 193px;
                 gap: 24px;
-
+                
+                .inpufield-wrapper {
+                    position: relative;
                 input {
-                    width: 100%;
+                    width: 422px;
                     height: 48px;
                     padding-left: 16px;
-                    @include OpenSans(400, 19px, 22.8px, $black);
-
-                    &.ng-touched,
-                    &.ng-dirty {
-                      &.ng-invalid {
-                        border: 1px solid $red;
-                        border-radius: 10px;
-                      }
-                      &.ng-valid {
-                        border: 1px solid $green;
-                        border-radius: 10px;
-                      }
-                    }
+                    @include OpenSans(400, 19px, 22.8px, $input-boarder);
+                    border-color: $input-boarder;
+                    border-top: unset;
+                    border-left: unset;
+                    border-right: unset;
                 }
+                img {
+                    position: absolute;
+                    right: 6px;
+                    top: 10px;
+                }
+            }
             }
             .add-contact-btn {
                 display: flex;
@@ -161,6 +177,7 @@
                 }
             }
         }
+    }
         .edit-contact-bottom {
             display: flex;
             flex-direction: column;

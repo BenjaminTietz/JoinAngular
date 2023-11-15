@@ -1,6 +1,8 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { BoardService } from '../board.service';
 import { Router } from '@angular/router';
+import {Title} from "@angular/platform-browser";
+
 
 @Component({
   selector: 'app-privacy-policy',
@@ -9,7 +11,9 @@ import { Router } from '@angular/router';
 })
 export class PrivacyPolicyComponent {
   @Output() componentSelected = new EventEmitter<string>();  
-  constructor(public router: Router, private boardService: BoardService) { }
+  constructor(public router: Router, private boardService: BoardService, private titleService:Title) 
+  {  this.titleService.setTitle("Join - Privacy Policy");
+}
 
 /**
  * Selects a component based on the provided component name and updates the visibility of components.

@@ -1,6 +1,7 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { BoardService } from '../board.service';
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-introduction',
@@ -9,7 +10,9 @@ import { BoardService } from '../board.service';
 })
 export class IntroductionComponent {
   @Output() componentSelected = new EventEmitter<string>();  
-  constructor(public router: Router, private boardService: BoardService) { }
+  constructor(public router: Router, private boardService: BoardService, private titleService:Title) 
+  { this.titleService.setTitle("Join - Help");
+}
 
 /**
  * Selects a component based on its name and updates the visibility of related components.

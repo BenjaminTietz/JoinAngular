@@ -4,7 +4,7 @@ import { RemotestorageService } from '../remotestorage.service';
 import { TaskArraysService } from '../task-arrays.service';
 import { ArraysService } from '../contact-arrays.service';
 import { LoginService } from '../login.service';
-
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-summary',
@@ -17,8 +17,10 @@ export class SummaryComponent {
     public RemotestorageService: RemotestorageService,
     public ArraysService: ArraysService,
     public TaskArraysService: TaskArraysService,
-    public loginService: LoginService
-    ) {}
+    public loginService: LoginService,
+    private titleService:Title
+    ) {this.titleService.setTitle("Join - Summary");}
+
 
 /**
  * Indicates whether the "Summary" component should be shown.

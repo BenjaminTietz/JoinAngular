@@ -11,6 +11,7 @@ import { TaskArraysService } from '../task-arrays.service';
 import { ArraysService } from '../contact-arrays.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-addtask',
@@ -39,7 +40,8 @@ export class AddtaskComponent {
     public TaskArraysService: TaskArraysService,
     public ArraysService: ArraysService,
     public fb: FormBuilder,
-  ) {}
+    private titleService:Title) 
+{ this.titleService.setTitle("Join - Add Task");}
 
   async ngOninit() {
     await this.TaskArraysService.loadTasks();

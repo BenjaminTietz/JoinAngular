@@ -11,6 +11,7 @@ import { ArraysService } from '../contact-arrays.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TaskArraysService } from '../task-arrays.service';
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-contacts',
@@ -107,9 +108,11 @@ indexToEdit: number;
     public RemotestorageService: RemotestorageService,
     public ArraysService: ArraysService,
     private fb: FormBuilder,
-    public TaskArraysService: TaskArraysService
+    public TaskArraysService: TaskArraysService,
+    private titleService:Title
   ) {
     this.ArraysService.contactsForm.valueChanges.subscribe(console.log);
+    this.titleService.setTitle("Join - Contacts");
   }
 
 /**

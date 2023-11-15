@@ -1,6 +1,9 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { BoardService } from '../board.service';
 import { Router } from '@angular/router';
+import {Title} from "@angular/platform-browser";
+
+
 @Component({
   selector: 'app-legal-notice',
   templateUrl: './legal-notice.component.html',
@@ -8,7 +11,9 @@ import { Router } from '@angular/router';
 })
 export class LegalNoticeComponent {
   @Output() componentSelected = new EventEmitter<string>();  
-  constructor(public router: Router, private boardService: BoardService) { }
+  constructor(public router: Router, private boardService: BoardService, private titleService:Title)
+   { this.titleService.setTitle("Join - Legal Notice");
+  }
 /**
  * Selects a component based on its name and updates the visibility of related components.
  *

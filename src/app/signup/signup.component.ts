@@ -6,6 +6,7 @@ import { ArraysService } from '../contact-arrays.service';
 import { LoginService } from '../login.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-signup',
@@ -66,8 +67,9 @@ export class SignupComponent {
     public ArraysService: ArraysService,
     public LoginService: LoginService,
     private fb: FormBuilder,
+    private titleService:Title
     ) { 
-      this.LoginService.signUpForm.valueChanges.subscribe(console.log);
+      this.titleService.setTitle("Join - Sign up");
     }
 
 
@@ -77,8 +79,6 @@ export class SignupComponent {
  * @param {object} data - An object containing user registration data, including email, password, and name.
  */
 async signUp(data) {
-  console.log(data);
-
   // Validate if the password and confirm password match
   if (data.password === data.confirmPassword) {
       // Add the new user to the 'users' array
@@ -87,30 +87,21 @@ async signUp(data) {
           'password': data.password,
           'name': data.name
       });
-
-      console.log(this.ArraysService.users);
-
       // Save the updated 'users' array to remote storage
       await this.RemotestorageService.setItem('users', JSON.stringify(this.ArraysService.users));
-
       // Reset the registration form
       this.resetForm(data);
-
       // Reload the 'users' array from remote storage
       this.ArraysService.users = JSON.parse(await this.RemotestorageService.getItem('users'));
-
       // Redirect the user to the login page with a success message
       this.showSuccessMessage();
       setTimeout(() => {
           this.router.navigate(['/']);
       }, 2000);
-
-      console.log(this.ArraysService.users);
   } else {
       // Clear the input fields for password and confirm password
       data.password = '';
       data.confirmPassword = '';
-
       // Return from the function
       return;
   }

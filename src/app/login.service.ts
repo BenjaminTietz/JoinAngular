@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { RemotestorageService } from './remotestorage.service';
 import { ArraysService } from './contact-arrays.service';
-
+import {Title} from "@angular/platform-browser";
 
 import {
   FormBuilder,
@@ -49,6 +49,7 @@ export class LoginService {
     private fb: FormBuilder,
     public RemotestorageService: RemotestorageService,
     public ArraysService: ArraysService,
+    private titleService:Title
   ) {
     this.loginFormFB = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -62,7 +63,7 @@ export class LoginService {
       password: ['', [Validators.required, Validators.minLength(4)]],
       confirmPassword: ['', [Validators.required, Validators.minLength(4)]],
     });
-
+    this.titleService.setTitle("Join - Log in");
   }
 
   /**

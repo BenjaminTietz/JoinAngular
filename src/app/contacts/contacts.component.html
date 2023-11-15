@@ -11,7 +11,8 @@
     </div>
   </div>
   <!--Hidden Add Contact Container-->
-  <div class="add-contact-container" #addContactContainer>
+  <div class="slide-wrapper" #addContactContainer>
+  <div class="add-contact-container">
     <div class="add-contact-top">
       <img
         (click)="showSlider()"
@@ -30,69 +31,34 @@
         [formGroup]="this.ArraysService.contactsForm"
         (ngSubmit)="this.addContact(this.ArraysService.contactsForm.value)"
       >
-      <div>
+      <div class="inpufield-wrapper">
         <input
           formControlName="name"
           name="name"
           type="text"
           placeholder="Name"
         />
+        <img src="assets/img/contacts/name_inputfield.png">
       </div>
-      <ng-container
-      *ngIf="
-        this.ArraysService.contactsForm.controls['name'].dirty ||
-        this.ArraysService.contactsForm.controls['name'].touched
-      "
-    >
-      <p
-        class="error-message"
-        *ngIf="this.ArraysService.contactsForm.controls['name'].errors"
-      >
-        Enter correct Name
-      </p>
-    </ng-container>
-      <div>
+      <div class="inpufield-wrapper">
         <input
           formControlName="email"
           name="email"
           type="email"
           placeholder="Email"
         />
+        <img src="assets/img/contacts/mail_inputfield.png">
       </div>
-      <ng-container
-      *ngIf="
-        this.ArraysService.contactsForm.controls['email'].dirty ||
-        this.ArraysService.contactsForm.controls['email'].touched
-      "
-    >
-      <p
-        class="error-message"
-        *ngIf="this.ArraysService.contactsForm.controls['email'].errors"
-      >
-        Enter valid email adress
-      </p>
-    </ng-container>
-    <div>
+    <div class="inpufield-wrapper">
         <input
           formControlName="phone"
           name="phone"
           type="phone"
           placeholder="Phone"
         />
+        <img src="assets/img/contacts/phone_inputfield.png">
       </div>
-      <ng-container
-      *ngIf="
-        this.ArraysService.contactsForm.controls['phone'].dirty ||
-        this.ArraysService.contactsForm.controls['phone'].touched
-      "
-    >
-      <p
-        class="error-message"
-        *ngIf="this.ArraysService.contactsForm.controls['phone'].errors"
-      >
-        Enter correct phone number
-      </p>
-    </ng-container>
+
         <div class="add-contact-btn">
           <button class="cancel-btn" (click)="showSlider()" type="button">
             Cancel<img src="assets/img/contacts/cancel.png" />
@@ -111,6 +77,7 @@
       </form>
     </div>
   </div>
+</div>
   <!--end of hidden Add Contact Container-->
   <!--Hidden Edit Contact Container-->
   <div
