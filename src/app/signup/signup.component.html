@@ -303,70 +303,33 @@
       [formGroup]="this.LoginService.signUpForm"
       (ngSubmit)="signUp(this.LoginService.signUpForm.value)"
     >
-      <div>
-        <input placeholder="Name" type="text" formControlName="name" />
+      <div class="input-wrapper">
+        <input class="inputfield" placeholder="Name" type="text" formControlName="name" />
+        <img class="inputfield-icon" src="assets/img/signup/signup-namefield.svg" alt="icon" />
       </div>
-      <ng-container
-        *ngIf="
-          this.LoginService.signUpForm.controls['name'].dirty ||
-          this.LoginService.signUpForm.controls['name'].touched
-        "
-      >
-        <p
-          class="error-message"
-          *ngIf="this.LoginService.signUpForm.controls['name'].errors"
-        >
-          Enter correct Name
-        </p>
-      </ng-container>
-      <div>
-        <input placeholder="Email" type="email" formControlName="email" />
+      <div class="input-wrapper">
+        <input class="inputfield" placeholder="Email" type="email" formControlName="email" />
+        <img class="inputfield-icon" src="assets/img/signup/signup-emailfield.svg" alt="icon" />
       </div>
-      <ng-container
-        *ngIf="
-          this.LoginService.signUpForm.controls['email'].dirty ||
-          this.LoginService.signUpForm.controls['email'].touched
-        "
-      >
-        <p
-          class="error-message"
-          *ngIf="this.LoginService.signUpForm.controls['email'].errors"
-        >
-          Enter vaild Email adress
-        </p>
-      </ng-container>
-
-      <div>
-        <input
+      <div class="input-wrapper">
+        <input class="inputfield"
           placeholder="Password"
           type="password"
           formControlName="password"
         />
+        <img class="inputfield-icon" src="assets\img\signup\signup-passwordfield.svg" alt="icon" />
       </div>
-      <ng-container
-        *ngIf="
-          this.LoginService.signUpForm.controls['password'].dirty ||
-          this.LoginService.signUpForm.controls['password'].touched
-        "
-      >
-        <p
-          class="error-message"
-          *ngIf="this.LoginService.signUpForm.controls['password'].errors"
-        >
-          Enter vaild password. min 4 char
-        </p>
-      </ng-container>
-      <div>
+      <div class="input-wrapper">
         <input
+          class="inputfield"
           placeholder="Confirm password"
           type="password"
           formControlName="confirmPassword"
         />
+        <img class="inputfield-icon" src="assets\img\signup\signup-passwordfield.svg" alt="icon" />
       </div>
       <ng-container
         *ngIf="
-          this.LoginService.signUpForm.controls['confirmPassword'].dirty ||
-          this.LoginService.signUpForm.controls['confirmPassword'].touched ||
           this.LoginService.signUpForm.controls['password'].value !==
             this.LoginService.signUpForm.controls['confirmPassword'].value
         "
@@ -380,6 +343,9 @@
           Confirmed password doesn't match password!
         </p>
       </ng-container>
+      <div class="accept-privacy-policy">
+        <input type="checkbox" formControlName="acceptPrivacyPolicy" />I accept the  <a (click)="showPrivacyPolicy()" > Privacy Policy</a>
+      </div>
       <div class="btn-container">
         <button
           [disabled]="

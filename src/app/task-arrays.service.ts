@@ -461,29 +461,47 @@ async addTask(data) {
  * @param {number} newId - The newly generated task ID.
  * @param {object} data - Data containing task details to be added.
  */
- addNewTask(newId, data) {
-  /**
-   * An array of selected contact names for assignment.
-   * @type {string[]}
-   */
+addNewTask(newId, data) {
   let selectedContacts = this.ArraysService.contacts
     .filter((contact) => contact.selected)
     .map((contact) => contact.name);
 
+  // Create a new array for the subtasks of the current task
+  let subtasksForCurrentTask = [];
+
+  // Initialize a new subtask in the subtasks array with the name and completed as false
+  subtasksForCurrentTask.push({ name: data.title, completed: false });
+
+  // Initialize additional subtasks as needed
+  if (data.subtask && data.subtask.length > 0) {
+    for (let subtaskName of data.subtask) {
+      subtasksForCurrentTask.push({ name: subtaskName, completed: false });
+    }
+  }
+
+  // Add the subtasks array for the current task to the main subtasks array
+  this.subtasks.push(...subtasksForCurrentTask);
+
   // Add the new task to the "tasks" array.
   this.pushToArray(
     newId,
-    data.assignedContacts,
+    selectedContacts,
     data.title,
     data.description,
     data.date,
     this.selectedPriority,
     data.category,
-    this.subtasks,
-    this.subtasksDone,
+    subtasksForCurrentTask, // Use the new array for subtasks
     this.assignStatus
   );
+
+  // Add empty arrays for subtasksDone for the current task
+  this.tasks[this.tasks.length - 1].subtasksDone = [];
+
+  console.log('New task added successfully with subtasks.', this.subtasks);
 }
+
+
 
 /**
  * Asynchronous function to edit an existing task with the provided data.
@@ -576,70 +594,6 @@ combineAndSetSubtasks(taskIndex) {
   }, 1000);
 }
 
-//   /**
-//    * Asynchronous function to add a new task to the "task" array
-//    */
-// async editTask(data) {
-//   await this.getIndexOfSelectedTask();
-//   // Find the index in the main tasks array
-//   let taskIndex = this.selectedTaskIndex;
-
-//   if (taskIndex >= 0 && taskIndex < this.tasks.length) {
-
-// // Update the task properties
-// this.tasks[taskIndex].title = data.title;
-// this.tasks[taskIndex].description = data.description;
-// this.tasks[taskIndex].date = data.date;
-// console.log('this.date', data.date);
-// this.tasks[taskIndex].prio = this.selectedEditPriority;
-// console.log('this.selectedPriority', this.selectedEditPriority);
-// this.tasks[taskIndex].category = data.category;
-// console.log('this.category', data.category);
-
-// debugger;
-// // Kombinieren Sie this.subtasks und this.newSubtasks zu einem neuen Array.
-// const combinedSubtasks = [...this.tasks[taskIndex].subtasks, ...this.newSubtasks];
-
-// // Aktualisieren Sie this.tasks[taskIndex].subtasks mit der Kombination.
-// this.tasks[taskIndex].subtasks = combinedSubtasks;
-
-
-
-// // Angenommen, this.tasks[taskIndex].assigned ist ein Array von bereits zugewiesenen Kontakten und data.assignedContacts ist ein Array von neuen Zuweisungen.
-
-// // Kombinieren Sie die vorhandenen Zuweisungen und die neuen Zuweisungen, unter Berücksichtigung der ID.
-// let combinedAssigned = [...this.tasks[taskIndex].assigned, ...data.assignedContacts];
-
-// // Entfernen Sie doppelte Kontakte anhand ihrer ID.
-// let uniqueCombinedAssigned = combinedAssigned.filter((contact, index, self) =>
-//   index === self.findIndex(c => c.id === contact.id)
-// );
-
-// // Aktualisieren Sie this.tasks[taskIndex].assigned mit den eindeutigen Zuweisungen.
-// this.tasks[taskIndex].assigned = uniqueCombinedAssigned;
-
-//     this.safeTasks();
-
-//     console.log('Edited task', data.title, data.description, data.dueDate, data.prio, data.assignedContacts, data.category, data.subtask);
-//   } else {
-//     console.log('Invalid task index.');
-//   }
-
-//   await this.findNearestDate(this.urgent);
-
-
-//   this.subtasks = [];
-//   this.clearAssignedData();
-//   this.ngOnInit();
-//   data.assignedContacts = [];
-//   await this.resetEditTaskForm();
-
-//   setTimeout(() => {
-//     // todo confirmationMessage(); hideSlider();
-//   }, 1000);
-//   // todo confirmationMessage(); hideSlider();
-// }
-
   removeDuplicates(array) {
     return array.filter((item, index, self) => {
       return self.findIndex((t) => t.id === item.id) === index;
@@ -658,19 +612,24 @@ combineAndSetSubtasks(taskIndex) {
   addSubtask() {
     let subtaskControl = this.addTaskForm.get('subtask');
     let subtaskValue = subtaskControl.value;
-
+  
     if (subtaskValue) {
-      this.subtasks.push(subtaskValue);
+      // Hinzufügen eines Subtasks als Objekt
+      this.subtasks.push({ name: subtaskValue, completed: false });
+  
       subtaskControl.setValue(''); // Das Eingabefeld leeren
+      console.log('New task added successfully with subtasks.', this.subtasks);
     }
   }
 
   addSubtaskFromEdit() {
     let subtaskControl = this.editTaskForm.get('subtask');
     let subtaskValue = subtaskControl.value;
-
+  
     if (subtaskValue) {
-      this.newSubtasks.push(subtaskValue);
+      // Hinzufügen eines Subtasks als Objekt
+      this.subtasks.push({ name: subtaskValue, completed: false });
+  
       subtaskControl.setValue(''); // Das Eingabefeld leeren
     }
   }
@@ -706,8 +665,7 @@ combineAndSetSubtasks(taskIndex) {
       console.error('Invalid task index');
     }
   }
-  //this.pushToArray(newId, data.assignedContacts, data.title, data.description, data.date, this.selectedPriority, data.category, this.subtasks, this.assignStatus);
-  
+
   pushToArray(
     id,
     assigned,
@@ -717,7 +675,6 @@ combineAndSetSubtasks(taskIndex) {
     prio,
     category,
     subtasks,
-    subtasksDone,
     status,
   ) {
     this.tasks.push({
@@ -729,7 +686,6 @@ combineAndSetSubtasks(taskIndex) {
       prio: this.selectedPriority,
       category: category,
       subtasks: this.subtasks,
-      subtasksDone: this.subtasksDone,
       status: this.assignStatus,
     });
   }
@@ -739,35 +695,45 @@ combineAndSetSubtasks(taskIndex) {
   }
 
 /**
- * Asynchronously updates the status of a subtask by moving it between 'subtasks' and 'subtasksDone' arrays.
+ * Asynchronously sets the 'completed' status of a subtask to true.
  *
  * @param {number} subtaskIndex - The index of the subtask to be updated.
- * @param {boolean} moveToDone - A boolean flag indicating whether to move the subtask to the 'subtasksDone' array (true) or 'subtasks' array (false).
- * @returns {Promise<void>} A promise that resolves after the task has been updated.
+ * @returns {Promise<void>} A promise that resolves after the subtask has been updated.
  * @throws {Error} Throws an error if the subtaskIndex is invalid or if no task is selected.
  *
  * @example
- * // Move a subtask from 'subtasks' to 'subtasksDone'
- * await updateSubtaskStatus(0, true);
- *
- * // Move a subtask from 'subtasksDone' to 'subtasks'
- * await updateSubtaskStatus(1, false);
+ * // Set the 'completed' status of a subtask to true
+ * await setSubtaskCompleted(0);
  */
-async updateSubtaskStatus(subtaskIndex: number, moveToDone: boolean) {
+async setSubtaskCompleted(subtaskIndex: number, isChecked: boolean): Promise<void> {
   await this.getIndexOfSelectedTask();
 
   if (this.selectedTask && subtaskIndex >= 0) {
-    let sourceArray = moveToDone ? this.selectedTask.subtasks : this.selectedTask.subtasksDone;
-    let destinationArray = moveToDone ? this.selectedTask.subtasksDone : this.selectedTask.subtasks;
+    let subtasksArray = this.selectedTask.subtasks;
+    let completedSubtask = subtasksArray[subtaskIndex];
 
-    if (subtaskIndex < sourceArray?.length) {
-      this.moveSubtask(sourceArray, destinationArray, subtaskIndex);
+    if (subtaskIndex < subtasksArray?.length) {
+      // Wenn isChecked true ist, setze subtasks.completed auf true
+      // Wenn isChecked false ist, entferne den Subtask aus subtasksDone
+      if (isChecked) {
+        completedSubtask.completed = true;
+        this.selectedTask.subtasksDone ??= [];
+        this.selectedTask.subtasksDone.push({ ...completedSubtask });
+      } else {
+        // Wenn isChecked false ist, entferne den Subtask aus subtasksDone
+        let subtasksDoneIndex = this.selectedTask.subtasksDone.findIndex(
+          (subtask) => subtask.name === completedSubtask.name
+        );
+        if (subtasksDoneIndex !== -1) {
+          this.selectedTask.subtasksDone.splice(subtasksDoneIndex, 1);
+        }
+      }
+
+      // Nach den Änderungen die Aufgaben speichern
+      await this.safeTasks();
     } else {
-      console.error('Invalid subtaskIndex or selected task');
+      console.error('Ungültiger subtaskIndex oder ausgewählte Aufgabe');
     }
-
-    // After the changes are made, save the tasks
-    await this.safeTasks();
   }
 }
 

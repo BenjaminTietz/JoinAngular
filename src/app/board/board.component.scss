@@ -275,13 +275,35 @@
   }
   .board-top {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     width: 100vw;
     max-width: 100%;
     height: 51px;
-    padding: 72px 0px 16px 0px;
+    padding: 72px 0px 0px 0px;
     gap: 35px;
+
+    .search {
+      position: relative;
+      width: 312px;
+      height: 48px;
+      border-style: none;
+
+      input {
+        cursor: pointer;
+        width: 312px;
+        height: 48px;
+        border-radius: 10px;
+        border-style: solid;
+        border-width: 1px;
+        border-color: $boarder-color-board;
+      }
+      img {
+        position: absolute;
+        top: 10px;
+        right: 0;
+      }
+    }
 
     input {
       width: 312px;
@@ -419,11 +441,12 @@
       }
 
       .single-task-top {
-        display: none;
+        display: flex;
         justify-content: space-between;
         width: 100%;
 
         .btn-container {
+          display: none;
           position: absolute;
           right: 24px;
           .btn-up {
@@ -465,33 +488,40 @@
 
         .task-name {
           width: 220px;
-          height: 16px;
+          height: 38px;
           @include OpenSans(700, 16px, 19.2px, $light-blue);
+          display: block;
+          text-overflow: ellipsis;
+          word-wrap: break-word;
+          overflow: hidden;
         }
 
         .task-description {
-          margin-top: 16px;
-          margin-bottom: 16px;
           width: 220px;
-          height: 12px;
+          height: 38px;
           @include OpenSans(400, 16px, 19.2px, $board-text);
+          display: block;
+          text-overflow: ellipsis;
+          word-wrap: break-word;
+          overflow: hidden;
         }
       }
 
       .progressbar {
         display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        align-items: flex-start;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
         width: 100%;
         position: absolute;
-        top: 100px;
+        top: 164px;
         progress {
-          width: 120px;
-          height: 32px;
+          width: 128px;
+          height: 8px;
+          margin-right: 8px;
         }
         span {
-          @include OpenSans(400, 16px, 19.2px, $board-text);
+          @include Inter(400, 13px, 15.6px, $black);
         }
       }
 
@@ -533,7 +563,7 @@
       justify-content: flex-start;
       align-items: flex-start;
       width: 90%;
-      height: 100vh;
+      height: 45%;
       padding: 0px 0px 64px;
       gap: 24px;
 
@@ -631,6 +661,10 @@
             width: 100%;
 
             .btn-container {
+              display: flex;
+              flex-direction: column;
+              justify-content: center;
+              align-items: center;
               .btn-up {
                 margin-bottom: 16px;
               }

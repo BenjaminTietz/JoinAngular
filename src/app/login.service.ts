@@ -29,6 +29,7 @@ export class LoginService {
       Validators.required,
       Validators.minLength(4),
     ]),
+    acceptPrivacyPolicy: new FormControl('', [Validators.requiredTrue]),
     confirmPassword: new FormControl('', [
       Validators.required,
       Validators.minLength(4),

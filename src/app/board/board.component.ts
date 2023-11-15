@@ -85,6 +85,10 @@ export class BoardComponent {
     }
   }
 
+// ...
+
+
+// ...
   async openTask(i: number, subArrayName: string) {
     if (
       ['toDo', 'inProgress', 'awaitFeedback', 'done'].includes(subArrayName)

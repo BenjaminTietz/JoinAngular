@@ -14,7 +14,19 @@
   max-width: 100%;
   background-color: $light-blue;
 }
-
+.input-wrapper {
+  position: relative;
+}
+.inputfield-icon {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  width: 24px;
+  height: 24px;
+  padding: 0 10px;
+}
 .popup-wrapper {
   position: absolute;
   display: none;
@@ -98,8 +110,8 @@
     position: relative;
     img {
       position: absolute;
-      left: 65px;
-      top: 50px;
+      left: -60px;
+      top: 0px;
       cursor: pointer;
     }
   }
@@ -130,17 +142,7 @@
 
         @include OpenSans(400, 16px, 19.2px, $red);
       }
-      &.ng-touched,
-      &.ng-dirty {
-        &.ng-invalid {
-          border: 1px solid $red;
-          border-radius: 10px;
-        }
-        &.ng-valid {
-          border: 1px solid $green;
-          border-radius: 10px;
-        }
-      }
+
     }
   }
 
@@ -164,6 +166,31 @@
       &:disabled {
         background-color: $light-gray;
         cursor: not-allowed;
+      }
+    }
+  }
+  .accept-privacy-policy {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 16px;
+    @include OpenSans(400, 16px, 19.2px, $menu-color);
+    input {
+      width: 24px;
+      height: 24px;
+      border-radius: 3px;
+      margin-right: 10px;
+      margin-right: 4px;
+    }
+    a {
+      margin-left: 4px;
+      cursor: pointer;
+
+      &:hover {
+        text-decoration: underline;
+        text-decoration-color: $light-blue;
+        text-decoration-thickness: 2px;
+        text-underline-offset: 6px;
       }
     }
   }

@@ -91,25 +91,8 @@
         <ul>
           <li *ngFor="let subtask of TaskArrayService.selectedTask.subtasks; let i = index">
             <span>
-              {{ subtask }}
-              <input type="checkbox" name="subtask{{i}}" (change)="this.TaskArrayService.updateSubtaskStatus(i, true)" /> move to done
-            </span>
-          </li>
-        </ul>
-      </div>
-    </div>
-    
-    <div *ngIf="TaskArrayService.selectedTask && TaskArrayService.selectedTask.subtasksDone && TaskArrayService.selectedTask.subtasksDone.length > 0">
-      <div class="floating-task-subtask">
-        <h2>Subtasks done:</h2>
-        <ul>
-          <li *ngFor="let subtask of TaskArrayService.selectedTask.subtasksDone; let i = index">
-            <span>
-              {{ subtask }}
-              <input type="checkbox" name="subtask{{i}}" 
-                (change)="this.TaskArrayService.updateSubtaskStatus(i, false)" />move to todo
-                <input type="checkbox" name="subtask{{i}}" 
-                (change)="this.TaskArrayService.deleteSubtaskDone(i)" />delete
+              {{ subtask.name }}
+              <input type="checkbox" [checked]="subtask.completed" (change)="this.TaskArrayService.setSubtaskCompleted(i, $any($event.target)?.checked)" /> Done
             </span>
           </li>
         </ul>
@@ -365,7 +348,7 @@
         "
       >
         <div class="subtask-container">
-          <span>{{ subtask }} </span>
+          <span>{{ subtask.name }} </span>
           <div class="subtask-btn-container">
             <img
               src="assets/img/board/delete.png"
@@ -469,7 +452,6 @@ class="edittask-wrapper"
     </ng-container>
       </div>
     </div>
-    <!-- //TODO prio in edit task -->
     <div class="edittask-left-prio">
       <div *ngIf="this.TaskArrayService.selectedTaskIndex >= 0 && this.TaskArrayService.tasks[this.TaskArrayService.selectedTaskIndex]">
         <div class="edittask-left-prio">
@@ -484,7 +466,6 @@ class="edittask-wrapper"
               }}.svg"
             />
           </div>
-
         </div>
       </div>
       <h2>change Priority <span>(optional)</span></h2>
@@ -658,16 +639,6 @@ class="edittask-wrapper"
           (click)="this.TaskArrayService.addSubtaskFromEdit()"
         />
       </div>
-
-      <!-- TODO <div
-        *ngIf="
-          this.TaskArrayService.tasks &&
-          this.TaskArrayService.tasks[
-            this.TaskArrayService.selectedTaskIndex
-          ]
-        "
-      > -->
-
         <div
           *ngFor="
             let subtask of this.TaskArrayService.newSubtasks;
@@ -716,6 +687,7 @@ class="edittask-wrapper"
 <div class="board-top">
 <div class="search">
   <input type="text" placeholder="Find Task" (input)="onSearch($event)" />
+  <img src="assets/img/board/search_field.svg" />
 </div>
 <button (click)="showAddtaskFloatingContainer('toDo')" class="addtask-btn">
   Add task <img src="assets/img/board/addtask_btn.svg" />
@@ -788,10 +760,9 @@ class="edittask-wrapper"
           *ngIf="task.subtasks && task.subtasks.length > 0"
           class="progressbar"
         >
-          <progress id="file" [value]="task.subtasksDone.length" [max]="task.subtasks.length + task.subtasksDone.length"></progress>
-          <span>{{ task.subtasks.length }} subtask todo</span>
-          <span>{{ task.subtasksDone.length }} subtask done</span>
-        </div>
+        <progress id="file" [value]="this.TaskArrayService.tasks[i].subtasksDone.length" [max]="this.TaskArrayService.tasks[i].subtasks.length"></progress>
+        <span>{{ this.TaskArrayService.tasks[i].subtasksDone.length }} / {{ this.TaskArrayService.tasks[i].subtasks.length }} subtasks </span>
+        </div> 
         <div class="single-task-bottom">
           <div class="assigned-contacts">
             <div *ngFor="let assignedContact of task.assigned; let j = index" class="assigned-box">
@@ -848,9 +819,8 @@ class="edittask-wrapper"
           *ngIf="task.subtasks && task.subtasks.length > 0"
           class="progressbar"
         >
-          <progress id="file" [value]="task.subtasksDone.length" [max]="task.subtasks.length + task.subtasksDone.length"></progress>
-          <span>{{ task.subtasks.length }} subtask todo</span>
-          <span>{{ task.subtasksDone.length }} subtask done</span>
+        <progress id="file" [value]="this.TaskArrayService.tasks[i].subtasksDone.length" [max]="this.TaskArrayService.tasks[i].subtasks.length"></progress>
+        <span>{{ this.TaskArrayService.tasks[i].subtasksDone.length }} / {{ this.TaskArrayService.tasks[i].subtasks.length }} subtasks </span>
         </div>
         <div class="single-task-bottom">
           <div class="assigned-contacts">
@@ -858,7 +828,6 @@ class="edittask-wrapper"
               <div [style.background-color]="assignedContact.color" class="contacts-usercircle">
                 {{ assignedContact.initials }}
               </div>
-
             </div>
           </div>
           <img class="prio" src="assets/img/board/prio_{{ task.prio }}.svg" />
@@ -872,7 +841,7 @@ class="edittask-wrapper"
       "
       class="no-task-msg"
     >
-      <h2>No tasks in this category</h2>
+      <h2>No tasks To do</h2>
     </div>
   </div>
 </div>
@@ -957,9 +926,8 @@ class="edittask-wrapper"
           *ngIf="task.subtasks && task.subtasks.length > 0"
           class="progressbar"
         >
-          <progress id="file" [value]="task.subtasksDone.length" [max]="task.subtasks.length + task.subtasksDone.length"></progress>
-          <span>{{ task.subtasks.length }} subtask todo</span>
-          <span>{{ task.subtasksDone.length }} subtask done</span>
+        <progress id="file" [value]="this.TaskArrayService.tasks[i].subtasksDone.length" [max]="this.TaskArrayService.tasks[i].subtasks.length"></progress>
+        <span>{{ this.TaskArrayService.tasks[i].subtasksDone.length }} / {{ this.TaskArrayService.tasks[i].subtasks.length }} subtasks </span>
         </div>
         <div class="single-task-bottom">
           <div class="assigned-contacts">
@@ -967,7 +935,6 @@ class="edittask-wrapper"
               <div [style.background-color]="assignedContact.color" class="contacts-usercircle">
                 {{ assignedContact.initials }}
               </div>
-
             </div>
           </div>
           <img class="prio" src="assets/img/board/prio_{{ task.prio }}.svg" />
@@ -1030,9 +997,8 @@ class="edittask-wrapper"
           *ngIf="task.subtasks && task.subtasks.length > 0"
           class="progressbar"
         >
-          <progress id="file" [value]="task.subtasksDone.length" [max]="task.subtasks.length + task.subtasksDone.length"></progress>
-          <span>{{ task.subtasks.length }} subtask todo</span>
-          <span>{{ task.subtasksDone.length }} subtask done</span>
+        <progress id="file" [value]="this.TaskArrayService.tasks[i].subtasksDone.length" [max]="this.TaskArrayService.tasks[i].subtasks.length"></progress>
+        <span>{{ this.TaskArrayService.tasks[i].subtasksDone.length }} / {{ this.TaskArrayService.tasks[i].subtasks.length }} subtasks </span>
         </div>
         <div class="single-task-bottom">
           <div class="assigned-contacts">
@@ -1053,7 +1019,7 @@ class="edittask-wrapper"
       "
       class="no-task-msg"
     >
-      <h2>No tasks in this category</h2>
+      <h2>No tasks In progress</h2>
     </div>
   </div>
 </div>
@@ -1139,9 +1105,8 @@ class="edittask-wrapper"
           *ngIf="task.subtasks && task.subtasks.length > 0"
           class="progressbar"
         >
-          <progress id="file" [value]="task.subtasksDone.length" [max]="task.subtasks.length + task.subtasksDone.length"></progress>
-          <span>{{ task.subtasks.length }} subtask todo</span>
-          <span>{{ task.subtasksDone.length }} subtask done</span>
+        <progress id="file" [value]="this.TaskArrayService.tasks[i].subtasksDone.length" [max]="this.TaskArrayService.tasks[i].subtasks.length"></progress>
+        <span>{{ this.TaskArrayService.tasks[i].subtasksDone.length }} / {{ this.TaskArrayService.tasks[i].subtasks.length }} subtasks </span>
         </div>
         <div class="single-task-bottom">
           <div class="assigned-contacts">
@@ -1149,7 +1114,6 @@ class="edittask-wrapper"
               <div [style.background-color]="assignedContact.color" class="contacts-usercircle">
                 {{ assignedContact.initials }}
               </div>
-
             </div>
           </div>
           <img class="prio" src="assets/img/board/prio_{{ task.prio }}.svg" />
@@ -1215,9 +1179,8 @@ class="edittask-wrapper"
           *ngIf="task.subtasks && task.subtasks.length > 0"
           class="progressbar"
         >
-          <progress id="file" [value]="task.subtasksDone.length"  [max]="task.subtasks.length + task.subtasksDone.length"></progress>
-          <span>{{ task.subtasks.length }} subtask todo</span>
-          <span>{{ task.subtasksDone.length }} subtask done</span>
+        <progress id="file" [value]="this.TaskArrayService.tasks[i].subtasksDone.length" [max]="this.TaskArrayService.tasks[i].subtasks.length"></progress>
+        <span>{{ this.TaskArrayService.tasks[i].subtasksDone.length }} / {{ this.TaskArrayService.tasks[i].subtasks.length }} subtasks </span>
         </div>
         <div class="single-task-bottom">
           <div class="assigned-contacts">
@@ -1225,7 +1188,6 @@ class="edittask-wrapper"
               <div [style.background-color]="assignedContact.color" class="contacts-usercircle">
                 {{ assignedContact.initials }}
               </div>
-
             </div>
           </div>
           <img class="prio" src="assets/img/board/prio_{{ task.prio }}.svg" />
@@ -1239,7 +1201,7 @@ class="edittask-wrapper"
       "
       class="no-task-msg"
     >
-      <h2>No tasks in this category</h2>
+      <h2>No tasks Await feedback</h2>
     </div>
   </div>
 </div>
@@ -1305,9 +1267,8 @@ class="edittask-wrapper"
           *ngIf="task.subtasks && task.subtasks.length > 0"
           class="progressbar"
         >
-          <progress id="file" [value]="task.subtasksDone.length" [max]="task.subtasks.length + task.subtasksDone.length"></progress>
-          <span>{{ task.subtasks.length }} subtask todo</span>
-          <span>{{ task.subtasksDone.length }} subtask done</span>
+        <progress id="file" [value]="this.TaskArrayService.tasks[i].subtasksDone.length" [max]="this.TaskArrayService.tasks[i].subtasks.length"></progress>
+        <span>{{ this.TaskArrayService.tasks[i].subtasksDone.length }} / {{ this.TaskArrayService.tasks[i].subtasks.length }} subtasks </span>
         </div>
         <div class="single-task-bottom">
           <div class="assigned-contacts">
@@ -1315,7 +1276,6 @@ class="edittask-wrapper"
               <div [style.background-color]="assignedContact.color" class="contacts-usercircle">
                 {{ assignedContact.initials }}
               </div>
-
             </div>
           </div>
           <img class="prio" src="assets/img/board/prio_{{ task.prio }}.svg" />
@@ -1365,9 +1325,8 @@ class="edittask-wrapper"
           *ngIf="task.subtasks && task.subtasks.length > 0"
           class="progressbar"
         >
-          <progress id="file" [value]="task.subtasksDone.length" [max]="task.subtasks.length + task.subtasksDone.length"></progress>
-          <span>{{ task.subtasks.length }} subtask todo</span>
-          <span>{{ task.subtasksDone.length }} subtask done</span>
+        <progress id="file" [value]="this.TaskArrayService.tasks[i].subtasksDone.length" [max]="this.TaskArrayService.tasks[i].subtasks.length"></progress>
+        <span>{{ this.TaskArrayService.tasks[i].subtasksDone.length }} / {{ this.TaskArrayService.tasks[i].subtasks.length }} subtasks </span>
         </div>
         <div class="single-task-bottom">
           <div class="assigned-contacts">
@@ -1375,7 +1334,6 @@ class="edittask-wrapper"
               <div [style.background-color]="assignedContact.color" class="contacts-usercircle">
                 {{ assignedContact.initials }}
               </div>
-
             </div>
           </div>
           <img class="prio" src="assets/img/board/prio_{{ task.prio }}.svg" />
@@ -1389,7 +1347,7 @@ class="edittask-wrapper"
       "
       class="no-task-msg"
     >
-      <h2>No tasks in this category</h2>
+      <h2>No tasks Done</h2>
     </div>
   </div>
 </div>

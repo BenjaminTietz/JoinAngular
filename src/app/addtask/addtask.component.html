@@ -6,7 +6,7 @@
       <span>Task succesfully created</span>
     </div>
   </div>
-    <!--Hidden Add Contact Container-->
+    <!--Hidden Add Task Container-->
   <div class="addtask-left">
     <div class="headline">
       <h1>Add Task</h1>
@@ -223,7 +223,7 @@
           *ngFor="let subtask of this.TaskArraysService.subtasks; let i = index"
         >
           <div class="subtask-container">
-            <span>{{ subtask }} </span>
+            <span>{{ subtask.name }} </span>
             <div class="subtask-btn-container">
               <img
                 src="assets/img/board/delete.png"

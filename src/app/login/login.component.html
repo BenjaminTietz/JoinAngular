@@ -292,32 +292,18 @@
       [formGroup]="this.LoginService.logInForm"
       (ngSubmit)="this.LoginService.logIn(this.LoginService.logInForm.value)"
     >
-      <div>
+      <div class="inputwrapper">
         <input placeholder="Email" type="text" formControlName="email" />
+          <img class="input-icon" src="assets/img/login/inputfield_email.svg" alt="icon" />
       </div>
-      <ng-container
-        *ngIf="
-          this.LoginService.logInForm.controls['email'].dirty ||
-          this.LoginService.logInForm.controls['email'].touched
-        "
-      >
-        <p class="error-message" *ngIf="this.LoginService.logInForm.controls['email'].errors">Enter correct UserEmailAdress</p>
-      </ng-container>
-      <div>
+      <div class="inputwrapper">
         <input
           placeholder="Password"
           type="password"
           formControlName="password"
         />
+        <img class="input-icon" src="assets/img/login/inputfield_password.svg" alt="icon" />
       </div>
-      <ng-container
-        *ngIf="
-          this.LoginService.logInForm.controls['password'].dirty ||
-          this.LoginService.logInForm.controls['password'].touched
-        "
-      >
-        <p class="error-message" *ngIf="this.LoginService.logInForm.controls['password'].errors">Enter correct Password</p>
-      </ng-container>
       <div class="login-checkbox">
         <input type="checkbox" id="remember-me" />
         <span>Remember me</span>
