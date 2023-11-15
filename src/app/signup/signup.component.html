@@ -337,12 +337,17 @@
         <p
           class="error-message"
           *ngIf="
-            this.LoginService.signUpForm.controls['confirmPassword'].errors
+            (
+              this.LoginService.signUpForm.valid &&
+              (this.LoginService.signUpForm.dirty ||
+                this.LoginService.signUpForm.touched || this.LoginService.signUpForm.controls['password'].value !==
+            this.LoginService.signUpForm.controls['confirmPassword'].value)
+            )
           "
         >
           Confirmed password doesn't match password!
         </p>
-      </ng-container>
+      </ng-container> 
       <div class="accept-privacy-policy">
         <input type="checkbox" formControlName="acceptPrivacyPolicy" />I accept the  <a (click)="showPrivacyPolicy()" > Privacy Policy</a>
       </div>
@@ -352,7 +357,8 @@
             !(
               this.LoginService.signUpForm.valid &&
               (this.LoginService.signUpForm.dirty ||
-                this.LoginService.signUpForm.touched)
+                this.LoginService.signUpForm.touched || this.LoginService.signUpForm.controls['password'].value !==
+            this.LoginService.signUpForm.controls['confirmPassword'].value)
             )
           "
           type="submit"

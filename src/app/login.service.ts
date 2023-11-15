@@ -29,7 +29,7 @@ export class LoginService {
       Validators.required,
       Validators.minLength(4),
     ]),
-    acceptPrivacyPolicy: new FormControl('', [Validators.requiredTrue]),
+    acceptPrivacyPolicy: new FormControl('', [Validators.requiredTrue, Validators.minLength(4)]),
     confirmPassword: new FormControl('', [
       Validators.required,
       Validators.minLength(4),
@@ -39,6 +39,8 @@ export class LoginService {
   public loginFormFB: FormGroup;
   public signUpFormFB: FormGroup;
 
+  loginAttempts: number = 0;
+  showFailedLogin: boolean = false; 
   userGreeting;
   currentUser;
   currentUserEmail;
@@ -50,15 +52,15 @@ export class LoginService {
   ) {
     this.loginFormFB = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      password: ['', [Validators.required, Validators.minLength(4)]],
     });
 
 
     this.signUpFormFB = this.fb.group({
       name: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      confirmPassword: ['', [Validators.required, Validators.minLength(6)]],
+      password: ['', [Validators.required, Validators.minLength(4)]],
+      confirmPassword: ['', [Validators.required, Validators.minLength(4)]],
     });
 
   }
@@ -123,13 +125,14 @@ export class LoginService {
  */
 async logIn(data) {
   // Find the user with the provided email and password
-  let user = this.ArraysService.users.find((u) => u.email == data.email && u.password == data.password);
+  let user = this.ArraysService.users.find((u) => u.email === data.email && u.password === data.password);
 
   if (user) {
+    // Save user data to local storage
     await this.RemotestorageService.setItem('user', JSON.stringify(user));
+    
+    // Set current user's properties
     this.currentUserEmail = user.email;
-
-    // Set the current user's properties
     this.currentUser = {
       name: user.name,
       initials: this.extractInitialsFromName(user.name),
@@ -138,14 +141,32 @@ async logIn(data) {
 
     // Save the current user to remote storage
     await this.safeUser();
+
+    // Navigate to the summary route
     this.router.navigate(['/summary']);
+
+    // Clear email and password fields
     data.email = '';
     data.password = '';
   } else {
-    console.log('User not found');
-    // TODO: Implement the failedLogIn(email, password) function.
+    // Handle failed login
+    await this.failedLogin();
   }
 }
+
+
+/**
+ * Handles a failed login attempt.
+ */
+failedLogin() {
+  this.loginAttempts++;
+  
+  // Display "User not found" alert only after a certain number of failed attempts
+  if (this.loginAttempts >= 3) {
+    this.showFailedLogin = true;
+  }
+}
+
 
 /**
 * Extracts initials from a user's name.

@@ -154,8 +154,13 @@
         input {
             width: 90%;
             @include OpenSans(400, 19px, 16px, $black);
-
         }
+        .error-message {
+            @include OpenSans(400, 16px, 19.2px, $red);
+            text-align: center;
+            margin-block-start: unset !important;
+            margin-block-end: unset !important;
+          }
     }
     
     

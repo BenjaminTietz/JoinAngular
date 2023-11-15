@@ -107,9 +107,6 @@ async signUp(data) {
 
       console.log(this.ArraysService.users);
   } else {
-      // Display an alert if the password and confirm password do not match
-      alert("Password and confirm password don't match!");
-
       // Clear the input fields for password and confirm password
       data.password = '';
       data.confirmPassword = '';

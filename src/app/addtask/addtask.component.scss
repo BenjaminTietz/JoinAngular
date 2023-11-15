@@ -169,6 +169,9 @@
         box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.16);
         cursor: pointer;
 
+        span {
+          @include OpenSans(400, 19px, 22.8px, $black);
+        }
         svg {
           fill: $urgent;
         }
@@ -195,6 +198,10 @@
         border-radius: 10px;
         box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.16);
         cursor: pointer;
+
+        span {
+          @include OpenSans(400, 19px, 22.8px, $black);
+        }
 
         svg {
           fill: $medium;
@@ -223,6 +230,10 @@
         box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.16);
         cursor: pointer;
 
+        span {
+          @include OpenSans(400, 19px, 22.8px, $black);
+        }
+        
         svg {
           fill: $low;
         }
@@ -309,7 +320,7 @@
         border: 0px 0px 1px 0px solid $input-boarder;
         background-color: $bg-color;
         span {
-          @include OpenSans(400, 19px, 22.8px, $menu-color);
+          @include OpenSans(400, 19px, 22.8px, $black);
         }
       }
       .arrow-container {
@@ -413,7 +424,7 @@
       border-right: none;
       border-bottom: 1px solid $input-boarder;
       background-color: $bg-color;
-      @include OpenSans(400, 19px, 22.8px, $menu-color);
+      @include OpenSans(400, 19px, 22.8px, $black);
     }
     .input-wrapper {
       width: 100vw;

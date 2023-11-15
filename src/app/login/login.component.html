@@ -302,7 +302,10 @@
           type="password"
           formControlName="password"
         />
-        <img class="input-icon" src="assets/img/login/inputfield_password.svg" alt="icon" />
+        <img class="input-icon" src="assets/img/login/inputfield_password.svg" alt="icon" />    
+        <ng-container *ngIf="this.LoginService.showFailedLogin === true">
+          <p class="error-message">Email and password dont match!</p>
+        </ng-container>
       </div>
       <div class="login-checkbox">
         <input type="checkbox" id="remember-me" />
@@ -310,13 +313,11 @@
       </div>
       <div class="btn-container">
         <button
-          [disabled]="
-            !(
-              this.LoginService.logInForm.valid &&
-              (this.LoginService.logInForm.dirty ||
-                this.LoginService.logInForm.touched)
-            )
-          "
+        [disabled]="!(
+          this.LoginService.logInForm.controls['email'].value &&
+          this.LoginService.logInForm.controls['password'].value &&
+          (this.LoginService.logInForm.dirty || this.LoginService.logInForm.touched)
+        )"
           type="submit"
           class="login-btn"
         >
