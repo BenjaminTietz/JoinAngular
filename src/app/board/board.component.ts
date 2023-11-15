@@ -52,40 +52,80 @@ export class BoardComponent {
     await this.TaskArrayService.mapUrgentTasks();
   }
 
-  onSearch(event: any) {
-    const searchTerm = event.target.value;
-    console.log('searchTerm', searchTerm);
+/**
+ * Handles the search functionality based on the provided event.
+ * @param {any} event - The event object containing information about the search.
+ */
+onSearch(event: any) {
+  /**
+   * The search term entered by the user.
+   * @type {string}
+   */
+  const searchTerm = event.target.value.toLowerCase(); // Convert to lowercase for case-insensitive search
 
-    if (searchTerm.trim() === '') {
-      this.searchFieldActive = false;
-      this.TaskArrayService.filteredTasks = this.TaskArrayService.tasks;
-    } else {
-      this.searchFieldActive = true;
-      this.TaskArrayService.filteredTasks = this.TaskArrayService.tasks.filter(
-        (task) => task.title.includes(searchTerm)
-      );
+  console.log('searchTerm', searchTerm);
 
-      // Filtered tasks by status
-      this.TaskArrayService.filteredToDo =
-        this.TaskArrayService.filteredTasks.filter(
-          (task) => task.status === 'toDo'
-        );
-      this.TaskArrayService.filteredInProgress =
-        this.TaskArrayService.filteredTasks.filter(
-          (task) => task.status === 'inProgress'
-        );
-      this.TaskArrayService.filteredAwaitFeedback =
-        this.TaskArrayService.filteredTasks.filter(
-          (task) => task.status === 'awaitFeedback'
-        );
-      this.TaskArrayService.filteredDone =
-        this.TaskArrayService.filteredTasks.filter(
-          (task) => task.status === 'done'
-        );
-    }
+  if (searchTerm.trim() === '') {
+    /**
+     * Indicates whether the search field is active.
+     * @type {boolean}
+     */
+    this.searchFieldActive = false;
+    /**
+     * The filtered tasks array when the search term is empty.
+     * @type {Array}
+     */
+    this.TaskArrayService.filteredTasks = this.TaskArrayService.tasks;
+  } else {
+    /**
+     * Indicates whether the search field is active.
+     * @type {boolean}
+     */
+    this.searchFieldActive = true;
+    /**
+     * The filtered tasks array based on the search term.
+     * @type {Array}
+     */
+    this.TaskArrayService.filteredTasks = this.TaskArrayService.tasks.filter(
+      (task) =>
+        task.title.toLowerCase().includes(searchTerm) ||
+        task.description.toLowerCase().includes(searchTerm)
+    );
+    // Filtered tasks by status
+    /**
+     * The filtered tasks in the 'toDo' status.
+     * @type {Array}
+     */
+    this.TaskArrayService.filteredToDo = this.TaskArrayService.filteredTasks.filter(
+      (task) => task.status === 'toDo'
+    );
+    /**
+     * The filtered tasks in the 'inProgress' status.
+     * @type {Array}
+     */
+    this.TaskArrayService.filteredInProgress = this.TaskArrayService.filteredTasks.filter(
+      (task) => task.status === 'inProgress'
+    );
+    /**
+     * The filtered tasks in the 'awaitFeedback' status.
+     * @type {Array}
+     */
+    this.TaskArrayService.filteredAwaitFeedback = this.TaskArrayService.filteredTasks.filter(
+      (task) => task.status === 'awaitFeedback'
+    );
+    /**
+     * The filtered tasks in the 'done' status.
+     * @type {Array}
+     */
+    this.TaskArrayService.filteredDone = this.TaskArrayService.filteredTasks.filter(
+      (task) => task.status === 'done'
+    );
   }
+}
 
-// ...
+  
+  
+  
 
 
 // ...
