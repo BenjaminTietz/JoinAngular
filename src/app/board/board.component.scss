@@ -154,41 +154,10 @@
         }
       }
       .floating-task-content {
-        .floating-task-title {
-          h1 {
-            margin-block-start: 0;
-            margin-block-end: 0;
-            @include OpenSans(700, 61px, 73.2px, $black);
-          }
-        }
-        .floating-task-description {
-          h2 {
-            @include OpenSans(400, 19px, 22.8px, $black);
-          }
-        }
-        .floating-task-date {
-          display: flex;
-          align-items: center;
-          h2 {
-            @include Inter(700, 21px, 25.2px, $menu-color);
-          }
-          span {
-            margin-left: 24px;
-            @include OpenSans(400, 19px, 22.8px, $menu-color);
-          }
-        }
-        .floating-task-prio {
-          display: flex;
-          align-items: center;
-          h2 {
-            @include Inter(700, 21px, 25.2px, $menu-color);
-          }
-          span {
-            margin-left: 24px;
-            @include OpenSans(400, 19px, 22.8px, $menu-color);
-          }
-        }
         .floating-task-assign-wrapper {
+          h2 {
+            @include Inter(700, 21px, 25.2px, $menu-color);
+          }
           .assigned-wrapper {
             display: flex;
             .assigned-box {
@@ -222,8 +191,55 @@
             }
           }
         }
+        .floating-task-title {
+          h1 {
+            margin-block-start: 0;
+            margin-block-end: 0;
+            @include OpenSans(700, 61px, 73.2px, $black);
+          }
+        }
+        .floating-task-description {
+          h2 {
+            @include OpenSans(400, 19px, 22.8px, $black);
+          }
+        }
+        .floating-task-date {
+          display: flex;
+          align-items: center;
+          h2 {
+            @include Inter(700, 21px, 25.2px, $menu-color);
+          }
+          span {
+            margin-left: 24px;
+            @include OpenSans(400, 19px, 22.8px, $black);
+          }
+        }
+        .floating-task-prio {
+          display: flex;
+          align-items: center;
+          h2 {
+            @include Inter(700, 21px, 25.2px, $menu-color);
+          }
+          span {
+            margin-left: 24px;
+            @include OpenSans(400, 19px, 22.8px, $black);
+          }
+        }
+        .floating-task-subtask {
+          h2 {
+            @include Inter(700, 21px, 25.2px, $menu-color);
+          }
+          ul {
+            @include OpenSans(400, 16px, 19.2px, $black);
+          }
+        }
       }
     }
+  }
+  .floating-task-bottom {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
   }
   .floating-task-btn {
     display: flex;

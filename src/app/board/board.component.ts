@@ -50,6 +50,7 @@ export class BoardComponent {
     await this.TaskArrayService.loadTasks();
     await this.TaskArrayService.mapTaskStatus();
     await this.TaskArrayService.mapUrgentTasks();
+    console.log('tasks', this.TaskArrayService.tasks);
   }
 
 /**

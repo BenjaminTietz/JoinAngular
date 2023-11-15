@@ -26,8 +26,8 @@ export class TaskArraysService {
 
 
   public addTaskForm: FormGroup = new FormGroup({
-    title: new FormControl('', [Validators.required]),
-    description: new FormControl('', []),
+    title: new FormControl('', [Validators.required, Validators.maxLength(30)]),
+    description: new FormControl('', [Validators.maxLength(120)]),
     date: new FormControl('', [Validators.required]),
     category: new FormControl('', [Validators.required]),
     subtask: new FormControl('', []),
@@ -35,8 +35,8 @@ export class TaskArraysService {
   });
 
   public editTaskForm: FormGroup = new FormGroup({
-    title: new FormControl('', [Validators.required]),
-    description: new FormControl('', []),
+    title: new FormControl('', [Validators.required, Validators.maxLength(30)]),
+    description: new FormControl('', [Validators.maxLength(120)]),
     date: new FormControl('', [Validators.required]),
     category: new FormControl('', [Validators.required]),
     subtask: new FormControl('', []),
@@ -53,8 +53,8 @@ export class TaskArraysService {
     private boardService: BoardService
   ) {
     this.addTaskFormFB = this.fb.group({
-      title: new FormControl('', [Validators.required]),
-      description: new FormControl('', []),
+      title: new FormControl('', [Validators.required, Validators.maxLength(30)]),
+      description: new FormControl('', [Validators.maxLength(120)]),
       date: new FormControl('', [Validators.required]),
       category: new FormControl('', [Validators.required]),
       subtask: new FormControl('', []),
@@ -64,8 +64,8 @@ export class TaskArraysService {
 
 
     this.editTaskFormFB = this.fb.group({
-      title: new FormControl('', [Validators.required]),
-      description: new FormControl('', [Validators.required]),
+      title: new FormControl('', [Validators.required, Validators.maxLength(30)]),
+      description: new FormControl('', [Validators.maxLength(120)]),
       date: new FormControl('', [Validators.required]),
       category: new FormControl('', [Validators.required]),
       subtask: new FormControl('', []),
@@ -695,32 +695,37 @@ combineAndSetSubtasks(taskIndex) {
   }
 
 /**
- * Asynchronously sets the 'completed' status of a subtask to true.
+ * Asynchronously sets the 'completed' status of a subtask and updates the tasks.
  *
  * @param {number} subtaskIndex - The index of the subtask to be updated.
- * @returns {Promise<void>} A promise that resolves after the subtask has been updated.
+ * @param {boolean} isChecked - The status indicating whether the subtask is completed.
+ * @returns {Promise<void>} A promise that resolves after the subtask has been updated and the task is saved.
  * @throws {Error} Throws an error if the subtaskIndex is invalid or if no task is selected.
  *
  * @example
  * // Set the 'completed' status of a subtask to true
- * await setSubtaskCompleted(0);
+ * await setSubtaskCompleted(0, true);
  */
 async setSubtaskCompleted(subtaskIndex: number, isChecked: boolean): Promise<void> {
   await this.getIndexOfSelectedTask();
 
   if (this.selectedTask && subtaskIndex >= 0) {
     let subtasksArray = this.selectedTask.subtasks;
-    let completedSubtask = subtasksArray[subtaskIndex];
 
     if (subtaskIndex < subtasksArray?.length) {
-      // Wenn isChecked true ist, setze subtasks.completed auf true
-      // Wenn isChecked false ist, entferne den Subtask aus subtasksDone
+      let completedSubtask = subtasksArray[subtaskIndex];
+
+      // Update subtask.completed based on isChecked
+      completedSubtask.completed = isChecked;
+
+      // Initialize subtasksDone array if not already present
+      this.selectedTask.subtasksDone ??= [];
+
       if (isChecked) {
-        completedSubtask.completed = true;
-        this.selectedTask.subtasksDone ??= [];
+        // If isChecked is true, add the completed subtask to subtasksDone
         this.selectedTask.subtasksDone.push({ ...completedSubtask });
       } else {
-        // Wenn isChecked false ist, entferne den Subtask aus subtasksDone
+        // If isChecked is false, remove the subtask from subtasksDone
         let subtasksDoneIndex = this.selectedTask.subtasksDone.findIndex(
           (subtask) => subtask.name === completedSubtask.name
         );
@@ -729,13 +734,31 @@ async setSubtaskCompleted(subtaskIndex: number, isChecked: boolean): Promise<voi
         }
       }
 
-      // Nach den Änderungen die Aufgaben speichern
+      // Update the subtasks array in the selected task
+      this.selectedTask.subtasks = [...subtasksArray];
+
+      // Update the subtasksDone array in the selected task
+      this.selectedTask.subtasksDone = [...this.selectedTask.subtasksDone];
+
+      // Update the tasks array
+      this.tasks[this.selectedTaskIndex] = { ...this.selectedTask };
+
+      console.log('Updated subtasks:', this.selectedTask.subtasks);
+      console.log('Updated subtasksDone:', this.selectedTask.subtasksDone);
+      console.log('Updated tasks:', this.tasks);
+
+      // Save the updated tasks
       await this.safeTasks();
+
+      console.log('Tasks saved successfully.');
     } else {
-      console.error('Ungültiger subtaskIndex oder ausgewählte Aufgabe');
+      console.error('Invalid subtaskIndex or selected task');
     }
+  } else {
+    throw new Error('Invalid subtaskIndex or no task selected');
   }
 }
+
 
 
 /**

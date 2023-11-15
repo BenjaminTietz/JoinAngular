@@ -87,7 +87,7 @@
     </div>
     <div *ngIf="TaskArrayService.selectedTask && TaskArrayService.selectedTask.subtasks && TaskArrayService.selectedTask.subtasks.length > 0">
       <div class="floating-task-subtask">
-        <h2>Subtasks to do:</h2>
+        <h2>Subtasks</h2>
         <ul>
           <li *ngFor="let subtask of TaskArrayService.selectedTask.subtasks; let i = index">
             <span>
@@ -760,8 +760,8 @@ class="edittask-wrapper"
           *ngIf="task.subtasks && task.subtasks.length > 0"
           class="progressbar"
         >
-        <progress id="file" [value]="this.TaskArrayService.tasks[i].subtasksDone.length" [max]="this.TaskArrayService.tasks[i].subtasks.length"></progress>
-        <span>{{ this.TaskArrayService.tasks[i].subtasksDone.length }} / {{ this.TaskArrayService.tasks[i].subtasks.length }} subtasks </span>
+        <progress id="file" [value]="task.subtasksDone.length" [max]="task.subtasks.length"></progress>
+        <span>{{ task.subtasksDone.length }} / {{ task.subtasks.length }} subtasks </span>
         </div> 
         <div class="single-task-bottom">
           <div class="assigned-contacts">
@@ -819,8 +819,8 @@ class="edittask-wrapper"
           *ngIf="task.subtasks && task.subtasks.length > 0"
           class="progressbar"
         >
-        <progress id="file" [value]="this.TaskArrayService.tasks[i].subtasksDone.length" [max]="this.TaskArrayService.tasks[i].subtasks.length"></progress>
-        <span>{{ this.TaskArrayService.tasks[i].subtasksDone.length }} / {{ this.TaskArrayService.tasks[i].subtasks.length }} subtasks </span>
+        <progress id="file" [value]="task.subtasksDone.length" [max]="task.subtasks.length"></progress>
+        <span>{{ task.subtasksDone.length }} / {{ task.subtasks.length }} subtasks </span>
         </div>
         <div class="single-task-bottom">
           <div class="assigned-contacts">
@@ -926,8 +926,8 @@ class="edittask-wrapper"
           *ngIf="task.subtasks && task.subtasks.length > 0"
           class="progressbar"
         >
-        <progress id="file" [value]="this.TaskArrayService.tasks[i].subtasksDone.length" [max]="this.TaskArrayService.tasks[i].subtasks.length"></progress>
-        <span>{{ this.TaskArrayService.tasks[i].subtasksDone.length }} / {{ this.TaskArrayService.tasks[i].subtasks.length }} subtasks </span>
+        <progress id="file" [value]="task.subtasksDone.length" [max]="task.subtasks.length"></progress>
+        <span>{{ task.subtasksDone.length }} / {{ task.subtasks.length }} subtasks </span>
         </div>
         <div class="single-task-bottom">
           <div class="assigned-contacts">
@@ -997,8 +997,8 @@ class="edittask-wrapper"
           *ngIf="task.subtasks && task.subtasks.length > 0"
           class="progressbar"
         >
-        <progress id="file" [value]="this.TaskArrayService.tasks[i].subtasksDone.length" [max]="this.TaskArrayService.tasks[i].subtasks.length"></progress>
-        <span>{{ this.TaskArrayService.tasks[i].subtasksDone.length }} / {{ this.TaskArrayService.tasks[i].subtasks.length }} subtasks </span>
+        <progress id="file" [value]="task.subtasksDone.length" [max]="task.subtasks.length"></progress>
+        <span>{{ task.subtasksDone.length }} / {{ task.subtasks.length }} subtasks </span>
         </div>
         <div class="single-task-bottom">
           <div class="assigned-contacts">
@@ -1105,8 +1105,8 @@ class="edittask-wrapper"
           *ngIf="task.subtasks && task.subtasks.length > 0"
           class="progressbar"
         >
-        <progress id="file" [value]="this.TaskArrayService.tasks[i].subtasksDone.length" [max]="this.TaskArrayService.tasks[i].subtasks.length"></progress>
-        <span>{{ this.TaskArrayService.tasks[i].subtasksDone.length }} / {{ this.TaskArrayService.tasks[i].subtasks.length }} subtasks </span>
+        <progress id="file" [value]="task.subtasksDone.length" [max]="task.subtasks.length"></progress>
+        <span>{{ task.subtasksDone.length }} / {{ task.subtasks.length }} subtasks </span>
         </div>
         <div class="single-task-bottom">
           <div class="assigned-contacts">
@@ -1179,8 +1179,8 @@ class="edittask-wrapper"
           *ngIf="task.subtasks && task.subtasks.length > 0"
           class="progressbar"
         >
-        <progress id="file" [value]="this.TaskArrayService.tasks[i].subtasksDone.length" [max]="this.TaskArrayService.tasks[i].subtasks.length"></progress>
-        <span>{{ this.TaskArrayService.tasks[i].subtasksDone.length }} / {{ this.TaskArrayService.tasks[i].subtasks.length }} subtasks </span>
+        <progress id="file" [value]="task.subtasksDone.length" [max]="task.subtasks.length"></progress>
+        <span>{{ task.subtasksDone.length }} / {{ task.subtasks.length }} subtasks </span>
         </div>
         <div class="single-task-bottom">
           <div class="assigned-contacts">
@@ -1267,8 +1267,8 @@ class="edittask-wrapper"
           *ngIf="task.subtasks && task.subtasks.length > 0"
           class="progressbar"
         >
-        <progress id="file" [value]="this.TaskArrayService.tasks[i].subtasksDone.length" [max]="this.TaskArrayService.tasks[i].subtasks.length"></progress>
-        <span>{{ this.TaskArrayService.tasks[i].subtasksDone.length }} / {{ this.TaskArrayService.tasks[i].subtasks.length }} subtasks </span>
+        <progress id="file" [value]="task.subtasksDone.length" [max]="task.subtasks.length"></progress>
+        <span>{{ task.subtasksDone.length }} / {{ task.subtasks.length }} subtasks </span>
         </div>
         <div class="single-task-bottom">
           <div class="assigned-contacts">
@@ -1325,8 +1325,8 @@ class="edittask-wrapper"
           *ngIf="task.subtasks && task.subtasks.length > 0"
           class="progressbar"
         >
-        <progress id="file" [value]="this.TaskArrayService.tasks[i].subtasksDone.length" [max]="this.TaskArrayService.tasks[i].subtasks.length"></progress>
-        <span>{{ this.TaskArrayService.tasks[i].subtasksDone.length }} / {{ this.TaskArrayService.tasks[i].subtasks.length }} subtasks </span>
+        <progress id="file" [value]="task.subtasksDone.length" [max]="task.subtasks.length"></progress>
+        <span>{{ task.subtasksDone.length }} / {{ task.subtasks.length }} subtasks </span>
         </div>
         <div class="single-task-bottom">
           <div class="assigned-contacts">
