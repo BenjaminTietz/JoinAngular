@@ -497,8 +497,6 @@ addNewTask(newId, data) {
 
   // Add empty arrays for subtasksDone for the current task
   this.tasks[this.tasks.length - 1].subtasksDone = [];
-
-  console.log('New task added successfully with subtasks.', this.subtasks);
 }
 
 
@@ -522,9 +520,7 @@ async editTask(data) {
     this.safeTasks();
     this.postEditCleanup(data);
     this.newSubtasks = [];
-  } else {
-    console.log('Invalid task index.');
-  }
+  } 
 }
 
 /**
@@ -558,8 +554,6 @@ combineAndSetSubtasks(taskIndex) {
   let existingSubtasks = this.tasks[this.selectedTaskIndex].subtasks || [];
   let combinedSubtasks = [...existingSubtasks, ...this.newSubtasks];
   this.tasks[taskIndex].subtasks = combinedSubtasks;
-
-  console.log('Combined Subtasks:', combinedSubtasks);
 }
 
 /**
@@ -594,105 +588,185 @@ combineAndSetSubtasks(taskIndex) {
   }, 1000);
 }
 
+/**
+ * Removes duplicate items from an array based on the 'id' property.
+ *
+ * @param {Array} array - The input array containing items with 'id' property.
+ * @returns {Array} - The array with duplicates removed.
+ */
   removeDuplicates(array) {
-    return array.filter((item, index, self) => {
-      return self.findIndex((t) => t.id === item.id) === index;
-    });
-  }
+  return array.filter((item, index, self) => {
+    return self.findIndex((t) => t.id === item.id) === index;
+  });
+}
 
+/**
+ * Resets the form for adding tasks.
+ */
   resetAddTaskForm() {
-    this.addTaskForm.reset();
-  }
+  this.addTaskForm.reset();
+}
 
+/**
+ * Resets the form for editing tasks.
+ */
   resetEditTaskForm() {
-    this.editTaskForm.reset();
-  }
+  this.editTaskForm.reset();
+}
 
-
+/**
+ * Adds a subtask to the task using the 'addTaskForm'.
+ */
   addSubtask() {
-    let subtaskControl = this.addTaskForm.get('subtask');
-    let subtaskValue = subtaskControl.value;
-  
-    if (subtaskValue) {
-      // Hinzufügen eines Subtasks als Objekt
-      this.subtasks.push({ name: subtaskValue, completed: false });
-  
-      subtaskControl.setValue(''); // Das Eingabefeld leeren
-      console.log('New task added successfully with subtasks.', this.subtasks);
-    }
-  }
+  /**
+   * Represents the control for the 'subtask' form field.
+   * @type {AbstractControl}
+   */
+  let subtaskControl = this.addTaskForm.get('subtask');
 
+  /**
+   * The value entered in the 'subtask' form field.
+   * @type {string}
+   */
+  let subtaskValue = subtaskControl.value;
+
+  if (subtaskValue) {
+    // Adding a subtask as an object
+    this.subtasks.push({ name: subtaskValue, completed: false });
+
+    // Clearing the input field
+    subtaskControl.setValue('');
+  }
+}
+
+/**
+ * Adds a subtask to the task using the 'editTaskForm'.
+ */
   addSubtaskFromEdit() {
-    let subtaskControl = this.editTaskForm.get('subtask');
-    let subtaskValue = subtaskControl.value;
-  
-    if (subtaskValue) {
-      // Hinzufügen eines Subtasks als Objekt
-      this.subtasks.push({ name: subtaskValue, completed: false });
-  
-      subtaskControl.setValue(''); // Das Eingabefeld leeren
-    }
-  }
+  /**
+   * Represents the control for the 'subtask' form field.
+   * @type {AbstractControl}
+   */
+  let subtaskControl = this.editTaskForm.get('subtask');
 
+  /**
+   * The value entered in the 'subtask' form field.
+   * @type {string}
+   */
+  let subtaskValue = subtaskControl.value;
+
+  if (subtaskValue) {
+    // Adding a subtask as an object
+    this.subtasks.push({ name: subtaskValue, completed: false });
+
+    // Clearing the input field
+    subtaskControl.setValue('');
+  }
+}
+
+
+/**
+ * Edits a subtask for the task using the 'editTaskForm'.
+ * @function
+ */
   editSubtask() {
-    let subtaskControl = this.editTaskForm.get('subtask');
-    let subtaskValue = subtaskControl.value;
+  /**
+   * Represents the control for the 'subtask' form field.
+   * @type {AbstractControl}
+   */
+  let subtaskControl = this.editTaskForm.get('subtask');
 
-    if (subtaskValue) {
-      this.subtasks.push(subtaskValue);
-      subtaskControl.setValue(''); // Das Eingabefeld leeren
-    }
+  /**
+   * The value entered in the 'subtask' form field.
+   * @type {string}
+   */
+  let subtaskValue = subtaskControl.value;
+
+  if (subtaskValue) {
+    // Adding the edited subtask value to the subtasks array
+    this.subtasks.push(subtaskValue);
+
+    // Clearing the input field
+    subtaskControl.setValue('');
   }
+}
 
+/**
+ * Deletes a subtask from the subtasks array.
+ *
+ * @param {number} i - The index of the subtask to be deleted.
+ */
   deleteSubtask(i) {
-    this.subtasks.splice(i, 1);
-    this.pushFromTaskArraytoSubtaskArray();
-  }
+  // Removing the subtask at index 'i' from the subtasks array
+  this.subtasks.splice(i, 1);
 
+  // Updating the subtasks array from the task array
+  this.pushFromTaskArraytoSubtaskArray();
+}
+
+/**
+ * Deletes a subtask from the 'newSubtasks' array when editing a task.
+ *
+ * @param {number} i - The index of the subtask to be deleted.
+ */
   deleteSubtaskFromEdit(i) {
-    this.newSubtasks.splice(i, 1);
-    this.safeTasks();
-  }
+  // Removing the subtask at index 'i' from the 'newSubtasks' array
+  this.newSubtasks.splice(i, 1);
 
-  async updateTask(taskIndex: number, newStatus: string) {
-    if (taskIndex >= 0 && taskIndex < this.tasks.length) {
-      this.tasks[taskIndex].status = newStatus;
-      await this.safeTasks();
-      console.log(
-        `Updated task status to "${newStatus}" for task with title: ${this.tasks[taskIndex].title}`
-      );
-    } else {
-      console.error('Invalid task index');
-    }
-  }
+  // Saving the updated tasks
+  this.safeTasks();
+}
 
-  pushToArray(
-    id,
-    assigned,
-    title,
-    description,
-    date,
-    prio,
-    category,
-    subtasks,
-    status,
-  ) {
-    this.tasks.push({
-      id: id,
-      assigned: this.assignedUser,
-      title: title,
-      description: description,
-      date: date,
-      prio: this.selectedPriority,
-      category: category,
-      subtasks: this.subtasks,
-      status: this.assignStatus,
-    });
-  }
 
-  selectAssigned(assigned: string) {
-    this.selectedPriority = assigned;
-  }
+/**
+ * Asynchronously updates the status of a task.
+ *
+ * @param {number} taskIndex - The index of the task to be updated.
+ * @param {string} newStatus - The new status to set for the task.
+ * @returns {Promise<void>} - A promise that resolves when the update is complete.
+ */
+async updateTask(taskIndex, newStatus) {
+  if (taskIndex >= 0 && taskIndex < this.tasks.length) {
+    this.tasks[taskIndex].status = newStatus;
+    await this.safeTasks();
+  } 
+}
+
+/**
+ * Adds a new task to the 'tasks' array.
+ *
+ * @param {any} id - The ID of the task.
+ * @param {any} assigned - The assigned user for the task.
+ * @param {string} title - The title of the task.
+ * @param {string} description - The description of the task.
+ * @param {any} date - The date of the task.
+ * @param {any} prio - The priority of the task.
+ * @param {string} category - The category of the task.
+ * @param {Array} subtasks - An array of subtasks for the task.
+ * @param {string} status - The status of the task.
+ */
+  pushToArray(id, assigned, title, description, date, prio, category, subtasks, status) {
+  this.tasks.push({
+    id: id,
+    assigned: this.assignedUser,
+    title: title,
+    description: description,
+    date: date,
+    prio: this.selectedPriority,
+    category: category,
+    subtasks: this.subtasks,
+    status: this.assignStatus,
+  });
+}
+
+/**
+ * Selects an assigned user for a task.
+ *
+ * @param {string} assigned - The assigned user for the task.
+ */
+  selectAssigned(assigned) {
+  this.selectedPriority = assigned;
+}
 
 /**
  * Asynchronously sets the 'completed' status of a subtask and updates the tasks.
@@ -733,30 +807,16 @@ async setSubtaskCompleted(subtaskIndex: number, isChecked: boolean): Promise<voi
           this.selectedTask.subtasksDone.splice(subtasksDoneIndex, 1);
         }
       }
-
       // Update the subtasks array in the selected task
       this.selectedTask.subtasks = [...subtasksArray];
-
       // Update the subtasksDone array in the selected task
       this.selectedTask.subtasksDone = [...this.selectedTask.subtasksDone];
-
       // Update the tasks array
       this.tasks[this.selectedTaskIndex] = { ...this.selectedTask };
-
-      console.log('Updated subtasks:', this.selectedTask.subtasks);
-      console.log('Updated subtasksDone:', this.selectedTask.subtasksDone);
-      console.log('Updated tasks:', this.tasks);
-
       // Save the updated tasks
       await this.safeTasks();
-
-      console.log('Tasks saved successfully.');
-    } else {
-      console.error('Invalid subtaskIndex or selected task');
-    }
-  } else {
-    throw new Error('Invalid subtaskIndex or no task selected');
-  }
+    } 
+  } 
 }
 
 
@@ -799,10 +859,7 @@ deleteSubtaskDone(subtaskIndex: number): void {
     if (subtaskIndex < this.selectedTask.subtasksDone.length) {
       this.selectedTask.subtasksDone.splice(subtaskIndex, 1);
       this.safeTasks(); // Save the changes
-      console.log('Subtask deleted successfully.');
-    } else {
-      console.error('Invalid subtaskIndex for subtasksDone or selected task');
-    }
+    } 
   }
 }
 
@@ -862,32 +919,48 @@ async findNearestDate(tasks: any[]): Promise<void> {
   let formattedDate = nearestDate.toLocaleDateString('en-US', options); // 'en-US' for English
 
   this.nearestTaskDate = formattedDate;
-  console.log('Nearest task date:', this.nearestTaskDate);
 }
 
+/**
+ * Asynchronously sets a new status for task assignment.
+ *
+ * @param {string} status - The new status to set for task assignment.
+ * @returns {Promise<void>} - A promise that resolves when the status is updated.
+ */
+async getNewStatus(status) {
+  this.assignStatus = status;
+}
 
-
-  async getNewStatus (status: string) {
-    this.assignStatus = status;
-  }
   
-  deleteAssignedFromTask(i,j) {
-    this.tasks[i].assigned.splice(j, 1);
-    this.safeTasks();
-  }
+/**
+ * Deletes an assigned user from a task at a specified index.
+ *
+ * @param {number} i - The index of the task from which the assigned user should be deleted.
+ * @param {number} j - The index of the assigned user to be deleted from the task.
+ */
+  deleteAssignedFromTask(i, j) {
+  // Removing the assigned user at index 'j' from the assigned users array of the task at index 'i'
+  this.tasks[i].assigned.splice(j, 1);
+  // Saving the updated tasks
+  this.safeTasks();
+}
 
+/**
+ * Clears the form for adding tasks, resetting all form fields and marking them as untouched.
+ */
   clearAddtaskForm() {
-    console.log('clearAddtaskForm');
-    this.addTaskForm.get('title').setValue('');
-    this.addTaskForm.get('description').setValue('');
-    this.addTaskForm.get('date').setValue('');
-    this.addTaskForm.get('category').setValue('');
-    this.addTaskForm.get('subtask').setValue('');
-    this.addTaskForm.get('title').markAsUntouched();
-    this.addTaskForm.get('description').markAsUntouched();
-    this.addTaskForm.get('date').markAsUntouched();
-    this.addTaskForm.get('category').markAsUntouched();
-  }
+  // Resetting the values of each form field
+  this.addTaskForm.get('title').setValue('');
+  this.addTaskForm.get('description').setValue('');
+  this.addTaskForm.get('date').setValue('');
+  this.addTaskForm.get('category').setValue('');
+  this.addTaskForm.get('subtask').setValue('');
+  // Marking each form field as untouched
+  this.addTaskForm.get('title').markAsUntouched();
+  this.addTaskForm.get('description').markAsUntouched();
+  this.addTaskForm.get('date').markAsUntouched();
+  this.addTaskForm.get('category').markAsUntouched();
+}
 
   /**
    * Asynchronous function to save all tasks from array "contacts" to remote storage
