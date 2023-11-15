@@ -15,7 +15,7 @@
   z-index: 2;
 
   .error-message {
-    @include OpenSans(700, 16px, 18.8px, $red);
+    @include OpenSans(400, 16px, 18.8px, $red);
     margin-block-start: unset;
     margin-block-end: unset;
   }
@@ -289,6 +289,12 @@
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
+      border: solid;
+      border-top: unset;
+      border-left: unset;
+      border-right: unset;
+      border-width: 1px;
+      border-color: #D1D1D1;
       .assigned-dropdown-menu {
         display: flex;
         flex-direction: row;
@@ -670,7 +676,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      width: 100%;
+      width: 66%;
       height: 48px;
       gap: 4px;
       margin-left: 0 !important;

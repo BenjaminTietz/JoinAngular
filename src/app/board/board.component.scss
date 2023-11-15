@@ -606,7 +606,8 @@
       width: 100%;
     }
     .board-top {
-      padding: unset;
+      padding-top: 16px;
+      justify-content: center;
 
       .search {
         input {
@@ -1002,12 +1003,12 @@
 }
 .addtask-wrapper {
   position: absolute;
-  left: 0;
+  right: 0;
   display: none;
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
-  width: calc(100vw - 252px);
+  width: 40vw;
   height: calc(100vh - 96px);
   background-color: $bg-color;
   overflow: hidden;
@@ -1255,6 +1256,12 @@
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
+      border: solid;
+      border-top: unset;
+      border-left: unset;
+      border-right: unset;
+      border-width: 1px;
+      border-color: #D1D1D1;
       .assigned-dropdown-menu {
         display: flex;
         flex-direction: row;

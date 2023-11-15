@@ -278,7 +278,6 @@ onSearch(event: any) {
   async showAddtaskFloatingContainer(status: string) {
     this.TaskArrayService.assignStatus = status;
     this.addtaskWrapper.nativeElement.classList.add('show-addtask-wrapper');
-    this.taskCategoryWrapper.nativeElement.classList.add('display-none');
     //TO-DO: Reset form
   }
 
