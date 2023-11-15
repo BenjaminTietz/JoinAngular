@@ -11,7 +11,7 @@
   margin-left: 238px;
   width: calc(100vw - 238px);
   height: calc(100vh - 96px);
-  overflow: hidden;
+  overflow-y: scroll;
   z-index: 2;
 
   .error-message {

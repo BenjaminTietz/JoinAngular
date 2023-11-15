@@ -31,6 +31,8 @@ export class BoardComponent {
   @ViewChild('popupEditedContainer') popupEditedContainer: ElementRef;
   @ViewChild('popupdeletedContainer') popupdeletedContainer: ElementRef;
   @ViewChild('popupCreateContainer') popupCreateContainer: ElementRef;
+  @ViewChild('boardWrapper') boardWrapper: ElementRef;
+  
 
   event: Event;
   taskToDelete;
@@ -278,6 +280,7 @@ onSearch(event: any) {
   async showAddtaskFloatingContainer(status: string) {
     this.TaskArrayService.assignStatus = status;
     this.addtaskWrapper.nativeElement.classList.add('show-addtask-wrapper');
+    this.boardWrapper.nativeElement.classList.add('fix-board-wrapper');
     //TO-DO: Reset form
   }
 
@@ -285,6 +288,7 @@ onSearch(event: any) {
     this.prioUrgentEdit.nativeElement.classList.remove('assign-color-urgent');
     this.prioMediumEdit.nativeElement.classList.remove('assign-color-medium');
     this.prioLowEdit.nativeElement.classList.remove('assign-color-low');
+    this.boardWrapper.nativeElement.classList.remove('fix-board-wrapper');
 
     await this.ngOnInit();
     this.addtaskWrapper.nativeElement.classList.remove('show-addtask-wrapper');
@@ -313,7 +317,7 @@ onSearch(event: any) {
 
     this.TaskArrayService.editTaskFormFB.get('title').markAsTouched();
     this.TaskArrayService.editTaskFormFB.get('description').markAsTouched();
-
+    this.boardWrapper.nativeElement.classList.add('fix-board-wrapper');
   }
 
   async hideEditTaskFloatingContainer() {
@@ -328,6 +332,7 @@ onSearch(event: any) {
     this.editTaskWrapper.nativeElement.classList.remove(
       'show-edittask-wrapper'
     );
+    this.boardWrapper.nativeElement.classList.remove('fix-board-wrapper');
   }
 
   showSuccessEditMessage() {

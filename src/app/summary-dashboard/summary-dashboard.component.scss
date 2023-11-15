@@ -13,6 +13,7 @@
   height: calc(100vh - 96px);
   gap: 72px;
   background-color: $bg-color;
+  overflow-y: scroll;
   .headline {
     h1 {
       @include OpenSans(400, 48px, 57.6px, $dashboard-headline);
