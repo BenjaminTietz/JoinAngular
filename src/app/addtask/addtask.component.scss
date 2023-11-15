@@ -106,18 +106,6 @@
         border-right: none;
         border-bottom: 1px solid $input-boarder;
         padding: 13px 16px 13px 16px;
-
-        &.ng-touched,
-        &.ng-dirty {
-          &.ng-invalid {
-            border: 1px solid $red;
-            border-radius: 10px;
-          }
-          &.ng-valid {
-            border: 1px solid $green;
-            border-radius: 10px;
-          }
-        }
       }
     }
     h2 {

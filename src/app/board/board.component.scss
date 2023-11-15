@@ -15,7 +15,7 @@
   padding-left: 16px;
   padding-right: 16px;
   gap: 72px;
-  overflow-y: scroll;
+  overflow-y: visible;
   overflow-x: hidden;
 
   .popup-container {
@@ -78,7 +78,7 @@
     background-color: rgba(255, 255, 255, 0.4);
     animation: changeBgColor 1s;
     transition: 225ms ease-in-out all;
-    overflow: hidden;
+    overflow-y: scroll;
 
     @keyframes changeBgColor {
       0% {
@@ -112,7 +112,7 @@
       align-items: flex-start;
       box-sizing: border-box;
       width: 528px;
-      height: 932px;
+      height: fit-content;
       border-radius: 30px;
       padding: 48px 40px 48px 40px;
       gap: 24px;
@@ -377,7 +377,7 @@
       justify-content: flex-start;
       align-items: flex-start;
       width: 25%;
-      height: 100%;
+      height: fit-content;
       gap: 24px;
     }
 
@@ -415,7 +415,7 @@
       justify-content: flex-start;
       align-items: flex-start;
       width: 100%;
-      height: 700px;
+      height: fit-content;
 
       .no-task-msg {
         display: flex;
@@ -464,19 +464,19 @@
         .btn-container {
           display: none;
           position: absolute;
-          right: 24px;
+          right: -129px;
           .btn-up {
             margin-bottom: 8px;
             img {
-              width: 64px;
-              height: 64px;
+              width: 48px;
+              height: 48px;
             }
           }
           .btn-down {
             margin-top: 8px;
             img {
-              width: 64px;
-              height: 64px;
+              width: 48px;
+              height: 48px;
             }
           }
         }
@@ -584,9 +584,8 @@
       gap: 24px;
 
       .category {
-        flex: 0 0 48%; /* Änderung der Breite, um Platz für den Abstand (gap) zu lassen */
-        height: 100%;
-        margin-bottom: 24px; /* Abstand zwischen den Zeilen hinzufügen */
+        flex: 0 0 48%; 
+        margin-bottom: 24px;
       }
     }
   }
@@ -660,12 +659,12 @@
           max-width: 95%;
           height: 265px;
           .progressbar {
-            top: 145px;
+            top: 195px;
           }
           .single-task-bottom {
-            right: 4px !important;
+            right: 10px !important;
             top: 225px !important;
-            width: 95%;
+            width: 92%;
             .assigned-contacts {
               .assigned-box {
               }
@@ -1073,17 +1072,6 @@
         border-bottom: 1px solid $input-boarder;
         padding: 13px 16px 13px 16px;
 
-        &.ng-touched,
-        &.ng-dirty {
-          &.ng-invalid {
-            border: 1px solid $red;
-            border-radius: 10px;
-          }
-          &.ng-valid {
-            border: 1px solid $green;
-            border-radius: 10px;
-          }
-        }
       }
     }
     h2 {
@@ -1400,17 +1388,6 @@
         padding: 13px 16px 13px 16px;
         background-color: $bg-color;
         @include OpenSans(400, 19px, 22.8px, $menu-color);
-        &.ng-touched,
-        &.ng-dirty {
-          &.ng-invalid {
-            border: 1px solid $red;
-            border-radius: 10px;
-          }
-          &.ng-valid {
-            border: 1px solid $green;
-            border-radius: 10px;
-          }
-        }
       }
     }
 
@@ -1460,9 +1437,10 @@
     align-items: flex-end;
     width: 335px;
     height: 61px;
-    margin-top: 32px;
+    margin-top: 64px!important;
     margin-left: 64px;
     gap: 4px;
+    right: -120px;
 
     .clear-btn {
       display: flex;
@@ -1820,18 +1798,6 @@
         border-right: none;
         border-bottom: 1px solid $input-boarder;
         padding: 13px 16px 13px 16px;
-
-        &.ng-touched,
-        &.ng-dirty {
-          &.ng-invalid {
-            border: 1px solid $red;
-            border-radius: 10px;
-          }
-          &.ng-valid {
-            border: 1px solid $green;
-            border-radius: 10px;
-          }
-        }
       }
     }
     h2 {
@@ -2173,16 +2139,6 @@
         padding: 13px 16px 13px 16px;
         background-color: $bg-color;
         @include OpenSans(400, 19px, 22.8px, $menu-color);
-        &.ng-touched,
-        &.ng-dirty {
-          &.ng-invalid {
-            border: 1px solid $red;
-            border-radius: 10px;
-          }
-          &.ng-valid {
-            border: 1px solid $green;
-            border-radius: 10px;
-          }
         }
       }
     }
@@ -2233,7 +2189,7 @@
     align-items: flex-end;
     width: 335px;
     height: 61px;
-    margin-top: 32px;
+    margin-top: 64px;
     margin-left: 64px;
     gap: 4px;
 
@@ -2274,7 +2230,7 @@
       }
     }
   }
-}
+
 @media screen and (max-width: 1400px) {
 }
 

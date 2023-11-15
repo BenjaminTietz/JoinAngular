@@ -91,8 +91,8 @@
         <ul>
           <li *ngFor="let subtask of TaskArrayService.selectedTask.subtasks; let i = index">
             <span>
+              <input type="checkbox" [checked]="subtask.completed" (change)="this.TaskArrayService.setSubtaskCompleted(i, $any($event.target)?.checked)" />
               {{ subtask.name }}
-              <input type="checkbox" [checked]="subtask.completed" (change)="this.TaskArrayService.setSubtaskCompleted(i, $any($event.target)?.checked)" /> Done
             </span>
           </li>
         </ul>
@@ -421,7 +421,7 @@ class="edittask-wrapper"
           this.TaskArrayService.editTaskForm.controls['title'].touched
         "
       >
-        <p class="error-message" *ngIf="this.TaskArrayService.editTaskForm.controls['title'].errors">Choose a title</p>
+        <p class="error-message" *ngIf="this.TaskArrayService.editTaskForm.controls['title'].errors">Choose a title (max. 30char)</p>
       </ng-container>
       </div>
       <h2>Description <span>(optional)</span></h2>

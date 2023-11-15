@@ -31,7 +31,7 @@
             this.TaskArraysService.addTaskForm.controls['title'].touched
           "
         >
-          <p class="error-message" *ngIf="this.TaskArraysService.addTaskForm.controls['title'].errors">Choose a title</p>
+          <p class="error-message" *ngIf="this.TaskArraysService.addTaskForm.controls['title'].errors">Choose a title (max 30char)</p>
         </ng-container>
         </div>
         <h2>Description <span>(optional)</span></h2>
