@@ -31,7 +31,7 @@
         [formGroup]="this.ArraysService.contactsForm"
         (ngSubmit)="this.addContact(this.ArraysService.contactsForm.value)"
       >
-      <div class="inpufield-wrapper">
+      <div class="inputfield-wrapper">
         <input
           formControlName="name"
           name="name"
@@ -40,7 +40,7 @@
         />
         <img src="assets/img/contacts/name_inputfield.png">
       </div>
-      <div class="inpufield-wrapper">
+      <div class="inputfield-wrapper">
         <input
           formControlName="email"
           name="email"
@@ -49,7 +49,7 @@
         />
         <img src="assets/img/contacts/mail_inputfield.png">
       </div>
-    <div class="inpufield-wrapper">
+    <div class="inputfield-wrapper">
         <input
           formControlName="phone"
           name="phone"
@@ -80,6 +80,7 @@
 </div>
   <!--end of hidden Add Contact Container-->
   <!--Hidden Edit Contact Container-->
+  <div class="slide-wrapper" #editContactContainer>
   <div
     *ngIf="selectedContactIndex !== -1"
     class="add-contact-container"
@@ -94,6 +95,7 @@
       <div class="add-contact-top-title">
         <img src="assets/img/contacts/join_logo.png" />
         <h2>Edit Contact</h2>
+        <span>Tasks are better with a team!</span>
       </div>
     </div>
     <div class="edit-contact-bottom">
@@ -103,14 +105,15 @@
         [formGroup]="this.ArraysService.editContactForm"
         (ngSubmit)="editContact(editContactForm.value)"
       >
+      <div class="inputfield-wrapper">
         <input
-          #inputName
           formControlName="name"
           name="name"
           type="text"
           placeholder="Name"
-          
         />
+        <img src="assets/img/contacts/name_inputfield.png">
+      </div>
         <ng-container
         *ngIf="
           this.ArraysService.editContactForm.controls['name'].dirty ||
@@ -124,14 +127,15 @@
           Enter correct Name
         </p>
       </ng-container>
+      <div class="inputfield-wrapper">
         <input
-          #inputEmail
           formControlName="email"
           name="email"
           type="email"
           placeholder="Email"
-          
         />
+        <img src="assets/img/contacts/mail_inputfield.png">
+      </div>
         <ng-container
         *ngIf="
           this.ArraysService.editContactForm.controls['email'].dirty ||
@@ -145,14 +149,15 @@
           Enter valid email adress
         </p>
       </ng-container>
+      <div class="inputfield-wrapper">
         <input
-          #inputPhone
           formControlName="phone"
           name="phone"
           type="phone"
           placeholder="Phone"
-          
         />
+        <img src="assets/img/contacts/phone_inputfield.png">
+      </div>
         <ng-container
         *ngIf="
           this.ArraysService.editContactForm.controls['phone'].dirty ||
@@ -184,6 +189,7 @@
       </form>
     </div>
   </div>
+</div>
   <!--end of Hidden Edit Contact Container-->
   <!--end of Hidden Container-->
   <div class="contacts-left">
