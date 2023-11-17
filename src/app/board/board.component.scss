@@ -718,7 +718,7 @@
         align-items: flex-start;
         box-sizing: border-box;
         width: 420px;
-        height: 932px;
+        height: fit-content;
         border-radius: 30px;
         padding: 28px 20px 28px 20px;
         gap: 24px;
@@ -855,7 +855,7 @@
         box-sizing: border-box;
         width: 100vw;
         max-width: 98%;
-        height: 100vh;
+        height: fit-content;
         max-height: 100%;
         border-radius: 30px;
         padding: 28px 20px 28px 20px;
@@ -2265,13 +2265,12 @@
     padding-left: 8px;
     position: absolute;
     display: none;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
     box-sizing: border-box;
     width: 100vw;
     max-width: 105%;
     height: calc(100vh - 96px);
-    background-color: $bg-color;
     overflow-y: hidden;
     z-index: 2;
     animation: slide-in-right 1.5s ease-in-out;
@@ -2294,7 +2293,7 @@
           .edittask-left-top {
             .input-wrapper {
               input {
-                width: 100%;
+                width: 408px;
               }
             }
             textarea {
@@ -2325,6 +2324,11 @@
         }
       }
       .edittask-left-bottom {
+        .input-wrapper {
+          input {
+            width: 408px;
+          }
+        }
         .add-btn-container {
           left: 346px;
         }
