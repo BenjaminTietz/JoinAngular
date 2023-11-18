@@ -21,6 +21,7 @@ export class LoginService {
       Validators.required,
       Validators.minLength(4),
     ]),
+    rememberMe: new FormControl(false),
   });
   public signUpForm: FormGroup = new FormGroup({
     name: new FormControl('', [Validators.required]),
@@ -44,6 +45,7 @@ export class LoginService {
   userGreeting;
   currentUser;
   currentUserEmail;
+  rememberMe: boolean = false;
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -54,6 +56,7 @@ export class LoginService {
     this.loginFormFB = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(4)]],
+      rememberMe: [false],
     });
 
 
@@ -142,9 +145,11 @@ async logIn(data) {
     await this.safeUser();
     // Navigate to the summary route
     this.router.navigate(['/join']);
-    // Clear email and password fields
-    data.email = '';
-    data.password = '';
+    // Clear email and password fields if rememberMe is false
+    if (data.rememberMe === false || data.rememberMe === undefined)  {
+      this
+      await this.logInForm.reset();;
+    }
   } else {
     // Handle failed login
     await this.failedLogin();
