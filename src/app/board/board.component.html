@@ -93,6 +93,12 @@
             <span>
               <input type="checkbox" [checked]="subtask.completed" (change)="this.TaskArrayService.setSubtaskCompleted(i, $any($event.target)?.checked)" />
               {{ subtask.name }}
+              <img
+              src="assets/img/board/delete.png"
+              (click)="
+                this.TaskArrayService.deleteSubtaskFromDetailView(i)
+              "
+            />
             </span>
           </li>
         </ul>
@@ -583,7 +589,7 @@ class="edittask-wrapper"
         </div>
       </div>
       <span>delete already assigned contacts:</span>
-      <div *ngIf="this.TaskArrayService.selectedTask" class="assigned-box">
+      <div *ngIf="this.TaskArrayService.selectedTaskIndex >= 0 && this.TaskArrayService.tasks[this.TaskArrayService.selectedTaskIndex].assigned" class="assigned-box">
         <div
         (click)="this.TaskArrayService.deleteAssignedFromTask(this.TaskArrayService.selectedTaskIndex,j)" 
         *ngFor = "let assigned of this.TaskArrayService.tasks[this.TaskArrayService.selectedTaskIndex].assigned; let j = index"
@@ -639,14 +645,26 @@ class="edittask-wrapper"
           (click)="this.TaskArrayService.addSubtaskFromEdit()"
         />
       </div>
-        <div
-          *ngFor="
-            let subtask of this.TaskArrayService.newSubtasks;
-            let i = index
-          "
-        >
-          <div class="subtask-container">
-            <span>{{ subtask }} </span>
+        <div *ngIf="this.TaskArrayService.selectedTaskIndex >= 0 && this.TaskArrayService.selectedTask.subtasks"
+          >
+          <div *ngFor=" let subtask of this.TaskArrayService.newSubtasks; let i = index " class="subtask-container">
+            <span>{{ subtask.name }} </span>
+            <div class="subtask-btn-container">
+              <img
+                src="assets/img/board/delete.png"
+                (click)="
+                  this.TaskArrayService.deleteSubtaskFromEdit(i)
+                "
+              />
+            </div>
+          </div>
+        </div>
+
+
+        <div *ngIf="this.TaskArrayService.selectedTaskIndex >= 0 && this.TaskArrayService.selectedTask.subtasks"
+          >
+          <div *ngFor=" let subtask of this.TaskArrayService.subtasks; let i = index " class="subtask-container">
+            <span>{{ subtask.name }} </span>
             <div class="subtask-btn-container">
               <img
                 src="assets/img/board/delete.png"

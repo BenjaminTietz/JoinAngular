@@ -520,6 +520,7 @@ async editTask(data) {
     this.safeTasks();
     this.postEditCleanup(data);
     this.newSubtasks = [];
+    await this.ngOnInit;
   } 
 }
 
@@ -580,9 +581,8 @@ combineAndSetSubtasks(taskIndex) {
   this.findNearestDate(this.urgent);
   this.subtasks = [];
   this.clearAssignedData();
-  this.ngOnInit();
   data.assignedContacts = [];
-
+  this.ngOnInit();
   setTimeout(() => {
     // todo confirmationMessage(); hideSlider();
   }, 1000);
@@ -657,7 +657,7 @@ combineAndSetSubtasks(taskIndex) {
 
   if (subtaskValue) {
     // Adding a subtask as an object
-    this.subtasks.push({ name: subtaskValue, completed: false });
+    this.newSubtasks.push({ name: subtaskValue, completed: false });
 
     // Clearing the input field
     subtaskControl.setValue('');
@@ -702,6 +702,8 @@ combineAndSetSubtasks(taskIndex) {
 
   // Updating the subtasks array from the task array
   this.pushFromTaskArraytoSubtaskArray();
+
+  this.ngOnInit();
 }
 
 /**
@@ -715,8 +717,29 @@ combineAndSetSubtasks(taskIndex) {
 
   // Saving the updated tasks
   this.safeTasks();
+
+  this.ngOnInit();
 }
 
+/**
+ * Deletes a subtask from the 'newSubtasks' array when editing a task.
+ *
+ * @param {number} i - The index of the subtask to be deleted.
+ */
+deleteSubtaskFromDetailView(i) {
+  // Removing the subtask at index 'i' from the 'newSubtasks' array
+  const deletedSubtask = this.selectedTask.subtasks.splice(i, 1)[0];
+
+  // Removing the corresponding entry from the 'subtasksDone' array
+  const indexInSubtasksDone = this.subtasksDone.findIndex(subtask => subtask.name === deletedSubtask.name);
+  if (indexInSubtasksDone !== -1) {
+    this.subtasksDone.splice(indexInSubtasksDone, 1);
+  }
+
+  // Saving the updated tasks
+  this.safeTasks();
+  this.ngOnInit();
+}
 
 /**
  * Asynchronously updates the status of a task.
