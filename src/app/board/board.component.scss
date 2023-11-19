@@ -2321,7 +2321,7 @@
             }
             div {
               input {
-                width: 240%;
+                width: 190%;
               }
             }
             h2 {
@@ -2344,6 +2344,9 @@
         }
       }
       .edittask-left-bottom {
+        select {
+          width: 92%;
+        }
         .input-wrapper {
           input {
             width: 408px;
@@ -2431,7 +2434,7 @@
             }
             div {
               input {
-                width: 220%;
+                width: 160%;
               }
             }
             h2 {
@@ -2455,6 +2458,11 @@
       }
       .edittask-left-bottom {
         width: 400px;
+        .input-wrapper {
+          input {
+            width: 336px;
+          }
+        }
         .add-btn-container {
           left: 346px;
         }
@@ -2546,7 +2554,7 @@
             }
             div {
               input {
-                width: 172%;
+                width: 121%;
               }
             }
             h2 {
@@ -2579,6 +2587,9 @@
         }
         .input-wrapper {
           width: 78%;
+          input {
+            width: 268px;
+          }
         }
         span {
           @include OpenSans(400, 16px, 19.2px, $menu-color);
