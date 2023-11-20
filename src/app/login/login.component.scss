@@ -378,7 +378,9 @@
     .privacy-headline {
         display: flex;
         justify-content: space-between;
-        width: 90%;
+        width: 95%;
+        padding-left: 16px;
+        padding-right: 16px;
         h1 {
         @include OpenSans(700, 61px, 73.2px, $black);
         }
@@ -388,6 +390,8 @@
     }
 
     .privacy-content {
+        padding-left: 16px;
+        padding-right: 16px;
         h2 {
             @include OpenSans(700, 33px, 39.6px, $medium-light-blue);
         }
@@ -430,7 +434,9 @@
       flex-direction: row;
       justify-content: space-between;
       align-items: center;
-      width: 100%;
+      width: 95%;
+      padding-left: 16px;
+      padding-right: 16px;
       h1 {
         @include OpenSans(700, 61px, 73.2px, $black);
       }
@@ -442,6 +448,8 @@
     }
   
     .legal-content {
+        padding-left: 16px;
+        padding-right: 16px;
       h2 {
         @include OpenSans(700, 33px, 39.6px, $light-blue);
       }
