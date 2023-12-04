@@ -120,7 +120,7 @@
                     width: 422px;
                     height: 48px;
                     padding-left: 16px;
-                    @include OpenSans(400, 19px, 22.8px, $input-boarder);
+                    @include OpenSans(400, 19px, 22.8px, $black);
                     border-color: $input-boarder;
                     border-top: unset;
                     border-left: unset;
@@ -189,6 +189,17 @@
             background-color: $white;
             border: 1px solid $input-boarder;
             padding-top: 16px;
+
+            .contacts-left-usercircle {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 120px;
+                height: 120px;
+                border: solid 1px $white;
+                border-radius: 50%;
+                @include Inter(500, 47px, 56.4px, $white);
+            }
             form {
                 display: flex;
                 flex-direction: column;
@@ -204,7 +215,7 @@
                     width: 422px;
                     height: 48px;
                     padding-left: 16px;
-                    @include OpenSans(400, 19px, 22.8px, $input-boarder);
+                    @include OpenSans(400, 19px, 22.8px, $black);
                     border-color: $input-boarder;
                     border-top: unset;
                     border-left: unset;
@@ -301,6 +312,7 @@
                 }
                 h2 {
                     @include OpenSans(700, 48px, 57.6px, $white);
+                    margin-block-end: unset;
                 }
                 span {
                     @include Inter(400, 27px, 32.4px, $white);
@@ -505,13 +517,13 @@
             display: flex;
             flex-direction: column;
             gap: 15px;
-            @include OpenSans(400, 16px, 19.2px, $black);
+            @include OpenSans(400, 16px, 18.2px, $black);
             h2 {
                 @include OpenSans(700, 23px, 27.6px, $black);
             }
             
             span {
-                @include OpenSans(700, 16px, 19.2px, $black);
+                @include OpenSans(700, 16px, 18.2px, $black);
             }
         }
     }
@@ -874,8 +886,60 @@
                 width: 350px;
                 padding-top: unset;
                 border: unset;
+                .add-contact-btn {
+                    display: flex;
+                    gap: 4px;
+    
+                    .cancel-btn {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        box-sizing: border-box;
+                        white-space: nowrap;
+                        width: 106px;
+                        height: 60px;
+                        border-radius: 8px;
+                        border-style:solid 1px;
+                        border-color: $light-gray;
+                        background-color: $white;
+                        padding: 16px 18px 16px 18px;
+                        gap: 6px;
+                        @include OpenSans(400, 23px, 27.6px, $light-gray);
+                        cursor: pointer;
+    
+                    }
+            
+                    .create-btn {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        width: 174px;
+                        height: 60px;
+                        border-radius: 10px;
+                        border-style: none;
+                        background-color: $light-blue;
+                        padding: 16px 10px 16px 10px;
+                        gap: 8px;
+                        @include OpenSans(400, 23px, 27.6px, $white);
+                        cursor: pointer;
+    
+                        &:disabled {
+                            background-color: $light-gray;
+                            cursor: not-allowed;
+                          }
+                    }
+                }
+                .contacts-left-usercircle {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    width: 80px;
+                    height: 80px;
+                    border: solid 1px $white;
+                    border-radius: 50%;
+                    @include Inter(500, 37px, 46.4px, $white);
+                }
                 form {
-                    padding-top: 70px;
                     width: 90%;
 
                     .inputfield-wrapper {

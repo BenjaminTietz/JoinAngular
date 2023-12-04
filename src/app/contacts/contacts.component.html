@@ -98,8 +98,13 @@
         <span>Tasks are better with a team!</span>
       </div>
     </div>
-    <div class="edit-contact-bottom">
-      <img class="user-img" src="assets/img/contacts/user-circle-add-contact.png" />
+    <div *ngIf="this.ArraysService.sortedalphabetically[selectedContactIndex].color" class="edit-contact-bottom">
+      <div
+      [style.background-color]="this.ArraysService.sortedalphabetically[selectedContactIndex].color"
+      class="contacts-left-usercircle"
+    >
+      {{this.ArraysService.sortedalphabetically[selectedContactIndex].initials}}
+    </div>
       <form
         #editContactForm="ngForm"
         [formGroup]="this.ArraysService.editContactForm"

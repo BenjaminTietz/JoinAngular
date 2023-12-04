@@ -133,6 +133,9 @@
 <div class="addtask-left">
   <div class="headline">
     <h1>Add Task</h1>
+    <img
+      (click)="hideAddtaskFloatingContainer()"
+      src="assets/img/board/close.png">
   </div>
   <form
     [formGroup]="this.TaskArrayService.addTaskForm"
@@ -645,7 +648,7 @@ class="edittask-wrapper"
           (click)="this.TaskArrayService.addSubtaskFromEdit()"
         />
       </div>
-        <div *ngIf="this.TaskArrayService.selectedTaskIndex >= 0 && this.TaskArrayService.selectedTask.subtasks"
+        <div *ngIf="this.TaskArrayService.selectedTaskIndex >= 0"
           >
           <div *ngFor=" let subtask of this.TaskArrayService.newSubtasks; let i = index " class="subtask-container">
             <span>{{ subtask.name }} </span>
@@ -661,7 +664,7 @@ class="edittask-wrapper"
         </div>
 
 
-        <div *ngIf="this.TaskArrayService.selectedTaskIndex >= 0 && this.TaskArrayService.selectedTask.subtasks"
+        <div *ngIf="this.TaskArrayService.selectedTaskIndex >= 0 "
           >
           <div *ngFor=" let subtask of this.TaskArrayService.subtasks; let i = index " class="subtask-container">
             <span>{{ subtask.name }} </span>

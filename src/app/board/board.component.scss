@@ -1082,8 +1082,14 @@
   }
 
   .headline {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     h1 {
       @include OpenSans(400, 48px, 57.6px, $dashboard-headline);
+    }
+    img {
+      cursor: pointer;
     }
   }
 
@@ -2418,6 +2424,8 @@
 @media screen and (max-width: 500px) {
   .board-wrapper {
     .edittask-wrapper {
+      height: inherit;    
+  
       padding-left: 8px;
       .edittask-left {
         padding: 0px 0px 0px 0px;
