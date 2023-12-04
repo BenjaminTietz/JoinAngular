@@ -658,7 +658,6 @@ combineAndSetSubtasks(taskIndex) {
   if (subtaskValue) {
     // Adding a subtask as an object
     this.newSubtasks.push({ name: subtaskValue, completed: false });
-
     // Clearing the input field
     subtaskControl.setValue('');
   }
@@ -728,10 +727,10 @@ combineAndSetSubtasks(taskIndex) {
  */
 deleteSubtaskFromDetailView(i) {
   // Removing the subtask at index 'i' from the 'newSubtasks' array
-  const deletedSubtask = this.selectedTask.subtasks.splice(i, 1)[0];
+  let deletedSubtask = this.selectedTask.subtasks.splice(i, 1)[0];
 
   // Removing the corresponding entry from the 'subtasksDone' array
-  const indexInSubtasksDone = this.subtasksDone.findIndex(subtask => subtask.name === deletedSubtask.name);
+  let indexInSubtasksDone = this.subtasksDone.findIndex(subtask => subtask.name === deletedSubtask.name);
   if (indexInSubtasksDone !== -1) {
     this.subtasksDone.splice(indexInSubtasksDone, 1);
   }
